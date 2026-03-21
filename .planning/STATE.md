@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 6.1 — Episodio4 Article — Learnship Behind the Scenes
-Plan: 06.1-01 complete
-Status: plan 06.1-01 executed — El proyecto de ejemplo section fully expanded
-Last activity: 2026-03-21 — Plan 06.1-01 executed: replaced placeholder with 1600+ word Spanish chronicle
+Plan: 06.1-02 complete
+Status: plan 06.1-02 executed — La conexión section expanded to ~350 words with Ep2/Ep3 explicit callbacks
+Last activity: 2026-03-21 — Plan 06.1-02 executed: enhanced La conexión section with agentic-learn callback, harness argument data points, same-repo meta note, and Ep1→Ep4 closing thesis
 
 ## Completed Phases
 
@@ -75,6 +75,7 @@ All site code lives in: `Episodio4/`
 
 ### Phase 6.1 Plans Progress
 - 06.1-01: Expand "El proyecto de ejemplo" section — complete (2026-03-21)
+- 06.1-02: Strengthen "La conexión" section with Ep2/Ep3 explicit callbacks — complete (2026-03-21)
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
