@@ -71,6 +71,7 @@ All site code lives in: `Episodio4/`
 - 06-03: Fuse.js Search — complete
 - 06-04: Stub Pages + stop-shell.js Updates — complete
 - 06-05-FIX: Teaser Animation Quality (027 Planck + 040 Fission) — complete
+- 06-06-FIX: Search Discoverability (search trigger button, all 51 pages) — complete
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
