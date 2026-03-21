@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 6.1 — Episodio4 Article — Learnship Behind the Scenes
-Plan: —
-Status: discuss-phase 6.1 complete — context gathered, ready for plan-phase 6.1
-Last activity: 2026-03-21 — Phase 6.1 context session completed
+Plan: 06.1-01 complete
+Status: plan 06.1-01 executed — El proyecto de ejemplo section fully expanded
+Last activity: 2026-03-21 — Plan 06.1-01 executed: replaced placeholder with 1600+ word Spanish chronicle
 
 ## Completed Phases
 
@@ -72,6 +72,9 @@ All site code lives in: `Episodio4/`
 - 06-04: Stub Pages + stop-shell.js Updates — complete
 - 06-05-FIX: Teaser Animation Quality (027 Planck + 040 Fission) — complete
 - 06-06-FIX: Search Discoverability (search trigger button, all 51 pages) — complete
+
+### Phase 6.1 Plans Progress
+- 06.1-01: Expand "El proyecto de ejemplo" section — complete (2026-03-21)
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
