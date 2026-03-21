@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Galileo used an inclined plane to prove that all objects accelerate identically under gravity, regardless of mass.">
+  <title>Galileo's Inclined Plane — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "009-galileo-inclined-plane",
+  "order": 9,
+  "era": "revolution",
+  "title": "Galileo's Inclined Plane",
+  "prev": "008-copernicus-heliocentric",
+  "prevTitle": "Copernicus and the Heliocentric Model",
+  "next": "010-galileo-pendulum",
+  "nextTitle": "Galileo's Pendulum"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+  </div>
+</header>
+<main class="stop-page container" data-era="revolution">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Scientific Revolution · 1604</div>
+    <h1 class="stop-header__title">Galileo's Inclined Plane</h1>
+    <p class="stop-header__subtitle">How to measure gravity without a stopwatch</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1604</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Galileo Galilei</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      The problem with studying free fall is that objects fall too fast to measure precisely with Renaissance instruments. Galileo's solution was elegant: tilt the plane. By rolling balls down an inclined surface instead of dropping them, he slowed gravity enough to time carefully.
+    </p>
+    <p>
+      He found that distance traveled grows as the <em>square</em> of elapsed time — always, regardless of the ball's mass. This is uniformly accelerated motion, and it contradicted Aristotle completely.
+    </p>
+    <p>
+      Adjust the angle and mass below. Notice: the angle changes how fast the ball rolls, but mass has no effect on the time to reach the bottom.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:380px;" aria-label="Interactive: Ball rolling down an inclined plane">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="angle-slider">
+          Angle
+          <span class="sim-control__value" id="angle-val">20°</span>
+        </label>
+        <input type="range" id="angle-slider" min="5" max="60" step="5" value="20" aria-label="Incline angle in degrees">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="mass-slider">
+          Mass
+          <span class="sim-control__value" id="mass-val">1 kg</span>
+        </label>
+        <input type="range" id="mass-slider" min="1" max="10" step="1" value="1" aria-label="Ball mass in kg">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Release!</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Adjust angle and mass, then release the ball. Does mass matter?</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Discovery</h3>
+    <p>Galileo's inclined plane experiments led him to the law of uniform acceleration: distance = ½at². He used a water clock (measuring water flow as a proxy for time) and a grooved plank with bells at measured intervals. He could hear whether the ball hit each bell at equally spaced time intervals — confirming uniform acceleration.</p>
+    <p>The acceleration along the incline is g·sin(θ), where θ is the angle and g = 9.8 m/s². At 30° this is about 4.9 m/s². At 90° (free fall) it is the full 9.8 m/s². Crucially, at every angle, the result is identical for all masses — the 1 kg ball and the 10 kg ball reach the bottom at the same moment.</p>
+    <p>This was the birth of modern kinematics. Before Galileo, "natural philosophy" described motion in qualitative terms. After Galileo, physics measured it in equations.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>On an inclined plane, acceleration = g·sin(θ) — independent of the object's mass.</li>
+      <li>Distance traveled grows as the square of elapsed time: d = ½at². This is Galileo's law of uniform acceleration.</li>
+      <li>Galileo invented the experimental method: use a controlled setup to isolate one variable at a time.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Galileo made another key discovery about motion from a different direction — looking up at a chandelier swinging in a cathedral draft. The pendulum would give him the first reliable clock.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+</body>
+</html>
