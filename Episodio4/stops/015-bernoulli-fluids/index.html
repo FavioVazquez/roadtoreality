@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -30,7 +31,7 @@
   </div>
 </header>
 <main class="stop-page container" data-era="classical">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
   <header class="stop-header">
     <div class="stop-header__era">Classical Physics · 1738</div>
     <h1 class="stop-header__title">Bernoulli's Principle</h1>
@@ -42,19 +43,44 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls.</p>
+    <p>As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls. Bernoulli derived this from conservation of energy: in a steady flow, the sum of pressure, kinetic, and potential energy per unit volume is constant.</p>
   </div>
-  <div class="sim-wrapper content-column">
-    <div class="sim-container" id="sim-mount" style="min-height:360px;" aria-label="Interactive simulation — coming soon">
-      <div class="sim-placeholder">
-        <div class="sim-placeholder__icon">⚗️</div>
-        <div class="sim-placeholder__text">Simulation coming in a future update</div>
-        <div class="sim-placeholder__sub">Stop 15 of 50</div>
+  <div class="sim-wrapper content-column" data-autoplay="true">
+    <div class="sim-container" id="sim-mount" aria-label="Bernoulli's Principle — teaser animation">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-actions" style="margin-left:auto;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
       </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Teaser — full interactive simulation coming in Phase 9</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <p style="color:var(--color-text-muted);font-style:italic;">Full narrative and interactive simulation for this stop will be added in Phase 3 or 4.</p>
+    <h3>What you'll explore in the full stop</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Adjust pipe geometry and watch how flow speed and pressure trade off</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how an airfoil shape generates lift from pressure differences</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Apply the principle to explain curveballs, carburetors, and atomizers</li>
+    </ul>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Concept</div>
+    <ul class="takeaway-box__list">
+      <li>P + ½ρv² + ρgh = constant. Where fluid moves faster, it pushes sideways less. This pressure difference is what lifts every aircraft in the sky.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Bernoulli handled fluids in motion. Euler next formalized how solid rigid bodies rotate — the mathematics that keeps gyroscopes upright and satellites stable.</span>
+  </div>
+  <div style="margin-top:var(--space-6);text-align:center;">
+    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -80,6 +106,10 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
 </body>
 </html>

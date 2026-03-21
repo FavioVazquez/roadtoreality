@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -30,7 +31,7 @@
   </div>
 </header>
 <main class="stop-page container" data-era="classical">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
   <header class="stop-header">
     <div class="stop-header__era">Classical Physics · 1824</div>
     <h1 class="stop-header__title">Carnot and the Heat Engine</h1>
@@ -44,17 +45,42 @@
   <div class="stop-intro content-column">
     <p>Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.</p>
   </div>
-  <div class="sim-wrapper content-column">
-    <div class="sim-container" id="sim-mount" style="min-height:360px;" aria-label="Interactive simulation — coming soon">
-      <div class="sim-placeholder">
-        <div class="sim-placeholder__icon">⚗️</div>
-        <div class="sim-placeholder__text">Simulation coming in a future update</div>
-        <div class="sim-placeholder__sub">Stop 20 of 50</div>
+  <div class="sim-wrapper content-column" data-autoplay="true">
+    <div class="sim-container" id="sim-mount" aria-label="Carnot and the Heat Engine — teaser animation">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-actions" style="margin-left:auto;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
       </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Teaser — full interactive simulation coming in Phase 9</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <p style="color:var(--color-text-muted);font-style:italic;">Full narrative and interactive simulation for this stop will be added in Phase 3 or 4.</p>
+    <h3>What you'll explore in the full stop</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Trace the four-stage Carnot cycle on a PV diagram interactively</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Adjust hot and cold reservoir temperatures and watch efficiency change</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Prove that no real engine can exceed Carnot efficiency</li>
+    </ul>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Concept</div>
+    <ul class="takeaway-box__list">
+      <li>No heat engine can be more efficient than a reversible engine operating between the same two temperatures. The Carnot efficiency is η = 1 − Tc/Th — a fundamental thermodynamic limit.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Carnot set the efficiency limit. Joule measured the conversion rate between work and heat with precision — establishing conservation of energy as a universal law.</span>
+  </div>
+  <div style="margin-top:var(--space-6);text-align:center;">
+    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -80,6 +106,10 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
 </body>
 </html>
