@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 06 — Foundation & UX Polish (v2.0 phases run 06–14; v1.0 was 01–05)
-Plan: 06-01 complete
-Status: Plan 06-01 executed — CSS UX polish applied; ready for next plan in phase 06
-Last activity: 2026-03-21 — 06-01 CSS & Global UX Polish complete (base.css + simulation.css)
+Plan: 06-02 complete
+Status: Plan 06-02 executed — KaTeX self-hosted and wired to all 13 stops; ready for next plan in phase 06
+Last activity: 2026-03-21 — 06-02 KaTeX Integration complete (assets/katex/, katex-init.js, 13 stop pages updated)
 
 ## Completed Phases
 
@@ -64,6 +64,10 @@ All site code lives in: `Episodio4/`
 - Galaxy background: Perlin fBm noise procedural rendering (DEC-010)
 - All oklch color tokens: hue 285 → 0 (neutral black, no blue cast)
 - GitHub Pages: deploy from /Episodio4 subfolder (confirmed)
+
+### Phase 06 Plans Progress
+- 06-01: CSS & Global UX Polish — complete
+- 06-02: KaTeX Integration — complete
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
