@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -97,6 +98,10 @@
       <li>Aristotle's theory felt obvious because air resistance is real and everyday objects experience it differently.</li>
       <li>This error persisted for 1,800 years because no one did a careful, controlled experiment to check it.</li>
     </ul>
+    <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-4);">Aristotle believed:</p>
+    <p>$$v \propto \frac{F}{m}$$</p>
+    <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Newton corrected this to:</p>
+    <p>$$a = \frac{F}{m}$$</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
@@ -108,5 +113,8 @@
 <script src="../../assets/js/progress.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
 <script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
 </body>
 </html>

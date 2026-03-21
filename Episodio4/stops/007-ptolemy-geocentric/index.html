@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -93,6 +94,7 @@
       <li>Epicycles were mathematical patches to make circles work; they hid the real geometry.</li>
       <li>The retrograde loops that required epicycles in geocentric astronomy are simply explained by relative orbital speeds in heliocentric astronomy.</li>
     </ul>
+    <p>$$\lambda(t) = \lambda_0 + \omega_1 t + r \sin(\omega_2 t + \phi)$$</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
@@ -104,5 +106,8 @@
 <script src="../../assets/js/progress.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
 <script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
 </body>
 </html>
