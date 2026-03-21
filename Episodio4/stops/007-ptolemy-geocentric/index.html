@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -103,6 +104,26 @@
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
 <footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
 <script src="sim.js"></script>
