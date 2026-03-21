@@ -32,6 +32,7 @@
 **Requirements:** UX-01–10, FEAT-KATEX-01–04, FEAT-SEARCH-01–04
 **Dir:** `06-v2-foundation-ux-polish`
 **Context:** `06-CONTEXT.md` ✓
+**Status:** ✓ Complete — 2026-03-21
 
 **Plan 06-01: KaTeX Integration**
 - Self-host KaTeX fonts + CSS + auto-render.min.js under `assets/katex/`
