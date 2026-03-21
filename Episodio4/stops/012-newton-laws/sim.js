@@ -9,6 +9,7 @@
   var canvas, ctx, W, H;
   var running = false;
   var rafId   = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lastTs  = null;
 
   var FRICTION_LABELS = ['None', 'Low', 'Medium', 'High'];

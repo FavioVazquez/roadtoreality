@@ -1,7 +1,8 @@
 # Phase 5: Polish & Deployment — Context
 
 **Gathered:** 2026-03-20
-**Status:** Planned — not yet executed
+**Updated:** 2026-03-21
+**Status:** In execution
 
 <domain>
 ## Phase Boundary
@@ -51,6 +52,25 @@ Preferred: option C for v1.0 (simplicity > micro-optimization). Revisit for v2.0
 - How to add a new stop (5-step checklist)
 - How to deploy to GitHub Pages
 - Tech stack summary
+
+### Visual polish (user-requested addition)
+- Animated galaxy background on landing page: 3 parallax star layers, colored nebulae,
+  Milky Way band, shooting stars. Uses mix-blend-mode:screen over dark html background.
+- Implementation: inline JS in index.html, no external dependencies.
+- prefers-reduced-motion: draws static frame, no RAF loop.
+
+### GitHub Pages deployment
+- Decision confirmed: deploy from /Episodio4 subfolder via GitHub Pages custom directory.
+- Repo: github.com/FavioVazquez/roadtoreality — main branch, folder: /Episodio4.
+- Allows future episodes to deploy from their own subdirectories.
+
+### prefers-reduced-motion in JS
+- Added to all 12 sim.js files: `var reducedMotion = window.matchMedia(...).matches`
+- On start(): if reducedMotion, draw() once instead of launching RAF loop.
+
+### Accessibility fixes executed
+- aria-live="polite" added to .sim-caption on all 12 active stop pages.
+- aria-label already present on all interactive controls (verified).
 
 ### Claude's Discretion
 - Exact accessibility fixes discovered during audit

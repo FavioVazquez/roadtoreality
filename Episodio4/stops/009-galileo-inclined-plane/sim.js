@@ -10,6 +10,7 @@
   var canvas, ctx, W, H;
   var running = false;
   var rafId = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var angleDeg = 20;
   var mass = 1;
   var dropped = false;
@@ -225,7 +226,8 @@
     if (dot) dot.classList.add('is-running');
     var s = document.getElementById('sim-status');
     if (s) s.textContent = 'Ball released! Watch the distance grow as t².';
-    rafId = requestAnimationFrame(loop);
+    if (!reducedMotion) rafId = requestAnimationFrame(loop);
+    else draw();
   }
 
   function pause() {

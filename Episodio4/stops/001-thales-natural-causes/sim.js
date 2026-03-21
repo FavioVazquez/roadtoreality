@@ -17,6 +17,7 @@
   var animT    = 0;
   var rafId    = null;
   var running  = false;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var waveT    = 0;  /* wave animation phase */
   var shakeT   = 0;  /* shake offset for supernatural */
   var shakeAmp = 0;

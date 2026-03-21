@@ -15,6 +15,7 @@
   var canvas, ctx, W, H;
   var running = false;
   var rafId   = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dropped = false;
 
   var ball1 = null, ball2 = null;

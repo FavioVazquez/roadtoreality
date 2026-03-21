@@ -9,6 +9,7 @@
   var canvas, ctx, W, H;
   var running = false;
   var rafId   = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var animT   = 0;
   var distanceKm = 800;
   var showResult = false;
@@ -249,7 +250,8 @@
     if (btn) { btn.textContent = '⏸ Pause'; btn.dataset.state = 'playing'; }
     var dot = document.querySelector('.sim-caption__dot');
     if (dot) dot.classList.add('is-running');
-    rafId = requestAnimationFrame(loop);
+    if (!reducedMotion) rafId = requestAnimationFrame(loop);
+    else draw();
   }
 
   function pause() {

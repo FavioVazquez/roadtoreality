@@ -19,6 +19,7 @@
   var animProgress = 1; /* 0 = transitioning in, 1 = fully shown */
   var running = false;
   var rafId = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var autoZoomT = 0;
 
   /* Seeded arrangement so particles don't jump on resize */
@@ -190,7 +191,8 @@
     if (running) return;
     running = true;
     autoZoomT = 0;
-    rafId = requestAnimationFrame(loop);
+    if (!reducedMotion) rafId = requestAnimationFrame(loop);
+    else draw();
   }
 
   function pause() {
