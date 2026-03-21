@@ -495,15 +495,17 @@ Hay un hilo que conecta los cuatro episodios de esta investigación, y quiero ha
 
 **Episodio 1** planteó la pregunta central: la IA es poderosa, pero la realidad tiene sus propias fricciones. El conocimiento que se gana a golpes —el *scar tissue*, el tejido cicatricial— no puede descargarse de un modelo. La velocidad del aprendizaje en sistemas complejos está acotada por la velocidad de la realidad, no por la velocidad del cómputo.
 
-**Episodio 2** exploró el problema del aprendizaje pasivo: usar IA para obtener output sin construir comprensión. Construí `agentic-learn` como una capa que invierte el orden: el agente espera tu respuesta antes de dar la suya. La fricción productiva como mecanismo de aprendizaje real.
+**Episodio 2** exploró el problema del aprendizaje pasivo: usar IA para obtener output sin construir comprensión. Construí `agentic-learn` como una capa que invierte el orden: el agente espera tu respuesta antes de dar la suya. La fricción productiva como mecanismo de aprendizaje real. Lo que no dije explícitamente en ese episodio es que ese skill específico — el agente que espera, que no da su respuesta hasta que el humano ha procesado la suya — sigue siendo la columna vertebral del Learning Partner en `learnship`. Los checkpoints de aprendizaje integrados en el workflow no son una idea nueva. Son `agentic-learn` promovido de skill independiente a paso estructurado dentro del Phase Loop.
 
-**Episodio 3** amplió el problema. No era solo cómo aprendemos con IA. Era cómo trabajamos con IA. La ingeniería agéntica como sistema: contexto persistente, decisiones documentadas, ejecución estructurada, verificación real. `learnship` como la implementación concreta.
+**Episodio 3** amplió el problema. No era solo cómo aprendemos con IA. Era cómo trabajamos con IA. La ingeniería agéntica como sistema: contexto persistente, decisiones documentadas, ejecución estructurada, verificación real. `learnship` como la implementación concreta. El argumento que fundamentó ese episodio fue específico: LangChain saltando del puesto 30 al puesto 5 en popularidad midiendo la demanda de harnesses; Gartner reportando que el 40% de los proyectos de IA se cancelan por falta de estructura; el codebase interno de OpenAI alcanzando un millón de líneas como evidencia de que incluso los constructores del modelo necesitan harnesses para trabajar con él. Ese argumento necesitaba un proyecto real para tener peso. "How Physics Works" es ese proyecto.
 
-**Episodio 4** es la práctica. No la teoría del sistema. El uso del sistema. Cómo se ve en la realidad trabajar en un proyecto real con `learnship`, paso a paso, decisión por decisión.
+**Episodio 4** es la práctica. No la teoría del sistema. El uso del sistema. Cómo se ve en la realidad trabajar en un proyecto real con `learnship`, paso a paso, decisión por decisión. Y hay algo más: este artículo y el proyecto que describe viven en el mismo repositorio de git. La carpeta `Episodio4/` contiene el sitio. La carpeta raíz contiene este artículo. El lector está, literalmente, dentro del proyecto mientras lee sobre él.
 
 ![El arco de los cuatro episodios: de la teoría a la práctica](assets/four_episodes_arc.png)
 
 El argumento que atraviesa los cuatro no es "usa más IA" ni "ten cuidado con la IA". Es algo más preciso: **la IA amplifica lo que traes. Si traes criterio, estructura y comprensión, la amplifica. Si no traes nada, no amplifica nada.**
+
+El Episodio 1 dijo que el scar tissue no puede descargarse. El Episodio 4 es sobre el sistema que lo acumula deliberadamente, fase a fase, en un formato que sobrevive el reset del contexto.
 
 `learnship` es el sistema que te ayuda a traer las tres cosas de forma consistente.
 
