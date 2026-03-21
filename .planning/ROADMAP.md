@@ -66,12 +66,13 @@
 ## Phase 6.1: Episodio4 Article — Learnship Behind the Scenes *(INSERTED)*
 
 **Goal:** Write a long-form Spanish article documenting how Learnship is being used to build "How Physics Works" — covering the discuss → plan → execute → verify cycle, phase progress, and what agentic collaboration looks like in practice.
-**Status:** [ ] Not started
+**Status:** ✓ Complete — 2026-03-21
 **Depends on:** Phase 06
 **Note:** Inserted between Phase 06 and Phase 07. Content lives in the roadtoreality repo as a Markdown article.
 
 ### Plans
-*Not yet planned — run `plan-phase 6.1`*
+- 06.1-01: Expand "El proyecto de ejemplo" — complete
+- 06.1-02: Strengthen "La conexión" section — complete
 
 ---
 

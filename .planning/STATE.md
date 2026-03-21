@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 6.1 — Episodio4 Article — Learnship Behind the Scenes
-Plan: 06.1-02 complete
-Status: plan 06.1-02 executed — La conexión section expanded to ~350 words with Ep2/Ep3 explicit callbacks
-Last activity: 2026-03-21 — Plan 06.1-02 executed: enhanced La conexión section with agentic-learn callback, harness argument data points, same-repo meta note, and Ep1→Ep4 closing thesis
+Phase: 07 — Open Graph Images
+Plan: —
+Status: Phase 6.1 ✓ complete (25/25 must-haves verified) — ready for discuss-phase 07
+Last activity: 2026-03-21 — Phase 6.1 fully executed and verified
 
 ## Completed Phases
 
