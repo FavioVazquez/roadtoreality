@@ -63,6 +63,18 @@
 
 ---
 
+## Phase 6.1: Episodio4 Article — Learnship Behind the Scenes *(INSERTED)*
+
+**Goal:** Write a long-form Spanish article documenting how Learnship is being used to build "How Physics Works" — covering the discuss → plan → execute → verify cycle, phase progress, and what agentic collaboration looks like in practice.
+**Status:** [ ] Not started
+**Depends on:** Phase 06
+**Note:** Inserted between Phase 06 and Phase 07. Content lives in the roadtoreality repo as a Markdown article.
+
+### Plans
+*Not yet planned — run `plan-phase 6.1`*
+
+---
+
 ## Phase 07 — Open Graph Images
 
 **Goal:** Every stop has a social sharing image and complete OG meta tags.
@@ -77,20 +89,6 @@
 **Plan 07-02: OG Meta Tags**
 - Add `og:title`, `og:description`, `og:image`, `og:type`, `twitter:card` meta tags to every stop's `index.html`
 - Test: Twitter Card Validator + LinkedIn Post Inspector on 3–5 stops
-
----
-
-## Phase 7.1: Episodio4 Article — Learnship Behind the Scenes *(INSERTED)*
-
-**Goal:** Write a long-form Spanish article documenting how Learnship is being used to build "How Physics Works" — covering the discuss → plan → execute → verify cycle, phase progress, and what agentic collaboration looks like in practice.
-**Status:** [ ] Not started
-**Depends on:** Phase 07
-**Note:** Inserted between Phase 07 and Phase 08. Content lives in the roadtoreality repo as a Markdown article.
-
-### Plans
-*Not yet planned — run `plan-phase 7.1`*
-
----
 
 ## Phase 08 — Era Gap Fills (Stops 002, 014)
 

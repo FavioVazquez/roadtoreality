@@ -83,7 +83,7 @@ All site code lives in: `Episodio4/`
 
 ## Roadmap Evolution
 
-- Phase 7.1 inserted after Phase 07: Spanish article documenting Learnship workflow used to build How Physics Works (discuss → plan → execute → verify cycle, current status, agentic collaboration behind the scenes)
+- Phase 6.1 inserted after Phase 06: Spanish article documenting Learnship workflow used to build How Physics Works (discuss → plan → execute → verify cycle, current status, agentic collaboration behind the scenes)
 
 ---
 
