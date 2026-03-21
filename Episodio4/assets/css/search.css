@@ -1,0 +1,206 @@
+/* ============================================================
+   search.css — Cmd/Ctrl+K search modal
+   How Physics Works — v2.0
+   ============================================================ */
+
+/* ── Overlay ─────────────────────────────────────────────── */
+.search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: oklch(0 0 0 / 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+#search-modal[open] + .search-overlay,
+.search-overlay.is-open {
+  display: flex;
+}
+
+/* ── Modal panel ─────────────────────────────────────────── */
+.search-modal {
+  display: none;
+  position: fixed;
+  top: 15vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 901;
+  width: min(600px, calc(100vw - 2rem));
+  max-height: 60vh;
+  background: var(--color-deep);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  flex-direction: column;
+  animation: search-in 0.15s ease;
+}
+
+#search-modal[open] {
+  display: flex;
+}
+
+@keyframes search-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1); }
+}
+
+/* ── Search input row ─────────────────────────────────────── */
+.search-modal__input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid oklch(1 0 0 / 0.08);
+  flex-shrink: 0;
+}
+
+.search-modal__icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.search-modal__input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+}
+
+.search-modal__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-modal__close {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  background: var(--color-surface);
+  border: 1px solid oklch(1 0 0 / 0.1);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Results list ─────────────────────────────────────────── */
+.search-modal__results {
+  overflow-y: auto;
+  flex: 1;
+  padding: var(--space-2) 0;
+}
+
+.search-modal__empty {
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.search-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  border-left: 2px solid transparent;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.search-result:hover,
+.search-result.is-focused {
+  background: var(--era-result-bg, oklch(1 0 0 / 0.04));
+  border-left-color: var(--era-result-color, var(--color-gold));
+}
+
+.search-result[data-era="ancient"]        {
+  --era-result-color: var(--era-ancient-color);
+  --era-result-bg: var(--era-ancient-bg);
+}
+.search-result[data-era="revolution"]     {
+  --era-result-color: var(--era-revolution-color);
+  --era-result-bg: var(--era-revolution-bg);
+}
+.search-result[data-era="classical"]      {
+  --era-result-color: var(--era-classical-color);
+  --era-result-bg: var(--era-classical-bg);
+}
+.search-result[data-era="modern"]         {
+  --era-result-color: var(--era-modern-color);
+  --era-result-bg: var(--era-modern-bg);
+}
+.search-result[data-era="contemporary"]   {
+  --era-result-color: var(--era-contemporary-color);
+  --era-result-bg: var(--era-contemporary-bg);
+}
+
+.search-result__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--era-result-color, var(--color-gold));
+  flex-shrink: 0;
+  width: 2.5ch;
+}
+
+.search-result__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-result__title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result__meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.search-result__era-badge {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--era-result-color, var(--color-gold));
+  flex-shrink: 0;
+}
+
+/* ── Footer hint ─────────────────────────────────────────── */
+.search-modal__footer {
+  padding: var(--space-2) var(--space-5);
+  border-top: 1px solid oklch(1 0 0 / 0.06);
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.search-modal__hint kbd {
+  background: var(--color-surface);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-family: inherit;
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .search-modal { animation: none; }
+}
