@@ -26,7 +26,6 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
-      mix-blend-mode: screen;
     }
 
     .page-content {
@@ -254,21 +253,21 @@
     /* 4-7 nebula blobs scattered across the canvas */
     nebulae = [];
     var nebulaColors = [
-      [80, 60, 160],   /* blue-purple */
-      [20, 80, 140],   /* deep blue */
-      [100, 30, 100],  /* magenta */
-      [10, 60, 80],    /* teal */
-      [60, 20, 80]     /* violet */
+      [120, 60, 220],  /* vivid purple */
+      [30, 100, 200],  /* deep blue */
+      [180, 40, 120],  /* magenta */
+      [20, 130, 140],  /* teal */
+      [80, 30, 160]    /* violet */
     ];
-    var count = 4 + Math.floor(Math.random() * 4);
+    var count = 5;
     for (var n = 0; n < count; n++) {
       var col = nebulaColors[n % nebulaColors.length];
       nebulae.push({
         x: rand(W * 0.05, W * 0.95),
         y: rand(H * 0.05, H * 0.95),
-        rx: rand(W * 0.10, W * 0.28),
-        ry: rand(H * 0.08, H * 0.22),
-        a: rand(0.06, 0.15),
+        rx: rand(W * 0.12, W * 0.30),
+        ry: rand(H * 0.10, H * 0.25),
+        a: rand(0.12, 0.22),
         r: col[0], g: col[1], b: col[2]
       });
     }
@@ -390,8 +389,13 @@
     }
   }
 
+  function fillVoid() {
+    ctx.fillStyle = '#09090f';
+    ctx.fillRect(0, 0, W, H);
+  }
+
   function drawFrame() {
-    ctx.clearRect(0, 0, W, H);
+    fillVoid();
     drawNebulae();
     drawMilkyWay();
     drawStars(true);
@@ -401,7 +405,7 @@
   }
 
   function drawStatic() {
-    ctx.clearRect(0, 0, W, H);
+    fillVoid();
     drawNebulae();
     drawMilkyWay();
     drawStars(false);
