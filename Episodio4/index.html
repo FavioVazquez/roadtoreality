@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/search.css">
 
   <style>
     /* ── Landing-page-specific overrides ── */
@@ -127,8 +128,19 @@
       </a>
       <span class="site-header__tagline">An Interactive History</span>
       <span class="visit-counter" id="header-visit-counter" aria-live="polite"></span>
+      <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+        <span class="search-trigger__icon">⌕</span>
+        <span>Search</span>
+        <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+      </button>
     </div>
   </header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
 
   <!-- Hero -->
   <section class="hero container" aria-labelledby="hero-title">
@@ -204,8 +216,29 @@
 
 </div><!-- /.page-content -->
 
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">⌕</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+
 <script src="assets/js/progress.js"></script>
 <script src="assets/js/nav.js"></script>
+<script>window.STOPS_DATA_PATH = 'assets/data/stops.json';</script>
+<script src="assets/js/vendor/fuse.min.js"></script>
+<script src="assets/js/search.js"></script>
 
 <script>
 (function () {

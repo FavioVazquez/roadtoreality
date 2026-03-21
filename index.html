@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Road to Reality — a research series by Favio Vázquez exploring AI, learning, and the nature of reality. Each episode is a deep investigation that produces essays, data, and working software.">
+  <title>Road to Reality — Favio Vázquez</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --void:      oklch(0.07 0 0);
+      --surface:   oklch(0.11 0 0);
+      --border:    oklch(1 0 0 / 0.08);
+      --gold:      oklch(0.78 0.12 75);
+      --text-1:    oklch(0.92 0 0);
+      --text-2:    oklch(0.65 0 0);
+      --text-3:    oklch(0.45 0 0);
+      --radius:    8px;
+      --font-sans: 'Georgia', 'Times New Roman', serif;
+      --font-mono: 'Courier New', monospace;
+    }
+
+    html { background: var(--void); color: var(--text-1); font-family: var(--font-sans); }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(760px, 100% - 3rem);
+      margin-inline: auto;
+    }
+
+    /* ── Header ─────────────────────────────── */
+    .site-header {
+      padding-block: 3.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-header__label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 0.75rem;
+    }
+
+    .site-header__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text-1);
+    }
+
+    .site-header__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .site-header__sub {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 52ch;
+    }
+
+    .site-header__author {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .site-header__author a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+
+    .site-header__author a:hover { color: var(--text-2); }
+
+    .site-header__author-sep {
+      width: 24px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Episode list ───────────────────────── */
+    .episodes {
+      padding-block: 3rem;
+      flex: 1;
+    }
+
+    .episodes__heading {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 2rem;
+    }
+
+    .episode-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .episode {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: start;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .episode + .episode {
+      border-top: 1px solid var(--border);
+    }
+
+    .episode--live {
+      background: oklch(0.12 0.01 75);
+    }
+
+    .episode--live:hover {
+      background: oklch(0.14 0.015 75);
+    }
+
+    .episode--stub {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .episode__num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      padding-top: 0.2rem;
+      letter-spacing: 0.06em;
+    }
+
+    .episode--live .episode__num {
+      color: var(--gold);
+    }
+
+    .episode__body {}
+
+    .episode__title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-1);
+      margin-bottom: 0.35rem;
+    }
+
+    .episode__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .episode__desc {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      max-width: 58ch;
+    }
+
+    .episode__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .episode__tag {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      background: var(--border);
+      border-radius: 999px;
+      padding: 2px 8px;
+    }
+
+    .episode--live .episode__tag {
+      color: oklch(0.75 0.08 75);
+      background: oklch(1 0 0 / 0.06);
+    }
+
+    .episode__status {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding-top: 0.25rem;
+    }
+
+    .episode__status--live {
+      color: var(--gold);
+    }
+
+    .episode__status--soon {
+      color: var(--text-3);
+    }
+
+    .episode__link {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ── Footer ─────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding-block: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .site-footer__copy {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+    }
+
+    .site-footer__links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-footer__links a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+
+    .site-footer__links a:hover { color: var(--text-2); }
+
+    @media (max-width: 540px) {
+      .episode {
+        grid-template-columns: 2.5rem 1fr;
+      }
+      .episode__status { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="site-header__label">A research series</div>
+      <h1 class="site-header__title">Road to <em>Reality</em></h1>
+      <p class="site-header__sub">
+        A series exploring AI, learning, and the nature of reality.
+        Each episode is a deep investigation — long-form writing, data, and working software.
+      </p>
+      <div class="site-header__author">
+        <a href="https://github.com/FavioVazquez" target="_blank" rel="noopener">Favio Vázquez</a>
+        <div class="site-header__author-sep"></div>
+        <a href="https://github.com/FavioVazquez/roadtoreality" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="episodes">
+    <div class="container">
+      <div class="episodes__heading">Episodes</div>
+
+      <div class="episode-list">
+
+        <!-- Episode 1 -->
+        <article class="episode episode--stub">
+          <div class="episode__num">01</div>
+          <div class="episode__body">
+            <h2 class="episode__title">The Real State of AI Adoption</h2>
+            <p class="episode__desc">
+              87.8% of humanity has never used AI meaningfully. Who actually uses it, how, and what
+              the distribution reveals about the gap between narrative and reality.
+            </p>
+            <div class="episode__tags">
+              <span class="episode__tag">Essay</span>
+              <span class="episode__tag">Data</span>
+              <span class="episode__tag">Research</span>
+            </div>
+          </div>
+          <div class="episode__status episode__status--soon">Essay</div>
+        </article>
+
+        <!-- Episode 2 -->
+        <article class="episode episode--stub">
+          <div class="episode__num">02</div>
+          <div class="episode__body">
+            <h2 class="episode__title">Learning in the Age of Instant Output</h2>
+            <p class="episode__desc">
+              When AI produces output instantly, the bottleneck shifts to learning. This episode
+              produced <em>agentic-learn</em> — an open-source tool for active learning inside your IDE.
+            </p>
+            <div class="episode__tags">
+              <span class="episode__tag">Essay</span>
+              <span class="episode__tag">Open Source</span>
+            </div>
+          </div>
+          <div class="episode__status episode__status--soon">Essay + Tool</div>
+        </article>
+
+        <!-- Episode 3 -->
+        <article class="episode episode--stub">
+          <div class="episode__num">03</div>
+          <div class="episode__body">
+            <h2 class="episode__title">Agentic Engineering: The Creative Generalist</h2>
+            <p class="episode__desc">
+              How to build at scale with AI without losing coherence or understanding. Martec's Law,
+              the collapse of specialist/generalist boundaries, and what it means to direct machines
+              that can handle depth.
+            </p>
+            <div class="episode__tags">
+              <span class="episode__tag">Essay</span>
+              <span class="episode__tag">Methodology</span>
+            </div>
+          </div>
+          <div class="episode__status episode__status--soon">Essay</div>
+        </article>
+
+        <!-- Episode 4 — LIVE -->
+        <article class="episode episode--live">
+          <a class="episode__link" href="Episodio4/index.html" aria-label="Open Episode 4: How Physics Works"></a>
+          <div class="episode__num">04</div>
+          <div class="episode__body">
+            <h2 class="episode__title">How <em>Physics</em> Works</h2>
+            <p class="episode__desc">
+              50 interactive stops through 2,500 years of physics history — from Thales to
+              gravitational waves. Every stop pairs a narrative with a playable Canvas simulation.
+              Built using the Learnship agentic workflow developed across Episodes 2 and 3.
+            </p>
+            <div class="episode__tags">
+              <span class="episode__tag">Interactive Site</span>
+              <span class="episode__tag">50 Simulations</span>
+              <span class="episode__tag">Physics</span>
+              <span class="episode__tag">v2.0 in progress</span>
+            </div>
+          </div>
+          <div class="episode__status episode__status--live">Live →</div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="display:contents;">
+      <span class="site-footer__copy">© Favio Vázquez</span>
+      <nav class="site-footer__links">
+        <a href="https://github.com/FavioVazquez/roadtoreality" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/FavioVazquez" target="_blank" rel="noopener">Author</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

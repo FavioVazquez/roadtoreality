@@ -2,9 +2,11 @@
 
 ## Current Position
 
-Milestone: v1.0 — First Light ✓ SHIPPED
-Status: milestone complete — ready for v2.0 planning
-Last activity: 2026-03-21 — UAT 8/8 passed, archived, tagged v1.0
+Milestone: v2.0 — Full Spectrum
+Phase: 07 — Open Graph Images
+Plan: —
+Status: Phase 06 ✓ complete (35/35 must-haves verified) — ready for discuss-phase 07
+Last activity: 2026-03-21 — Phase 06 fully executed and verified
 
 ## Completed Phases
 
@@ -62,6 +64,14 @@ All site code lives in: `Episodio4/`
 - Galaxy background: Perlin fBm noise procedural rendering (DEC-010)
 - All oklch color tokens: hue 285 → 0 (neutral black, no blue cast)
 - GitHub Pages: deploy from /Episodio4 subfolder (confirmed)
+
+### Phase 06 Plans Progress
+- 06-01: CSS & Global UX Polish — complete
+- 06-02: KaTeX Integration — complete
+- 06-03: Fuse.js Search — complete
+- 06-04: Stub Pages + stop-shell.js Updates — complete
+- 06-05-FIX: Teaser Animation Quality (027 Planck + 040 Fission) — complete
+- 06-06-FIX: Search Discoverability (search trigger button, all 51 pages) — complete
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages

@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -26,8 +28,19 @@
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
     <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
     <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
   </div>
 </header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
 <main class="stop-page container" data-era="ancient">
   <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
   <header class="stop-header">
@@ -86,6 +99,7 @@
       <li>What matters is density (mass per volume), not mass alone. A hollow steel ship floats; a solid steel ball sinks.</li>
       <li>Archimedes' insight was the first quantitative principle in fluid mechanics — 2,000 years before Newton.</li>
     </ul>
+    <p>$$F_b = \rho_{\text{fluid}} \cdot V_{\text{displaced}} \cdot g$$</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
@@ -94,8 +108,31 @@
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
 <footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
 <script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
 </body>
 </html>

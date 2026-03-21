@@ -55,11 +55,11 @@
   function _cardHtml(stop) {
     var visited = window.PhysicsProgress && window.PhysicsProgress.isVisited(stop.id);
     var isStub = stop.isStub;
-    var href = isStub ? '#' : 'stops/' + stop.id + '/index.html';
-    var tag = isStub ? 'div' : 'a';
-    var attrs = isStub
-      ? 'class="stop-card stop-card--stub" data-era="' + stop.era + '" aria-hidden="true"'
-      : 'class="stop-card' + (visited ? ' is-visited' : '') + '" data-era="' + stop.era + '" href="' + href + '"';
+    var href = 'stops/' + stop.id + '/index.html';
+    var tag = 'a';
+    var stubClass = isStub ? ' stop-card--stub' : '';
+    var visitedClass = (!isStub && visited) ? ' is-visited' : '';
+    var attrs = 'class="stop-card' + stubClass + visitedClass + '" data-era="' + stop.era + '" href="' + href + '"';
 
     return '<' + tag + ' ' + attrs + '>' +
       '<div class="stop-card__visited-badge" aria-label="Visited"></div>' +

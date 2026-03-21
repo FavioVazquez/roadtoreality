@@ -3,7 +3,9 @@
 
 # Allow only what belongs in the repo
 !.gitignore
+!.nojekyll
 !README.md
+!index.html
 !.planning/
 !.planning/**
 !Episodio4/
