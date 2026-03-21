@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 1 — Foundation & UX Polish
+Phase: 06 — Foundation & UX Polish (v2.0 phases run 06–14; v1.0 was 01–05)
 Plan: —
-Status: Phase 1 context captured — ready for plan-phase 1
-Last activity: 2026-03-21 — Phase 1 context discussed and written (06-v2-foundation-ux-polish)
+Status: Phase 06 context captured — ready for plan-phase 06
+Last activity: 2026-03-21 — Phase 06 context discussed and written (06-v2-foundation-ux-polish)
 
 ## Completed Phases
 

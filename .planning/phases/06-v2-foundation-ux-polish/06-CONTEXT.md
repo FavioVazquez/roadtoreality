@@ -1,4 +1,4 @@
-# Phase 1 (v2.0): Foundation & UX Polish — Context
+# Phase 06 (v2.0): Foundation & UX Polish — Context
 
 **Gathered:** 2026-03-21
 **Status:** Ready for planning
