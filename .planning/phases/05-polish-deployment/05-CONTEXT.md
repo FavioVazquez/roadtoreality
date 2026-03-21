@@ -53,11 +53,23 @@ Preferred: option C for v1.0 (simplicity > micro-optimization). Revisit for v2.0
 - How to deploy to GitHub Pages
 - Tech stack summary
 
-### Visual polish (user-requested addition)
-- Animated galaxy background on landing page: 3 parallax star layers, colored nebulae,
-  Milky Way band, shooting stars. Uses mix-blend-mode:screen over dark html background.
+### Visual polish (user-requested addition) — FINAL
+- Galaxy background completely rewritten using noise-based procedural rendering.
+- Technique: offscreen canvas rendered at 1/4 resolution using Perlin fBm noise.
+  Each pixel evaluated: nebula envelope check, then domain-warped fBm noise value
+  determines color and brightness. Below threshold = black (dark voids). Above = filament.
+- Three named nebulae: purple/blue (upper-left), teal/cyan (right), magenta/pink (lower-center).
+- Milky Way: diagonal band with dual-noise — large-scale density variation (scale/180)
+  + fine dust lane mask (scale/55). Warm golden core, cooler outer arms. Base=0 so
+  areas outside band stay pitch black.
+- Stars: count scales with viewport area (~W*H/2200), 8% bright foreground stars
+  with 4-point diffraction spikes. Fast twinkling da=0.007-0.020 per frame.
+- Shooting stars: gradient tail + radial glow head, every 5-14s.
+- Dark radial vignette (::before on .page-content) protects hero text legibility.
+- All CSS color tokens: oklch hue 285 (blue) replaced with 0 (neutral black) across
+  base.css, simulation.css, site-header, era-tabs-sticky.
 - Implementation: inline JS in index.html, no external dependencies.
-- prefers-reduced-motion: draws static frame, no RAF loop.
+- prefers-reduced-motion: draws static frame (buildBackground + drawStars once), no RAF.
 
 ### GitHub Pages deployment
 - Decision confirmed: deploy from /Episodio4 subfolder via GitHub Pages custom directory.

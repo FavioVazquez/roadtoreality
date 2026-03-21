@@ -176,3 +176,24 @@
 - Every stop page must have `data-era` on its `.stop-page.container` element
 - `nav.js` must set `data-era` on each rendered `.stop-card` element
 - stop-shell.js reads `config.era` and sets `data-era` on the header — not yet implemented (Phase 5 polish item)
+
+---
+
+## DEC-010 · 2026-03-21 · Noise-based procedural galaxy background
+
+**Status:** Active
+
+**Decision:** Landing page galaxy background uses Perlin fBm noise rendered pixel-by-pixel into an offscreen canvas at 1/4 resolution, then scaled up via `drawImage`. Nebulae are procedural, not composed of stacked radial gradient ellipses.
+
+**Context:** User requested a realistic galaxy background. Initial approach used stacked radial gradients — produced smooth colored blobs with no internal structure. Real nebulae have filamentary structure with dark voids punched through them. This requires per-pixel evaluation of noise functions, not gradient primitives.
+
+**Alternatives considered:**
+- Stacked radial gradient ellipses (8–20 per nebula) — rejected: still smooth blobs, no filament texture
+- WebGL/shader — rejected: overkill for a static educational site, adds external dependency risk
+- Pre-rendered PNG background image — rejected: large file size, not generative, can't tweak parameters
+
+**Consequences:**
+- `buildBackground()` runs once on page load (~120ms at 1/4 res) — acceptable cold-start cost
+- All CSS color tokens changed from `oklch(... 285)` (blue-tinted) to `oklch(... 0)` (neutral) to eliminate background blue cast
+- Dark radial vignette via `::before` on `.page-content` protects hero text legibility against bright nebula regions
+- Noise parameters (threshold, intensity multiplier, NS scale) are the primary tuning levers for visual brightness

@@ -96,7 +96,7 @@
 .sim-container {
   position: relative;
   width: 100%;
-  background: oklch(0.09 0.025 285);
+  background: oklch(0.09 0 0);
   min-height: 360px;
   display: flex;
   align-items: center;
@@ -350,7 +350,7 @@
 .stop-bridge {
   margin-top: var(--space-8);
   padding: var(--space-5) var(--space-6);
-  background: oklch(0.09 0.025 285);
+  background: oklch(0.09 0 0);
   border-radius: var(--radius-lg);
   border: 1px solid oklch(1 0 0 / 0.06);
   font-style: italic;

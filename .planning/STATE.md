@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 5 — Polish & Deployment
-Plan: 05-01 — Accessibility, README, performance
-Status: Planning
-Last activity: 2026-03-20 — Phases 1–4 complete; full learnship structure retroactively documented
+Plan: 05-01 — Accessibility, README, performance, galaxy background
+Status: Plan 05-01 complete, awaiting GitHub Pages deployment
+Last activity: 2026-03-21 — Plan 05-01 fully executed and user-approved
 
 ## Completed Phases
 
@@ -60,6 +60,9 @@ All site code lives in: `Episodio4/`
 - Dark luxury aesthetic (oklch color system, Cormorant Garamond display font)
 - p5.js instance mode for most simulations; vanilla Canvas for simpler ones
 - Matter.js for rigid-body sims; vanilla math (RK4) for orbital/wave physics
+- Galaxy background: Perlin fBm noise procedural rendering (DEC-010)
+- All oklch color tokens: hue 285 → 0 (neutral black, no blue cast)
+- GitHub Pages: deploy from /Episodio4 subfolder (confirmed)
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages

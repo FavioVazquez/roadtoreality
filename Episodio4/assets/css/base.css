@@ -6,10 +6,10 @@
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
   /* Background scale */
-  --color-void:    oklch(0.07 0.02 285);
-  --color-deep:    oklch(0.11 0.025 285);
-  --color-surface: oklch(0.15 0.03 285);
-  --color-raised:  oklch(0.19 0.03 285);
+  --color-void:    oklch(0.07 0 0);
+  --color-deep:    oklch(0.11 0 0);
+  --color-surface: oklch(0.15 0 0);
+  --color-raised:  oklch(0.19 0 0);
 
   /* Text */
   --color-text-primary:   oklch(0.93 0.01 90);
@@ -204,7 +204,7 @@ code, pre {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: oklch(0.07 0.02 285 / 0.85);
+  background: oklch(0.07 0 0 / 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid oklch(1 0 0 / 0.06);
