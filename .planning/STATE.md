@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 07 — Open Graph Images
+Phase: 6.1 — Episodio4 Article — Learnship Behind the Scenes
 Plan: —
-Status: Phase 06 ✓ complete (35/35 must-haves verified) — ready for discuss-phase 07
-Last activity: 2026-03-21 — Phase 06 fully executed and verified
+Status: discuss-phase 6.1 complete — context gathered, ready for plan-phase 6.1
+Last activity: 2026-03-21 — Phase 6.1 context session completed
 
 ## Completed Phases
 
