@@ -1,34 +1,17 @@
-# Environment & secrets
+# Ignore everything by default
+*
+
+# Allow only what belongs in the repo
+!.gitignore
+!README.md
+!.planning/
+!.planning/**
+!Episodio4/
+!Episodio4/**
+
+# Always exclude secrets and caches even inside allowed folders
 .env
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Windsurf internal
-.windsurf/
-
-# Other episodes (not ready for repo)
-Episodio1/
-Episodio2/
-Episodio3/
-DanWritting/
-Knowledge/
-learnshipexamples/
-podcasts/
-skills-lock.json
-
-# Root-level scripts (personal tooling)
-fetch_and_plot.py
-generate_*.py
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.DS_Store
