@@ -220,20 +220,25 @@
 }
 
 .stop-card--stub {
-  opacity: 0.5;
-  cursor: default;
-  pointer-events: none;
+  /* Stub cards are fully interactive — opacity and pointer-events removed */
+  cursor: pointer;
 }
 
 .stop-card--stub::after {
-  content: 'Coming soon';
+  content: 'Coming Soon';
   position: absolute;
-  bottom: var(--space-3);
+  top: var(--space-3);
   right: var(--space-3);
-  font-size: var(--text-xs);
+  font-size: 0.65rem;
   color: var(--color-text-muted);
   font-family: var(--font-mono);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: oklch(1 0 0 / 0.06);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  border-radius: 999px;
+  padding: 2px 8px;
+  line-height: 1.6;
 }
 
 /* ── Breadcrumb ─────────────────────────────────────────────── */
