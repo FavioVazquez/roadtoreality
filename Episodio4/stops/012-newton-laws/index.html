@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Apply forces to objects and watch Newton's three laws play out: inertia, F=ma, and action-reaction.">
+  <title>Newton's Laws of Motion — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "012-newton-laws",
+  "order": 12,
+  "era": "revolution",
+  "title": "Newton's Laws of Motion",
+  "prev": "011-kepler-laws",
+  "prevTitle": "Kepler's Laws of Planetary Motion",
+  "next": "013-newton-gravity",
+  "nextTitle": "Newton's Universal Gravitation"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+  </div>
+</header>
+<main class="stop-page container" data-era="revolution">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Scientific Revolution · 1687</div>
+    <h1 class="stop-header__title">Newton's Laws of Motion</h1>
+    <p class="stop-header__subtitle">F = ma. Three laws that governed physics for 200 years.</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1687</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Isaac Newton</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      In 1687, Newton published the <em>Principia Mathematica</em> — arguably the most important scientific book ever written. In it, he laid out three laws that describe how every object in the universe responds to forces.
+    </p>
+    <p>
+      Push the block below. Watch how force, mass, and acceleration relate. Notice that when you stop pushing, the block doesn't stop — it keeps moving (First Law). Heavier blocks accelerate less for the same force (Second Law). And the block pushes back against the wall with equal force (Third Law).
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:380px;" aria-label="Interactive: Newton's three laws of motion">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="force-slider">
+          Applied force
+          <span class="sim-control__value" id="force-val">10 N</span>
+        </label>
+        <input type="range" id="force-slider" min="0" max="50" step="5" value="10" aria-label="Applied force in Newtons">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="mass-slider-n">
+          Mass
+          <span class="sim-control__value" id="mass-val-n">5 kg</span>
+        </label>
+        <input type="range" id="mass-slider-n" min="1" max="20" step="1" value="5" aria-label="Block mass in kg">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="friction-slider">
+          Surface friction
+          <span class="sim-control__value" id="friction-val">Low</span>
+        </label>
+        <input type="range" id="friction-slider" min="0" max="3" step="1" value="1" aria-label="Surface friction level">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Apply Force</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Set force and mass, then apply. Watch F = ma in action.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Three Laws</h3>
+    <p><strong>First Law (Inertia):</strong> An object at rest stays at rest; an object in motion stays in motion, unless acted on by an external force. Before Newton, people thought things naturally "ran down." Newton said they keep going forever unless something stops them.</p>
+    <p><strong>Second Law (F = ma):</strong> The acceleration of an object is proportional to the net force applied and inversely proportional to its mass. Double the force, double the acceleration. Double the mass, halve the acceleration.</p>
+    <p><strong>Third Law (Action-Reaction):</strong> Every force has an equal and opposite reaction. When you push a wall, the wall pushes back with the same force. When a rocket expels gas backward, the gas pushes the rocket forward.</p>
+    <p>These three laws — combined with his law of gravitation — gave physics a unified mathematical framework that explained everything from falling apples to planetary orbits.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Objects don't need a force to keep moving — they need a force to <em>change</em> their motion (1st Law).</li>
+      <li>F = ma: acceleration is proportional to force and inversely proportional to mass (2nd Law).</li>
+      <li>Forces always come in equal and opposite pairs — you can never push without being pushed back (3rd Law).</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Newton's laws describe how forces affect motion. But what produces the force that holds the Moon in orbit and pulls apples from trees? That's his other great insight — universal gravitation.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+</body>
+</html>

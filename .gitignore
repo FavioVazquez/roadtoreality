@@ -1,0 +1,34 @@
+# Environment & secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Windsurf internal
+.windsurf/
+
+# Other episodes (not ready for repo)
+Episodio1/
+Episodio2/
+Episodio3/
+DanWritting/
+Knowledge/
+learnshipexamples/
+podcasts/
+skills-lock.json
+
+# Root-level scripts (personal tooling)
+fetch_and_plot.py
+generate_*.py

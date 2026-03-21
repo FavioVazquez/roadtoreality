@@ -1,0 +1,68 @@
+# Project State — How Physics Works
+
+## Current Position
+
+Phase: 5 — Polish & Deployment
+Plan: 05-01 — Accessibility, README, performance
+Status: Planning
+Last activity: 2026-03-20 — Phases 1–4 complete; full learnship structure retroactively documented
+
+## Completed Phases
+
+### Phase 1 — Foundation & Shell ✓
+- `Episodio4/` full directory structure created
+- `assets/css/base.css`, `components.css`, `simulation.css` written (dark luxury palette, oklch)
+- Cormorant Garamond + DM Sans self-hosted as WOFF2 in `assets/fonts/`
+- `assets/js/nav.js`, `stop-shell.js`, `progress.js` written
+- Vendor libs: `p5.min.js` (1.9.4), `matter.min.js` (0.19.0) in `assets/js/vendor/`
+- `index.html` landing page with starfield, era tabs, hero section
+
+### Phase 2 — Stops Data & Navigation ✓
+- `assets/data/stops.json` — all 50 stops with full metadata
+- 50 stop directories created under `stops/`
+- 12 stops with full HTML + interactive sim.js
+- 38 stops with full HTML shell + placeholder sim
+- All prev/next navigation chains verified
+- `.nojekyll` added for GitHub Pages
+
+## Full Simulations Built (12)
+- 001 Thales: supernatural vs natural explanation two-panel comparison
+- 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
+- 004 Aristotle: two balls dropped, adjustable mass + air resistance
+- 005 Archimedes: objects dropped into water, buoyancy force arrows
+- 006 Eratosthenes: two-stick Earth measurement with circumference calc
+- 007 Ptolemy: geocentric model with epicycles + retrograde trails
+- 008 Copernicus: toggle heliocentric/geocentric view, orbital trails
+- 009 Galileo inclined plane: ball rolls, d=½at² graph, mass has no effect
+- 010 Galileo pendulum: RK4 physics, mass/length/angle sliders, period readout
+- 011 Kepler: RK4 orbital mechanics, equal-areas triangles, adjustable eccentricity
+- 012 Newton laws: F=ma block, friction, velocity graph, wall reaction
+- 013 Newton gravity: Newton's cannon, projectile→orbit RK4, escape velocity
+
+## Milestone
+
+**v1.0 — First Light**
+Goal: Ship a working static site with the shared shell, landing page, and ~10 fully polished interactive stops covering Eras 1–2 (Ancient → Scientific Revolution), deployable to GitHub Pages.
+
+## Output Location
+
+All site code lives in: `Episodio4/`
+
+## Accumulated Context
+
+### Key Decisions
+- Site code and all generated artifacts live in `Episodio4/` (not project root)
+- Static site, no build pipeline — pure HTML/CSS/JS + vendored libraries
+- Multi-page hub-and-spoke: `index.html` + `stops/{slug}/index.html` per stop
+- Simulations are self-contained IIFE modules exposing `window.SimAPI`
+- `IntersectionObserver` starts/stops simulation loops on viewport entry/exit
+- `stops.json` is the single source of truth for all stop metadata
+- Dark luxury aesthetic (oklch color system, Cormorant Garamond display font)
+- p5.js instance mode for most simulations; vanilla Canvas for simpler ones
+- Matter.js for rigid-body sims; vanilla math (RK4) for orbital/wave physics
+
+### Constraints
+- No backend, no build step required — must serve from file system or GitHub Pages
+- All vendor libraries self-hosted in `Episodio4/assets/js/vendor/`
+- Must work in Chrome, Firefox, Safari, Edge without plugins
+- Mobile-friendly — simulations responsive, touch events handled

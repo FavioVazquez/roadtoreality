@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Newton's cannon: fire a cannonball fast enough and it orbits instead of falling. The same force that drops an apple holds the Moon in orbit.">
+  <title>Newton's Universal Gravitation — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "013-newton-gravity",
+  "order": 13,
+  "era": "revolution",
+  "title": "Newton's Universal Gravitation",
+  "prev": "012-newton-laws",
+  "prevTitle": "Newton's Laws of Motion",
+  "next": "014-hooke-elasticity",
+  "nextTitle": "Hooke's Law and Elasticity"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+  </div>
+</header>
+<main class="stop-page container" data-era="revolution">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Scientific Revolution · 1687</div>
+    <h1 class="stop-header__title">Newton's Universal Gravitation</h1>
+    <p class="stop-header__subtitle">The same force that drops an apple holds the Moon in orbit</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1687</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Isaac Newton</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Newton's great insight was that the force pulling an apple to the ground and the force keeping the Moon in orbit are the same force — gravity — just acting at different distances. This seems obvious now. In 1687 it was revolutionary: the heavens and the Earth obeyed identical laws.
+    </p>
+    <p>
+      He illustrated this with a thought experiment: imagine a cannon on top of a very tall mountain. Fire a cannonball horizontally. It falls and lands nearby. Fire faster — it lands farther. Fire fast enough, and the Earth curves away as fast as the ball falls. It never lands. It orbits.
+    </p>
+    <p>
+      Drag the speed slider below. Watch the cannonball's path change from a parabola to an orbit.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:420px;" aria-label="Interactive: Newton's cannon — from projectile to orbit">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:2">
+        <label class="sim-control__label" for="speed-slider-cannon">
+          Launch speed
+          <span class="sim-control__value" id="speed-val-cannon">5.0 km/s</span>
+        </label>
+        <input type="range" id="speed-slider-cannon" min="1" max="13" step="0.1" value="5" aria-label="Cannon launch speed in km/s">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="sim-speed-dial">
+          Sim speed
+          <span class="sim-control__value" id="sim-speed-val">1×</span>
+        </label>
+        <input type="range" id="sim-speed-dial" min="1" max="5" step="1" value="1" aria-label="Simulation speed multiplier">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Fire!</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Orbital speed for Earth is ~7.9 km/s. Try values above and below.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Inverse Square Law</h3>
+    <p>Newton showed that the gravitational force between two objects is F = GMm/r². Double the distance, the force drops to a quarter. This precise mathematical relationship explained all of Kepler's empirical laws from a single principle.</p>
+    <p>The "universal" in universal gravitation was the radical claim: the same formula applies everywhere in the universe, at all scales, between all masses. The Moon, Jupiter, distant stars — all governed by the same equation. This was a profound unification of earthly and celestial physics.</p>
+    <p>Escape velocity — the speed needed to permanently leave Earth's gravity — is about 11.2 km/s. Orbital speed is lower (7.9 km/s) because you don't need to escape, just balance falling with horizontal speed. Try both in the simulation.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Orbiting IS falling — just with enough sideways speed that the Earth curves away as fast as you fall.</li>
+      <li>F = GMm/r²: gravity follows an inverse square law — double the distance, quarter the force.</li>
+      <li>Newton unified terrestrial and celestial mechanics: the same law governs apples and planets.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Newton's mechanics reigned supreme for over 200 years. Physicists built on it to understand heat, electricity, magnetism, and thermodynamics. They thought physics was almost complete. Then things got strange.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+</body>
+</html>

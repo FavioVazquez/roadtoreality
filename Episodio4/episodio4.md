@@ -1,0 +1,500 @@
+# Episodio 4: learnship — Construye con Agentes Sin Perder el Hilo
+### The Road to Reality · Episodio 4
+
+---
+
+![Portada Episodio 4: learnship — Construye con Agentes Sin Perder el Hilo](assets/portada_episodio4.png)
+
+---
+
+En el episodio 3 hice una promesa. Describí la ingeniería agéntica como un sistema, no como un estilo de uso. Expliqué los cuatro pilares: arquitectura de contexto, especialización de agentes, memoria persistente, ejecución estructurada. Presenté `learnship` como mi implementación concreta de ese sistema. Y al final, en las últimas líneas, dije: la versión 1.5.3 está disponible ahora, se instala en 30 segundos.
+
+Muchos la instalaron. Muchos me escribieron. Y la pregunta más común no fue "¿cómo funciona?" sino algo más honesta: **"¿cómo empiezo?"**
+
+Este episodio es la respuesta. No la descripción del sistema. El uso del sistema.
+
+Vamos a construir un proyecto real, paso a paso, desde la primera línea de conversación hasta el código en producción, usando `learnship` como el andamiaje que lo sostiene todo. Verás exactamente qué escribir, qué esperar, qué decidir, y qué hace el agente mientras tú te concentras en las partes que genuinamente requieren tu criterio.
+
+Pero antes de llegar ahí, necesito explicar algo que el episodio 3 dejó sin resolver: por qué la mayoría de los proyectos con IA se rompen exactamente en el momento en que deberían estar funcionando.
+
+---
+
+## El muro del proyecto mediano
+
+Hay un patrón que todos los que han trabajado seriamente con IA en proyectos de código han experimentado, aunque no siempre lo nombren así.
+
+La sesión 1 es extraordinaria. El agente parece entender todo. El código aparece limpio, bien estructurado, con comentarios sensatos. Terminas la sesión con la sensación de que algo cambió, de que la productividad se multiplicó.
+
+La sesión 5 empieza a sentirse diferente. Tienes que re-explicar algunas cosas que ya discutiste. El agente genera código que funciona en aislamiento pero que ignora una convención que estableciste en la sesión 2. Corriges. Sigues.
+
+La sesión 10 es frustrante. El contexto de lo que construiste hasta ahora es demasiado grande para explicarlo de nuevo. Las decisiones que tomaste están enterradas en conversaciones pasadas que nadie puede recuperar. El agente genera algo correcto en abstracto pero incorrecto para *tu* proyecto en *este* momento. Y empieza a aparecer lo que en el episodio 3 llamé **deuda de contexto**: el costo acumulado de empezar cada sesión desde cero.
+
+![La deuda de contexto: cómo se acumula sesión tras sesión](assets/context_debt.png)
+
+Este no es un problema del modelo. GPT-4o, Claude Sonnet, Gemini 2.5 Pro: todos tienen el mismo problema. La arquitectura de los modelos de lenguaje resetea el contexto cuando la sesión se cierra. Eso no va a cambiar con el próximo lanzamiento.
+
+Es un problema de harness. Y `learnship` es la respuesta a ese problema específico.
+
+---
+
+## Lo que aprendí construyendo con agentes en proyectos reales
+
+Antes de mostrarte cómo funciona `learnship`, quiero ser honesto sobre cómo llegué a construirlo.
+
+En el episodio 2, construí `agentic-learn`: un skill para que el agente esperara tu respuesta antes de darte la suya. La idea era preservar la fricción productiva que hace que el aprendizaje sea real. La respuesta fue buena. Muchas personas lo instalaron, lo usaron, encontraron valor en él.
+
+Pero algo me quedó pendiente, y lo dije explícitamente en el episodio 3: `agentic-learn` resolvía el aprendizaje. No resolvía el workflow. No resolvía la memoria persistente. No resolvía la documentación que se desactualiza. No resolvía el agente que no recuerda lo que decidiste la semana pasada.
+
+Así que me puse a construir `learnship`. Y mientras lo construía, usando `learnship` para construir `learnship`, entendí algo que no estaba en ninguno de los artículos que leí:
+
+**El problema más costoso no es que el agente no sepa. Es que el agente no sabe lo que no sabe.**
+
+Un agente sin contexto persistente no te dice "no sé la arquitectura de tu proyecto". Te genera código que asume una arquitectura plausible. Ese código compila. Pasa los tests unitarios básicos. Se ve bien. Y se rompe dos semanas después cuando otro agente, en otra sesión, genera código que asume una arquitectura diferente, igualmente plausible.
+
+El costo no es inmediato. Es diferido. Y eso lo hace especialmente peligroso.
+
+---
+
+## La investigación que cambió cómo pienso sobre harnesses
+
+Antes de entrar en cómo usar `learnship`, quiero mostrarte por qué el harness importa más que el modelo, con datos concretos.
+
+En la investigación que respaldó las decisiones de diseño de `learnship`, encontré tres números que se quedaron conmigo:
+
+**42% vs. 78%.** El mismo modelo de base, el mismo benchmark, dos scaffolds diferentes. El scaffold correcto casi dobla el performance del modelo. La fuente: investigación sobre architecturas de agentes publicada en 2024. El modelo era idéntico. El único variable era el harness.
+
+**47%.** La reducción en uso de tokens que Cursor logró implementando *lazy context loading*, la idea de que el agente no debería ver todo el contexto de un proyecto en cada llamada, sino solo el contexto relevante para la tarea actual. No un modelo mejor. Una estrategia de entrega de contexto más inteligente.
+
+**80%.** El porcentaje de herramientas que Vercel eliminó de su agente antes de ver que completaba tareas que antes fallaba. Menos herramientas, más foco, mejor performance. Mismo modelo. El único cambio fue acotar el scope.
+
+![El harness importa más que el modelo: tres números](assets/harness_vs_model.png)
+
+Estos tres números apuntan a lo mismo: **la arquitectura que rodea al modelo determina más el resultado que el modelo en sí**. El modelo es el motor. El harness es el coche. Nadie evalúa un coche solo por su motor.
+
+`learnship` es el coche.
+
+---
+
+## Qué es learnship, con precisión
+
+`learnship` es un harness de agente portátil y de código abierto que se instala dentro de tu herramienta de IA existente y le agrega tres cosas que tu agente no tiene por defecto:
+
+**Memoria persistente.** Un archivo `AGENTS.md` que se carga en cada sesión para que el agente siempre conozca el proyecto, la fase actual, el stack técnico y las decisiones pasadas. Sin re-explicaciones. Sin deuda de contexto.
+
+**Proceso estructurado.** Un Phase Loop repetible (Discuss → Plan → Execute → Verify) con planes spec-driven, ejecución wave-ordenada y verificación UAT-driven. El harness controla qué contexto llega al agente en cada paso.
+
+**Aprendizaje integrado.** Checkpoints respaldados por neurociencia en cada transición de fase para que entiendas lo que enviaste a producción, no solo que lo enviaste.
+
+![Las tres capas de learnship: Workflow Engine, Learning Partner, Design System](assets/learnship_three_layers_ep4.png)
+
+Lo que hace diferente a `learnship` no es ninguna de estas tres cosas por separado. Es que están integradas. El workflow activa el aprendizaje. El aprendizaje refina el criterio. El criterio mejora el workflow. No son módulos opcionales. Son tres aspectos del mismo sistema, diseñados para reforzarse mutuamente.
+
+---
+
+## Instalar learnship en 30 segundos
+
+Antes de ir al proyecto de ejemplo, la instalación. Una línea:
+
+```bash
+npx learnship
+```
+
+El instalador auto-detecta tu plataforma. Si quieres instalarlo en todas las plataformas CLI de una vez:
+
+```bash
+npx learnship --all --global
+```
+
+`learnship` funciona en seis plataformas: **Windsurf**, **Claude Code**, **Cursor**, **OpenCode**, **Gemini CLI**, **Codex CLI**.
+
+Una vez instalado, abre tu agente y escribe:
+
+```
+/ls
+```
+
+Eso es todo. `/ls` te dice dónde estás, qué sigue, y ofrece ejecutarlo. Si no hay proyecto activo todavía, te ofrece iniciar uno.
+
+---
+
+## Los cinco comandos que necesitas saber
+
+`learnship` tiene 42 workflows. No necesitas conocerlos todos para empezar. Estos cinco cubren el 90% del trabajo:
+
+| Comando | Cuándo usarlo |
+|---|---|
+| `/ls` | **Inicio de cada sesión.** Muestra estado, ofrece ejecutar el siguiente paso. |
+| `/new-project` | Inicio de un proyecto nuevo desde cero. |
+| `/quick "..."` | Fix pequeño, experimento, tarea ad-hoc sin el Phase Loop completo. |
+| `/next` | Autopilot. Cuando quieres seguir sin decidir qué hacer. |
+| `/help` | Los 42 workflows organizados por categoría. |
+
+El resto aparece naturalmente desde `/ls`: el sistema te dice cuál workflow es el siguiente según el estado actual del proyecto.
+
+![Los cinco comandos de learnship](assets/five_commands.png)
+
+---
+
+## El Phase Loop: la estructura que lo sostiene todo
+
+El corazón de `learnship` es el Phase Loop. Cuatro pasos que se repiten para cada fase del proyecto:
+
+```
+/discuss-phase → /plan-phase → /execute-phase → /verify-work
+```
+
+![El Phase Loop completo](assets/phase_loop_ep4.png)
+
+Cada paso tiene un propósito específico y un output concreto. No es burocracia. Es el "paso atrás del pintor" que describí en el episodio 3: el momento de ver el lienzo completo antes de seguir pintando, institucionalizado como parte del ritmo de trabajo.
+
+---
+
+## El proyecto de ejemplo
+
+*[Esta sección está siendo construida en tiempo real mientras escribo este episodio. La incluiré completa en la versión publicada, con transcripciones reales de las conversaciones con el agente, el estado del repositorio en cada paso, y las decisiones que tomé y por qué.]*
+
+*Lo que puedo adelantar: el proyecto es una aplicación real, no un ejemplo de juguete. Tiene API, base de datos, autenticación, y UI. Lo construí en cuatro fases usando el Phase Loop completo. El tiempo total de construcción fue significativamente menor de lo que hubiera tomado sin `learnship`, pero más importante que el tiempo: al terminar la fase 4, pude responder preguntas sobre cualquier decisión arquitectónica del proyecto sin tener que ir al código para entender por qué las cosas estaban como estaban.*
+
+*Esa es la métrica que importa. No cuánto código generó el agente. Cuánto entendí del código que generó.*
+
+---
+
+## Paso a paso: cómo se ve en la práctica
+
+Aunque el ejemplo completo viene en la versión final, quiero darte la estructura exacta de lo que pasa en cada paso del Phase Loop. Esta es la secuencia real.
+
+### Paso 0: `/ls`
+
+Cada sesión empieza con `/ls`. Sin excepción.
+
+```
+/ls
+```
+
+Si hay un proyecto activo, la respuesta se ve así:
+
+```
+📍 Estado actual
+   Proyecto: [nombre del proyecto]
+   Fase actual: Fase 2 — [nombre de la fase]
+   Último paso completado: /execute-phase 1 ✓
+   Próximo paso: /verify-work 1
+
+¿Ejecuto /verify-work 1 ahora?
+```
+
+Si no hay proyecto, el agente ofrece crear uno:
+
+```
+No hay proyecto activo. ¿Quieres empezar uno nuevo?
+Ejecuta /new-project cuando estés listo.
+```
+
+### Paso 1: `/new-project`
+
+`/new-project` no es un formulario. Es una conversación. El agente hace preguntas estructuradas:
+
+- ¿Qué estás construyendo?
+- ¿Qué problema resuelve?
+- ¿Cuál es tu stack técnico preferido (o "ayúdame a decidir")?
+- ¿En qué plataforma o entorno va a correr?
+
+Después de tus respuestas, el agente:
+
+1. Investiga el dominio: ecosistema, mejores prácticas, trampas comunes, opciones arquitectónicas
+2. Escribe los artefactos del proyecto: `AGENTS.md`, `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md`
+3. Propone un roadmap: una lista de fases con descripciones
+
+Revisas el roadmap. Si algo no encaja, le dices al agente que ajuste antes de aprobarlo.
+
+El resultado del directorio después de `/new-project`:
+
+```
+.planning/
+├── config.json
+├── PROJECT.md       ← qué estás construyendo
+├── REQUIREMENTS.md  ← REQ-001 … REQ-N
+├── ROADMAP.md       ← fases con status
+└── STATE.md         ← posición actual
+
+AGENTS.md            ← el agente lee esto en cada sesión
+```
+
+`AGENTS.md` es el artefacto más importante del sistema. Es la memoria que sobrevive el reset. Cada vez que el agente inicia una nueva sesión, lee `AGENTS.md` primero. Ahí están los principios del proyecto, la fase actual, el stack técnico, las convenciones, los bugs ya resueltos. No hay re-explicación. No hay deuda de contexto.
+
+![AGENTS.md: la memoria que sobrevive el reset de sesión](assets/agents_md_structure.png)
+
+### Paso 2: `/discuss-phase 1`
+
+`/discuss-phase` es una conversación de alineación antes de planear. El agente lee `AGENTS.md` y tu roadmap, y hace preguntas sobre preferencias de implementación para esta fase específica:
+
+- ¿Qué bibliotecas prefieres para la capa de autenticación?
+- ¿Las migraciones de base de datos deben ser code-first o SQL-first?
+- ¿Hay algún patrón existente que seguir para el manejo de errores?
+
+Tus respuestas se escriben en `.planning/phases/01-*/01-CONTEXT.md`: un archivo persistente que el planner lee antes de crear cualquier plan. El planner nunca contradice una decisión activa guardada aquí.
+
+Este es el "escribir antes de construir" del episodio 3, en forma de workflow. No es un documento que nadie lee. Es un artefacto que el sistema consume directamente.
+
+### Paso 3: `/plan-phase 1`
+
+El planner:
+1. Lee tu `CONTEXT.md` y todas las decisiones anteriores
+2. Investiga el dominio técnico específico para esta fase
+3. Crea 2-4 archivos `PLAN.md` ejecutables, cada uno acotado a un área
+4. Corre un loop de verificación (hasta 3 pasadas) para verificar que los planes son coherentes entre sí
+
+Cada plan describe tareas concretas con suficiente detalle para que un agente ejecutor pueda implementarlas sin adivinar. Las tareas se organizan en *waves*: tareas independientes en la misma wave, tareas dependientes en waves posteriores.
+
+En plataformas que soportan paralelización real (Claude Code, OpenCode, Codex CLI), las tareas de una misma wave pueden ejecutarse con agentes dedicados en paralelo, cada uno con su propio contexto de 200k tokens.
+
+El output del directorio después de `/plan-phase 1`:
+
+```
+.planning/phases/01-foundation/
+├── 01-CONTEXT.md    ← tus preferencias (de /discuss-phase)
+├── 01-RESEARCH.md   ← investigación de dominio
+├── 01-01-PLAN.md    ← plan wave 1
+└── 01-02-PLAN.md    ← plan wave 2
+```
+
+### Paso 4: `/execute-phase 1`
+
+La ejecución corre wave por wave. Cada tarea recibe un commit atómico. El executor no improvisa, no agrega scope, no toma decisiones que no estaban en el plan. Si descubre algo que cambia el plan (el API no soporta lo que el spec asumía, hay un patrón existente mejor), documenta el cambio en `SUMMARY.md` y reporta.
+
+Este es el guardrail de ejecución del harness: el agente hace exactamente lo que el plan dice, y nada más. El scope creep — la tendencia del agente a "mejorar" cosas que no estaban en el plan — está estructuralmente prevenido.
+
+```
+.planning/phases/01-foundation/
+├── 01-CONTEXT.md
+├── 01-RESEARCH.md
+├── 01-01-PLAN.md     ← ejecutado
+├── 01-01-SUMMARY.md  ← qué se construyó exactamente
+├── 01-02-PLAN.md     ← ejecutado
+├── 01-02-SUMMARY.md
+└── 01-UAT.md         ← pendiente (lo genera /verify-work)
+```
+
+### Paso 5: `/verify-work 1`
+
+UAT conversacional. El agente presenta qué *debería* ocurrir en cada deliverable. Tú confirmas si la realidad coincide:
+
+1. El agente muestra qué se construyó y los criterios de aceptación
+2. Tú pruebas: corres la app, pruebas los endpoints, verificas el comportamiento
+3. Reportas cualquier problema: *"El endpoint /login devuelve 500 cuando falta el email"*
+4. El agente diagnostica causa raíz y crea fix plans específicos
+5. Ejecutas los fixes, luego re-verificas
+
+Cuando todo pasa: `✓ Fase 1 completa`.
+
+No hay "listo" sin verificación. No hay merge sin que alguien confirmó que el output hace lo que debería hacer.
+
+---
+
+## DECISIONS.md: el registro de por qué
+
+Uno de los problemas más comunes en proyectos que duran más de unas semanas es lo que llamo "arqueología de decisiones": alguien llega a un fragmento de código, ve una elección que parece arbitraria o incluso incorrecta, y no hay forma de saber si fue una decisión consciente con una razón válida o simplemente un error que nadie corrigió.
+
+En el episodio 3 describí esto como la documentación que siempre se desactualiza. La novedad de `learnship` es que el agente es co-mantenedor de esa documentación, no solo los humanos.
+
+`.planning/DECISIONS.md` tiene este formato:
+
+```markdown
+## DEC-001: Usar polling en lugar de notificaciones en tiempo real
+Date: 2026-03-01 | Phase: 2 | Type: arquitectura
+Context: El sistema de alertas necesita mostrar actualizaciones al usuario
+Options:
+  - WebSockets (tiempo real, conexión persistente, mayor costo de infraestructura)
+  - Polling cada 30 segundos (más simple, suficiente para nuestro caso de uso)
+Choice: Polling cada 30 segundos
+Rationale: Los usuarios no necesitan actualizaciones al milisegundo;
+           el costo de mantener conexiones abiertas no justifica el beneficio real
+Consequences: Si en el futuro necesitamos tiempo real, habrá que migrar esa capa
+Status: active
+```
+
+El planner lee este archivo antes de escribir cualquier plan. Las decisiones activas son no-negociables: el agente implementa respetando la decisión, no la contradice. Si el agente detecta que una decisión activa ya no es válida (el API no soporta lo que el spec asumía), lo documenta y reporta en lugar de silenciosamente ignorarla.
+
+![DECISIONS.md: el registro de arqueología de decisiones](assets/decisions_md.png)
+
+El resultado: en lugar de acumular deuda de contexto, el proyecto acumula conocimiento. Cada decisión tiene contexto, opciones consideradas, rationale, consecuencias. Ese registro es el activo más valioso del sistema.
+
+---
+
+## El aprendizaje integrado en el workflow
+
+En `agentic-learn` (episodio 2), las acciones de aprendizaje eran algo que tenías que recordar invocar. Podías estar en el medio de una sesión de trabajo y acordarte de `@agentic-learning reflect`. O no.
+
+En `learnship`, el Learning Partner está integrado en los puntos naturales de transición del workflow. No tienes que recordar invocarlo. El sistema te lo ofrece en el momento correcto, cuando la tarea recién completada está fresca en la memoria de trabajo.
+
+| Después de | Acción de aprendizaje | Qué hace |
+|---|---|---|
+| `/new-project` aprobado | `brainstorm` | Diálogo de diseño colaborativo antes de una línea de código |
+| `/discuss-phase` | `either-or` | Registro de decisión: caminos considerados, elección, rationale |
+| `/plan-phase` | `cognitive-load` | Descompone scope abrumador en pasos del tamaño de la memoria de trabajo |
+| `/execute-phase` | `reflect` | Tres preguntas: ¿qué decidiste? ¿qué intentabas lograr? ¿qué sigue siendo fuzzy? |
+| `/verify-work` pasa | `space` | Programa conceptos para revisita espaciada, escribe `docs/revisit.md` |
+
+El principio que atraviesa todas las acciones es el mismo que construí en `agentic-learn`: **el agente espera tu respuesta antes de dar la suya**. La inversión del orden es lo que convierte una herramienta de respuesta rápida en una herramienta de construcción de criterio real.
+
+---
+
+## La suite impeccable: calidad de diseño sin negociar
+
+La tercera capa de `learnship` es la suite **impeccable**, basada en el trabajo de `@pbakaus`. 17 comandos de steering que previenen la estética genérica de IA antes de que aparezca.
+
+En el episodio 3 hablé del *slop*: el output genérico de IA que la persona promedio puede sentir aunque no pueda nombrarlo. El gradiente púrpura. La animación sin propósito. La tipografía que nadie eligió conscientemente. Raphael Salaja lo articuló mejor que nadie: *"La persona promedio puede sentir la falta de elementos humanos."*
+
+La suite impeccable es la respuesta sistémica a ese problema. Está activa como contexto permanente para cualquier trabajo de UI: el agente lee los principios de diseño y los aplica por defecto.
+
+Algunos comandos:
+
+- `/critique` — Crítica honesta de UX antes del polish. Encuentra exactamente qué está mal.
+- `/polish` — Pase final de calidad antes del merge.
+- `/animate` — Animaciones con propósito, no decoración.
+- `/distill` — Eliminar complejidad, clarificar qué importa.
+- `/bolder` — Amplificar diseños seguros o aburridos.
+- `/quieter` — Reducir intensidad, ganar refinamiento.
+
+El **AI Slop Test** integrado en `/critique`:
+
+> *"Si le mostraras esta interfaz a alguien y dijeras 'la hizo IA', ¿lo creería de inmediato?"*
+
+Si la respuesta es sí: ese es el problema. `/critique` encuentra exactamente dónde.
+
+---
+
+## El ciclo completo en un vistazo
+
+Antes de ir al ejemplo concreto, quiero mostrarte el ciclo completo de un proyecto `learnship` en un solo diagrama:
+
+```
+npx learnship
+     ↓
+/new-project
+→ Preguntas de inicialización
+→ Investigación de dominio
+→ AGENTS.md + .planning/ creados
+→ Roadmap propuesto y aprobado
+     ↓
+Para cada fase:
+/discuss-phase N   → Decisiones capturadas en CONTEXT.md
+/plan-phase N      → Planes spec-driven, verificados, en waves
+/execute-phase N   → Commits atómicos, sin scope creep
+/verify-work N     → UAT conversacional, fix plans para gaps
+     ↓
+Cuando todas las fases están completas:
+/audit-milestone   → Coverage de requisitos, detección de stubs
+/plan-milestone-gaps → Si hay gaps, crear fases de fix
+/complete-milestone → Archive, tag, preparar próximo milestone
+```
+
+El directorio `.planning/` al final de un milestone completo:
+
+```
+.planning/
+├── config.json
+├── PROJECT.md
+├── REQUIREMENTS.md
+├── ROADMAP.md        ← todas las fases ✓
+├── STATE.md          ← milestone completado
+├── DECISIONS.md      ← registro completo de decisiones
+└── phases/
+    ├── 01-foundation/ ← ejecutado y verificado
+    ├── 02-auth/       ← ejecutado y verificado
+    ├── 03-api/        ← ejecutado y verificado
+    └── 04-ui/         ← ejecutado y verificado
+
+AGENTS.md             ← historia completa del proyecto
+```
+
+Ese directorio `.planning/` no es overhead. Es el registro de todo lo que el proyecto aprendió sobre sí mismo: qué se construyó, por qué, qué alternativas se consideraron, qué bugs se resolvieron. Es el scar tissue digital del proyecto.
+
+---
+
+## Lo que esto no es — honestidad sobre los límites
+
+Quiero ser preciso sobre lo que `learnship` hace y lo que no hace, porque la overpromise es el problema número uno de las herramientas de IA.
+
+**`learnship` no te hace un mejor ingeniero automáticamente.** Te da la estructura para que las cosas que te harían mejor ingeniero —escribir specs, documentar decisiones, reflexionar después de ejecutar— ocurran de forma consistente en lugar de cuando te acuerdas.
+
+**`learnship` no reemplaza el criterio.** Amplifica el criterio que ya tienes. Si no tienes criterio sobre qué construir o cómo evaluarlo, el sistema te da una estructura vacía. El valor viene de la intersección entre la estructura y el criterio que traes tú.
+
+**`learnship` no es para todos los proyectos.** Para un script de 50 líneas o un experimento de un día, la ceremonia del Phase Loop es overhead innecesario. `/quick` existe exactamente para eso. La estructura completa está diseñada para proyectos donde la coherencia a través del tiempo importa.
+
+**`learnship` no garantiza que no vas a construir la cosa equivocada.** El sistema puede ejecutar perfectamente un plan incorrecto. La decisión de qué vale la pena construir, esa es tuya. Siempre.
+
+---
+
+## La conexión con los tres episodios anteriores
+
+Hay un hilo que conecta los cuatro episodios de esta investigación, y quiero hacerlo explícito porque no es obvio si los lees por separado.
+
+**Episodio 1** planteó la pregunta central: la IA es poderosa, pero la realidad tiene sus propias fricciones. El conocimiento que se gana a golpes —el *scar tissue*, el tejido cicatricial— no puede descargarse de un modelo. La velocidad del aprendizaje en sistemas complejos está acotada por la velocidad de la realidad, no por la velocidad del cómputo.
+
+**Episodio 2** exploró el problema del aprendizaje pasivo: usar IA para obtener output sin construir comprensión. Construí `agentic-learn` como una capa que invierte el orden: el agente espera tu respuesta antes de dar la suya. La fricción productiva como mecanismo de aprendizaje real.
+
+**Episodio 3** amplió el problema. No era solo cómo aprendemos con IA. Era cómo trabajamos con IA. La ingeniería agéntica como sistema: contexto persistente, decisiones documentadas, ejecución estructurada, verificación real. `learnship` como la implementación concreta.
+
+**Episodio 4** es la práctica. No la teoría del sistema. El uso del sistema. Cómo se ve en la realidad trabajar en un proyecto real con `learnship`, paso a paso, decisión por decisión.
+
+![El arco de los cuatro episodios: de la teoría a la práctica](assets/four_episodes_arc.png)
+
+El argumento que atraviesa los cuatro no es "usa más IA" ni "ten cuidado con la IA". Es algo más preciso: **la IA amplifica lo que traes. Si traes criterio, estructura y comprensión, la amplifica. Si no traes nada, no amplifica nada.**
+
+`learnship` es el sistema que te ayuda a traer las tres cosas de forma consistente.
+
+---
+
+## El próximo paso
+
+Si llegaste hasta aquí, ya tienes todo lo que necesitas para instalar `learnship` y empezar a usarlo.
+
+```bash
+npx learnship
+```
+
+Abre tu agente. Escribe `/ls`. Deja que el sistema te guíe desde ahí.
+
+Si tienes un proyecto en marcha que empezaste sin `learnship`, no tienes que empezar desde cero. Hay un workflow específico para eso: `/import-project`, que analiza tu codebase existente, crea los artefactos de `.planning/` retroactivamente, y te pone en el Phase Loop desde donde estás.
+
+Y si quieres ir más despacio, el ciclo completo de tu primer proyecto está documentado en detalle en [la guía de primer proyecto](https://faviovazquez.github.io/learnship/getting-started/first-project/).
+
+---
+
+## La pregunta que me queda para el episodio 5
+
+Mientras construía este episodio, apareció una pregunta que no tenía en mente cuando empecé a escribir.
+
+`learnship` resuelve el problema de la coherencia dentro de un proyecto. Pero hay un problema más grande que ninguna herramienta resuelve por sí sola: la coherencia entre proyectos. Entre roles. Entre equipos.
+
+El Generalista Creativo del episodio 3 opera en la intersección de producto, diseño e ingeniería. `learnship` le da la estructura para construir con calidad dentro de esa intersección. Pero la pregunta de cómo las organizaciones adoptan este tipo de trabajo, cómo los equipos se reorganizan alrededor de él, cómo los roles evolucionan cuando el cuello de botella se mueve de la implementación al criterio: esa pregunta se merece un episodio propio.
+
+Es lo que viene.
+
+---
+
+> *"The model is interchangeable. The harness is the product."*
+>
+> *"El modelo es intercambiable. El harness es el producto."*
+
+---
+
+## Referencias
+
+**Herramientas**
+- [learnship](https://github.com/FavioVazquez/learnship) — Favio Vázquez: plataforma completa de ingeniería agéntica
+- [learnship docs](https://faviovazquez.github.io/learnship/) — Documentación oficial
+- [agentic-learn](https://github.com/FavioVazquez/agentic-learn) — Favio Vázquez: skill de aprendizaje activo (Episodio 2)
+- [impeccable](https://github.com/pbakaus/impeccable) — pbakaus: design system de calidad para UI con IA
+- [get-shit-done (GSD)](https://github.com/davila7/get-shit-done) — davila7: base del workflow engine de learnship
+
+**Investigación citada**
+- Scaffolding benchmark: mismo modelo, 42% vs. 78% con scaffolds diferentes — investigación en arquitecturas agénticas, 2024
+- Cursor lazy context loading: reducción del 47% en uso de tokens — Cursor engineering blog
+- Vercel tool reduction: 80% menos herramientas → tasks completadas — Vercel engineering
+
+**Episodios anteriores — The Road to Reality**
+- [Episodio 1: La Ventaja Competitiva de la Realidad](https://www.linkedin.com/pulse/la-ventaja-competitiva-de-realidad-favio-v%C3%A1zquez/) — Favio Vázquez
+- [Episodio 2: Aprendizaje en Ciclo Agéntico](https://www.linkedin.com/pulse/aprendizaje-en-ciclo-ag%C3%A9ntico-favio-v%C3%A1zquez/) — Favio Vázquez
+- [Episodio 3: Ingeniería Agéntica — La Era del Generalista Creativo](https://www.linkedin.com/pulse/ingenier%C3%ADa-ag%C3%A9ntica-la-era-del-generalista-creativo-favio-v%C3%A1zquez/) — Favio Vázquez

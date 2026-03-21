@@ -1,0 +1,295 @@
+/* ============================================================
+   base.css — Reset, design tokens, typography, layout grid
+   How Physics Works — v1.0
+   ============================================================ */
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  /* Background scale */
+  --color-void:    oklch(0.07 0.02 285);
+  --color-deep:    oklch(0.11 0.025 285);
+  --color-surface: oklch(0.15 0.03 285);
+  --color-raised:  oklch(0.19 0.03 285);
+
+  /* Text */
+  --color-text-primary:   oklch(0.93 0.01 90);
+  --color-text-secondary: oklch(0.70 0.02 90);
+  --color-text-muted:     oklch(0.50 0.02 90);
+
+  /* Accents */
+  --color-gold:   oklch(0.80 0.17 82);
+  --color-plasma: oklch(0.72 0.22 310);
+
+  /* Era accent colors */
+  --era-ancient-color:     oklch(0.72 0.12 60);
+  --era-revolution-color:  oklch(0.72 0.15 145);
+  --era-classical-color:   oklch(0.65 0.18 240);
+  --era-modern-color:      oklch(0.68 0.20 310);
+  --era-contemporary-color:oklch(0.68 0.22 20);
+
+  /* Era subtle backgrounds */
+  --era-ancient-bg:      oklch(0.72 0.12 60 / 0.08);
+  --era-revolution-bg:   oklch(0.72 0.15 145 / 0.08);
+  --era-classical-bg:    oklch(0.65 0.18 240 / 0.08);
+  --era-modern-bg:       oklch(0.68 0.20 310 / 0.08);
+  --era-contemporary-bg: oklch(0.68 0.22 20 / 0.08);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body:    'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Type scale (fluid) */
+  --text-xs:   clamp(0.70rem, 1.5vw, 0.75rem);
+  --text-sm:   clamp(0.85rem, 1.8vw, 0.9rem);
+  --text-base: clamp(1rem,    2vw,   1.05rem);
+  --text-md:   clamp(1.1rem,  2.2vw, 1.2rem);
+  --text-lg:   clamp(1.25rem, 2.5vw, 1.4rem);
+  --text-xl:   clamp(1.5rem,  3vw,   1.75rem);
+  --text-2xl:  clamp(1.9rem,  4vw,   2.4rem);
+  --text-3xl:  clamp(2.4rem,  5vw,   3.2rem);
+  --text-4xl:  clamp(3rem,    6vw,   4.5rem);
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --content-width: 680px;
+  --page-max:      1200px;
+  --page-padding:  clamp(1rem, 5vw, 3rem);
+
+  /* Radii */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px oklch(0 0 0 / 0.4);
+  --shadow-md:  0 4px 16px oklch(0 0 0 / 0.5);
+  --shadow-lg:  0 8px 32px oklch(0 0 0 / 0.6);
+  --shadow-glow-gold:   0 0 32px oklch(0.80 0.17 82 / 0.3);
+  --shadow-glow-plasma: 0 0 32px oklch(0.72 0.22 310 / 0.3);
+
+  /* Transitions */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-slow:   0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Modern Reset ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background-color: var(--color-void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+a:hover { opacity: 0.8; }
+a:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+}
+button:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+ul, ol { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--text-4xl); font-weight: 700; }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-md); }
+
+p { max-width: 68ch; }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* ── Layout Utilities ───────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+
+.content-column {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Site Header ────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: oklch(0.07 0.02 285 / 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid oklch(1 0 0 / 0.06);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+.site-header__logo {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.site-header__logo span {
+  color: var(--color-gold);
+}
+
+.site-header__tagline {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Site Footer ────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid oklch(1 0 0 / 0.06);
+  padding-block: var(--space-12);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.site-footer a {
+  color: var(--color-text-secondary);
+}
+
+/* ── Fonts ──────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fonts/CormorantGaramond-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fonts/CormorantGaramond-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fonts/CormorantGaramond-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fonts/CormorantGaramond-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DMSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DMSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

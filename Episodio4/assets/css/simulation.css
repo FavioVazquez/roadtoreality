@@ -1,0 +1,389 @@
+/* ============================================================
+   simulation.css — Stop page layout, sim container, controls
+   How Physics Works — v1.0
+   ============================================================ */
+
+/* ── Stop Page Layout ───────────────────────────────────────── */
+.stop-page {
+  padding-block: var(--space-8) var(--space-20);
+}
+
+.stop-header {
+  margin-bottom: var(--space-10);
+}
+
+.stop-header__era {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--era-stop-color, var(--color-gold));
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.stop-header__era::after {
+  content: '';
+  height: 1px;
+  width: 48px;
+  background: var(--era-stop-color, var(--color-gold));
+  opacity: 0.5;
+}
+
+.stop-header__title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-3);
+}
+
+.stop-header__subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin-bottom: var(--space-4);
+}
+
+.stop-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  flex-wrap: wrap;
+}
+
+.stop-header__year {
+  font-family: var(--font-mono);
+  color: var(--era-stop-color, var(--color-gold));
+}
+
+.stop-header__scientist {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* Era color application on stop pages */
+.stop-page[data-era="ancient"]        { --era-stop-color: var(--era-ancient-color); }
+.stop-page[data-era="revolution"]     { --era-stop-color: var(--era-revolution-color); }
+.stop-page[data-era="classical"]      { --era-stop-color: var(--era-classical-color); }
+.stop-page[data-era="modern"]         { --era-stop-color: var(--era-modern-color); }
+.stop-page[data-era="contemporary"]   { --era-stop-color: var(--era-contemporary-color); }
+
+/* ── Stop Intro Text ────────────────────────────────────────── */
+.stop-intro {
+  font-size: var(--text-md);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-8);
+}
+
+.stop-intro p + p { margin-top: var(--space-4); }
+
+/* ── Simulation Container ───────────────────────────────────── */
+.sim-wrapper {
+  margin-block: var(--space-8);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--color-deep);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  contain: layout paint;
+}
+
+.sim-container {
+  position: relative;
+  width: 100%;
+  background: oklch(0.09 0.025 285);
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sim-container canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* ── Simulation Controls ────────────────────────────────────── */
+.sim-controls {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid oklch(1 0 0 / 0.07);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  align-items: flex-end;
+  background: var(--color-deep);
+}
+
+.sim-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 140px;
+}
+
+.sim-control__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sim-control__value {
+  color: var(--era-stop-color, var(--color-gold));
+  font-weight: 500;
+}
+
+.sim-control input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: oklch(1 0 0 / 0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  outline: none;
+  min-height: 44px;
+  padding-block: 20px;
+  background-clip: padding-box;
+}
+
+.sim-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--era-stop-color, var(--color-gold));
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--era-stop-color, var(--color-gold));
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.sim-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: var(--era-stop-color, var(--color-gold));
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--era-stop-color, var(--color-gold));
+}
+
+.sim-control input[type="range"]:hover::-webkit-slider-thumb,
+.sim-control input[type="range"]:focus::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 0 16px var(--era-stop-color, var(--color-gold));
+}
+
+/* ── Sim Action Buttons ─────────────────────────────────────── */
+.sim-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.sim-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: 44px;
+  min-width: 44px;
+  transition: all var(--transition-fast);
+}
+
+.sim-btn-play {
+  background: var(--era-stop-color, var(--color-gold));
+  color: oklch(0.1 0.02 82);
+}
+
+.sim-btn-play:hover {
+  filter: brightness(1.15);
+}
+
+.sim-btn-reset {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid oklch(1 0 0 / 0.12);
+}
+
+.sim-btn-reset:hover {
+  border-color: var(--era-stop-color, var(--color-gold));
+  color: var(--era-stop-color, var(--color-gold));
+}
+
+/* ── Sim Status Caption ─────────────────────────────────────── */
+.sim-caption {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  border-top: 1px solid oklch(1 0 0 / 0.05);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.sim-caption__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.sim-caption__dot.is-running {
+  background: oklch(0.72 0.22 145);
+  box-shadow: 0 0 6px oklch(0.72 0.22 145);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Sim Placeholder (stub stops) ──────────────────────────── */
+.sim-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  gap: var(--space-4);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.sim-placeholder__icon {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.sim-placeholder__text {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.sim-placeholder__sub {
+  font-size: var(--text-sm);
+  opacity: 0.7;
+}
+
+/* ── Stop Body Content ──────────────────────────────────────── */
+.stop-body {
+  margin-top: var(--space-10);
+}
+
+.stop-body h3 {
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+.stop-body p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-4);
+}
+
+/* ── Key Takeaway Box ───────────────────────────────────────── */
+.takeaway-box {
+  margin-top: var(--space-10);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border-left: 3px solid var(--era-stop-color, var(--color-gold));
+}
+
+.takeaway-box__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--era-stop-color, var(--color-gold));
+  margin-bottom: var(--space-4);
+}
+
+.takeaway-box__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.takeaway-box__list li {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+.takeaway-box__list li::before {
+  content: '→';
+  color: var(--era-stop-color, var(--color-gold));
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+/* ── Bridge Sentence ────────────────────────────────────────── */
+.stop-bridge {
+  margin-top: var(--space-8);
+  padding: var(--space-5) var(--space-6);
+  background: oklch(0.09 0.025 285);
+  border-radius: var(--radius-lg);
+  border: 1px solid oklch(1 0 0 / 0.06);
+  font-style: italic;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.stop-bridge__arrow {
+  color: var(--era-stop-color, var(--color-gold));
+  font-style: normal;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sim-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sim-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: stretch;
+  }
+  .sim-btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .sim-control { min-width: 100%; }
+}

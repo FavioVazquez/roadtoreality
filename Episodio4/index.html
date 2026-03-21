@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="50 interactive stops through the history of physics — from Aristotle to gravitational waves. Play with simulations. Understand the universe.">
+  <title>How Physics Works — An Interactive History</title>
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+
+  <style>
+    /* ── Landing-page-specific overrides ── */
+    .landing-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .star-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.8;
+    }
+
+    .page-content { position: relative; z-index: 1; }
+
+    .hero { padding-block: 5rem 3rem; }
+
+    .hero__title em {
+      font-style: italic;
+      color: var(--color-gold);
+      -webkit-text-fill-color: var(--color-gold);
+    }
+
+    .visit-counter {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* Sticky era tabs on scroll */
+    .era-tabs-sticky {
+      position: sticky;
+      top: 64px;
+      z-index: 50;
+      background: oklch(0.07 0.02 285 / 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid oklch(1 0 0 / 0.06);
+      padding-block: 0.5rem;
+    }
+
+    .era-tabs {
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-inline: var(--page-padding);
+      max-width: var(--page-max);
+      margin-inline: auto;
+    }
+
+    .era-tabs::-webkit-scrollbar { display: none; }
+
+    .era-tab {
+      flex-shrink: 0;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      color: var(--color-text-muted);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .era-tab:hover,
+    .era-tab.is-active {
+      color: var(--era-tab-color, var(--color-gold));
+      border-color: var(--era-tab-color, var(--color-gold));
+      background: oklch(from var(--era-tab-color, var(--color-gold)) l c h / 0.08);
+    }
+
+    .era-tab[data-era="ancient"]        { --era-tab-color: var(--era-ancient-color); }
+    .era-tab[data-era="revolution"]     { --era-tab-color: var(--era-revolution-color); }
+    .era-tab[data-era="classical"]      { --era-tab-color: var(--era-classical-color); }
+    .era-tab[data-era="modern"]         { --era-tab-color: var(--era-modern-color); }
+    .era-tab[data-era="contemporary"]   { --era-tab-color: var(--era-contemporary-color); }
+  </style>
+</head>
+<body>
+
+<!-- Starfield background -->
+<canvas class="star-canvas" id="star-canvas" aria-hidden="true"></canvas>
+
+<div class="page-content">
+
+  <!-- Site Header -->
+  <header class="site-header" role="banner">
+    <div class="container landing-header__inner">
+      <a href="index.html" class="site-header__logo">
+        How <span>Physics</span> Works
+      </a>
+      <span class="site-header__tagline">An Interactive History</span>
+      <span class="visit-counter" id="header-visit-counter" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero container" aria-labelledby="hero-title">
+    <p class="hero__eyebrow">~2,600 years · 50 stops · 5 eras</p>
+    <h1 class="hero__title" id="hero-title">
+      The Story of How<br>
+      We Learned to Understand<br>
+      <em>the Universe</em>
+    </h1>
+    <p class="hero__subtitle">
+      From Aristotle's first principles to gravitational waves detected last decade.
+      Every stop has a simulation you can play with — no physics background required.
+    </p>
+
+    <div class="hero__stats" role="list">
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-number">50</span>
+        <span class="hero__stat-label">Interactive Stops</span>
+      </div>
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-number">5</span>
+        <span class="hero__stat-label">Eras of Physics</span>
+      </div>
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-number">2,600</span>
+        <span class="hero__stat-label">Years of Discovery</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem;" id="progress-bar" aria-label="Your progress"></div>
+  </section>
+
+  <!-- Era Quick-Nav Tabs (sticky) -->
+  <nav class="era-tabs-sticky" aria-label="Jump to era">
+    <div class="era-tabs" role="list">
+      <a class="era-tab" data-era="ancient"       href="#era-ancient"       role="listitem">Ancient &amp; Classical</a>
+      <a class="era-tab" data-era="revolution"    href="#era-revolution"    role="listitem">Scientific Revolution</a>
+      <a class="era-tab" data-era="classical"     href="#era-classical"     role="listitem">Classical Physics</a>
+      <a class="era-tab" data-era="modern"        href="#era-modern"        role="listitem">Modern Revolution</a>
+      <a class="era-tab" data-era="contemporary"  href="#era-contemporary"  role="listitem">Contemporary</a>
+    </div>
+  </nav>
+
+  <!-- Era Timeline Visual -->
+  <div class="container" style="margin-top: 2rem;">
+    <div id="era-timeline" role="navigation" aria-label="Physics era timeline"></div>
+  </div>
+
+  <!-- Era Sections (rendered by nav.js) -->
+  <main class="container" id="era-sections" aria-label="Physics stops by era">
+    <!-- Populated by nav.js from stops.json -->
+    <noscript>
+      <p style="color: var(--color-text-muted); padding: 2rem; text-align: center;">
+        JavaScript is required to load the interactive stops.
+        Please enable JavaScript or try a different browser.
+      </p>
+    </noscript>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>
+        Built with curiosity. Every simulation is interactive and runs entirely in your browser.
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+        <a href="https://encyclopediaworld.github.io/howaiworks/" target="_blank" rel="noopener">
+          Inspired by How AI Works
+        </a>
+      </p>
+    </div>
+  </footer>
+
+</div><!-- /.page-content -->
+
+<script src="assets/js/progress.js"></script>
+<script src="assets/js/nav.js"></script>
+
+<script>
+(function () {
+  /* ── Starfield background ───────────────────────────── */
+  var canvas = document.getElementById('star-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var stars = [];
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makeStar() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random(),
+      da: (Math.random() - 0.5) * 0.003
+    };
+  }
+
+  function initStars() {
+    stars = [];
+    var count = Math.floor((W * H) / 8000);
+    for (var i = 0; i < count; i++) stars.push(makeStar());
+  }
+
+  var raf;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.a += s.da;
+      if (s.a < 0.05) { s.a = 0.05; s.da = Math.abs(s.da); }
+      if (s.a > 1)    { s.a = 1;    s.da = -Math.abs(s.da); }
+      ctx.globalAlpha = s.a * 0.7;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(draw);
+  }
+
+  /* Respect prefers-reduced-motion: static stars, no animation */
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  resize();
+  initStars();
+  if (prefersReducedMotion.matches) {
+    /* Draw once, no RAF loop */
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.globalAlpha = s.a * 0.9;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  } else {
+    draw();
+    window.addEventListener('resize', function () {
+      resize();
+      initStars();
+    });
+  }
+
+  /* ── Visit counter in header ────────────────────────── */
+  function updateVisitCounter() {
+    var el = document.getElementById('header-visit-counter');
+    if (!el || !window.PhysicsProgress) return;
+    var n = window.PhysicsProgress.getVisitedCount();
+    el.textContent = n > 0 ? n + ' stop' + (n === 1 ? '' : 's') + ' visited' : '';
+  }
+
+  /* run after nav.js has rendered */
+  setTimeout(updateVisitCounter, 200);
+
+  /* ── Active era tab on scroll ────────────────────────── */
+  var sections = [];
+  var tabs = [];
+
+  function initScrollSpy() {
+    sections = Array.from(document.querySelectorAll('.era-section'));
+    tabs     = Array.from(document.querySelectorAll('.era-tab'));
+  }
+
+  function onScroll() {
+    var scrollY = window.scrollY + 140;
+    var current = '';
+    sections.forEach(function (s) {
+      if (s.offsetTop <= scrollY) current = s.dataset.era;
+    });
+    tabs.forEach(function (t) {
+      t.classList.toggle('is-active', t.dataset.era === current);
+    });
+  }
+
+  /* init after nav.js renders sections */
+  setTimeout(function () {
+    initScrollSpy();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }, 300);
+}());
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thales of Miletus was the first to claim that natural events have natural explanations — the founding idea of all science.">
+  <title>Thales and Natural Causes — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+</head>
+<body>
+
+<script id="stop-config" type="application/json">
+{
+  "id": "001-thales-natural-causes",
+  "order": 1,
+  "era": "ancient",
+  "title": "Thales and Natural Causes",
+  "prev": null,
+  "prevTitle": null,
+  "next": "002-pythagoras-harmony",
+  "nextTitle": "Pythagoras and Mathematical Harmony"
+}
+</script>
+
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline" aria-label="Stop position"></span>
+  </div>
+</header>
+
+<main class="stop-page container" data-era="ancient">
+
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~600 BCE</div>
+    <h1 class="stop-header__title">Thales and Natural Causes</h1>
+    <p class="stop-header__subtitle">What if the universe runs on rules, not gods?</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~600 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Thales of Miletus</span>
+    </div>
+  </header>
+
+  <div class="stop-intro content-column">
+    <p>
+      Before Thales, the Greeks explained earthquakes as Poseidon shaking the ground, lightning as Zeus throwing bolts, and eclipses as divine omens. These explanations worked — they gave frightened people a story — but they made no predictions you could test.
+    </p>
+    <p>
+      Thales made one move that changed everything: he asked whether nature has <em>patterns</em> that repeat regardless of what any god wants. He proposed that earthquakes happen because the Earth floats on water, and water disturbs it. He was wrong about the mechanism. But the question itself — "what natural process causes this?" — is the founding question of all science.
+    </p>
+    <p>
+      Below, compare two ways of explaining the same event. One closes the question. The other opens it.
+    </p>
+  </div>
+
+  <!-- Simulation -->
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" aria-label="Interactive: Natural vs supernatural explanation comparison">
+      <noscript>
+        <div class="sim-placeholder">
+          <div class="sim-placeholder__text">Simulation requires JavaScript</div>
+        </div>
+      </noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="perspective-slider">
+          Perspective
+          <span class="sim-control__value" id="perspective-label">50</span>
+        </label>
+        <input type="range" id="perspective-slider" min="0" max="100" step="1" value="50"
+               aria-label="Shift between supernatural and natural worldview">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot" id="sim-dot"></div>
+      <span>Toggle between a supernatural and natural explanation for the same event.</span>
+    </div>
+  </div>
+
+  <div class="stop-body content-column">
+    <h3>Why This Moment Matters</h3>
+    <p>
+      Thales lived in Miletus, a trading city on the coast of present-day Turkey. He had contact with Babylonian astronomers and Egyptian geometers — people who had already noticed that the sky follows patterns. Thales absorbed this and drew the radical conclusion: if the sky has patterns, so does everything else.
+    </p>
+    <p>
+      He predicted a solar eclipse in 585 BCE — a prediction so startling that when it came true, it ended a war. Two armies were so shaken by the eclipse they had been watching in the middle of a battle that they signed a peace treaty on the spot.
+    </p>
+    <p>
+      His specific theories about what things are made of (he thought water was the fundamental substance) turned out to be wrong. But the <em>method</em> — look for a natural cause, form a prediction, check it against reality — became the engine of 2,500 years of discovery.
+    </p>
+  </div>
+
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Thales was the first recorded thinker to demand natural (not supernatural) explanations for natural events — the birth of scientific thinking.</li>
+      <li>He was wrong about the specifics (water as the fundamental substance) but right about the approach: nature has patterns that repeat and can be predicted.</li>
+      <li>His eclipse prediction in 585 BCE was the first recorded scientific forecast — and it worked.</li>
+    </ul>
+  </div>
+
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>
+      Thales opened the door, but his student Pythagoras walked through it in a surprising direction: not just natural causes, but <em>mathematical</em> causes. The universe, Pythagoras believed, is written in numbers.
+    </span>
+  </div>
+
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <a href="../../index.html">← Back to all stops</a>
+  </div>
+</footer>
+
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+
+</body>
+</html>
