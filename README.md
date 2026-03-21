@@ -1,115 +1,63 @@
 # Road to Reality
 
-A personal journey through the history and ideas of physics — built as a series of interactive episodes. Each episode is a self-contained web application pairing narrative essays with live, playable simulations.
+A newsletter and research series by [Favio Vázquez](https://github.com/FavioVazquez) exploring the intersection of AI, learning, and the nature of reality. Each episode is a deep investigation that produces both long-form writing and working software.
 
-This repository is the workspace for all episodes. Right now only **Episodio 4** is active and under construction.
-
----
-
-## Episodes
-
-| Episode | Topic | Status |
-|---------|-------|--------|
-| Episodio 1 | Early explorations | Archive |
-| Episodio 2 | [Agentic Learning skill](https://github.com/FavioVazquez/agentic-learn) | Archive |
-| Episodio 3 | Research & writing | Archive |
-| **Episodio 4** | **How Physics Works — interactive history of physics** | **Work in progress** |
+This repository is the workspace behind the series: essays, research notes, data, and the code built along the way.
 
 ---
 
-## Episodio 4 — How Physics Works
+## The Series
 
-> *"Every visitor leaves understanding something real about how the universe works — because they played with it, not just read about it."*
+### Episodio 1 — The Real State of AI Adoption
 
-A static website walking through 2,500 years of physics history via 50 interactive stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop combines a short narrative essay with a Canvas-based simulation you can actually play with.
+Most conversations about AI assume everyone is using it deeply. The numbers say otherwise. This episode investigated who actually uses AI, how, and what that distribution reveals about the gap between public narrative and ground-level reality.
 
-**Live site:** coming soon (GitHub Pages deployment in Phase 5)
+Key finding: 87.8% of humanity has never used AI in any meaningful way. Of those who have, the vast majority use it passively — one prompt, one answer, move on. The population using AI as a genuine cognitive tool is a fraction of a percent.
 
-**Local preview:**
-```bash
-python3 -m http.server 8765 --directory Episodio4
-# Open: http://localhost:8765
-```
-
-See [`Episodio4/README.md`](./Episodio4/README.md) for full technical documentation.
+The episode produced a long-form essay (in Spanish and English), data visualizations reconstructed from ITU and OpenAI figures, and a LinkedIn/X thread.
 
 ---
 
-## How This Was Built
+### Episodio 2 — Learning in the Age of Instant Output
 
-Episodio 4 is planned and developed using the **[Learnship](https://github.com/FavioVazquez/agentic-learn) agentic workflow system** — a structured, AI-assisted planning methodology where every phase goes through:
+When AI can produce output almost instantly, the bottleneck shifts. The question is no longer "how do I produce more?" It's "how do I actually learn anything when the machine can just do it for me?"
 
-1. **Discovery** — research goals, constraints, and architecture decisions
-2. **Planning** — explicit phase plans with requirements and definition of done
-3. **Execution** — wave-based implementation with subagent coordination
-4. **Verification** — formal UAT (user acceptance testing) with pass/fail results
+This episode investigated that question and produced a practical answer: `agentic-learn`, an open-source Windsurf skill that turns an AI agent into an active learning partner instead of an answer machine. It implements spaced repetition, productive struggle, Socratic dialogue, and metacognitive reflection — all inside your IDE.
 
-All planning artifacts live in [`.planning/`](./.planning/) and are kept as first-class project documents.
-
-### Planning structure
-
-```
-.planning/
-├── PROJECT.md          ← Vision, goals, constraints, key decisions
-├── REQUIREMENTS.md     ← REQ-IDs for all v1.0 requirements
-├── ROADMAP.md          ← 5-phase plan with status
-├── DECISIONS.md        ← 9 architectural decisions with rationale
-├── STATE.md            ← Current phase, last activity
-└── phases/
-    ├── 01-foundation-shell/       ← Phase 1: CSS system, HTML shell, shared JS
-    ├── 02-stops-data-navigation/  ← Phase 2: stops.json, 50 stubs, nav
-    ├── 03-era1-simulations/       ← Phase 3: Ancient physics sims (12/12 UAT pass)
-    └── 04-era2-simulations/       ← Phase 4: Scientific Revolution sims (12/12 UAT pass)
-```
-
-### What's been built so far
-
-**Phase 1 — Foundation & Shell** ✓
-The entire shared design system: dark luxury aesthetic using CSS4 `oklch()` color, self-hosted Cormorant Garamond and DM Sans fonts, the shared JS shell (`nav.js`, `stop-shell.js`, `progress.js`), and the landing page.
-
-**Phase 2 — Stops Data & Navigation** ✓
-All 50 stops defined in `stops.json` with full metadata. Stub pages generated for all 50, navigation chain verified end-to-end.
-
-**Phase 3 — Era 1 Simulations (Ancient Physics)** ✓
-Fully interactive simulations for stops 001–011 covering ancient physics:
-- Thales — natural causes (particle simulation)
-- Democritus — atomic theory
-- Aristotle — theory of motion (free fall)
-- Archimedes — buoyancy (float/sink physics)
-- Eratosthenes — measuring Earth's circumference
-- Ptolemy — geocentric model with epicycles
-- Copernicus — heliocentric vs geocentric toggle
-- Galileo — inclined plane (d ∝ t² graph)
-- Galileo — pendulum (isochronism)
-- Kepler — orbital laws (RK4, equal-areas, T² ∝ a³)
-
-**Phase 4 — Era 2 Simulations (Scientific Revolution)** ✓
-Simulations for the Scientific Revolution (stops 012–013):
-- Newton's Laws — F=ma block with friction, velocity graph
-- Newton's Cannon — RK4 orbital mechanics, orbit vs escape velocity
-
-All 24 UAT tests passed across Phases 3 and 4. Device pixel ratio scaling applied to all simulations for crisp text on HiDPI displays.
-
-**Phase 5 — Polish & Deployment** (in progress)
-Performance audit, accessibility, mobile validation, GitHub Pages deployment.
+The skill is live at [github.com/FavioVazquez/agentic-learn](https://github.com/FavioVazquez/agentic-learn).
 
 ---
 
-## Tech Stack
+### Episodio 3 — Agentic Engineering: The Era of the Creative Generalist
 
-| Layer | Technology |
-|-------|-----------|
-| HTML | Plain HTML5 — no template engine |
-| CSS | CSS4 (`oklch`, `clamp`, custom properties) — no preprocessor |
-| JavaScript | ES5 IIFEs — no bundler, no TypeScript |
-| Simulations | Vanilla Canvas 2D |
-| Physics (simple) | Euler integration |
-| Physics (orbital) | RK4 integration |
-| Fonts | Cormorant Garamond + DM Sans — self-hosted WOFF2 |
-| Hosting | GitHub Pages — zero config required |
+Building on the learning framework from Episodio 2, this episode tackled a larger question: how do you *build* with AI at scale without losing coherence, quality, or understanding?
+
+The investigation covered Martec's Law (technology changes exponentially, organizations logarithmically), the collapse of the specialist/generalist divide, and what it means to be a "creative generalist" — someone who can move across domains because AI handles the depth while the human handles the direction.
+
+The episode produced a four-part long-form essay, research on agentic engineering patterns, and a methodology for sustained AI-assisted construction that became the foundation for Episodio 4.
+
+---
+
+### Episodio 4 — How Physics Works *(work in progress)*
+
+The culmination of the methodology developed across episodes 2 and 3: a full software project planned and built using the Learnship agentic workflow system.
+
+The project is a static interactive website walking through 2,500 years of physics history via 50 stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop pairs a narrative essay with a playable Canvas simulation.
+
+See [`Episodio4/`](./Episodio4/) for all site code and [`Episodio4/README.md`](./Episodio4/README.md) for technical documentation.
+
+The planning process itself is documented in [`.planning/`](./.planning/) — every phase, decision, requirement, and UAT result kept as first-class artifacts. Phases 1–4 are complete (24/24 UAT tests passing). Phase 5 (deployment) is in progress.
+
+---
+
+## What Learnship Is
+
+Learnship is the agentic workflow system developed through this series. It structures AI-assisted work into explicit phases: discovery, planning, execution, and verification. Every decision has a record. Every phase has a definition of done. Nothing ships without a UAT report.
+
+It's what makes long-horizon AI-assisted projects stay coherent across many sessions and many moving parts. The `.planning/` directory in this repo is a live example of it in action.
 
 ---
 
 ## About
 
-Built by [Favio Vázquez](https://github.com/FavioVazquez) as part of the Road to Reality project — an ongoing exploration of physics, mathematics, and the tools we use to understand them.
+Built by [Favio Vázquez](https://github.com/FavioVazquez) — data scientist, researcher, and writer. The Road to Reality is an ongoing investigation into how intelligence (human and artificial) actually works, and what it means to build things that matter with it.
