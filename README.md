@@ -44,6 +44,8 @@ The culmination of the methodology developed across episodes 2 and 3: a full sof
 
 The project is a static interactive website walking through 2,500 years of physics history via 50 stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop pairs a narrative essay with a playable Canvas simulation.
 
+Inspired by [How AI Works](https://encyclopediaworld.github.io/howaiworks/) — 50 interactive AI demos on a static site. The goal is the same concept applied to physics, with higher visual ambition.
+
 See [`Episodio4/`](./Episodio4/) for all site code and [`Episodio4/README.md`](./Episodio4/README.md) for technical documentation.
 
 The planning process itself is documented in [`.planning/`](./.planning/) — every phase, decision, requirement, and UAT result kept as first-class artifacts. Phases 1–4 are complete (24/24 UAT tests passing). Phase 5 (deployment) is in progress.
