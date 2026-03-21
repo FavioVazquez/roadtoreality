@@ -89,6 +89,7 @@ skipped: 0
   reason: "User reported: not obvious to users that cmd+k or ctrl+k exists in the page"
   severity: minor
   test: 1
+  fix_plan: 06-06-FIX-PLAN.md
 
 - truth: "Stub teaser canvas animations are visibly animated (not static-looking)"
   status: failed
@@ -96,10 +97,13 @@ skipped: 0
   severity: major
   test: 8
   note: "Code is correct — start() fires rAF loop. Root issue: animation motion is imperceptible (±0.2 opacity glow only). Fix: replace with clearly dynamic motion (curve build-in, pulsing peak, temperature sweep). Likely affects multiple sims with similar subtle effects."
+  fix_plan: 06-05-FIX-PLAN.md
 
-- truth: "Stub teaser animations loop continuously while running"
+- truth: "Stub teaser chain reaction is slow enough to see each stage"
   status: failed
-  reason: "User reported: 040-nuclear-fission chain reaction lasts milliseconds then stops, does not loop"
+  reason: "User clarified: 040 loops correctly but the chain reaction fires in milliseconds — too fast to see what's happening. Daughter nuclei are spawned only 16px from parent so neutrons reach them in ~6 frames at 2.5px/frame."
   severity: minor
   test: 12
-  note: "One-shot animations need a reset+restart cycle after sequence completes. Likely affects other event-based sims (039-dirac, 031-emc2, etc.)."
+  root_cause: "Daughter nuclei spawned too close to parent (dist = nuc.r * 0.8 = 16px). Fix: increase spawn distance, slow neutron speed, and/or add a per-nucleus delay timer before daughters become hittable."
+  affected_files: ["Episodio4/stops/040-nuclear-fission/sim.js"]
+  fix_plan: 06-05-FIX-PLAN.md
