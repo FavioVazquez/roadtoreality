@@ -207,6 +207,14 @@
         }
       }
     });
+
+    /* Bind header search trigger button */
+    var triggerBtn = document.getElementById('search-trigger-btn');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', function () {
+        _openModal();
+      });
+    }
   }
 
   function _esc(str) {
