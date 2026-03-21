@@ -396,4 +396,20 @@
   .sim-container {
     min-height: 60vh;
   }
+
+  .sim-control input[type="range"] {
+    min-height: 44px;
+    padding-block: 10px;
+  }
+}
+
+/* ── Sim control hint labels ────────────────────────────── */
+.sim-control__hint {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  margin-top: var(--space-1);
+  line-height: 1.4;
 }
