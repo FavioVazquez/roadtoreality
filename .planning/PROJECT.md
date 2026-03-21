@@ -8,40 +8,38 @@ A self-contained, static website that walks through the history of physics — f
 
 Every visitor leaves understanding something real about how the universe works — because they played with it, not just read about it.
 
-## Current Milestone: v1.0 — First Light
+## Milestone History
 
-**Goal:** Ship a working static site with the shared shell, landing page, and ~10 fully polished interactive stops covering Eras 1–2 (Ancient + Scientific Revolution), deployable to GitHub Pages.
+### v1.0 — First Light (shipped 2026-03-21)
 
-**Output directory:** `Episodio4/`
+**Delivered:** Static site with full CSS design system, 50 stop navigation chain, 13 interactive simulations (Eras 1–2), noise-based galaxy background, GitHub Pages deployment.
 
-**Target stops:**
-- Era 1 (Ancient, ~600 BCE – 150 CE): 4–7 stops
-- Era 2 (Scientific Revolution, 1543–1700): 6 stops
-- Remaining 33–40 stops: stub pages (full shell, placeholder sim slot)
+**Live:** https://faviovazquez.github.io/roadtoreality/
 
-**Target features:**
-- Shared CSS design system (dark luxury, era color coding, oklch palette)
-- `stops.json` manifest driving all navigation and card grids
-- Shared JS shell (`nav.js`, `stop-shell.js`, `progress.js`)
-- All simulations self-contained IIFEs, viewport-aware, mobile-responsive
+## Current Milestone: v2.0 (planning pending)
+
+**Goal:** Expand to Eras 3–5, add search, polish social sharing and KaTeX equations.
 
 ## Requirements
 
-### Validated
+### Validated (v1.0)
 
-(None yet — ship to validate)
+- [x] Static site, no backend, deployable to GitHub Pages
+- [x] ~50 interactive stop architecture (13 fully implemented, 37 stubs)
+- [x] Ancient/early physics represented (stops 001–007)
+- [x] Scientific Revolution represented (stops 008–013)
+- [x] Each implemented stop has a playable Canvas 2D simulation
+- [x] Dark luxury aesthetic with oklch palette and Cormorant Garamond
+- [x] Chronological navigation with era color coding
+- [x] General public accessible (no equations-first)
+- [x] Mobile-friendly layout
 
-### Active
+### Active (v2.0)
 
-- [ ] Static site — no backend, fully self-contained, deployable to GitHub Pages or similar
-- [ ] ~50 interactive stops across physics history, weighted toward post-1500s
-- [ ] Ancient/early physics represented briefly (a few stops: Greeks, medieval optics, etc.)
-- [ ] Rich coverage from the Scientific Revolution onward (Newton, thermodynamics, electromagnetism, relativity, quantum mechanics, Standard Model, current frontiers)
-- [ ] Each stop includes a playable simulation or interactive visualization
-- [ ] Visually luxurious — more polished and aesthetic than howaiworks; dark, elegant, rich design
-- [ ] Timeline/navigation structure allowing visitors to move through history chronologically
-- [ ] Content accessible to general public — no equations-first approach; intuition and wonder first
-- [ ] Mobile-friendly layout
+- [ ] Eras 3–5 fully implemented stops (Classical Physics → Contemporary)
+- [ ] Client-side search
+- [ ] KaTeX equation rendering
+- [ ] Open Graph images per stop
 
 ### Out of Scope
 
@@ -69,10 +67,12 @@ Every visitor leaves understanding something real about how the universe works �
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Static site only | Free hosting, no maintenance, matches howaiworks model | — Pending |
-| Weighted post-1500s | Ancient physics is foundational but the revolution of modern physics is the payoff | — Pending |
-| Simulations + visualizations (not text-heavy) | General public learns better through play than reading; matches "teach and inspire" goal | — Pending |
+|----------|-----------|----------|
+| Static site only | Free hosting, no maintenance, matches howaiworks model | Validated ✓ |
+| Weighted post-1500s | Ancient physics is foundational but the revolution of modern physics is the payoff | Validated ✓ |
+| Simulations + visualizations (not text-heavy) | General public learns better through play than reading | Validated ✓ |
+| Perlin fBm noise galaxy (DEC-010) | Gradients produce blobs; noise produces filamentary realism | Shipped ✓ |
+| gh-pages branch for deploy | GitHub Pages only supports root or /docs; gh-pages branch solves subfolder | Shipped ✓ |
 
 ---
-*Last updated: 2026-03-20 after initial project questioning*
+*Last updated: 2026-03-21 — v1.0 shipped*

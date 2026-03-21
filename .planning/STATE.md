@@ -2,10 +2,9 @@
 
 ## Current Position
 
-Phase: 5 — Polish & Deployment
-Plan: 05-01 — Accessibility, README, performance, galaxy background
-Status: Plan 05-01 complete, awaiting GitHub Pages deployment
-Last activity: 2026-03-21 — Plan 05-01 fully executed and user-approved
+Milestone: v1.0 — First Light ✓ SHIPPED
+Status: milestone complete — ready for v2.0 planning
+Last activity: 2026-03-21 — UAT 8/8 passed, archived, tagged v1.0
 
 ## Completed Phases
 
@@ -69,3 +68,13 @@ All site code lives in: `Episodio4/`
 - All vendor libraries self-hosted in `Episodio4/assets/js/vendor/`
 - Must work in Chrome, Firefox, Safari, Edge without plugins
 - Mobile-friendly — simulations responsive, touch events handled
+
+---
+
+## Milestone History
+
+### v1.0 — First Light
+Completed: 2026-03-21
+Phases: 5
+Requirements delivered: ARCH-01–09, NAV-01–07, CONT-01–07, SIM-01–08, VIS-01–07, PERF-01–04
+Key achievements: Shipped a full static physics education site with 13 interactive Canvas 2D simulations covering Eras 1–2 (Ancient through Scientific Revolution). Deployed to GitHub Pages at https://faviovazquez.github.io/roadtoreality/. Landing page features a noise-based procedural galaxy background with Perlin fBm filamentary nebulae, dust-lane Milky Way, and animated starfield. All 50 stop navigation chain functional; 37 stub pages ready for v2.0 implementation.

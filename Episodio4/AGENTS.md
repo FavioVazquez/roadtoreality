@@ -6,10 +6,10 @@
 
 ## Current Phase
 
-**Milestone:** v1.0 — First Light
-**Phase:** 5 — Polish & Deployment
-**Status:** planning
-**Last updated:** 2026-03-20
+**Milestone:** v1.0 — First Light ✓ shipped
+**Phase:** —
+**Status:** milestone complete — ready for v2.0 planning
+**Last updated:** 2026-03-21
 
 ---
 
@@ -168,9 +168,10 @@ function loop(ts) {
 
 All in `.planning/`:
 - `PROJECT.md` — project vision and milestone history
-- `REQUIREMENTS.md` — REQ-IDs for all v1.0 requirements
-- `ROADMAP.md` — 5-phase plan (Phases 1-2 complete, 3-4 executed, 5 pending)
-- `STATE.md` — current phase, last activity, accumulated context
-- `DECISIONS.md` — 9 architectural decisions with context and consequences
+- `ROADMAP.md` — completed milestones + v2.0 candidates
+- `STATE.md` — current milestone status, accumulated context, milestone history
+- `DECISIONS.md` — 10 architectural decisions with context and consequences
+- `milestones/v1.0-ROADMAP.md` — archived v1.0 full phase roadmap
+- `milestones/v1.0-REQUIREMENTS.md` — archived v1.0 requirements
 - `research/` — ARCHITECTURE.md, FEATURES.md, STACK.md, PITFALLS.md
 - `phases/` — per-phase CONTEXT.md, RESEARCH.md, PLAN.md, SUMMARY.md, VERIFICATION.md
