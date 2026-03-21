@@ -80,6 +80,18 @@
 
 ---
 
+## Phase 7.1: Episodio4 Article — Learnship Behind the Scenes *(INSERTED)*
+
+**Goal:** Write a long-form Spanish article documenting how Learnship is being used to build "How Physics Works" — covering the discuss → plan → execute → verify cycle, phase progress, and what agentic collaboration looks like in practice.
+**Status:** [ ] Not started
+**Depends on:** Phase 07
+**Note:** Inserted between Phase 07 and Phase 08. Content lives in the roadtoreality repo as a Markdown article.
+
+### Plans
+*Not yet planned — run `plan-phase 7.1`*
+
+---
+
 ## Phase 08 — Era Gap Fills (Stops 002, 014)
 
 **Goal:** Complete the two missing stops so Eras 1–2 are fully implemented.
