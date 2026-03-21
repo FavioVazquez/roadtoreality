@@ -413,3 +413,32 @@
   margin-top: var(--space-1);
   line-height: 1.4;
 }
+
+/* ── Skeleton screen loader ──────────────────────────────── */
+.stop-skeleton {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.14 0 0);
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stop-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.22 0 0 / 0.6) 50%,
+    transparent 100%
+  );
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

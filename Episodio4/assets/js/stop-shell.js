@@ -59,6 +59,26 @@
 
   function _initSimObserver() {
     var mount = document.getElementById('sim-mount');
+
+    /* Remove skeleton loader once SimAPI is set */
+    var skeleton = document.querySelector('.stop-skeleton');
+    if (skeleton && window.SimAPI) {
+      skeleton.remove();
+    } else if (skeleton) {
+      /* Poll briefly until SimAPI is available, then remove */
+      var _skPoll = setInterval(function () {
+        if (window.SimAPI) {
+          skeleton.remove();
+          clearInterval(_skPoll);
+        }
+      }, 50);
+      /* Safety: remove after 3s regardless */
+      setTimeout(function () {
+        if (skeleton.parentNode) skeleton.remove();
+        clearInterval(_skPoll);
+      }, 3000);
+    }
+
     if (!mount) return;
 
     var observer = new IntersectionObserver(function (entries) {
