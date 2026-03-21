@@ -65,10 +65,14 @@
       entries.forEach(function (entry) {
         var api = window.SimAPI;
         if (!api) return;
+
+        var wrapper = mount.closest('.sim-wrapper');
+        var autoplay = wrapper ? wrapper.dataset.autoplay !== 'false' : true;
+
         if (entry.isIntersecting) {
-          if (typeof api.start === 'function') api.start();
+          if (autoplay && typeof api.start === 'function') api.start();
           var dot = document.querySelector('.sim-caption__dot');
-          if (dot) dot.classList.add('is-running');
+          if (dot && autoplay) dot.classList.add('is-running');
         } else {
           if (typeof api.pause === 'function') api.pause();
           var dot = document.querySelector('.sim-caption__dot');
@@ -78,6 +82,30 @@
     }, { threshold: 0.15 });
 
     observer.observe(mount);
+  }
+
+  function _bindArrowNav(cfg) {
+    if (!cfg) return;
+    document.addEventListener('keydown', function (e) {
+      /* Guard 1: ignore when an input/select/textarea is focused */
+      var active = document.activeElement;
+      if (active && (
+        active.tagName === 'INPUT' ||
+        active.tagName === 'TEXTAREA' ||
+        active.tagName === 'SELECT'
+      )) return;
+
+      /* Guard 2: ignore when search modal is open */
+      var modal = document.getElementById('search-modal');
+      if (modal && modal.hasAttribute('open')) return;
+
+      if (e.key === 'ArrowLeft' && cfg.prev) {
+        window.location.href = '../' + cfg.prev + '/index.html';
+      }
+      if (e.key === 'ArrowRight' && cfg.next) {
+        window.location.href = '../' + cfg.next + '/index.html';
+      }
+    });
   }
 
   function _bindPlayButton() {
@@ -137,6 +165,7 @@
     config = _readConfig();
     _renderBreadcrumb(config);
     _renderStopNav(config);
+    _bindArrowNav(config);
     _initSimObserver();
     _bindPlayButton();
     _bindResetButton();
