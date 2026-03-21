@@ -1,4 +1,4 @@
-/* sim.js — 027 Planck: blackbody spectrum vs Rayleigh-Jeans — teaser */
+/* sim.js — 027 Planck: blackbody spectrum, temperature sweep — teaser */
 (function () {
   'use strict';
   var mount = document.getElementById('sim-mount');
@@ -19,23 +19,23 @@
   var t = 0;
   var running = false;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var COLOR = '#a05cc8';
 
-  var ox = W * 0.1, oy = H * 0.85, gW = W * 0.82, gH = H * 0.7;
+  var ox = W * 0.12, oy = H * 0.82, gW = W * 0.80, gH = H * 0.65;
 
-  function planck(freq) {
-    /* Normalized Planck distribution */
-    var x = freq * 3;
+  function planck(freq, T) {
+    var scale = T / 4000;
+    var x = freq * 3 / scale;
     if (x < 0.01) return 0;
-    return (x * x * x) / (Math.exp(x) - 1) * 0.35;
-  }
-  function rayleigh(freq) {
-    return freq * freq * 0.22;
+    return (x * x * x) / (Math.exp(Math.min(x, 20)) - 1) * 0.32 * scale;
   }
 
-  function drawFrame() {
+  function rayleigh(freq, T) {
+    return freq * freq * (T / 4000) * 0.20;
+  }
+
+  function drawScene(T) {
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(160,92,200,0.06)';
+    ctx.fillStyle = 'oklch(0.10 0.01 285)';
     ctx.fillRect(0, 0, W, H);
 
     /* Axes */
@@ -44,56 +44,77 @@
     ctx.beginPath();
     ctx.moveTo(ox, oy - gH); ctx.lineTo(ox, oy); ctx.lineTo(ox + gW, oy);
     ctx.stroke();
+
     ctx.fillStyle = 'rgba(160,92,200,0.6)';
     ctx.font = '11px monospace';
-    ctx.fillText('frequency →', ox + gW * 0.7, oy + 14);
+    ctx.fillText('frequency →', ox + gW * 0.68, oy + 14);
     ctx.fillText('intensity', ox - 8, oy - gH + 12);
 
-    /* Rayleigh-Jeans (ultraviolet catastrophe) */
+    /* Rayleigh-Jeans: diverges at high frequency */
     ctx.beginPath();
-    for (var i = 0; i <= 80; i++) {
-      var freq = i / 80;
-      var val = rayleigh(freq);
+    for (var i = 0; i <= 90; i++) {
+      var freq = i / 90;
+      var val = rayleigh(freq, T);
       var x = ox + freq * gW;
-      var y = oy - Math.min(val, 1.2) * gH;
+      var y = oy - Math.min(val, 1.1) * gH;
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = 'rgba(200,80,80,0.7)';
+    ctx.strokeStyle = 'rgba(220,80,80,0.75)';
     ctx.lineWidth = 2;
     ctx.setLineDash([6, 4]);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(200,80,80,0.7)';
-    ctx.font = '11px monospace';
-    ctx.fillText('Rayleigh-Jeans (catastrophe)', ox + gW * 0.45, oy - gH * 0.4);
+    ctx.fillStyle = 'rgba(220,80,80,0.75)';
+    ctx.fillText('Rayleigh-Jeans →∞', ox + gW * 0.42, oy - gH * 0.88);
 
     /* Planck curve */
-    var glow = 0.8 + 0.2 * Math.sin(t * 2);
+    var peakFreq = 0;
+    var peakVal = 0;
     ctx.beginPath();
-    for (var j = 0; j <= 80; j++) {
-      var f = j / 80;
-      var p = planck(f);
+    for (var j = 0; j <= 90; j++) {
+      var f = j / 90;
+      var p = planck(f, T);
+      if (p > peakVal) { peakVal = p; peakFreq = f; }
       var px = ox + f * gW;
-      var py = oy - Math.min(p, 1.1) * gH;
+      var py = oy - Math.min(p, 1.05) * gH;
       if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     }
-    ctx.strokeStyle = 'rgba(255,255,255,' + glow + ')';
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
     ctx.lineWidth = 2.5;
     ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.font = '11px monospace';
-    ctx.fillText("Planck's law", ox + gW * 0.25, oy - gH * 0.78);
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.fillText("Planck's law ✓", ox + gW * 0.18, oy - gH * 0.78);
 
+    /* Moving peak marker */
+    var peakX = ox + peakFreq * gW;
+    ctx.strokeStyle = 'rgba(160,92,200,0.5)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath();
+    ctx.moveTo(peakX, oy - Math.min(peakVal, 1.05) * gH - 6);
+    ctx.lineTo(peakX, oy);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* Temperature label */
+    ctx.fillStyle = 'rgba(200,160,255,0.9)';
+    ctx.font = 'bold 12px monospace';
+    ctx.fillText('T = ' + Math.round(T) + ' K', ox + gW * 0.62, oy - gH * 0.55);
+  }
+
+  function drawFrame() {
+    var T = 3000 + 2500 * (0.5 + 0.5 * Math.sin(t * 0.4));
+    drawScene(T);
     t += 0.025;
     if (running && !reduced) raf = requestAnimationFrame(drawFrame);
   }
 
-  function drawStatic() { t = 0; drawFrame(); }
+  function drawStatic() { t = 0; drawScene(3000); }
 
   window.SimAPI = {
-    start: function () { if (running) return; running = true; if (reduced) { drawStatic(); return; } raf = requestAnimationFrame(drawFrame); },
-    pause: function () { running = false; if (raf) { cancelAnimationFrame(raf); raf = null; } },
-    reset: function () { window.SimAPI.pause(); t = 0; drawStatic(); },
+    start:   function () { if (running) return; running = true; if (reduced) { drawStatic(); return; } raf = requestAnimationFrame(drawFrame); },
+    pause:   function () { running = false; if (raf) { cancelAnimationFrame(raf); raf = null; } },
+    reset:   function () { window.SimAPI.pause(); t = 0; drawStatic(); },
     destroy: function () { window.SimAPI.pause(); if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }
   };
 
