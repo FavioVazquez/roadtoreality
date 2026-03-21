@@ -6,9 +6,9 @@
 
 ## Current Phase
 
-**Milestone:** v1.0 — First Light ✓ shipped
-**Phase:** —
-**Status:** milestone complete — ready for v2.0 planning
+**Milestone:** v2.0 — Full Spectrum
+**Phase:** 6.1 — Episodio4 Article — Learnship Behind the Scenes
+**Status:** planning
 **Last updated:** 2026-03-21
 
 ---
