@@ -2,9 +2,11 @@
 
 ## Current Position
 
-Milestone: v1.0 — First Light ✓ SHIPPED
-Status: milestone complete — ready for v2.0 planning
-Last activity: 2026-03-21 — UAT 8/8 passed, archived, tagged v1.0
+Milestone: v2.0 — Full Spectrum
+Phase: 1 — Foundation & UX Polish
+Plan: —
+Status: Ready to execute Phase 1
+Last activity: 2026-03-21 — v2.0 started (9 phases, 59 requirements, research complete)
 
 ## Completed Phases
 

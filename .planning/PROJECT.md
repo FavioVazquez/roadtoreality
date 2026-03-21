@@ -16,9 +16,11 @@ Every visitor leaves understanding something real about how the universe works �
 
 **Live:** https://faviovazquez.github.io/roadtoreality/
 
-## Current Milestone: v2.0 (planning pending)
+## Current Milestone: v2.0 — Full Spectrum
 
-**Goal:** Expand to Eras 3–5, add search, polish social sharing and KaTeX equations.
+**Goal:** Complete all 50 stops (Eras 3–5 + gap fills 002/014), add client-side search, KaTeX equation rendering, Open Graph images per stop, and ship UX polish throughout.
+
+**Phases:** 9 | **Requirements:** 59 | **Started:** 2026-03-21
 
 ## Requirements
 
@@ -36,10 +38,15 @@ Every visitor leaves understanding something real about how the universe works �
 
 ### Active (v2.0)
 
-- [ ] Eras 3–5 fully implemented stops (Classical Physics → Contemporary)
-- [ ] Client-side search
-- [ ] KaTeX equation rendering
-- [ ] Open Graph images per stop
+- [ ] Stop 002 (Pythagoras) and 014 (Hooke's Law) fully implemented
+- [ ] Era 3 — Classical Physics: stops 015–026 fully implemented (12 stops)
+- [ ] Era 4 — Modern Physics: stops 027–039 fully implemented (13 stops)
+- [ ] Era 5 — Contemporary Physics: stops 040–050 fully implemented (11 stops)
+- [ ] Client-side search (Fuse.js, Cmd/Ctrl+K modal)
+- [ ] KaTeX equation rendering (self-hosted, auto-render)
+- [ ] Open Graph images per stop (SVG, 1200×630)
+- [ ] Stub stop pages (37 stubs → dedicated landing pages with context)
+- [ ] UX polish (line-height, contrast, keyboard nav, mobile viewport, stub cards)
 
 ### Out of Scope
 
@@ -75,4 +82,4 @@ Every visitor leaves understanding something real about how the universe works �
 | gh-pages branch for deploy | GitHub Pages only supports root or /docs; gh-pages branch solves subfolder | Shipped ✓ |
 
 ---
-*Last updated: 2026-03-21 — v1.0 shipped*
+*Last updated: 2026-03-21 — v2.0 started*
