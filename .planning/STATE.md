@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 06 — Foundation & UX Polish (v2.0 phases run 06–14; v1.0 was 01–05)
-Plan: 06-03 complete
-Status: Plan 06-03 executed — Fuse.js search modal wired to all 50 stop pages and landing page; ready for next plan in phase 06
-Last activity: 2026-03-21 — 06-03 Fuse.js Search complete (fuse.min.js, search.css, search.js, all 51 pages updated)
+Plan: 06-04 complete
+Status: Plan 06-04 executed — stub pages upgraded to first-class citizens: clickable cards, 38 canvas teaser animations, full page content, arrow-key nav, skeleton loader
+Last activity: 2026-03-21 — 06-04 Stub Pages + stop-shell.js Updates complete
 
 ## Completed Phases
 
@@ -69,6 +69,7 @@ All site code lives in: `Episodio4/`
 - 06-01: CSS & Global UX Polish — complete
 - 06-02: KaTeX Integration — complete
 - 06-03: Fuse.js Search — complete
+- 06-04: Stub Pages + stop-shell.js Updates — complete
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
