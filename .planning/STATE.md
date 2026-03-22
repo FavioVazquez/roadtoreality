@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 07 — Open Graph Images
 Plan: —
-Status: Phase 6.1 ✓ complete (25/25 must-haves verified) — ready for discuss-phase 07
-Last activity: 2026-03-21 — Phase 6.1 fully executed and verified
+Status: Phase 07 ✓ complete — ready for Phase 08
+Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all stop pages
 
 ## Completed Phases
 
@@ -64,6 +64,7 @@ All site code lives in: `Episodio4/`
 - Galaxy background: Perlin fBm noise procedural rendering (DEC-010)
 - All oklch color tokens: hue 285 → 0 (neutral black, no blue cast)
 - GitHub Pages: deploy from /Episodio4 subfolder (confirmed)
+- OG SVG era hex colors (approx of oklch): ancient=#c4922a, revolution=#4ca86b, classical=#5b8fd4, modern=#b06fd0, contemporary=#d45b5b
 
 ### Phase 06 Plans Progress
 - 06-01: CSS & Global UX Polish — complete
@@ -76,6 +77,10 @@ All site code lives in: `Episodio4/`
 ### Phase 6.1 Plans Progress
 - 06.1-01: Expand "El proyecto de ejemplo" section — complete (2026-03-21)
 - 06.1-02: Strengthen "La conexión" section with Ep2/Ep3 explicit callbacks — complete (2026-03-21)
+
+### Phase 07 Plans Progress
+- 07-01: OG SVG Generation — complete (2026-03-22): 50 SVG files at Episodio4/stops/*/og-image.svg
+- 07-02: OG meta tag injection — complete (2026-03-22): scripts/inject-og-meta.mjs + 50 stop pages updated
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages

@@ -87,9 +87,9 @@
 
 | REQ-ID | Requirement |
 |--------|-------------|
-| FEAT-OG-01 | Each implemented stop has an `og-image.svg` (1200×630) with era-colored background, title, scientist, year badge, site branding |
-| FEAT-OG-02 | Each stop page includes `og:title`, `og:description`, `og:image`, `og:type`, and `twitter:card` meta tags |
-| FEAT-OG-03 | A generation script (`scripts/generate-og-svgs.mjs`) reads stops.json and produces all SVG files |
+| FEAT-OG-01 | Each implemented stop has an `og-image.svg` (1200×630) with era-colored background, title, scientist, year badge, site branding | ✓ Phase 07 |
+| FEAT-OG-02 | Each stop page includes `og:title`, `og:description`, `og:image`, `og:type`, and `twitter:card` meta tags | ✓ Phase 07 |
+| FEAT-OG-03 | A generation script (`scripts/generate-og-svgs.mjs`) reads stops.json and produces all SVG files | ✓ Phase 07 |
 
 ### UX — Polish & Usability
 
