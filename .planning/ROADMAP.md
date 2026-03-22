@@ -82,12 +82,14 @@
 
 **Requirements:** FEAT-OG-01–03
 **Dir:** `07-v2-open-graph`
+**Context:** `07-CONTEXT.md` ✓
+**Status:** ✓ Complete — 2026-03-22
 
 **Plan 07-01: OG SVG Generation** ✓ *complete 2026-03-22*
 - Write `scripts/generate-og-svgs.mjs`: reads stops.json, generates one SVG per stop (era color, title, scientist, year badge, branding)
 - Run script; commit all 50 SVG files to `stops/{slug}/og-image.svg`
 
-**Plan 07-02: OG Meta Tags**
+**Plan 07-02: OG Meta Tags** ✓ *complete 2026-03-22*
 - Add `og:title`, `og:description`, `og:image`, `og:type`, `twitter:card` meta tags to every stop's `index.html`
 - Test: Twitter Card Validator + LinkedIn Post Inspector on 3–5 stops
 
