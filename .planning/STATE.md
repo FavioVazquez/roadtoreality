@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 08 — Era Gap Fills
-Plan: 08-01 ✓ complete, 08-02 ✓ complete
-Status: Phase 08 fully executed — Stops 002 and 014 implemented
-Last activity: 2026-03-22 — Phase 08 complete: Stop 002 Pythagoras + Stop 014 Hooke's Law
+Plan: —
+Status: Phase 08 ✓ complete — ready for Phase 09
+Last activity: 2026-03-22 — Phase 08 complete: Eras 1–2 fully implemented (15 stops)
 
 ## Completed Phases
 

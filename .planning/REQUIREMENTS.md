@@ -11,8 +11,8 @@
 
 | REQ-ID | Requirement |
 |--------|-------------|
-| SIM-GAP-01 | Stop 002 (Pythagoras): interactive string simulation using Web Audio API; user controls string length and hears/sees frequency ratios; visualizes harmonics |
-| SIM-GAP-02 | Stop 014 (Hooke's Law): spring + weights Canvas 2D; live F vs. x graph; shows elastic and plastic regimes; stress-strain curve for multiple materials |
+| SIM-GAP-01 | Stop 002 (Pythagoras): interactive string simulation using Web Audio API; user controls string length and hears/sees frequency ratios; visualizes harmonics | ✓ Phase 08 |
+| SIM-GAP-02 | Stop 014 (Hooke's Law): spring + weights Canvas 2D; live F vs. x graph; shows elastic and plastic regimes; stress-strain curve for multiple materials | ✓ Phase 08 |
 
 ### SIM-CLS — Era 3: Classical Physics Simulations (015–026)
 
