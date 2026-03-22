@@ -37,7 +37,7 @@ for (const stop of stops) {
 
   const escapedTitle = escapeHtmlAttr(stop.title);
   const escapedDescription = escapeHtmlAttr(stop.description);
-  const ogImageUrl = `https://faviovazquez.github.io/roadtoreality/stops/${stop.id}/og-image.svg`;
+  const ogImageUrl = `https://faviovazquez.github.io/roadtoreality/Episodio4/stops/${stop.id}/og-image.svg`;
 
   const injectionBlock =
     `\n  <meta property="og:title" content="${escapedTitle} — How Physics Works">` +
