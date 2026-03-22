@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 07 — Open Graph Images
-Plan: —
-Status: Phase 07 ✓ complete — ready for Phase 08
-Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all stop pages
+Phase: 08 — Era Gap Fills
+Plan: 08-02 ✓ complete (08-01 pending)
+Status: Phase 08 in progress — Stop 014 implemented; Stop 002 pending
+Last activity: 2026-03-22 — Phase 08-02 complete: Stop 014 Hooke's Law full simulation
 
 ## Completed Phases
 
@@ -26,7 +26,7 @@ Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all s
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (12)
+## Full Simulations Built (13)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
 - 004 Aristotle: two balls dropped, adjustable mass + air resistance
@@ -39,6 +39,7 @@ Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all s
 - 011 Kepler: RK4 orbital mechanics, equal-areas triangles, adjustable eccentricity
 - 012 Newton laws: F=ma block, friction, velocity graph, wall reaction
 - 013 Newton gravity: Newton's cannon, projectile→orbit RK4, escape velocity
+- 014 Hooke's Law: split canvas spring + F vs. x graph, elastic/plastic/rupture, 3 material presets
 
 ## Milestone
 
@@ -81,6 +82,10 @@ All site code lives in: `Episodio4/`
 ### Phase 07 Plans Progress
 - 07-01: OG SVG Generation — complete (2026-03-22): 50 SVG files at Episodio4/stops/*/og-image.svg
 - 07-02: OG meta tag injection — complete (2026-03-22): scripts/inject-og-meta.mjs + 50 stop pages updated
+
+### Phase 08 Plans Progress
+- 08-01: Stop 002 Pythagoras Harmony — pending
+- 08-02: Stop 014 Hooke's Law — complete (2026-03-22): full sim.js, updated index.html, isStub: false
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
