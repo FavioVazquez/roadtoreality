@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 07 — Open Graph Images
-Plan: —
-Status: Phase 07 ✓ complete — ready for Phase 08
-Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all stop pages
+Phase: 08 — Era Gap Fills
+Plan: 08-01 ✓ complete
+Status: Phase 08 in progress — 08-01 done, 08-02 pending
+Last activity: 2026-03-22 — Phase 08-01 complete: Stop 002 Pythagoras full sim (Web Audio + Canvas standing wave)
 
 ## Completed Phases
 
@@ -26,8 +26,9 @@ Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all s
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (12)
+## Full Simulations Built (13)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
+- 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
 - 004 Aristotle: two balls dropped, adjustable mass + air resistance
 - 005 Archimedes: objects dropped into water, buoyancy force arrows
@@ -81,6 +82,10 @@ All site code lives in: `Episodio4/`
 ### Phase 07 Plans Progress
 - 07-01: OG SVG Generation — complete (2026-03-22): 50 SVG files at Episodio4/stops/*/og-image.svg
 - 07-02: OG meta tag injection — complete (2026-03-22): scripts/inject-og-meta.mjs + 50 stop pages updated
+
+### Phase 08 Plans Progress
+- 08-01: Stop 002 Pythagoras — complete (2026-03-22): full Web Audio + Canvas standing wave sim, 6 ratio buttons
+- 08-02: Stop 014 Alchemy to Chemistry — pending
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
