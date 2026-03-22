@@ -83,7 +83,7 @@
 **Requirements:** FEAT-OG-01–03
 **Dir:** `07-v2-open-graph`
 
-**Plan 07-01: OG SVG Generation**
+**Plan 07-01: OG SVG Generation** ✓ *complete 2026-03-22*
 - Write `scripts/generate-og-svgs.mjs`: reads stops.json, generates one SVG per stop (era color, title, scientist, year badge, branding)
 - Run script; commit all 50 SVG files to `stops/{slug}/og-image.svg`
 
