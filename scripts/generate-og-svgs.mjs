@@ -61,7 +61,8 @@ function esc(str) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // ------------------------------------------------------------------
@@ -95,7 +96,7 @@ function generateSVG(stop) {
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 
   <!-- Background -->
-  <rect width="1200" height="630" fill="#0d0d0f"/>
+  <rect width="1200" height="630" fill="#1a1a1a"/>
 
   <!-- Subtle grid pattern -->
   <defs>
@@ -104,7 +105,7 @@ function generateSVG(stop) {
     </pattern>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="${accent}" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="#0d0d0f"   stop-opacity="0"/>
+      <stop offset="100%" stop-color="#1a1a1a"   stop-opacity="0"/>
     </linearGradient>
   </defs>
 
