@@ -7,8 +7,8 @@
 ## Current Phase
 
 **Milestone:** v2.0 — Full Spectrum
-**Phase:** 07 — Open Graph Images
-**Status:** planning
+**Phase:** 07 — Open Graph Images ✓ complete → Phase 08 — Era Gap Fills
+**Status:** verifying
 **Last updated:** 2026-03-22
 
 ---
