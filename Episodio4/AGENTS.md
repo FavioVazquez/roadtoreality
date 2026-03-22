@@ -7,9 +7,9 @@
 ## Current Phase
 
 **Milestone:** v2.0 — Full Spectrum
-**Phase:** 6.1 — Episodio4 Article ✓ complete → Phase 07 — Open Graph Images
-**Status:** verifying
-**Last updated:** 2026-03-21
+**Phase:** 07 — Open Graph Images
+**Status:** planning
+**Last updated:** 2026-03-22
 
 ---
 
