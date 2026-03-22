@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 08 — Era Gap Fills
-Plan: 08-01 ✓ complete
-Status: Phase 08 in progress — 08-01 done, 08-02 pending
-Last activity: 2026-03-22 — Phase 08-01 complete: Stop 002 Pythagoras full sim (Web Audio + Canvas standing wave)
+Plan: 08-01 ✓ complete, 08-02 ✓ complete
+Status: Phase 08 fully executed — Stops 002 and 014 implemented
+Last activity: 2026-03-22 — Phase 08 complete: Stop 002 Pythagoras + Stop 014 Hooke's Law
 
 ## Completed Phases
 
@@ -40,6 +40,7 @@ Last activity: 2026-03-22 — Phase 08-01 complete: Stop 002 Pythagoras full sim
 - 011 Kepler: RK4 orbital mechanics, equal-areas triangles, adjustable eccentricity
 - 012 Newton laws: F=ma block, friction, velocity graph, wall reaction
 - 013 Newton gravity: Newton's cannon, projectile→orbit RK4, escape velocity
+- 014 Hooke's Law: split canvas spring + F vs. x graph, elastic/plastic/rupture, 3 material presets
 
 ## Milestone
 
@@ -84,8 +85,8 @@ All site code lives in: `Episodio4/`
 - 07-02: OG meta tag injection — complete (2026-03-22): scripts/inject-og-meta.mjs + 50 stop pages updated
 
 ### Phase 08 Plans Progress
-- 08-01: Stop 002 Pythagoras — complete (2026-03-22): full Web Audio + Canvas standing wave sim, 6 ratio buttons
-- 08-02: Stop 014 Alchemy to Chemistry — pending
+- 08-01: Stop 002 Pythagoras — complete (2026-03-22): Web Audio + Canvas standing wave sim, 6 ratio buttons
+- 08-02: Stop 014 Hooke's Law — complete (2026-03-22): spring + F vs. x graph, 3 materials, snap animation
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
