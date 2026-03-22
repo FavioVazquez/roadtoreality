@@ -133,6 +133,13 @@ function generateSVG(stop) {
     font-size="15" font-weight="400"
     fill="#ffffff" fill-opacity="0.35">HOW PHYSICS WORKS</text>
 
+  <!-- Stop number — large ghost watermark (lower-right, decorative) -->
+  <text x="1150" y="620" text-anchor="end"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="260" font-weight="700"
+    fill="${accent}" fill-opacity="0.07"
+    letter-spacing="-8">${esc(orderLabel)}</text>
+
   <!-- Title lines -->
   ${titleElems}
 
