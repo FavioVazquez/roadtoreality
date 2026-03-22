@@ -1,0 +1,16 @@
+{
+  "name": "roadtoreality",
+  "version": "1.0.0",
+  "description": "Road to Reality — a research series by Favio Vázquez",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FavioVazquez/roadtoreality.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
