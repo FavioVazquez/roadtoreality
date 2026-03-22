@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 07 — Open Graph Images
 Plan: —
-Status: Phase 06 ✓ complete (35/35 must-haves verified) — ready for discuss-phase 07
-Last activity: 2026-03-21 — Phase 06 fully executed and verified
+Status: Phase 6.1 ✓ complete (25/25 must-haves verified) — ready for discuss-phase 07
+Last activity: 2026-03-21 — Phase 6.1 fully executed and verified
 
 ## Completed Phases
 
@@ -73,11 +73,21 @@ All site code lives in: `Episodio4/`
 - 06-05-FIX: Teaser Animation Quality (027 Planck + 040 Fission) — complete
 - 06-06-FIX: Search Discoverability (search trigger button, all 51 pages) — complete
 
+### Phase 6.1 Plans Progress
+- 06.1-01: Expand "El proyecto de ejemplo" section — complete (2026-03-21)
+- 06.1-02: Strengthen "La conexión" section with Ep2/Ep3 explicit callbacks — complete (2026-03-21)
+
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
 - All vendor libraries self-hosted in `Episodio4/assets/js/vendor/`
 - Must work in Chrome, Firefox, Safari, Edge without plugins
 - Mobile-friendly — simulations responsive, touch events handled
+
+---
+
+## Roadmap Evolution
+
+- Phase 6.1 inserted after Phase 06: Spanish article documenting Learnship workflow used to build How Physics Works (discuss → plan → execute → verify cycle, current status, agentic collaboration behind the scenes)
 
 ---
 

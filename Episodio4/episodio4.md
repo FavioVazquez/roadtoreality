@@ -151,11 +151,74 @@ Cada paso tiene un propósito específico y un output concreto. No es burocracia
 
 ## El proyecto de ejemplo
 
-*[Esta sección está siendo construida en tiempo real mientras escribo este episodio. La incluiré completa en la versión publicada, con transcripciones reales de las conversaciones con el agente, el estado del repositorio en cada paso, y las decisiones que tomé y por qué.]*
+El proyecto de ejemplo no es un proyecto de ejemplo. Es un sitio estático de educación científica que lleva meses en construcción, con 50 paradas interactivas que cubren la historia de la física desde Thales de Mileto hasta los agujeros negros y la computación cuántica. Se llama "How Physics Works" y vive en `Episodio4/` dentro del mismo repositorio donde estás leyendo este artículo — literalmente: la carpeta que contiene este artículo también contiene el sitio que describe.
 
-*Lo que puedo adelantar: el proyecto es una aplicación real, no un ejemplo de juguete. Tiene API, base de datos, autenticación, y UI. Lo construí en cuatro fases usando el Phase Loop completo. El tiempo total de construcción fue significativamente menor de lo que hubiera tomado sin `learnship`, pero más importante que el tiempo: al terminar la fase 4, pude responder preguntas sobre cualquier decisión arquitectónica del proyecto sin tener que ir al código para entender por qué las cosas estaban como estaban.*
+Lo elegí porque es el tipo de proyecto donde el Phase Loop demuestra su valor o queda expuesto como ceremonia. No es un script de 50 líneas. No es un prototipo desechable. Tiene catorce fases planificadas, cincuenta páginas HTML individuales, física simulada en canvas 2D con integradores numéricos reales, una búsqueda con fuzzy matching, ecuaciones matemáticas renderizadas en KaTeX, y un lector que eventualmente va a llegar a la parada 050 esperando que todo funcione. **Es el tipo de proyecto donde la coherencia a través del tiempo importa de verdad.**
 
-*Esa es la métrica que importa. No cuánto código generó el agente. Cuánto entendí del código que generó.*
+![El sitio How Physics Works — landing page con el fondo de galaxia procedural y la grilla de paradas](assets/screenshot-landing.png)
+
+---
+
+La primera decisión del proyecto no fue sobre física. Fue sobre dónde vivía el código. El mismo repositorio, `roadtoreality/`, alberga artículos de episodios anteriores y va a albergar proyectos futuros. Poner todo el código del sitio en la raíz hubiera contaminado esa estructura. La decisión que se registró como `DEC-001` fue directa: todo el código generado — HTML, CSS, JS, fuentes, datos — vive bajo `Episodio4/`. Los artefactos de planning viven bajo `.planning/`. Sin excepciones. Eso puede parecer trivial hasta que llegas a la fase 06 y hay un agente nuevo que necesita configurar GitHub Pages para servir desde el subdirectorio correcto. `DEC-001` le dice exactamente qué hacer antes de que pregunte.
+
+La segunda decisión del proyecto fue sobre el build pipeline. La pregunta que surgió en el primer `/discuss-phase` fue simple: ¿Vite? ¿Eleventy? ¿Webpack? La respuesta fue no a los tres, y esa negación se guardó en `DEC-002`: puro HTML, CSS y JavaScript sin transpiladores, sin bundlers, sin pasos de build. Vite añade complejidad. Eleventy es innecesario para páginas HTML estáticas. El sitio tiene que funcionar con `python3 -m http.server` desde el directorio `Episodio4/` sin preprocessing. Eso es suficiente. Sin `DEC-002`, cada agente que llegue después tiene la tentación completamente razonable de proponer modernizar el toolchain mientras trabaja en otra cosa. Esa propuesta no es incorrecta en abstracto. Es incorrecta para *este* proyecto, por razones que ahora están documentadas. `DEC-002` descarta la conversación antes de que empiece.
+
+---
+
+La fase 02 estableció la decisión que más consecuencias tuvo: `stops.json` como única fuente de verdad para las 50 paradas. Toda la metadata — nombre del científico, período histórico, era, descripción, si está implementado o es stub — vive en un solo archivo. `nav.js` lo lee para renderizar la grilla. Cada página de parada tiene un JSON script tag que espeja los campos relevantes. Con eso en su lugar, agregar la parada 051 en el futuro requiere un solo cambio en un solo archivo. Sin eso, son cincuenta actualizaciones coordinadas esperando a desincronizarse.
+
+Las fases 03 y 04 construyeron las simulaciones de las Eras 1 y 2: Thales, Demócrito, Aristóteles, Arquímedes, Eratóstenes, Ptolomeo, Copérnico, Galileo, Kepler, Newton. Doce simulaciones interactivas en canvas 2D, más la decimotercera que vino después. La decisión que definió esas fases fue `DEC-006`: integradores Runge-Kutta de cuarto orden para mecánica orbital y péndulos, Euler para simulaciones simples de corta duración. Eso no es obvio mirando el código. Un agente que llegue al archivo `sim.js` del péndulo de Galileo y vea RK4 podría perfectamente asumir que es over-engineering y proponerse simplificarlo. `DEC-006` explica por qué eso sería un error: los sistemas que orbitan pierden energía con Euler, y esa pérdida hace que las órbitas espiralen hacia adentro en lugar de mantenerse estables. La cañón de Newton que se convierte en satélite en la parada 013 no puede funcionar con Euler — la órbita colapsaría en segundos de simulación.
+
+![La parada 013 — cañón de Newton con mecánica orbital RK4, ajuste de velocidad inicial, trayectoria a escape](assets/screenshot-sim-013.png)
+
+La fase 01 también estableció algo menos técnico pero igualmente importante: la estética del sitio. El brief fue explícito — más pulido que el sitio de referencia, oscuro, elegante, lujoso. Eso llevó a una decisión que quedó como `DEC-010`: el fondo de galaxia de la landing page usa ruido Perlin fBm renderizado píxel por píxel en un canvas offscreen a cuarta resolución, luego escalado. El enfoque inicial fue gradientes radiales apilados — producían blobs de color suaves sin estructura interna. Las nebulosas reales tienen estructura filamentaria, vacíos oscuros, polvo. Eso requiere evaluación de funciones de ruido por píxel, no primitivas de gradiente. **`DECISIONS.md` no es un registro de lo que construiste. Es un registro de lo que decidiste no construir, y por qué. Esa es la parte que las ventanas de contexto olvidan.**
+
+---
+
+La fase 05 desplegó el sitio. GitHub Pages, servido desde el subdirectorio `Episodio4/`, exactamente como especificaba `DEC-001`. El v1.0 quedó en línea con 13 simulaciones interactivas completas y 37 páginas stub listas para las fases siguientes.
+
+La fase 06 añadió KaTeX para ecuaciones matemáticas en todas las paradas, Fuse.js para búsqueda con fuzzy matching por `Cmd+K` / `Ctrl+K`, polish de UX global — altura de viewport en móvil, navegación por teclado con las flechas ←→ entre paradas — y 37 páginas stub con animaciones de teaser animadas en canvas, una por concepto físico. No placeholders en gris. Cada stub es una página completa que hace querer ver la implementación real.
+
+![El modal de búsqueda Fuse.js — resultados con tarjetas de color por era, navegación por teclado](assets/screenshot-search.png)
+
+![Una página stub — animación de teaser del concepto físico, navegación prev/next, badge de "Coming Soon"](assets/screenshot-stub.png)
+
+El `/verify-work` de la fase 06 cubrió 12 tests. Diez pasaron sin problemas. Tres fallaron de formas que vale la pena describir con precisión porque ilustran exactamente para qué sirve un UAT conversacional cuando está bien hecho.
+
+El primer problema fue la parada 027, Max Planck. El loop de `requestAnimationFrame` estaba activo, la función de dibujo se llamaba 60 veces por segundo, el código era correcto. Pero la animación parecía estática. No era un bug de código: era un problema de diseño. La variación de opacidad del resplandor era ±0.2 — imperceptible para un observador que no sabe que algo debería moverse. El diagnóstico del UAT fue preciso: reemplazar con movimiento claramente dinámico, construcción progresiva de la curva de cuerpo negro, pico pulsante, barrido de temperatura. Eso es lo que permitió escribir un fix plan quirúrgico en lugar de una instrucción vaga.
+
+El segundo problema fue la parada 040, fisión nuclear. La reacción en cadena funcionaba, los núcleos se partían, los neutrones viajaban. Pero la reacción completa ocurría en milisegundos. La causa raíz era geométrica: los núcleos hijos se spawneaban a 16 píxeles del padre (`dist = nuc.r × 0.8`), y los neutrones viajaban a 2.5 píxeles por frame. A esa velocidad, un neutrón alcanza el núcleo hijo en aproximadamente seis frames — menos de una décima de segundo. El fix plan fue específico: aumentar la distancia de spawn, reducir la velocidad de los neutrones, añadir un delay timer por núcleo antes de que se vuelva alcanzable. La diferencia entre esa instrucción y "hacer la animación más lenta" es la diferencia entre un fix que cualquier agente puede ejecutar correctamente y uno que va a producir algo diferente cada vez.
+
+El tercer problema era de descubribilidad: la búsqueda funcionaba, pero no había ningún affordance visual en ninguna de las 51 páginas del sitio. Un usuario nuevo no tenía forma de saber que existía. El fix fue añadir un botón de búsqueda en el header de cada página, con el hint de teclado correcto según plataforma — `⌘K` en Mac, `Ctrl+K` en los demás. Cincuenta y un archivos HTML, modificados en batch. El issue de UAT convirtió eso en una tarea con scope definido.
+
+---
+
+Cabe señalar algo sobre cómo se usó `learnship` en este proyecto: las fases 01 a 04 ejecutaron `/plan-phase` y `/execute-phase` directamente, y el `/discuss-phase` para esas fases se corrió de forma retroactiva, después de la ejecución, para capturar las decisiones que ya se habían tomado. Eso no es la secuencia ideal. Es la secuencia real de un proyecto que avanzó rápido al principio. Y funciona: el sistema es lo suficientemente flexible para absorber trabajo existente sin requerir un comienzo limpio. El artefacto que produce `/discuss-phase` tiene valor independientemente de si precede o sigue a la ejecución.
+
+El directorio `.planning/` al terminar la fase 06 se veía así:
+
+```
+.planning/
+├── config.json
+├── PROJECT.md
+├── REQUIREMENTS.md
+├── ROADMAP.md
+├── STATE.md
+├── DECISIONS.md
+└── phases/
+    ├── 01-foundation-shell/
+    ├── 02-stops-data-navigation/
+    ├── 03-era1-simulations/
+    ├── 04-era2-simulations/
+    ├── 05-polish-deployment/
+    └── 06-v2-foundation-ux-polish/
+```
+
+Cada directorio de fase contiene su `CONTEXT.md`, su `RESEARCH.md`, sus archivos `PLAN.md` ejecutados, sus `SUMMARY.md` de lo que se construyó exactamente, y su `UAT.md` con los resultados de verificación. No es overhead. Es el registro de todo lo que el proyecto aprendió sobre sí mismo: qué se construyó, por qué, qué alternativas se consideraron, qué bugs se resolvieron y cómo. Es el scar tissue digital que no puede descargarse de ningún modelo pero sí puede acumularse de forma deliberada.
+
+**Al terminar la fase 06, pude responder preguntas sobre cualquier decisión del proyecto sin ir al `git log`.** No porque tenga memoria excepcional. Porque el Phase Loop la genera como producto secundario de trabajar de manera estructurada.
+
+El paso a paso exacto de cómo se ve cada uno de estos momentos en la práctica es lo que viene a continuación.
 
 ---
 
@@ -432,15 +495,17 @@ Hay un hilo que conecta los cuatro episodios de esta investigación, y quiero ha
 
 **Episodio 1** planteó la pregunta central: la IA es poderosa, pero la realidad tiene sus propias fricciones. El conocimiento que se gana a golpes —el *scar tissue*, el tejido cicatricial— no puede descargarse de un modelo. La velocidad del aprendizaje en sistemas complejos está acotada por la velocidad de la realidad, no por la velocidad del cómputo.
 
-**Episodio 2** exploró el problema del aprendizaje pasivo: usar IA para obtener output sin construir comprensión. Construí `agentic-learn` como una capa que invierte el orden: el agente espera tu respuesta antes de dar la suya. La fricción productiva como mecanismo de aprendizaje real.
+**Episodio 2** exploró el problema del aprendizaje pasivo: usar IA para obtener output sin construir comprensión. Construí `agentic-learn` como una capa que invierte el orden: el agente espera tu respuesta antes de dar la suya. La fricción productiva como mecanismo de aprendizaje real. Lo que no dije explícitamente en ese episodio es que ese skill específico — el agente que espera, que no da su respuesta hasta que el humano ha procesado la suya — sigue siendo la columna vertebral del Learning Partner en `learnship`. Los checkpoints de aprendizaje integrados en el workflow no son una idea nueva. Son `agentic-learn` promovido de skill independiente a paso estructurado dentro del Phase Loop.
 
-**Episodio 3** amplió el problema. No era solo cómo aprendemos con IA. Era cómo trabajamos con IA. La ingeniería agéntica como sistema: contexto persistente, decisiones documentadas, ejecución estructurada, verificación real. `learnship` como la implementación concreta.
+**Episodio 3** amplió el problema. No era solo cómo aprendemos con IA. Era cómo trabajamos con IA. La ingeniería agéntica como sistema: contexto persistente, decisiones documentadas, ejecución estructurada, verificación real. `learnship` como la implementación concreta. El argumento que fundamentó ese episodio fue específico: LangChain saltando del puesto 30 al puesto 5 en popularidad midiendo la demanda de harnesses; Gartner reportando que el 40% de los proyectos de IA se cancelan por falta de estructura; el codebase interno de OpenAI alcanzando un millón de líneas como evidencia de que incluso los constructores del modelo necesitan harnesses para trabajar con él. Ese argumento necesitaba un proyecto real para tener peso. "How Physics Works" es ese proyecto.
 
-**Episodio 4** es la práctica. No la teoría del sistema. El uso del sistema. Cómo se ve en la realidad trabajar en un proyecto real con `learnship`, paso a paso, decisión por decisión.
+**Episodio 4** es la práctica. No la teoría del sistema. El uso del sistema. Cómo se ve en la realidad trabajar en un proyecto real con `learnship`, paso a paso, decisión por decisión. Y hay algo más: este artículo y el proyecto que describe viven en el mismo repositorio de git. La carpeta `Episodio4/` contiene el sitio. La carpeta raíz contiene este artículo. El lector está, literalmente, dentro del proyecto mientras lee sobre él.
 
 ![El arco de los cuatro episodios: de la teoría a la práctica](assets/four_episodes_arc.png)
 
 El argumento que atraviesa los cuatro no es "usa más IA" ni "ten cuidado con la IA". Es algo más preciso: **la IA amplifica lo que traes. Si traes criterio, estructura y comprensión, la amplifica. Si no traes nada, no amplifica nada.**
+
+El Episodio 1 dijo que el scar tissue no puede descargarse. El Episodio 4 es sobre el sistema que lo acumula deliberadamente, fase a fase, en un formato que sobrevive el reset del contexto.
 
 `learnship` es el sistema que te ayuda a traer las tres cosas de forma consistente.
 
