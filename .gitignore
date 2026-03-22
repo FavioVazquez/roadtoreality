@@ -10,6 +10,8 @@
 !.planning/**
 !Episodio4/
 !Episodio4/**
+!scripts/
+!scripts/**
 
 # Always exclude secrets and caches even inside allowed folders
 .env
