@@ -13,6 +13,10 @@
 !scripts/
 !scripts/**
 
+!package.json
+!package-lock.json
+node_modules/
+
 # Always exclude secrets and caches even inside allowed folders
 .env
 **/__pycache__/
