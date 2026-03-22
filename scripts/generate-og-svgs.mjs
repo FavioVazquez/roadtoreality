@@ -133,19 +133,6 @@ function generateSVG(stop) {
     font-size="15" font-weight="400"
     fill="#ffffff" fill-opacity="0.35">HOW PHYSICS WORKS</text>
 
-  <!-- Stop number — large background numeral -->
-  <text x="80" y="248"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="180" font-weight="700"
-    fill="${accent}" fill-opacity="0.07"
-    letter-spacing="-4">${esc(orderLabel)}</text>
-
-  <!-- Stop number — small badge -->
-  <text x="88" y="255"
-    font-family="'DM Sans', Arial, sans-serif"
-    font-size="18" font-weight="400"
-    fill="${accent}" fill-opacity="0.7">Stop ${esc(orderLabel)}</text>
-
   <!-- Title lines -->
   ${titleElems}
 
