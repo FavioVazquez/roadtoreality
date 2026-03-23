@@ -25,6 +25,7 @@
   var ctx = canvas.getContext('2d');
 
   var W, H;
+  var splitX;           /* pixel boundary between left and right panels */
 
   function resize() {
     var rect = mount.getBoundingClientRect();
@@ -33,6 +34,7 @@
     canvas.width  = W * dpr;
     canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    splitX = Math.floor(W * 0.46);   /* panel width; recomputed on every resize */
   }
   resize();
 
@@ -211,17 +213,15 @@
      STEP FUNCTIONS
   ───────────────────────────────────────────────────────── */
 
-  /* Panel geometry — computed each frame from W, H */
+  /* Panel geometry — uses splitX computed once in resize(), not per-frame */
   function leftBox() {
     var pad = 8;
-    var panelW = Math.floor(W * 0.46);
-    return { x0: pad, y0: pad + 28, x1: panelW - pad, y1: H - pad - 40 };
+    return { x0: pad, y0: pad + 28, x1: splitX - pad, y1: H - pad - 40 };
   }
 
   function rightBox() {
     var pad = 8;
-    var panelW = Math.floor(W * 0.46);
-    var rx0 = W - panelW + pad;
+    var rx0 = W - splitX + pad;
     return { x0: rx0, y0: pad + 28, x1: W - pad, y1: H - pad - 40 };
   }
 
