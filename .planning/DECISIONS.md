@@ -179,6 +179,51 @@
 
 ---
 
+## DEC-011 · 2026-03-23 · Use \\(...\\) for inline KaTeX, $...$ only for display math
+
+**Status:** Active
+
+**Decision:** Inline math within running text uses `\(...\)` delimiters. Display equations (standalone lines) use `$$...$$`. Never use `$...$` for inline math.
+
+**Context:** The `$...$` delimiter is unreliable when inline math appears inside mixed HTML/text content (e.g., `<li>` elements). KaTeX's auto-render fails to detect it in some DOM contexts. `\(...\)` is always parsed correctly.
+
+**Consequences:**
+- katex-init.js registers all four delimiters: `$$`, `\[`, `\(`, `$`
+- All existing inline math in stops 020, 021, 022 converted to `\(...\)` during Phase 09 fix pass
+- Future stops: write inline math as `\(...\)` from the start
+
+---
+
+## DEC-012 · 2026-03-23 · Stage-based timing for educational animations
+
+**Status:** Active
+
+**Decision:** Simulations that explain a process with distinct phases use an explicit state machine (e.g., `hold-start → action → hold-end`) rather than a continuous `t % PERIOD` loop.
+
+**Context:** Continuous loops repeat too fast for users to read labels and understand what is happening. A state machine with deliberate hold durations at each phase gives users time to read before the next transition.
+
+**Consequences:**
+- Each stage has an explicit `dur` (seconds); `advanceTime(1/60)` called each frame
+- `resetCycle()` restores `stageIdx=0, stageTime=0` on reset or slider change
+- Demonstrated in stop 021 (Joule PE→KE→Heat)
+
+---
+
+## DEC-013 · 2026-03-23 · Physics scale must produce observable timescales
+
+**Status:** Active
+
+**Decision:** Before finalising any time-based simulation, verify that interesting state changes take 1–10 seconds at 60fps. Adjust physical constants (object size, mass, length) to hit this window.
+
+**Context:** Stop 016 (Euler rotation) initially used R=0.12m objects. With τ=5 N·m, moment of inertia I≈0.01 kg·m², all shapes hit ω_max in <100ms — sliders appeared broken because everything maxed instantly. Switching to R=0.5m made divergence visible over 1–3 seconds.
+
+**Consequences:**
+- Physical constants in sims are representative/scaled, not real-world exact
+- Comments in sim.js should note the scale rationale
+- Rule of thumb: aim for 2–5 seconds from zero to max observable state
+
+---
+
 ## DEC-010 · 2026-03-21 · Noise-based procedural galaxy background
 
 **Status:** Active

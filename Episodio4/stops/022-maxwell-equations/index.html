@@ -59,44 +59,58 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Maxwell unified electricity, magnetism, and light into four elegant equations — and predicted that light itself is an electromagnetic wave.</p>
+    <p>James Clerk Maxwell looked at all of the known laws of electricity and magnetism — Gauss, Faraday, Ampère — and realized they were inconsistent. By adding one term (the "displacement current") he made them consistent, and in doing so predicted that oscillating electric and magnetic fields would sustain each other in a self-propagating wave. He calculated the speed: exactly the measured speed of light. Light is an electromagnetic wave.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Maxwell's Equations — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Maxwell's Equations — two-panel: charge field lines and propagating EM wave">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="em-frequency-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Wave frequency:</label>
+          <input id="em-frequency-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.0" style="flex:1;" aria-label="EM wave frequency 0.5 to 3.0">
+          <span id="em-frequency-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.0</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="em-amplitude-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Wave amplitude:</label>
+          <input id="em-amplitude-slider" type="range" min="0.2" max="1.0" step="0.05" value="0.6" style="flex:1;" aria-label="EM wave amplitude 0.2 to 1.0">
+          <span id="em-amplitude-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">0.60</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Left: drag the charges to see field lines update live. Right: adjust frequency and amplitude of the propagating EM wave.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Visualize the four equations as field diagrams showing how E and B fields couple</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how a changing E-field creates a B-field (displacement current)</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Discover why light is an electromagnetic wave from the equations alone</li>
-    </ul>
+    <h3>What You Are Seeing</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;"><strong style="color:var(--color-text-primary);">Left panel — Gauss's Law.</strong> The field lines (traced by following the electric field vector step by step) originate on the positive charge and terminate on the negative charge. Drag either charge to see the field lines recompute in real time. This is the electric field as described by the first of Maxwell's equations.</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;"><strong style="color:var(--color-text-primary);">Right panel — EM wave.</strong> Blue vertical arrows show the electric field (E) oscillating perpendicular to the direction of propagation. Gold markers (dots = out of screen, crosses = into screen) show the magnetic field (B) perpendicular to both E and the propagation direction. Together, E and B sustain each other — this is what Maxwell predicted: light.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Maxwell's Four Equations</div>
     <ul class="takeaway-box__list">
-      <li>Four equations unify electricity, magnetism, and light. They predict that electromagnetic waves travel at c = 1/√(ε₀μ₀) — exactly the speed of light, proving light is electromagnetic.</li>
+      <li>Gauss's Law (electric): electric field lines originate on positive charges and terminate on negative charges.</li>
+      <li>$$\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}$$</li>
+      <li>Gauss's Law (magnetic): there are no magnetic monopoles — field lines always form closed loops.</li>
+      <li>$$\nabla \cdot \mathbf{B} = 0$$</li>
+      <li>Faraday's Law: a changing magnetic field creates an electric field.</li>
+      <li>$$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$</li>
+      <li>Ampère-Maxwell Law: a changing electric field (or current) creates a magnetic field.</li>
+      <li>$$\nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}$$</li>
+      <li>Together, these four equations predict that oscillating electric and magnetic fields sustain each other — forming a self-propagating wave at speed \(c = \dfrac{1}{\sqrt{\mu_0 \varepsilon_0}} \approx 3 \times 10^8\) m/s.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Maxwell unified electricity and magnetism. Doppler showed that the motion of a source shifts the frequency of the waves it emits — a tool that would later measure the expansion of the universe itself.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Maxwell unified electricity and magnetism into light. Doppler showed that the motion of a source shifts the frequency of the waves it emits — a tool that would later reveal the expansion of the universe itself.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

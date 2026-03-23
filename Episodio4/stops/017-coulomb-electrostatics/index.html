@@ -59,44 +59,68 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Coulomb measured the force between electric charges and found it follows the same mathematical form as Newton's gravity — but can attract or repel.</p>
+    <p>In 1785, Charles-Augustin de Coulomb used a delicate torsion balance — a wire that twists under tiny forces — to measure the repulsion between two charged spheres with extraordinary precision. He found something striking: the electric force between charges obeys exactly the same mathematical form as Newton's law of gravity. Both forces follow an inverse-square law. But electricity adds something gravity cannot do — it can repel as well as attract.</p>
+    <p>Drag the two charges below to explore how force changes with distance. Switch their signs to see attraction and repulsion. Watch the live F&nbsp;vs.&nbsp;r graph on the right track the inverse-square curve in real time.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Coulomb's Law — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Coulomb's Law — interactive charge simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="q1-slider">
+          Q₁ magnitude
+          <span class="sim-control__value" id="q1-value">3.0 μC</span>
+        </label>
+        <input type="range" id="q1-slider" min="0.5" max="10" step="0.1" value="3.0" aria-label="Q1 magnitude in microcoulombs">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="q2-slider">
+          Q₂ magnitude
+          <span class="sim-control__value" id="q2-value">3.0 μC</span>
+        </label>
+        <input type="range" id="q2-slider" min="0.5" max="10" step="0.1" value="3.0" aria-label="Q2 magnitude in microcoulombs">
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:flex-end;flex-wrap:wrap;">
+        <button class="sim-btn" id="q1-sign-btn" aria-label="Toggle sign of Q1" style="min-width:80px;">Q₁: +</button>
+        <button class="sim-btn" id="q2-sign-btn" aria-label="Toggle sign of Q2" style="min-width:80px;">Q₂: −</button>
+        <span id="interaction-mode" style="font-size:var(--text-sm);font-family:var(--font-mono);padding:0 0.5rem;align-self:center;color:rgba(200,100,255,0.9);">Attraction</span>
+      </div>
       <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Interactive — drag the charges to explore the force</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Drag two charges and measure force as a function of separation distance</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Visualize how electric field lines change as charges move closer or further apart</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Compare the inverse-square law to Newton's gravitational law</li>
-    </ul>
+    <h3>What Coulomb discovered</h3>
+    <p>Before Coulomb, the qualitative fact that like charges repel and opposite charges attract was well known. What was missing was the precise mathematical law. Coulomb's torsion balance let him measure the restoring torque with enough precision to establish that the force between two charges scales as:</p>
+    <p style="font-size:var(--text-md);text-align:center;margin:var(--space-6) 0;">
+      $$F = k\frac{q_1 q_2}{r^2}$$
+    </p>
+    <p>where \(k = 8.99 \times 10^9\) N·m²/C² is Coulomb's constant, \(q_1\) and \(q_2\) are the charges (positive or negative), and \(r\) is the separation. When the charges have the same sign, \(q_1 q_2 > 0\) and the force is repulsive. Opposite signs give attraction.</p>
+
+    <h3>The parallel with Newton's gravity</h3>
+    <p>The structural resemblance to Newton's gravitational law \(F = Gm_1m_2/r^2\) is not a coincidence — both arise from the same mathematical requirement that a central force acting radially in three-dimensional space must fall off as \(1/r^2\). The key difference: gravity only attracts, while the electric force can do both. And the electric force between two protons is about \(10^{36}\) times stronger than their gravitational attraction — electromagnetic forces dominate all of chemistry, biology, and materials science.</p>
+
+    <h3>Real-world anchors</h3>
+    <p>Coulomb's law is responsible for the cling of freshly washed clothing, the snapping of a spark from a doorknob after crossing a carpet, and the behavior of every protein and DNA strand in your body. Every chemical bond — ionic, covalent, hydrogen — is a consequence of the inverse-square law between charged particles at atomic separations.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>F = kq₁q₂/r². Electric force follows the same inverse-square form as gravity — but can be millions of times stronger and can attract or repel.</li>
+      <li>The electric force between two charges follows \(F = kq_1q_2/r^2\). Same sign: repulsion. Opposite sign: attraction. Halve the distance: force quadruples. This single law — combined with Newton's — governs all of electrostatics.</li>
+      <li>Coulomb's constant \(k \approx 9 \times 10^9\) N·m²/C² makes the electric force between charges of 1 C separated by 1 m equal to 9 billion newtons — far stronger than gravity at any atomic scale.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Coulomb showed charges follow a force law. Volta went further — he found a way to sustain that force as a continuous current, inventing the battery and enabling all of electrical engineering.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Coulomb showed that static charges exert forces governed by an inverse-square law. Volta asked: what if you could sustain those forces as a continuous flow of charge? His answer was the battery — the first device capable of driving a steady electric current, and the key that unlocked all of electrical engineering.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 09 — Era 3: Classical Physics
+Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
-Status: Phase 08 ✓ merged — ready for Phase 09
-Last activity: 2026-03-23 — Added Learnship attribution to How Physics Works footer (quick-002). Phase 09 is next.
+Status: Phase 09 ✓ complete + verified — all 12 Classical Physics stops (015–026) pass UAT round 2
+Last activity: 2026-03-23 — Phase 09 UAT round 2 complete. All 7 tests pass. Stops 015–026 fully polished.
 
 ### Quick Tasks Completed
 
@@ -33,7 +33,7 @@ Last activity: 2026-03-23 — Added Learnship attribution to How Physics Works f
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (13)
+## Full Simulations Built (25)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
@@ -48,6 +48,18 @@ Last activity: 2026-03-23 — Added Learnship attribution to How Physics Works f
 - 012 Newton laws: F=ma block, friction, velocity graph, wall reaction
 - 013 Newton gravity: Newton's cannon, projectile→orbit RK4, escape velocity
 - 014 Hooke's Law: split canvas spring + F vs. x graph, elastic/plastic/rupture, 3 material presets
+- 015 Bernoulli: venturi tube, throat-width + flow-speed sliders, particle flow, pressure graph
+- 016 Euler rotation: three bodies (disk/rod/ring), τ=Iα, wired torque+mass sliders, live ω graph
+- 017 Coulomb: draggable charges, live field lines, F vs r graph
+- 018 Volta: voltaic pile schematic, animated circuit, series/parallel toggle
+- 019 Faraday: galvanometer driven by dΦ/dt, Lenz's law reversal
+- 020 Carnot: PV diagram with analytical curves, T_H/T_C sliders, efficiency readout
+- 021 Joule: stage-based PE→KE→Heat conversion, energy bar chart, wired height+mass sliders
+- 022 Maxwell: two-panel — draggable charges with live field lines + EM wave with E/B vectors
+- 023 Doppler: moving source wavefronts, source-speed + source-frequency sliders
+- 024 Boltzmann: two-panel — elastic collision gas + MB histogram, partition wall + entropy meter
+- 025 Hertz: oscillating dipole, sin²θ radiation pattern
+- 026 Michelson-Morley: three-mode narrative (Setup / Expected vs Found / Arm Ratio)
 
 ## Milestone
 

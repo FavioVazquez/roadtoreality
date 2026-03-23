@@ -59,44 +59,54 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Joule showed that mechanical work can be converted to heat with a precise ratio — establishing conservation of energy as a universal law.</p>
+    <p>James Prescott Joule was a brewer who became one of the most precise experimentalists in history. He showed that mechanical work and heat are interchangeable — that they are both forms of the same thing, energy. His paddle-wheel experiment measured the conversion ratio with extraordinary accuracy, and in doing so established the first law of thermodynamics: energy is conserved across all its forms.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Joule and Conservation of Energy — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Joule's weight-drop apparatus — live energy pie chart">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="drop-height-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Drop height (m):</label>
+          <input id="drop-height-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.5" style="flex:1;" aria-label="Drop height 0.5 to 3.0 meters">
+          <span id="drop-height-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.5 m</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="mass-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Mass (kg):</label>
+          <input id="mass-slider" type="range" min="0.5" max="5.0" step="0.1" value="2.0" style="flex:1;" aria-label="Weight mass 0.5 to 5.0 kg">
+          <span id="mass-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">2.0 kg</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Watch how PE converts to KE and then to heat as the weight falls. Try different masses and heights.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Drop the weight and measure the temperature rise in the water</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Vary the mass and height to see how mechanical energy converts to heat</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Calculate the mechanical equivalent of heat (J = 4.186 J/cal)</li>
-    </ul>
+    <h3>The Experiment</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">Joule suspended a known mass from a cord wound around a paddle-wheel axle. When the mass fell, it rotated the paddle through water. The temperature rise in the water was measured with extraordinary precision — a few thousandths of a degree per drop. By repeating the experiment thousands of times and accumulating the effect, Joule established that 4.184 joules of mechanical work raise one gram of water by one degree Celsius.</p>
+    <h3 style="margin-top:1.25rem;">Why It Was Controversial</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">In 1843, most physicists believed in caloric — a weightless fluid that flowed from hot bodies to cold ones. Joule's result implied that heat is not a substance but a mode of motion. The temperature rise is tiny (drop a 2 kg weight from 1.5 m and you heat 1 kg of water by just 0.007°C), but it is perfectly reproducible — which is the whole point.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>Mechanical work can be converted to heat at a fixed ratio (4.186 J = 1 cal). Energy is conserved across forms — this is the first law of thermodynamics, confirmed experimentally.</li>
+      <li>Energy is conserved — it changes form, but the total never changes. Joule proved that mechanical work and heat are interchangeable.</li>
+      <li>$$E_{\text{total}} = mgh = \underbrace{mg(h-y)}_{\text{PE}} + \underbrace{\tfrac{1}{2}mv^2}_{\text{KE}} + \underbrace{Q}_{\text{heat}}$$</li>
+      <li>Joule's mechanical equivalent of heat: \(1 \text{ cal} = 4.184 \text{ J}\)</li>
+      <li>This result unified mechanics and thermodynamics, displacing the caloric theory of heat. It became the foundation of the first law of thermodynamics.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Joule established energy conservation. Maxwell went on to show that electricity and magnetism are aspects of the same field — and that light is an electromagnetic wave.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Joule established that energy is conserved across forms. Maxwell went on to show that electricity and magnetism are aspects of the same field — and that light is an electromagnetic wave propagating at a speed derivable from first principles.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

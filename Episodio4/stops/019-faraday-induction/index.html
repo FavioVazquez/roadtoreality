@@ -59,44 +59,52 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.</p>
+    <p>Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Move the magnet through the coil below and watch the galvanometer needle respond to the <em>rate of change</em> of flux, not to flux itself. Pull the magnet back out and the needle flips direction — Lenz's law in action.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Faraday's Electromagnetic Induction — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Faraday's Electromagnetic Induction — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="magnet-position-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Magnet position:</label>
+          <input id="magnet-position-slider" type="range" min="0" max="1" step="0.01" value="0.2" style="flex:1;" aria-label="Magnet position left to right">
+          <span id="magnet-position-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">far left</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <button id="auto-oscillate-btn" class="sim-btn" style="font-size:var(--text-sm);">Auto Oscillate</button>
+          <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Watch the needle reverse as the magnet changes direction</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Drag the slider to move the magnet. Auto Oscillate runs it continuously. Notice the needle reverses when the magnet changes direction.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Move a magnet through a coil at different speeds and measure induced EMF</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Change coil turn count and see how flux linkage affects output</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe Lenz's law — the induced current always opposes the change that created it</li>
-    </ul>
+    <h3>What's happening</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The galvanometer needle is driven by the <em>time-derivative</em> of magnetic flux through the coil — dΦ/dt — not by the flux itself. When the magnet sits still, no current flows. Only movement creates induction. And when the magnet reverses direction, the induced current reverses too (Lenz's law).</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>A changing magnetic flux through a loop induces an EMF. Faraday's law: ε = −dΦ/dt. This is how every electric generator and transformer on Earth operates.</li>
+      <li>A changing magnetic flux through a coil induces an electromotive force (EMF). The magnitude depends on how fast the flux changes — not on the flux itself.</li>
+      <li>$$\mathcal{E} = -\frac{d\Phi_B}{dt}$$</li>
+      <li>Lenz's law: the induced current opposes the change that caused it. Move the magnet in &rarr; current one way; pull it out &rarr; current reverses.</li>
+      <li>$$\Phi_B = \int \mathbf{B} \cdot d\mathbf{A}$$</li>
+      <li>Every generator, transformer, and induction motor in the world runs on this principle.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Faraday gave us generators. Carnot asked a harder question: how much work can you extract from heat? His answer set a limit that no engineer has ever beaten — and never will.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Faraday gave us generators. Carnot asked a harder question: how much work can you extract from heat? His answer set a fundamental limit that no engineer has ever beaten — and never will.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

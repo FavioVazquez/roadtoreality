@@ -122,6 +122,7 @@
 
 **Requirements:** SIM-CLS-01–12
 **Dir:** `09-v2-era3-classical`
+**Status:** ✓ Complete — 2026-03-23
 
 **Plan 09-01: Stops 015 + 016 — Bernoulli + Euler**
 **Plan 09-02: Stops 017 + 018 — Coulomb + Volta**

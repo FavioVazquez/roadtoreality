@@ -59,7 +59,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Hertz built a spark-gap transmitter and detected the electromagnetic waves Maxwell had predicted — proving that invisible radiation travels at the speed of light.</p>
+    <p>In 1887, Heinrich Hertz built a spark-gap transmitter and a loop detector just a few meters away. When sparks jumped in the transmitter, sparks also jumped in the detector — confirming that invisible electromagnetic waves travel through space at the speed of light, exactly as Maxwell had predicted 22 years earlier.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Hertz and Radio Waves — teaser animation">
@@ -67,36 +67,45 @@
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="dipole-frequency-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Dipole frequency:</label>
+          <input id="dipole-frequency-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.2" style="flex:1;" aria-label="Dipole oscillation frequency 0.5 to 3.0 Hz">
+          <span id="dipole-frequency-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.2</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="wave-speed-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Wave propagation speed:</label>
+          <input id="wave-speed-slider" type="range" min="50" max="200" step="10" value="100" style="flex:1;" aria-label="Wave speed 50 to 200 pixels per second">
+          <span id="wave-speed-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">100</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Oscillate the dipole and watch EM wavefronts radiate. Adjust frequency and wave speed.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Oscillate a dipole antenna and watch electromagnetic waves radiate outward</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Measure wavelength and confirm it equals c/f</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how a receiver antenna picks up the signal at a distance</li>
-    </ul>
+    <p>A dipole antenna — two conducting rods with alternating charge — is the simplest EM radiator. The radiation is not uniform in all directions: it is zero directly along the antenna axis and strongest perpendicular to it. This angular dependence is one of the most fundamental results in electrodynamics.</p>
+    <p>Each half-cycle of oscillation reverses the E-field direction, producing a new wavefront of opposite polarity. The colored rings in the simulation show successive half-cycles: red for positive E-field, blue for negative. The spacing between rings equals the wavelength &lambda; = v/f.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>Hertz confirmed Maxwell's prediction experimentally: oscillating charges radiate electromagnetic waves at the speed of light. This discovery made radio, television, and wireless communication possible.</li>
+      <li>Hertz proved that oscillating electric charges radiate electromagnetic waves — exactly as Maxwell's equations predicted. The radiation pattern is not spherical: it is zero along the dipole axis and maximum perpendicular to it.</li>
+      <li>$$I(\theta) \propto \sin^2\!\theta$$</li>
+      <li>The emitted wave travels at the speed of light. Each half-cycle reverses the E-field direction — the alternating red and blue rings represent successive half-cycles.</li>
+      <li>$$c = \lambda f = \frac{1}{\sqrt{\mu_0 \varepsilon_0}}$$</li>
+      <li>Hertz's experiment — done in 1887 — directly confirmed Maxwell's 1865 prediction and opened the door to radio, television, and wireless communication.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Hertz detected Maxwell's waves. Michelson and Morley attempted to measure Earth's motion through the ether — and found nothing. Their null result pointed directly toward Einstein.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

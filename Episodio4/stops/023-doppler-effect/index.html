@@ -59,44 +59,56 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Moving sources compress or stretch the waves they emit. Doppler worked this out mathematically — it became the key to measuring the expansion of the universe.</p>
+    <p>In 1842 Christian Doppler noticed that stars emitting the same wavelength of light would appear bluer when approaching and redder when receding. The same mathematics applies to sound: when a source moves, the wavefronts it emits bunch up in front and spread apart behind. That bunching is a frequency shift — and it became the ruler astronomers use to measure the expansion of the universe.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Doppler Effect — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="The Doppler Effect — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="sim-actions" style="display:flex;align-items:center;gap:8px;width:100%;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;">
+        <label for="source-frequency-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;">Source Frequency</label>
+        <input type="range" id="source-frequency-slider" min="0.5" max="3.0" step="0.1" value="1.0" style="flex:1;accent-color:#5285c8;cursor:pointer;">
+        <span id="source-frequency-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:5em;text-align:right;">f = 1.0 Hz</span>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Drag the speed slider to change how fast the source moves. Watch the wavefronts compress ahead and expand behind.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Adjust source velocity and observe how wavefront compression changes frequency</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Hear the Doppler shift for different velocities (including supersonic)</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Apply it to redshift — how astronomers measure galaxy velocities</li>
-    </ul>
+    <h3>The Doppler formula</h3>
+    <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
+      When a source moves toward an observer at speed \(v_s\) and waves travel at \(v_w\), the observed frequency is:
+    </p>
+    <div style="text-align:center;padding:1rem 0;">
+      $$f_\text{obs} = f_0 \cdot \frac{v_w}{v_w \mp v_s}$$
+    </div>
+    <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
+      The minus sign applies when the source approaches (higher frequency); the plus sign when it recedes (lower frequency). For light and slow sources (\(v_s \ll c\)):
+    </p>
+    <div style="text-align:center;padding:0.5rem 0 1rem;">
+      $$\frac{\Delta f}{f_0} \approx \frac{v_s}{c}$$
+    </div>
+    <p style="color:var(--color-text-secondary);line-height:1.8;">
+      This redshift formula is how Edwin Hubble, using data from Vesto Slipher, discovered in 1929 that almost every galaxy is receding — and the further away it is, the faster it moves. The Doppler effect, worked out for sound in a Czech lecture hall, turned out to measure the size and fate of the cosmos.
+    </p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>A source moving toward you compresses its waves — you hear/see a higher frequency. Moving away stretches them — lower frequency. Δf/f ≈ v/c for slow sources.</li>
+      <li>A source moving toward you compresses its wavefronts — observed frequency rises. Moving away stretches them — frequency drops. The formula is \(f = f_0 \, v_w/(v_w \mp v_s)\). Redshift of distant galaxies is the Doppler effect applied to light.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Doppler connected motion to frequency. Boltzmann connected temperature to microscopic motion — and defined entropy as a count of possible arrangements.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Doppler connected motion to frequency. Boltzmann took a different approach — connecting temperature to the statistics of microscopic motion — and defined entropy as a count of possible arrangements.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

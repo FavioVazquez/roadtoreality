@@ -59,44 +59,53 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.</p>
+    <p>Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering. Adjust the hot and cold reservoir temperatures below and watch the efficiency readout change. The enclosed area on the PV diagram is exactly the net work extracted per cycle.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Carnot and the Heat Engine — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Carnot Heat Engine — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="hot-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T&#8347; (hot reservoir, K):</label>
+          <input id="hot-temp-slider" type="range" min="400" max="800" step="10" value="600" style="flex:1;" aria-label="Hot reservoir temperature 400 to 800 K">
+          <span id="hot-temp-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3.5rem;text-align:right;">600 K</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="cold-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T&#8346; (cold reservoir, K):</label>
+          <input id="cold-temp-slider" type="range" min="200" max="400" step="10" value="300" style="flex:1;" aria-label="Cold reservoir temperature 200 to 400 K">
+          <span id="cold-temp-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3.5rem;text-align:right;">300 K</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Left: PV diagram with isothermal (red/blue) and adiabatic (orange/teal) curves. Right: piston animation. Efficiency shown top-right.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Trace the four-stage Carnot cycle on a PV diagram interactively</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Adjust hot and cold reservoir temperatures and watch efficiency change</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Prove that no real engine can exceed Carnot efficiency</li>
-    </ul>
+    <h3>What's happening</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The four stages of the Carnot cycle are: (1) isothermal expansion at T<sub>H</sub> — the gas absorbs heat and expands; (2) adiabatic expansion — temperature drops from T<sub>H</sub> to T<sub>C</sub>; (3) isothermal compression at T<sub>C</sub> — the gas releases heat and is compressed; (4) adiabatic compression — temperature rises back to T<sub>H</sub>. The enclosed area equals net work done per cycle.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>No heat engine can be more efficient than a reversible engine operating between the same two temperatures. The Carnot efficiency is η = 1 − Tc/Th — a fundamental thermodynamic limit.</li>
+      <li>The Carnot efficiency is the maximum possible efficiency for any heat engine operating between two temperatures. No real engine can exceed it.</li>
+      <li>$$\eta_{\text{Carnot}} = 1 - \frac{T_C}{T_H}$$</li>
+      <li>The area enclosed by the PV cycle equals the net work done per cycle: \(W = Q_H - Q_C\).</li>
+      <li>To achieve 100% efficiency, the cold reservoir would need to be at absolute zero (0 K) — physically impossible.</li>
+      <li>Temperature must be in Kelvin for this formula. Celsius and Fahrenheit are shifts; ratios only make sense in Kelvin.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Carnot set the efficiency limit. Joule measured the conversion rate between work and heat with precision — establishing conservation of energy as a universal law.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Carnot set the efficiency limit. Joule measured the mechanical equivalent of heat — establishing conservation of energy as a universal law that even Carnot cycles must obey.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

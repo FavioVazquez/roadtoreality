@@ -51,7 +51,7 @@
   <header class="stop-header">
     <div class="stop-header__era">Classical Physics · 1800</div>
     <h1 class="stop-header__title">Volta and the Electric Battery</h1>
-    <p class="stop-header__subtitle">Storing electricity for the first time</p>
+    <p class="stop-header__subtitle">The first device to produce a steady electric current</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1800</span>
       <span>·</span>
@@ -59,44 +59,78 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the first battery, enabling all of electrical science.</p>
+    <p>In 1800, Alessandro Volta wrote to the Royal Society of London describing a remarkable device: alternating discs of zinc and copper, separated by cloth soaked in brine, stacked into a pile. When he connected a wire from the top to the bottom, charge flowed continuously — the first sustained electric current ever produced. Volta had discovered that a chemical reaction could drive electricity indefinitely. He had invented the battery.</p>
+    <p>Use the controls below to build your own voltaic pile. Stack more cells to increase voltage. Switch between series and parallel configurations to see how they affect voltage and current. Watch the glowing bulb respond to the circuit power.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Volta and the Electric Battery — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Volta and the Electric Battery — interactive circuit simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="cell-count-slider">
+          Cell count
+          <span class="sim-control__value" id="cell-count-value">3</span>
+        </label>
+        <input type="range" id="cell-count-slider" min="1" max="6" step="1" value="3" aria-label="Number of cells">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="emf-slider">
+          EMF per cell
+          <span class="sim-control__value" id="emf-value">1.5 V</span>
+        </label>
+        <input type="range" id="emf-slider" min="0.5" max="2.0" step="0.1" value="1.5" aria-label="EMF per cell in volts">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="rint-slider">
+          Internal resistance
+          <span class="sim-control__value" id="rint-value">0.5 Ω</span>
+        </label>
+        <input type="range" id="rint-slider" min="0.0" max="5.0" step="0.1" value="0.5" aria-label="Internal resistance per cell in ohms">
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:flex-end;flex-wrap:wrap;">
+        <button class="sim-btn" id="series-parallel-btn" aria-label="Toggle series or parallel configuration" style="min-width:90px;">Series</button>
+      </div>
       <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Interactive — build a voltaic pile and measure voltage</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Build a circuit with stacked Voltaic cells and measure total voltage</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch current flow through the circuit as a function of cell count</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore internal resistance and how batteries lose energy</li>
-    </ul>
+    <h3>How Volta made the discovery</h3>
+    <p>Volta's insight grew from a dispute. His colleague Luigi Galvani had shown that frogs' legs twitch when touched by two different metals — and concluded the animal itself was the source of "animal electricity." Volta disagreed. He argued the frog was merely a detector and that the electricity came from the contact between the two metals in the presence of a moist conductor. To prove it, he built his pile without any biology at all — just metal and brine.</p>
+    <p>The key physics is electrochemical: zinc dissolves into the electrolyte more readily than copper, releasing electrons that flow through the external circuit. Each zinc-copper pair separated by electrolyte acts as a cell with an EMF of roughly 1.1 V. Stack \(n\) cells in series and the voltages add:</p>
+    <p style="font-size:var(--text-md);text-align:center;margin:var(--space-6) 0;">
+      $$V_\text{series} = n \cdot \varepsilon$$
+    </p>
+    <p>where \(\varepsilon\) is the EMF of each cell. The current that flows through a load resistance \(R\) with each cell having internal resistance \(r\) is:</p>
+    <p style="font-size:var(--text-md);text-align:center;margin:var(--space-6) 0;">
+      $$I = \frac{n\varepsilon}{R + nr}$$
+    </p>
+    <p>In a <em>parallel</em> configuration the voltage stays at \(\varepsilon\) (same as one cell), but the internal resistances add in parallel, so the effective internal resistance drops to \(r/n\) — increasing the maximum current the battery can deliver before internal resistance causes significant voltage sag.</p>
+
+    <h3>Series vs. parallel — when to use which</h3>
+    <p>Series cells give you higher voltage — useful for applications that need more electrical "pressure." Parallel cells give you higher current capacity at the same voltage — useful when the load demands more current than one cell can sustain without excessive heat. Modern battery packs in electric vehicles mix both: cells in series to reach hundreds of volts, and those series strings connected in parallel for current capacity and redundancy.</p>
+
+    <h3>Why this was revolutionary</h3>
+    <p>Before Volta, you could generate static electricity with a Leyden jar or a friction machine, but these discharged in an instant. Volta's pile sustained current for minutes or hours. Within months of Volta's announcement, scientists across Europe were using it to decompose water into hydrogen and oxygen (electrolysis), deposit metals from solution (electroplating), and arc-weld metals with incandescent carbon electrodes. Every electrical device ever built — from a 19th-century telegraph to a modern neural implant — traces its power supply back to the voltaic pile.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>A chemical potential difference between two metals in an electrolyte drives current continuously. Volta's pile was the first sustained source of electric current — and unlocked all of electrical science.</li>
+      <li>A chemical potential difference between two dissimilar metals in an electrolyte drives charge continuously. Each cell contributes \(\varepsilon \approx 1.1\) V; stack them in series and voltages add linearly.</li>
+      <li>Series connection: \(V = n\varepsilon\), \(I = V/(R + nr)\). Parallel connection: voltage stays \(\varepsilon\), internal resistance drops to \(r/n\), boosting current capacity without raising voltage.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Volta stored electrical potential. Faraday discovered the reverse: mechanical motion can generate electricity. Every power plant on Earth is Faraday's machine, scaled up.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Volta created a sustained source of electric current. Faraday asked: can the process run in reverse — can a current create a mechanical force, or can mechanical motion create current? The answer to both was yes, and together they form the foundation of every motor and generator on Earth.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
