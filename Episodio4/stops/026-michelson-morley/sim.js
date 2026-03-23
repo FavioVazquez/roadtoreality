@@ -130,8 +130,8 @@
     ctx.setLineDash([]);
     t_('Source', cx - ARM * 0.55, cy - 14, C_BEAM, 'center', 11);
 
-    // Beam splitter label (right side of splitter, not overlapping arms)
-    t_('Splitter', cx + 12, cy + 14, C_BEAM, 'left', 11);
+    // Beam splitter label — above the junction, away from both arms
+    t_('Splitter', cx, cy - 18, C_BEAM, 'center', 11);
 
     // Arm labels — positioned mid-arm, below/beside
     t_('Arm 1', cx + ARM * 0.42, cy + 14, C_ARM1, 'center', 11);
