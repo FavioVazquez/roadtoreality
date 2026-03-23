@@ -211,12 +211,25 @@ El directorio `.planning/` al terminar la fase 06 se veía así:
     ├── 03-era1-simulations/
     ├── 04-era2-simulations/
     ├── 05-polish-deployment/
-    └── 06-v2-foundation-ux-polish/
+    ├── 06-v2-foundation-ux-polish/
+    ├── 06.1-episodio4-article-learnship/
+    ├── 07-v2-open-graph/
+    └── 08-v2-era-gap-fills/
 ```
 
 Cada directorio de fase contiene su `CONTEXT.md`, su `RESEARCH.md`, sus archivos `PLAN.md` ejecutados, sus `SUMMARY.md` de lo que se construyó exactamente, y su `UAT.md` con los resultados de verificación. No es overhead. Es el registro de todo lo que el proyecto aprendió sobre sí mismo: qué se construyó, por qué, qué alternativas se consideraron, qué bugs se resolvieron y cómo. Es el scar tissue digital que no puede descargarse de ningún modelo pero sí puede acumularse de forma deliberada.
 
-**Al terminar la fase 06, pude responder preguntas sobre cualquier decisión del proyecto sin ir al `git log`.** No porque tenga memoria excepcional. Porque el Phase Loop la genera como producto secundario de trabajar de manera estructurada.
+---
+
+La fase 07 fue la más mecanizable del proyecto hasta ahora. El objetivo era claro: cada una de las 50 paradas necesitaba una imagen de Open Graph para previews sociales. La implementación fue un script ESM en Node.js — `scripts/generate-og-svgs.mjs` — que lee `stops.json` y genera un SVG de 1200×630 por parada, usando el color de acento de cada era como barra lateral izquierda, el nombre del científico en tipografía grande, el año como badge. Cincuenta archivos. Un script. Una decisión que valió la pena documentar: los colores oklch del design system no funcionan en SVG, que requiere hex. La conversión quedó fijada en el script — `ancient=#c4922a, revolution=#4ca86b, classical=#5b8fd4` — y si el design system cambia de paleta, el script es la única fuente de verdad a actualizar. Después, `scripts/inject-og-meta.mjs` recorrió los 50 HTMLs e inyectó `og:title`, `og:description`, `og:image` y `twitter:card`. El resultado: cualquier parada del sitio pegada en LinkedIn o Twitter produce un preview visual coherente con la estética del sitio.
+
+La fase 08 cerró los dos huecos que habían quedado en las Eras 1 y 2. La parada 002 — Pitágoras y la armonía matemática — y la parada 014 — la ley de Hooke y la elasticidad — eran las únicas dos que seguían como stubs después de que las fases 03 y 04 construyeron el resto.
+
+La parada 002 fue técnicamente interesante por un detalle que no aparece en la descripción: Web Audio API en iOS requiere que el `AudioContext` se cree en respuesta a un gesto del usuario, no al cargar la página. La primera implementación creaba el contexto en la inicialización del sim — correcto en escritorio, silencioso en iOS sin error visible. La solución fue lazy initialization: el `AudioContext` se crea la primera vez que el usuario hace clic en un botón de ratio, no antes. Después de eso, los seis botones (1:1 hasta 9:8) producen tonos sine puros y animan la visualización de la onda estacionaria en canvas — `A · sin(nπ(x - x₀) / L) · cos(ωt)` — con los nodos marcados como puntos en los cruces por cero.
+
+La parada 014 usó el mismo patrón de canvas dividido que las paradas 010 y 012: el panel izquierdo muestra el resorte con el bloque colgando, el panel derecho muestra la gráfica F vs. x en tiempo real. La física es simple de forma deliberada — una fracción del slider lineal mapeada a fuerza y extensión, sin ODE — porque el objetivo pedagógico es mostrar la relación F = -kx, no simular un resorte con masa. Lo no obvio fue el modo de ruptura: cuando el slider supera el límite elástico, el resorte entra en zona plástica y eventualmente se rompe. La animación de ruptura fue específica: 18 frames de canvas shake — `ctx.save()` / `ctx.translate(offsetX, offsetY)` / `ctx.restore()` — con un overlay rojo que se desvanece con el timer. Tres presets de material (acero k=500, goma k=50, vidrio k=800) demuestran que la forma de la curva F vs. x es la misma en todos los casos, pero la escala cambia.
+
+**Al terminar la fase 08, las Eras 1 y 2 están completas: 14 simulaciones interactivas, todas con OG images, todas indexadas en `stops.json`, todas navegables con las flechas ←→ del teclado.**
 
 El paso a paso exacto de cómo se ve cada uno de estos momentos en la práctica es lo que viene a continuación.
 
@@ -508,6 +521,22 @@ El argumento que atraviesa los cuatro no es "usa más IA" ni "ten cuidado con la
 El Episodio 1 dijo que el scar tissue no puede descargarse. El Episodio 4 es sobre el sistema que lo acumula deliberadamente, fase a fase, en un formato que sobrevive el reset del contexto.
 
 `learnship` es el sistema que te ayuda a traer las tres cosas de forma consistente.
+
+---
+
+## Lo que viene: de la física clásica al borde del conocimiento
+
+El roadmap tiene seis fases más antes de que el sitio esté completo.
+
+La **fase 09** cubre la Era 3 — Física Clásica — con doce paradas: Bernoulli, Euler, Coulomb, Volta, Faraday, Carnot, Joule, Maxwell, Doppler, Boltzmann, Hertz, y el experimento de Michelson-Morley. Dinámica de fluidos, electromagnetismo, termodinámica estadística, ondas electromagnéticas. Las cuatro ecuaciones de Maxwell son el punto de inflexión: el momento en que la física del siglo XIX unifica electricidad, magnetismo y luz en un mismo formalismo, y siembra la pregunta que Einstein se haría veinte años después — qué vería alguien que viajara a la velocidad de esa luz.
+
+Las **fases 10 y 11** son la Física Moderna: trece paradas que van de Planck hasta Dirac. La cuantización de la energía, el efecto fotoeléctrico, la dilatación del tiempo, la contracción de longitud, E=mc², el átomo de Rutherford, el modelo de Bohr, la relatividad general, el experimento de la doble rendija, la ecuación de Schrödinger, el principio de incertidumbre, el principio de exclusión de Pauli, la ecuación de Dirac con su predicción de la antimateria. Trece simulaciones que tienen que hacer comprensible la física del siglo XX sin trivializarla. Es la parte más difícil del proyecto.
+
+Las **fases 12 y 13** cubren la Física Contemporánea: desde la fisión nuclear y QED hasta los agujeros negros, la materia oscura, la energía oscura, las ondas gravitacionales y la computación cuántica. La parada 050 es explícitamente sobre lo que no sabemos: la naturaleza de la materia oscura, la constante cosmológica, la reconciliación de la relatividad general con la mecánica cuántica. Un sitio de educación científica que termina con preguntas abiertas me parece más honesto que uno que termina con respuestas definitivas.
+
+La **fase 14** es el pase de integración: verificar que las 50 paradas tienen `isStub: false`, que las ecuaciones KaTeX renderizan correctamente, que los OG meta tags están presentes, que el sitio pasa en Chrome, Firefox, Safari y Edge, que el audit de Lighthouse no sorprende. Y después: deploy del v2.0 en GitHub Pages con el tag correspondiente.
+
+Son las fases que vienen. El Phase Loop las va a ejecutar con la misma estructura que ejecutó las ocho anteriores — discuss, plan, execute, verify — y el `.planning/` va a acumular el registro de cada decisión que se tome en el camino.
 
 ---
 
