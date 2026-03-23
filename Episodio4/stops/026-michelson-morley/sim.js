@@ -41,13 +41,13 @@
   // ── Drawing primitives ──────────────────────────────────────────
   function text(str, x, y, style, align, size) {
     ctx.fillStyle  = style  || C_TEXT;
-    ctx.font       = (size  || 11) + 'px sans-serif';
+    ctx.font       = (size  || 12) + 'px sans-serif';
     ctx.textAlign  = align  || 'left';
     ctx.fillText(str, x, y);
   }
   function boldText(str, x, y, style, align, size) {
     ctx.fillStyle  = style  || C_TEXT;
-    ctx.font       = 'bold ' + (size || 11) + 'px sans-serif';
+    ctx.font       = 'bold ' + (size || 12) + 'px sans-serif';
     ctx.textAlign  = align  || 'left';
     ctx.fillText(str, x, y);
   }
@@ -139,8 +139,8 @@
       }
     }
     // Label below detector
-    text('Detector', dx + dw/2, dy + dh/2 + 12, C_MUTED, 'center', 9);
-    if (label) text(label, dx + dw/2, dy + dh/2 + 23, isNull ? '#aaffaa' : '#ffaaaa', 'center', 9);
+    text('Detector', dx + dw/2, dy + dh/2 + 12, C_MUTED, 'center', 11);
+    if (label) text(label, dx + dw/2, dy + dh/2 + 23, isNull ? '#aaffaa' : '#ffaaaa', 'center', 11);
   }
 
   // ── MODE 1: The Setup ──────────────────────────────────────────
@@ -166,8 +166,8 @@
     ctx.lineTo(cx, cy);
     ctx.stroke();
     ctx.setLineDash([]);
-    text('Light', cx - ARM * 0.5, cy - 16, C_BEAM, 'center', 10);
-    text('source', cx - ARM * 0.5, cy - 6, C_BEAM, 'center', 10);
+    text('Light', cx - ARM * 0.5, cy - 16, C_BEAM, 'center', 12);
+    text('source', cx - ARM * 0.5, cy - 6, C_BEAM, 'center', 12);
 
     // Detector below splitter
     var detX = cx - 17, detY = cy + ARM * 0.55;
@@ -182,18 +182,18 @@
     drawDetector(detX, detY, (t * 0.1) % 1, false, '');
 
     // Beam splitter label
-    text('Beam', cx + 12, cy - 2, C_BEAM, 'left', 10);
-    text('splitter', cx + 12, cy + 10, C_BEAM, 'left', 10);
+    text('Beam', cx + 12, cy - 2, C_BEAM, 'left', 12);
+    text('splitter', cx + 12, cy + 10, C_BEAM, 'left', 12);
 
     // Arm labels with path lengths
-    text('Arm 1', cx + ARM * 0.45, cy + 16, C_ARM1, 'center', 10);
+    text('Arm 1', cx + ARM * 0.45, cy + 16, C_ARM1, 'center', 12);
     text('(horizontal)', cx + ARM * 0.45, cy + 27, C_ARM1, 'center', 9);
-    text('Arm 2', cx + 16, cy - ARM * 0.50, C_ARM2, 'left', 10);
+    text('Arm 2', cx + 16, cy - ARM * 0.50, C_ARM2, 'left', 12);
     text('(vertical)', cx + 16, cy - ARM * 0.50 + 12, C_ARM2, 'left', 9);
 
     // Right side explanation
     var rx = W * 0.74, ry = H * 0.12;
-    boldText('How it works', rx, ry, C_TEXT, 'left', 12);
+    boldText('How it works', rx, ry, C_TEXT, 'left', 14);
     var steps = [
       '1. Light enters and hits the beam splitter.',
       '2. Half goes right → bounces off M₁.',
@@ -204,7 +204,7 @@
     ];
     var colors = [C_MUTED, C_ARM1, C_ARM2, C_MUTED, C_MUTED, '#aaffaa'];
     steps.forEach(function(s, i) {
-      text(s, rx, ry + 18 + i * 16, colors[i], 'left', 10);
+      text(s, rx, ry + 22 + i * 18, colors[i], 'left', 12);
     });
   }
 
@@ -259,9 +259,9 @@
       ctx.moveTo(gx + 4, gY + gh / 2);
       ctx.lineTo(gx + gw - 4, gY + gh / 2);
       ctx.stroke();
-      text('0', gx - 10, gY + gh / 2 + 4, C_MUTED, 'right', 9);
-      text('fringe shift', gx + gw / 2, gY + gh - 4, C_MUTED, 'center', 9);
-      text('↑ Δ', gx + 2, gY + 20, C_MUTED, 'left', 9);
+      text('0', gx - 10, gY + gh / 2 + 4, C_MUTED, 'right', 11);
+      text('fringe shift', gx + gw / 2, gY + gh - 4, C_MUTED, 'center', 11);
+      text('↑ Δ', gx + 2, gY + 20, C_MUTED, 'left', 11);
     }
 
     // Top graph: PREDICTED fringe shift (oscillates with apparatus angle)
@@ -284,7 +284,7 @@
     ctx.arc(markerX, topY + gh/2 - markerShift, 5, 0, Math.PI*2);
     ctx.fillStyle = '#ff6666';
     ctx.fill();
-    text('← fringe shift as apparatus rotates', gx + 6, topY + gh - 14, '#ffaaaa', 'left', 9);
+    text('← fringe shift as apparatus rotates', gx + 6, topY + gh - 14, '#ffaaaa', 'left', 11);
 
     // Bottom graph: MEASURED fringe shift (flat zero line = null result)
     drawGraphBox(botY, 'What Michelson actually measured', '#aaffaa');
@@ -306,7 +306,7 @@
     var vx = gx, vy = botY + gh + 10;
     ctx.fillStyle = 'rgba(100,255,120,0.08)';
     ctx.fillRect(vx, vy, gw, 26);
-    boldText('The null result: the aether does not exist.', vx + 8, vy + 17, '#aaffaa', 'left', 11);
+    boldText('The null result: the aether does not exist.', vx + 8, vy + 18, '#aaffaa', 'left', 13);
   }
 
   // ── MODE 3: Arm Ratio — Interferometer Sensitivity ─────────────
@@ -339,7 +339,7 @@
 
     // Right side explanation
     var rx = W * 0.65, ry = H * 0.10;
-    boldText('Interferometer sensitivity', rx, ry, C_TEXT, 'left', 12);
+    boldText('Interferometer sensitivity', rx, ry, C_TEXT, 'left', 14);
 
     var lines = [
       { t: 'When both arms are equal (ratio 1.000):', c: C_MUTED },
@@ -355,7 +355,7 @@
       { t: 'They measured: 0.00 fringes.', c: '#aaffaa' }
     ];
     lines.forEach(function(l, i) {
-      if (l.t) text(l.t, rx, ry + 20 + i * 15, l.c, 'left', 10);
+      if (l.t) text(l.t, rx, ry + 22 + i * 18, l.c, 'left', 12);
     });
 
     // Sensitivity indicator
