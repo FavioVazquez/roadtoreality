@@ -26,7 +26,40 @@
   // Cycle is split into two equal phases:
   //   Phase A (0–0.5): weight falls   → PE converts to KE
   //   Phase B (0.5–1): paddle spins   → KE converts to Heat
-  var PERIOD = 6;
+  // State machine: hold-start → fall → hold-mid → paddle → hold-end → repeat
+  // Each stage has a duration in seconds; only fall/paddle advance physics
+  var STAGES = [
+    { id: 'hold-start', dur: 1.2 },  // show full PE at top
+    { id: 'fall',       dur: 3.5 },  // PE → KE
+    { id: 'hold-mid',   dur: 0.8 },  // show full KE at bottom
+    { id: 'paddle',     dur: 3.5 },  // KE → Heat
+    { id: 'hold-end',   dur: 2.0 }   // show full Heat — read the result
+  ];
+  var TOTAL_DUR = STAGES.reduce(function(s, st) { return s + st.dur; }, 0);
+  var stageTime = 0; // time within current stage
+  var stageIdx  = 0;
+
+  function currentStage() { return STAGES[stageIdx]; }
+
+  // physics cycle 0–1 for energies()
+  function getCycle() {
+    var id = currentStage().id;
+    if (id === 'hold-start') return 0;
+    if (id === 'hold-mid')   return 0.5;
+    if (id === 'hold-end')   return 1.0;
+    var frac = stageTime / currentStage().dur;
+    if (id === 'fall')   return frac * 0.5;
+    if (id === 'paddle') return 0.5 + frac * 0.5;
+    return 0;
+  }
+
+  function advanceTime(dt) {
+    stageTime += dt;
+    while (stageTime >= STAGES[stageIdx].dur) {
+      stageTime -= STAGES[stageIdx].dur;
+      stageIdx = (stageIdx + 1) % STAGES.length;
+    }
+  }
 
   function energies(cycle) {
     var E = E_total();
@@ -62,7 +95,7 @@
     ctx.fillStyle = 'rgba(10,10,20,0.0)';
     ctx.fillRect(0, 0, W, H);
 
-    var cycle = (t % PERIOD) / PERIOD;
+    var cycle = getCycle();
     var en    = energies(cycle);
 
     var splitX = Math.floor(W * 0.50);
@@ -74,7 +107,7 @@
     var weightY0  = ropeTopY + (1 - dropFrac) * H * 0.20;
     var weightYMax = H * 0.54;
 
-    // weight only falls in phase A; in phase B it rests at bottom
+    // weight falls during fall stage; rests at bottom in paddle+hold-end
     var fallPhase = Math.min(cycle / 0.5, 1.0);
     var weightY   = weightY0 + fallPhase * (weightYMax - weightY0);
     var wHalf = Math.max(14, Math.min(26, 14 + (mass / 5.0) * 12));
@@ -180,10 +213,10 @@
       ctx.fillText('Heat = ' + en.heat.toFixed(1) + ' J', bX, bY + bH + 16);
     }
 
-    // Paddle
+    // Paddle — use cycle for rotation angle so it only spins during paddle phase
     ctx.save();
     ctx.translate(bX, bY + bH * 0.5);
-    ctx.rotate(t * 3.5);
+    ctx.rotate(cycle * 18);
     ctx.strokeStyle = 'rgba(255,255,255,0.8)';
     ctx.lineWidth = 3;
     for (var a = 0; a < 4; a++) {
@@ -199,11 +232,12 @@
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'left';
-    if (cycle < 0.5) {
-      ctx.fillText('↓ falling: PE → KE', 6, H - 8);
-    } else {
-      ctx.fillText('↺ paddle: KE → Heat', 6, H - 8);
-    }
+    var stId = currentStage().id;
+    if (stId === 'hold-start')  ctx.fillText('Ready to fall — all energy stored as PE', 6, H - 8);
+    else if (stId === 'fall')   ctx.fillText('↓ Falling — PE converting to KE', 6, H - 8);
+    else if (stId === 'hold-mid') ctx.fillText('At bottom — all PE is now KE', 6, H - 8);
+    else if (stId === 'paddle') ctx.fillText('↺ Paddle spinning — KE converting to Heat', 6, H - 8);
+    else                        ctx.fillText('All mechanical energy converted to Heat', 6, H - 8);
 
     // Divider
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
@@ -281,11 +315,14 @@
     ctx.textAlign = 'left';
     ctx.fillText('E = mgh = ' + mass.toFixed(1) + ' × 9.8 × ' + dropHeight.toFixed(1) + ' = ' + E.toFixed(1) + ' J', gx, H - 8);
 
-    t += 0.025;
-    if (running && !reduced) raf = requestAnimationFrame(drawFrame);
+    if (running && !reduced) {
+      advanceTime(1 / 60);
+      raf = requestAnimationFrame(drawFrame);
+    }
   }
 
-  function drawStatic() { t = 0; drawFrame(); }
+  function resetCycle() { stageIdx = 0; stageTime = 0; }
+  function drawStatic() { resetCycle(); drawFrame(); }
 
   // Sliders
   var heightSlider = document.getElementById('drop-height-slider');
@@ -297,7 +334,7 @@
     heightSlider.addEventListener('input', function () {
       dropHeight = parseFloat(heightSlider.value);
       if (heightLabel) heightLabel.textContent = dropHeight.toFixed(1) + ' m';
-      t = 0;
+      resetCycle();
       if (!running) drawStatic();
     });
   }
@@ -305,7 +342,7 @@
     massSlider.addEventListener('input', function () {
       mass = parseFloat(massSlider.value);
       if (massLabel) massLabel.textContent = mass.toFixed(1) + ' kg';
-      t = 0;
+      resetCycle();
       if (!running) drawStatic();
     });
   }
@@ -316,7 +353,7 @@
   window.SimAPI = {
     start:   function () { if (running) return; running = true; if (reduced) { drawStatic(); return; } raf = requestAnimationFrame(drawFrame); },
     pause:   function () { running = false; if (raf) { cancelAnimationFrame(raf); raf = null; } },
-    reset:   function () { window.SimAPI.pause(); t = 0; drawStatic(); },
+    reset:   function () { window.SimAPI.pause(); drawStatic(); },
     destroy: function () { window.SimAPI.pause(); if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }
   };
 
