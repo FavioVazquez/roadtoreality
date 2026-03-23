@@ -225,7 +225,9 @@
     var naturalH = H * 0.35;
     var maxVisualExt = H * 0.80 - anchorY - naturalH;
     var visualExt = Math.min(state.x / m.ruptureX * maxVisualExt * 2, maxVisualExt);
-    var springEndY = anchorY + naturalH + visualExt;
+    /* Gentle oscillation when running — spring bobs at ±2% of canvas height */
+    var oscOffset = (running && !ruptured) ? Math.sin(t * 5) * (H * 0.02) : 0;
+    var springEndY = anchorY + naturalH + visualExt + oscOffset;
 
     /* Handle rupture trigger */
     if (state.zone === 'ruptured' && !ruptured) {
@@ -343,14 +345,14 @@
       ctx.fillText('~' + massKg + ' kg', anchorX, springEndY + wbH + 5);
       ctx.restore();
 
-      /* Zone label */
+      /* Zone label — above force readout */
       var zoneColor = state.zone === 'elastic' ? '#61bd67' : '#b0b0b0';
       ctx.save();
       ctx.font = '11px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = zoneColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(state.zone, anchorX, anchorY - 14);
+      ctx.fillText(state.zone, anchorX, H * 0.88);
       ctx.restore();
 
       /* Force readout */

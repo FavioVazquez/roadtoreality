@@ -67,20 +67,22 @@
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-material-selector" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
-        <label for="material-selector" style="font-size:var(--text-sm);color:var(--color-text-secondary);">Material:</label>
-        <select id="material-selector" class="sim-select" style="background:var(--color-surface-2);color:var(--color-text);border:1px solid var(--color-border);border-radius:4px;padding:0.25rem 0.5rem;font-size:var(--text-sm);">
-          <option value="0">Steel (k = 500 N/m)</option>
-          <option value="1">Rubber (k = 50 N/m)</option>
-          <option value="2">Glass (k = 800 N/m)</option>
-        </select>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div class="sim-material-selector" style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="material-selector" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Material:</label>
+          <select id="material-selector" class="sim-select" style="background:oklch(0.18 0 0);color:oklch(0.85 0 0);border:1px solid oklch(1 0 0 / 0.18);border-radius:4px;padding:0.25rem 0.5rem;font-size:var(--text-sm);cursor:pointer;">
+            <option value="0">Steel (k = 500 N/m)</option>
+            <option value="1">Rubber (k = 50 N/m)</option>
+            <option value="2">Glass (k = 800 N/m)</option>
+          </select>
+        </div>
+        <div class="sim-weight-slider" style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="weight-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Load:</label>
+          <input id="weight-slider" type="range" min="0" max="1" step="0.01" value="0.3" style="flex:1;" aria-label="Applied load from 0 to rupture">
+          <span id="weight-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">elastic</span>
+        </div>
       </div>
-      <div class="sim-weight-slider" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
-        <label for="weight-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);">Load:</label>
-        <input id="weight-slider" type="range" min="0" max="1" step="0.01" value="0.3" style="flex:1;" aria-label="Applied load from 0 to rupture">
-        <span id="weight-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">elastic</span>
-      </div>
-      <div class="sim-actions" style="margin-left:auto;">
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
         <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
         <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
