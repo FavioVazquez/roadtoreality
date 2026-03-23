@@ -26,31 +26,21 @@
   // Cycle is split into two equal phases:
   //   Phase A (0–0.5): weight falls   → PE converts to KE
   //   Phase B (0.5–1): paddle spins   → KE converts to Heat
-  // State machine: hold-start → fall → hold-mid → paddle → hold-end → repeat
-  // Each stage has a duration in seconds; only fall/paddle advance physics
+  // Three stages: pause at top → fall (paddle spins simultaneously) → pause at bottom
   var STAGES = [
-    { id: 'hold-start', dur: 1.2 },  // show full PE at top
-    { id: 'fall',       dur: 3.5 },  // PE → KE
-    { id: 'hold-mid',   dur: 0.8 },  // show full KE at bottom
-    { id: 'paddle',     dur: 3.5 },  // KE → Heat
-    { id: 'hold-end',   dur: 2.0 }   // show full Heat — read the result
+    { id: 'hold-start', dur: 1.5 },  // weight at top, full PE shown
+    { id: 'fall',       dur: 5.0 },  // weight falls, paddle spins, PE→Heat live
+    { id: 'hold-end',   dur: 2.5 }   // weight at bottom, full Heat shown
   ];
-  var TOTAL_DUR = STAGES.reduce(function(s, st) { return s + st.dur; }, 0);
-  var stageTime = 0; // time within current stage
+  var stageTime = 0;
   var stageIdx  = 0;
 
   function currentStage() { return STAGES[stageIdx]; }
 
-  // physics cycle 0–1 for energies()
-  function getCycle() {
-    var id = currentStage().id;
-    if (id === 'hold-start') return 0;
-    if (id === 'hold-mid')   return 0.5;
-    if (id === 'hold-end')   return 1.0;
-    var frac = stageTime / currentStage().dur;
-    if (id === 'fall')   return frac * 0.5;
-    if (id === 'paddle') return 0.5 + frac * 0.5;
-    return 0;
+  // f = 0→1 over the fall stage only
+  function getFallFrac() {
+    if (currentStage().id !== 'fall') return currentStage().id === 'hold-start' ? 0 : 1;
+    return stageTime / currentStage().dur;
   }
 
   function advanceTime(dt) {
@@ -61,20 +51,15 @@
     }
   }
 
-  function energies(cycle) {
+  // Physics: paddle is coupled to the rope — it spins as weight falls.
+  // PE drops linearly. KE is a small transient hump (weight in motion).
+  // Heat = PE lost − KE in system (friction from paddle through water).
+  function energies(f) {
     var E = E_total();
-    var pe, ke, heat;
-    if (cycle < 0.5) {
-      var f = cycle / 0.5; // 0→1 during fall
-      pe   = E * (1 - f);
-      ke   = E * f;
-      heat = 0;
-    } else {
-      var f2 = (cycle - 0.5) / 0.5; // 0→1 during paddle
-      pe   = 0;
-      ke   = E * (1 - f2);
-      heat = E * f2;
-    }
+    // KE of falling weight: small bell-curve peak (real but transient)
+    var ke   = E * 0.10 * Math.sin(f * Math.PI);
+    var pe   = E * (1 - f);
+    var heat = E - pe - ke;  // conservation: always sums to E
     return { pe: pe, ke: ke, heat: heat, total: E };
   }
 
@@ -95,8 +80,8 @@
     ctx.fillStyle = 'rgba(10,10,20,0.0)';
     ctx.fillRect(0, 0, W, H);
 
-    var cycle = getCycle();
-    var en    = energies(cycle);
+    var f  = getFallFrac();
+    var en = energies(f);
 
     var splitX = Math.floor(W * 0.50);
 
@@ -107,8 +92,7 @@
     var weightY0  = ropeTopY + (1 - dropFrac) * H * 0.20;
     var weightYMax = H * 0.54;
 
-    // weight falls during fall stage; rests at bottom in paddle+hold-end
-    var fallPhase = Math.min(cycle / 0.5, 1.0);
+    var fallPhase = f; // 0 = top, 1 = bottom
     var weightY   = weightY0 + fallPhase * (weightYMax - weightY0);
     var wHalf = Math.max(14, Math.min(26, 14 + (mass / 5.0) * 12));
     var wH    = wHalf * 1.4;
@@ -143,15 +127,10 @@
     ctx.lineTo(bX, bY + bH * 0.35);
     ctx.stroke();
 
-    // Weight block — color reflects current energy state
-    var wColor = cycle < 0.5 ? C_KE : C_HEAT;
-    ctx.fillStyle = wColor.replace('#', 'rgba(').replace(/([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/, function(m, r, g, b) {
-      return parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16);
-    }) + ',0.75)';
-    // simpler: just use static colors
-    ctx.fillStyle = cycle < 0.5 ? 'rgba(82,200,130,0.75)' : 'rgba(200,112,64,0.75)';
+    // Weight color: shifts from blue (top) to orange (bottom) as heat builds
+    ctx.fillStyle = f < 0.5 ? 'rgba(82,133,200,0.75)' : 'rgba(200,112,64,0.75)';
     ctx.fillRect(weightX - wHalf, weightY, wHalf * 2, wH);
-    ctx.strokeStyle = cycle < 0.5 ? C_KE : C_HEAT;
+    ctx.strokeStyle = f < 0.5 ? C_PE : C_HEAT;
     ctx.lineWidth = 2;
     ctx.strokeRect(weightX - wHalf, weightY, wHalf * 2, wH);
     ctx.fillStyle = '#ffffff';
@@ -175,23 +154,21 @@
     ctx.textAlign = 'center';
     ctx.fillText('h=' + dropHeight.toFixed(1) + 'm', weightX - wHalf - 12, (weightY0 + weightYMax) / 2);
 
-    // PE label above weight when at top
-    if (cycle < 0.08 || cycle > 0.96) {
-      ctx.fillStyle = C_PE;
-      ctx.font = 'bold 11px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('PE = ' + en.pe.toFixed(1) + ' J', weightX, weightY0 - 8);
-    }
-    // KE label beside weight while falling
-    if (cycle >= 0.08 && cycle < 0.48) {
+    // PE label above weight (always)
+    ctx.fillStyle = C_PE;
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('PE = ' + en.pe.toFixed(1) + ' J', weightX, weightY0 - 8);
+    // KE label beside weight while it's moving
+    if (f > 0.05 && f < 0.95) {
       ctx.fillStyle = C_KE;
-      ctx.font = 'bold 11px sans-serif';
+      ctx.font = '11px sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText('KE = ' + en.ke.toFixed(1) + ' J', weightX + wHalf + 6, weightY + wH / 2);
+      ctx.fillText('KE ' + en.ke.toFixed(1) + ' J', weightX + wHalf + 6, weightY + wH / 2);
     }
 
-    // Water box — heats up in phase B
-    var heatProgress = cycle < 0.5 ? 0 : (cycle - 0.5) / 0.5;
+    // Water box — heats up as paddle spins (throughout the fall)
+    var heatProgress = f;
     var rr = Math.round(82  + heatProgress * 120);
     var rg = Math.round(133 - heatProgress * 50);
     var rb = Math.round(200 - heatProgress * 130);
@@ -205,18 +182,18 @@
     ctx.textAlign = 'center';
     ctx.fillText('water', bX, bY - 6);
 
-    // Heat label on water box when warming
-    if (heatProgress > 0.05) {
+    // Heat label on water box — shows throughout fall
+    if (f > 0.04) {
       ctx.fillStyle = C_HEAT;
       ctx.font = 'bold 11px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('Heat = ' + en.heat.toFixed(1) + ' J', bX, bY + bH + 16);
     }
 
-    // Paddle — use cycle for rotation angle so it only spins during paddle phase
+    // Paddle — spins during the fall (coupled via rope)
     ctx.save();
     ctx.translate(bX, bY + bH * 0.5);
-    ctx.rotate(cycle * 18);
+    ctx.rotate(f * 18);
     ctx.strokeStyle = 'rgba(255,255,255,0.8)';
     ctx.lineWidth = 3;
     for (var a = 0; a < 4; a++) {
@@ -233,11 +210,9 @@
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'left';
     var stId = currentStage().id;
-    if (stId === 'hold-start')  ctx.fillText('Ready to fall — all energy stored as PE', 6, H - 8);
-    else if (stId === 'fall')   ctx.fillText('↓ Falling — PE converting to KE', 6, H - 8);
-    else if (stId === 'hold-mid') ctx.fillText('At bottom — all PE is now KE', 6, H - 8);
-    else if (stId === 'paddle') ctx.fillText('↺ Paddle spinning — KE converting to Heat', 6, H - 8);
-    else                        ctx.fillText('All mechanical energy converted to Heat', 6, H - 8);
+    if (stId === 'hold-start') ctx.fillText('Weight at top — all energy stored as PE = ' + en.total.toFixed(1) + ' J', 6, H - 8);
+    else if (stId === 'fall')  ctx.fillText('↓ Falling → rope turns paddle → water heats up — all at once', 6, H - 8);
+    else                       ctx.fillText('At bottom — PE fully converted to Heat = ' + en.heat.toFixed(1) + ' J', 6, H - 8);
 
     // Divider
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
