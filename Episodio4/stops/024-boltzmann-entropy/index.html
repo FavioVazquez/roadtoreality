@@ -59,44 +59,56 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Boltzmann defined entropy as the number of ways a system can be arranged. His equation S = k log W links microscopic disorder to macroscopic thermodynamics.</p>
+    <p>In 1877, Ludwig Boltzmann gave entropy a precise definition: it counts the number of microscopic arrangements (microstates) \(\Omega\) that produce the same macroscopic appearance. Because high-entropy states have astronomically more microstates than low-entropy ones, a system evolving randomly will almost certainly move toward disorder — not because nature "wants" disorder, but because there are so many more ways to be disordered. His formula is carved on his gravestone in Vienna.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Boltzmann and Entropy — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Boltzmann and Entropy — two-panel simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="sim-actions" style="display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Left: adjust temperature — watch the Maxwell-Boltzmann speed distribution shift. Right: press "Remove Wall" to open the partition and watch entropy climb toward maximum.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch 50 gas particles distribute velocities toward the Maxwell-Boltzmann curve</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe entropy as disorder — the system always evolves toward higher microstates</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Calculate S = k log W for different configurations</li>
-    </ul>
+    <h3>The Maxwell-Boltzmann speed distribution</h3>
+    <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
+      In a gas at temperature \(T\), particle speeds are not all equal — they follow a statistical distribution. In two dimensions, the probability density is:
+    </p>
+    <div style="text-align:center;padding:1rem 0;">
+      $$f(v) = \frac{m}{k_B T}\, v\, \exp\!\left(-\frac{mv^2}{2k_B T}\right)$$
+    </div>
+    <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
+      The peak shifts to higher speeds as temperature rises, and the distribution broadens. The yellow curve in the left panel shows this theoretical prediction.
+    </p>
+    <h3>Boltzmann entropy</h3>
+    <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
+      Entropy \(S\) is proportional to the logarithm of the number of microstates \(\Omega\):
+    </p>
+    <div style="text-align:center;padding:1rem 0;">
+      $$S = k_B \ln \Omega$$
+    </div>
+    <p style="color:var(--color-text-secondary);line-height:1.8;">
+      When the right-panel partition is removed, the gas expands into twice the volume. The number of accessible microstates doubles for each particle, so \(\Omega \to 2^N \Omega_0\) and entropy increases by \(\Delta S = N k_B \ln 2\). The entropy meter tracks the fraction of available phase space the gas has explored after the wall opens.
+    </p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>S = k log W. Entropy measures the number of microscopic ways to arrange a system. The second law says entropy increases because high-entropy states are astronomically more probable.</li>
+      <li>Boltzmann's equation \(S = k_B \ln \Omega\) links the macroscopic concept of entropy to the count of microscopic arrangements. The second law of thermodynamics — entropy never decreases — is really a statement about probability: disordered states are overwhelmingly more likely than ordered ones.</li>
+      <li>The Maxwell-Boltzmann distribution \(f(v) \propto v \exp(-mv^2/2k_BT)\) describes how particle speeds are distributed in thermal equilibrium at temperature \(T\).</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Boltzmann gave entropy a microscopic meaning. Hertz confirmed Maxwell's prediction by creating and detecting radio waves in the laboratory — and in doing so, invented wireless communication.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

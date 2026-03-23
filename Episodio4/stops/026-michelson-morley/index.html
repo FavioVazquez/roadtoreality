@@ -59,7 +59,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>They tried to measure Earth's motion through the luminiferous ether — and found nothing. This null result shattered classical physics and pointed toward Einstein.</p>
+    <p>In 1887, Albert Michelson and Edward Morley built the most sensitive interferometer ever made and set it spinning on a stone slab floating in mercury. They expected to detect Earth's motion through the hypothetical luminiferous ether. Instead, they found nothing — the most important null result in the history of physics.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="The Michelson-Morley Experiment — teaser animation">
@@ -67,36 +67,53 @@
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.75rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <span style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Mode:</span>
+          <button id="mode-1-btn" class="sim-btn" style="font-size:var(--text-sm);">Expected vs. Found</button>
+          <button id="mode-2-btn" class="sim-btn" style="font-size:var(--text-sm);opacity:0.45;">Light Race</button>
+          <button id="mode-3-btn" class="sim-btn" style="font-size:var(--text-sm);opacity:0.45;">Interferometer</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="rotation-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Rotation (&#176;):</label>
+          <input id="rotation-slider" type="range" min="0" max="360" step="1" value="0" style="flex:1;" aria-label="Apparatus rotation 0 to 360 degrees">
+          <span id="rotation-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">0&#176;</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="arm-ratio-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Arm ratio L&#x2081;/L&#x2082;:</label>
+          <input id="arm-ratio-slider" type="range" min="0.5" max="2.0" step="0.05" value="1.0" style="flex:1;" aria-label="Interferometer arm length ratio 0.5 to 2.0">
+          <span id="arm-ratio-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.00</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 9</span>
+      <span>Use the mode buttons to explore the prediction, the race, and the interferometer. Rotate the apparatus — nothing changes.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Split a light beam along two perpendicular arms and recombine it</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Rotate the interferometer and observe that no fringe shift occurs</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Understand why this null result demanded a new theory of space and time</li>
-    </ul>
+    <p>The interferometer splits a beam of light and sends the two halves along perpendicular arms. When they recombine at the beam splitter, they interfere — producing bright and dark fringes that are exquisitely sensitive to any difference in travel time.</p>
+    <p>Classical physics predicted that if Earth moves through a stationary ether at speed $v_E$, the two beams would take different times to travel and return, because one arm points partly into the ether wind. Rotating the apparatus by 90&#176; should swap the pattern and shift the fringes by a measurable amount.</p>
+    <p>Michelson and Morley observed no fringe shift at all — not just a small shift, but essentially zero — far below what any ether theory could explain away.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>No ether wind was detected — the speed of light is the same in all directions regardless of Earth's motion. This null result forced a complete rethinking of space, time, and motion.</li>
+      <li>Michelson and Morley expected Earth's motion through the hypothetical luminiferous ether to produce a measurable fringe shift when rotating the interferometer. They found nothing.</li>
+      <li>The expected fringe shift from an aether wind of speed $v_E$ would be:</li>
+      <li>$$\Delta\phi_{\text{expected}} = \frac{4\pi L v_E^2}{\lambda c^2}$$</li>
+      <li>The observed fringe shift was consistent with zero — the null result. The speed of light is the same in all directions, regardless of Earth's motion.</li>
+      <li>$$\Delta\phi_{\text{observed}} \approx 0$$</li>
+      <li>This result could not be explained by classical physics. It pointed directly toward Einstein's 1905 postulate: the speed of light is constant in all inertial frames.</li>
     </ul>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>The ether was gone. Classical physics was in crisis. Planck's desperate solution to the blackbody problem introduced an entirely new idea: energy comes in discrete chunks.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
