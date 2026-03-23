@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 09 — Era 3: Classical Physics
 Plan: —
-Status: Phase 08 ✓ merged — ready for Phase 09
-Last activity: 2026-03-23 — Added Learnship attribution to How Physics Works footer (quick-002). Phase 09 is next.
+Status: Phase 09 context captured — ready for plan-phase 9
+Last activity: 2026-03-23 — Phase 09 context discussion complete. Interactivity and equation depth decisions locked.
 
 ### Quick Tasks Completed
 
