@@ -203,6 +203,15 @@
   min-height: 44px;
   min-width: 44px;
   transition: all var(--transition-fast);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  cursor: pointer;
+}
+
+.sim-btn:hover {
+  border-color: var(--era-stop-color, var(--color-gold));
+  color: var(--color-text);
 }
 
 .sim-btn-play {
