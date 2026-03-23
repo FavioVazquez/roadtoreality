@@ -9,9 +9,7 @@
 
   if (typeof renderMathInElement !== 'function') return;
 
-  var container = document.querySelector('.takeaway-box') || document.body;
-
-  renderMathInElement(container, {
+  renderMathInElement(document.body, {
     delimiters: [
       { left: '$$', right: '$$', display: true  },
       { left: '$',  right: '$',  display: false }
