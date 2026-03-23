@@ -6,7 +6,7 @@ Milestone: v2.0 — Full Spectrum
 Phase: 09 — Era 3: Classical Physics
 Plan: —
 Status: Phase 08 ✓ merged — ready for Phase 09
-Last activity: 2026-03-23 — Completed quick task 001: episodio4.md updated with phases 7 & 8 narrative + upcoming phases preview, ready to publish newsletter
+Last activity: 2026-03-23 — Episodio 4 finalized and merged to main — newsletter ready to publish. Phase 09 is next.
 
 ### Quick Tasks Completed
 
