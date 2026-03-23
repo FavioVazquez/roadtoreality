@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 07 — Open Graph Images
+Phase: 08 — Era Gap Fills
 Plan: —
-Status: Phase 07 ✓ complete — ready for Phase 08
-Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all stop pages
+Status: Phase 08 ✓ complete — ready for Phase 09
+Last activity: 2026-03-22 — Phase 08 complete: Eras 1–2 fully implemented (15 stops)
 
 ## Completed Phases
 
@@ -26,8 +26,9 @@ Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all s
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (12)
+## Full Simulations Built (13)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
+- 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
 - 004 Aristotle: two balls dropped, adjustable mass + air resistance
 - 005 Archimedes: objects dropped into water, buoyancy force arrows
@@ -39,6 +40,7 @@ Last activity: 2026-03-22 — Phase 07 complete: 50 OG SVGs + meta tags on all s
 - 011 Kepler: RK4 orbital mechanics, equal-areas triangles, adjustable eccentricity
 - 012 Newton laws: F=ma block, friction, velocity graph, wall reaction
 - 013 Newton gravity: Newton's cannon, projectile→orbit RK4, escape velocity
+- 014 Hooke's Law: split canvas spring + F vs. x graph, elastic/plastic/rupture, 3 material presets
 
 ## Milestone
 
@@ -81,6 +83,10 @@ All site code lives in: `Episodio4/`
 ### Phase 07 Plans Progress
 - 07-01: OG SVG Generation — complete (2026-03-22): 50 SVG files at Episodio4/stops/*/og-image.svg
 - 07-02: OG meta tag injection — complete (2026-03-22): scripts/inject-og-meta.mjs + 50 stop pages updated
+
+### Phase 08 Plans Progress
+- 08-01: Stop 002 Pythagoras — complete (2026-03-22): Web Audio + Canvas standing wave sim, 6 ratio buttons
+- 08-02: Stop 014 Hooke's Law — complete (2026-03-22): spring + F vs. x graph, 3 materials, snap animation
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages

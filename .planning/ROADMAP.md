@@ -99,14 +99,16 @@
 
 **Requirements:** SIM-GAP-01–02
 **Dir:** `08-v2-era-gap-fills`
+**Context:** `08-CONTEXT.md` ✓
+**Status:** ✓ Complete — 2026-03-22
 
-**Plan 08-01: Stop 002 — Pythagoras and Mathematical Harmony**
+**Plan 08-01: Stop 002 — Pythagoras and Mathematical Harmony** ✓ *complete 2026-03-22*
 - Web Audio API oscillator + Canvas 2D string visualization
 - Frequency ratio readout; harmonic series toggle
 - Label common intervals (2:1 octave, 3:2 fifth, 4:3 fourth)
 - KaTeX equations, stops.json `isStub: false`
 
-**Plan 08-02: Stop 014 — Hooke's Law and Elasticity**
+**Plan 08-02: Stop 014 — Hooke's Law and Elasticity** ✓ *complete 2026-03-22*
 - Canvas 2D spring + weights; live F vs. x graph
 - Force vectors; material selector (rubber, steel, glass)
 - Show yield point and rupture; elastic vs. plastic regime
