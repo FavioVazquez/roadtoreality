@@ -39,7 +39,8 @@
 
   /* Physics */
   var WAVE_SPEED   = 0.014;     /* fraction of W per frame */
-  var EMIT_PERIOD  = 28;        /* frames between emissions */
+  var BASE_PERIOD  = 28;        /* frames between emissions at f=1.0 */
+  var emitFreq     = 1.0;       /* source emission frequency multiplier (0.5–3.0) */
   var sourceSpeed  = 0.35;      /* fraction of wave speed (0–0.95) */
 
   var sourceX   = 0.15;         /* fraction of W */
@@ -77,6 +78,16 @@
     sliderWrap.appendChild(slider);
     sliderWrap.appendChild(speedVal);
     ctrlRow.insertBefore(sliderWrap, ctrlRow.firstChild);
+  }
+
+  /* ── Source frequency slider (declared in HTML) ─────────── */
+  var freqSlider  = document.getElementById('source-frequency-slider');
+  var freqReadout = document.getElementById('source-frequency-readout');
+  if (freqSlider) {
+    freqSlider.addEventListener('input', function () {
+      emitFreq = parseFloat(freqSlider.value);
+      if (freqReadout) freqReadout.textContent = 'f = ' + emitFreq.toFixed(1) + ' Hz';
+    });
   }
 
   /* ── Frequency readout ──────────────────────────────────── */
@@ -151,9 +162,10 @@
       waves   = [];
     }
 
-    /* Emit wave at source position each EMIT_PERIOD frames */
+    /* Emit wave at source position; higher emitFreq = shorter interval */
+    var emitInterval = Math.round(BASE_PERIOD / Math.max(0.1, emitFreq));
     emitTimer++;
-    if (emitTimer >= EMIT_PERIOD) {
+    if (emitTimer >= emitInterval) {
       waves.push({ cx: sourceX * W, r: 0 });
       emitTimer = 0;
     }

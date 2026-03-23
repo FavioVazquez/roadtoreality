@@ -71,6 +71,11 @@
         <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
         <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;">
+        <label for="source-frequency-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;">Source Frequency</label>
+        <input type="range" id="source-frequency-slider" min="0.5" max="3.0" step="0.1" value="1.0" style="flex:1;accent-color:#5285c8;cursor:pointer;">
+        <span id="source-frequency-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:5em;text-align:right;">f = 1.0 Hz</span>
+      </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
