@@ -6,13 +6,14 @@ Milestone: v2.0 — Full Spectrum
 Phase: 09 — Era 3: Classical Physics
 Plan: —
 Status: Phase 08 ✓ merged — ready for Phase 09
-Last activity: 2026-03-23 — Episodio 4 finalized and merged to main — newsletter ready to publish. Phase 09 is next.
+Last activity: 2026-03-23 — Added Learnship attribution to How Physics Works footer (quick-002). Phase 09 is next.
 
 ### Quick Tasks Completed
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 001 | Update episodio4.md with phases 7 & 8 + upcoming phases preview | 2026-03-23 | 20652f6 | .planning/quick/001-update-episodio4-phases-7-8/ |
+| 002 | Add subtle Learnship attribution to How Physics Works footer | 2026-03-23 | d9af0ea | .planning/quick/002-add-learnship-attribution/ |
 
 ## Completed Phases
 
