@@ -12,16 +12,15 @@
   var ctx = canvas.getContext('2d');
 
   var W, H;
-  var raf    = null;
-  var t      = 0;
+  var raf     = null;
+  var t       = 0;
   var running = false;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var currentMode = 1;
-  var rotAngle    = 0;   // degrees, manual slider
-  var armRatio    = 1.0; // arm2 / arm1, mode 3
+  var rotAngle    = 0;
+  var armRatio    = 1.0;
 
-  // ── Resize ──────────────────────────────────────────────────────
   function resize() {
     W = mount.clientWidth  || 680;
     H = mount.clientHeight || 380;
@@ -29,358 +28,270 @@
     canvas.height = H;
   }
 
-  // ── Color palette ───────────────────────────────────────────────
   var C_ARM1  = '#5285c8';
   var C_ARM2  = '#c85252';
   var C_BEAM  = '#ffee66';
   var C_NULL  = '#888888';
-  var C_DIM   = 'rgba(255,255,255,0.3)';
   var C_TEXT  = 'rgba(255,255,255,0.85)';
-  var C_MUTED = 'rgba(255,255,255,0.4)';
+  var C_MUTED = 'rgba(255,255,255,0.45)';
 
-  // ── Drawing primitives ──────────────────────────────────────────
-  function text(str, x, y, style, align, size) {
-    ctx.fillStyle  = style  || C_TEXT;
-    ctx.font       = (size  || 12) + 'px sans-serif';
-    ctx.textAlign  = align  || 'left';
+  function t_(str, x, y, color, align, size) {
+    ctx.fillStyle = color || C_TEXT;
+    ctx.font      = (size || 12) + 'px sans-serif';
+    ctx.textAlign = align || 'left';
     ctx.fillText(str, x, y);
   }
-  function boldText(str, x, y, style, align, size) {
-    ctx.fillStyle  = style  || C_TEXT;
-    ctx.font       = 'bold ' + (size || 12) + 'px sans-serif';
-    ctx.textAlign  = align  || 'left';
+  function b_(str, x, y, color, align, size) {
+    ctx.fillStyle = color || C_TEXT;
+    ctx.font      = 'bold ' + (size || 12) + 'px sans-serif';
+    ctx.textAlign = align || 'left';
     ctx.fillText(str, x, y);
   }
 
-  // Draw the interferometer arms centered at (cx,cy), rotated by rad
-  // arm1Length, arm2Length in px; beam progress 0–1 along arm1, separate for arm2
-  function drawInterferometer(cx, cy, rotRad, arm1, arm2, beamT) {
+  // ── Interferometer schematic ─────────────────────────────────────
+  function drawInterferometer(cx, cy, rotRad, arm1, arm2, beamT, showLabels) {
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(rotRad);
 
-    // Beam splitter diagonal
-    ctx.strokeStyle = C_BEAM;
-    ctx.lineWidth   = 2;
-    ctx.beginPath();
-    ctx.moveTo(-10, -10); ctx.lineTo(10, 10);
-    ctx.stroke();
+    // Arms
+    ctx.strokeStyle = 'rgba(82,133,200,0.4)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(arm1, 0); ctx.stroke();
+    ctx.strokeStyle = 'rgba(200,82,82,0.4)';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -arm2); ctx.stroke();
 
-    // Arm 1 (horizontal — blue)
-    ctx.strokeStyle = 'rgba(82,133,200,0.35)';
-    ctx.lineWidth   = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, 0); ctx.lineTo(arm1, 0);
-    ctx.stroke();
-    // Mirror 1
-    ctx.strokeStyle = C_ARM1;
-    ctx.lineWidth   = 5;
-    ctx.beginPath();
-    ctx.moveTo(arm1, -14); ctx.lineTo(arm1, 14);
-    ctx.stroke();
-    boldText('M₁', arm1 + 8, 5, C_ARM1, 'left', 10);
-
-    // Arm 2 (vertical — red)
-    ctx.strokeStyle = 'rgba(200,82,82,0.35)';
-    ctx.lineWidth   = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, 0); ctx.lineTo(0, -arm2);
-    ctx.stroke();
-    // Mirror 2
+    // Mirrors
+    ctx.strokeStyle = C_ARM1; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(arm1, -13); ctx.lineTo(arm1, 13); ctx.stroke();
     ctx.strokeStyle = C_ARM2;
-    ctx.lineWidth   = 5;
-    ctx.beginPath();
-    ctx.moveTo(-14, -arm2); ctx.lineTo(14, -arm2);
-    ctx.stroke();
-    boldText('M₂', 8, -arm2 - 6, C_ARM2, 'left', 10);
+    ctx.beginPath(); ctx.moveTo(-13, -arm2); ctx.lineTo(13, -arm2); ctx.stroke();
 
-    // Animated beam — bounces along arm1 (blue dot)
-    if (beamT !== null) {
-      var b1 = (beamT % 1.0);
-      var b1x = b1 < 0.5 ? b1 * 2 * arm1 : (1 - (b1 - 0.5) * 2) * arm1;
-      ctx.beginPath();
-      ctx.arc(b1x, 0, 5, 0, Math.PI * 2);
-      ctx.fillStyle = C_ARM1;
-      ctx.fill();
+    // Beam splitter
+    ctx.strokeStyle = C_BEAM; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-9, -9); ctx.lineTo(9, 9); ctx.stroke();
 
-      var b2 = ((beamT + 0.25) % 1.0);
-      var b2y = b2 < 0.5 ? -b2 * 2 * arm2 : -(1 - (b2 - 0.5) * 2) * arm2;
-      ctx.beginPath();
-      ctx.arc(0, b2y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = C_ARM2;
-      ctx.fill();
+    if (showLabels) {
+      b_('M₁', arm1 + 7, 4, C_ARM1, 'left', 11);
+      b_('M₂', 7, -arm2 - 5, C_ARM2, 'left', 11);
     }
 
+    // Animated beam dots
+    if (beamT !== null) {
+      var b1 = beamT % 1;
+      var b1x = b1 < 0.5 ? b1 * 2 * arm1 : (1 - (b1 - 0.5) * 2) * arm1;
+      ctx.beginPath(); ctx.arc(b1x, 0, 5, 0, Math.PI*2);
+      ctx.fillStyle = C_ARM1; ctx.fill();
+      var b2 = (beamT + 0.25) % 1;
+      var b2y = b2 < 0.5 ? -b2 * 2 * arm2 : -(1 - (b2-0.5) * 2) * arm2;
+      ctx.beginPath(); ctx.arc(0, b2y, 5, 0, Math.PI*2);
+      ctx.fillStyle = C_ARM2; ctx.fill();
+    }
     ctx.restore();
   }
 
-  // Draw detector square at (dx, dy) showing either fringes or null
-  function drawDetector(dx, dy, shift, isNull, label) {
-    var dw = 34, dh = 60;
+  // ── Detector box ─────────────────────────────────────────────────
+  function drawDetector(dx, dy, shift, isNull, sublabel) {
+    var dw = 32, dh = 56;
     if (isNull) {
       ctx.fillStyle = 'rgb(120,120,120)';
-      ctx.fillRect(dx, dy - dh/2, dw, dh);
-      ctx.strokeStyle = C_NULL;
-      ctx.lineWidth = 1.5;
-      ctx.strokeRect(dx, dy - dh/2, dw, dh);
-      boldText('NULL', dx + dw/2, dy + 6, '#ffffff', 'center', 9);
+      ctx.fillRect(dx - dw/2, dy - dh/2, dw, dh);
+      ctx.strokeStyle = '#aaaaaa'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(dx - dw/2, dy - dh/2, dw, dh);
+      b_('NULL', dx, dy + 4, '#ffffff', 'center', 9);
     } else {
-      ctx.fillStyle = 'rgba(10,10,20,0.85)';
-      ctx.fillRect(dx, dy - dh/2, dw, dh);
-      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(dx, dy - dh/2, dw, dh);
-      // Interference fringes
+      ctx.fillStyle = 'rgba(10,10,25,0.9)';
+      ctx.fillRect(dx - dw/2, dy - dh/2, dw, dh);
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
+      ctx.strokeRect(dx - dw/2, dy - dh/2, dw, dh);
       for (var fi = 0; fi < 8; fi++) {
-        var frac = fi / 8;
-        var bright = 0.5 + 0.5 * Math.sin((frac + shift) * Math.PI * 5);
+        var bright = 0.5 + 0.5 * Math.sin((fi / 8 + shift) * Math.PI * 5);
         ctx.fillStyle = 'rgba(255,255,255,' + bright.toFixed(2) + ')';
-        ctx.fillRect(dx + 2, dy - dh/2 + 2 + fi * (dh-4)/8, dw - 4, (dh-4)/8 - 1);
+        ctx.fillRect(dx - dw/2 + 2, dy - dh/2 + 2 + fi * (dh-4)/8, dw-4, (dh-4)/8 - 1);
       }
     }
-    // Label below detector
-    text('Detector', dx + dw/2, dy + dh/2 + 12, C_MUTED, 'center', 11);
-    if (label) text(label, dx + dw/2, dy + dh/2 + 23, isNull ? '#aaffaa' : '#ffaaaa', 'center', 11);
+    t_('Detector', dx, dy + dh/2 + 13, C_MUTED, 'center', 10);
+    if (sublabel) t_(sublabel, dx, dy + dh/2 + 25, isNull ? '#aaffaa' : '#ffaa66', 'center', 10);
   }
 
-  // ── MODE 1: The Setup ──────────────────────────────────────────
-  // Shows the interferometer schematic with beam animation and component labels
+  // ── MODE 1: The Setup ────────────────────────────────────────────
   function drawMode1() {
-    var cx = W * 0.42, cy = H * 0.48;
-    var ARM = Math.min(W, H) * 0.26;
-    var beamT = (t * 0.4) % 1.0;
+    var ARM = Math.min(W * 0.24, H * 0.34);
+    var cx  = W * 0.30, cy = H * 0.46;
+    var beamT = (t * 0.4) % 1;
 
-    drawInterferometer(cx, cy, 0, ARM, ARM, beamT);
+    drawInterferometer(cx, cy, 0, ARM, ARM, beamT, true);
 
     // Light source
-    ctx.beginPath();
-    ctx.arc(cx - ARM * 0.5, cy, 9, 0, Math.PI * 2);
-    ctx.fillStyle = C_BEAM;
-    ctx.fill();
-    // Source ray to splitter
-    ctx.strokeStyle = 'rgba(255,238,102,0.4)';
-    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx - ARM * 0.55, cy, 8, 0, Math.PI*2);
+    ctx.fillStyle = C_BEAM; ctx.fill();
+    ctx.strokeStyle = 'rgba(255,238,102,0.4)'; ctx.lineWidth = 1.5;
     ctx.setLineDash([4,3]);
-    ctx.beginPath();
-    ctx.moveTo(cx - ARM * 0.5 + 9, cy);
-    ctx.lineTo(cx, cy);
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - ARM * 0.55 + 8, cy); ctx.lineTo(cx, cy); ctx.stroke();
     ctx.setLineDash([]);
-    text('Light', cx - ARM * 0.5, cy - 16, C_BEAM, 'center', 12);
-    text('source', cx - ARM * 0.5, cy - 6, C_BEAM, 'center', 12);
+    t_('Source', cx - ARM * 0.55, cy - 14, C_BEAM, 'center', 11);
+
+    // Beam splitter label (right side of splitter, not overlapping arms)
+    t_('Splitter', cx + 12, cy + 14, C_BEAM, 'left', 11);
+
+    // Arm labels — positioned mid-arm, below/beside
+    t_('Arm 1', cx + ARM * 0.42, cy + 14, C_ARM1, 'center', 11);
+    t_('Arm 2', cx + 14, cy - ARM * 0.55, C_ARM2, 'left', 11);
 
     // Detector below splitter
-    var detX = cx - 17, detY = cy + ARM * 0.55;
-    ctx.strokeStyle = 'rgba(255,238,102,0.4)';
-    ctx.lineWidth = 1.5;
+    var detY = cy + ARM * 0.65;
+    ctx.strokeStyle = 'rgba(255,238,102,0.35)'; ctx.lineWidth = 1.5;
     ctx.setLineDash([4,3]);
-    ctx.beginPath();
-    ctx.moveTo(cx, cy + 10);
-    ctx.lineTo(cx, detY - 30);
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy + 10); ctx.lineTo(cx, detY - 28); ctx.stroke();
     ctx.setLineDash([]);
-    drawDetector(detX, detY, (t * 0.1) % 1, false, '');
+    drawDetector(cx, detY, (t * 0.1) % 1, false, '');
 
-    // Beam splitter label
-    text('Beam', cx + 12, cy - 2, C_BEAM, 'left', 12);
-    text('splitter', cx + 12, cy + 10, C_BEAM, 'left', 12);
-
-    // Arm labels with path lengths
-    text('Arm 1', cx + ARM * 0.45, cy + 16, C_ARM1, 'center', 12);
-    text('(horizontal)', cx + ARM * 0.45, cy + 27, C_ARM1, 'center', 9);
-    text('Arm 2', cx + 16, cy - ARM * 0.50, C_ARM2, 'left', 12);
-    text('(vertical)', cx + 16, cy - ARM * 0.50 + 12, C_ARM2, 'left', 9);
-
-    // Right side explanation
-    var rx = W * 0.74, ry = H * 0.12;
-    boldText('How it works', rx, ry, C_TEXT, 'left', 14);
+    // Right panel — explanation list
+    var rx = W * 0.56, ry = H * 0.08, maxW = W - rx - 10;
+    b_('How it works', rx, ry, C_TEXT, 'left', 13);
     var steps = [
-      '1. Light enters and hits the beam splitter.',
-      '2. Half goes right → bounces off M₁.',
-      '3. Half goes up → bounces off M₂.',
-      '4. Both beams recombine at detector.',
-      '5. If path lengths differ, fringes appear.',
-      '   If paths are equal → null result.'
+      ['1. Light hits the beam splitter.', C_MUTED],
+      ['2. Half travels right → bounces off M₁.', C_ARM1],
+      ['3. Half travels up → bounces off M₂.', C_ARM2],
+      ['4. Beams recombine at the detector.', C_MUTED],
+      ['5. Equal paths → uniform (null result).', '#aaffaa'],
+      ['   Unequal paths → fringe pattern.', '#ffaa66']
     ];
-    var colors = [C_MUTED, C_ARM1, C_ARM2, C_MUTED, C_MUTED, '#aaffaa'];
     steps.forEach(function(s, i) {
-      text(s, rx, ry + 22 + i * 18, colors[i], 'left', 12);
+      t_(s[0], rx, ry + 22 + i * 19, s[1], 'left', 11);
     });
   }
 
-  // ── MODE 2: Expected vs Found ──────────────────────────────────
-  // Shows what the aether theory predicted (fringe shift on rotation)
-  // vs what Michelson actually measured (zero shift at every angle)
+  // ── MODE 2: Expected vs Found ────────────────────────────────────
   function drawMode2() {
     var autoRot = (rotAngle !== 0) ? rotAngle * Math.PI / 180 : t * 0.25;
-    var ARM     = Math.min(W, H) * 0.20;
-    var cx      = W * 0.28, cy = H * 0.48;
+    var ARM     = Math.min(W * 0.18, H * 0.26);
+    var cx      = W * 0.20, cy = H * 0.50;
 
-    // Aether wind arrow
-    ctx.save();
-    ctx.translate(cx, cy);
-    var windLen = ARM * 1.1;
-    ctx.strokeStyle = 'rgba(100,200,255,0.35)';
-    ctx.lineWidth   = 1;
-    ctx.setLineDash([4, 3]);
-    ctx.beginPath();
-    ctx.moveTo(-windLen, 0); ctx.lineTo(windLen, 0);
-    ctx.stroke();
+    // Aether wind arrow (in world space)
+    var wLen = ARM * 1.3;
+    ctx.strokeStyle = 'rgba(100,200,255,0.3)'; ctx.lineWidth = 1;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(cx - wLen, cy); ctx.lineTo(cx + wLen, cy); ctx.stroke();
     ctx.setLineDash([]);
-    // Arrowhead
-    ctx.fillStyle = 'rgba(100,200,255,0.35)';
-    ctx.beginPath();
-    ctx.moveTo(windLen, 0);
-    ctx.lineTo(windLen - 10, -5);
-    ctx.lineTo(windLen - 10,  5);
-    ctx.closePath();
-    ctx.fill();
-    text('Aether wind (Earth\'s orbital motion)', -windLen, -12, 'rgba(100,200,255,0.4)', 'left', 9);
-    ctx.restore();
+    ctx.fillStyle = 'rgba(100,200,255,0.3)';
+    ctx.beginPath(); ctx.moveTo(cx + wLen, cy); ctx.lineTo(cx + wLen - 9, cy - 5); ctx.lineTo(cx + wLen - 9, cy + 5); ctx.closePath(); ctx.fill();
+    t_('Aether wind →', cx - wLen, cy - 10, 'rgba(100,200,255,0.35)', 'left', 10);
 
-    drawInterferometer(cx, cy, autoRot, ARM, ARM, t * 0.4);
+    drawInterferometer(cx, cy, autoRot, ARM, ARM, t * 0.4, false);
 
-    // Right panel: two comparison graphs
-    var gx = W * 0.52, gw = W * 0.44;
-    var topY = H * 0.10, botY = H * 0.55;
-    var gh   = H * 0.32;
+    // Two stacked graphs on the right
+    var pad  = 8;
+    var gx   = W * 0.42;
+    var gw   = W - gx - pad;
+    var gh   = H * 0.36;
+    var topY = H * 0.05;
+    var botY = topY + gh + 14;
 
-    // Graph background helper
-    function drawGraphBox(gY, title, color) {
+    function graphBox(gY, title, titleColor) {
       ctx.fillStyle = 'rgba(255,255,255,0.03)';
       ctx.fillRect(gx, gY, gw, gh);
-      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 1;
       ctx.strokeRect(gx, gY, gw, gh);
-      boldText(title, gx + 6, gY + 14, color, 'left', 10);
-      // Zero line
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-      ctx.beginPath();
-      ctx.moveTo(gx + 4, gY + gh / 2);
-      ctx.lineTo(gx + gw - 4, gY + gh / 2);
-      ctx.stroke();
-      text('0', gx - 10, gY + gh / 2 + 4, C_MUTED, 'right', 11);
-      text('fringe shift', gx + gw / 2, gY + gh - 4, C_MUTED, 'center', 11);
-      text('↑ Δ', gx + 2, gY + 20, C_MUTED, 'left', 11);
+      b_(title, gx + 6, gY + 14, titleColor, 'left', 11);
+      // zero line
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(gx + 2, gY + gh/2); ctx.lineTo(gx + gw - 2, gY + gh/2); ctx.stroke();
+      t_('Δ=0', gx - 2, gY + gh/2 + 4, C_MUTED, 'right', 10);
     }
 
-    // Top graph: PREDICTED fringe shift (oscillates with apparatus angle)
-    drawGraphBox(topY, 'What aether theory predicted', '#ffaaaa');
-    ctx.beginPath();
-    ctx.strokeStyle = '#ff6666';
-    ctx.lineWidth = 2;
-    for (var xi = 0; xi < gw - 8; xi++) {
-      var angle  = (xi / (gw - 8)) * Math.PI * 2;
-      var shift  = Math.sin(angle * 2 + autoRot * 2) * (gh * 0.35);
-      var px2    = gx + 4 + xi;
-      var py2    = topY + gh / 2 - shift;
-      if (xi === 0) ctx.moveTo(px2, py2); else ctx.lineTo(px2, py2);
+    // Top: predicted (oscillating)
+    graphBox(topY, 'Predicted (aether theory)', '#ffaaaa');
+    ctx.beginPath(); ctx.strokeStyle = '#ff6666'; ctx.lineWidth = 2;
+    for (var xi = 0; xi < gw - 4; xi++) {
+      var ang = (xi / (gw - 4)) * Math.PI * 2;
+      var sh  = Math.sin(ang * 2 + autoRot * 2) * (gh * 0.34);
+      var px  = gx + 2 + xi, py = topY + gh/2 - sh;
+      if (xi === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     }
     ctx.stroke();
-    // Current angle marker on top graph
-    var markerX = gx + 4 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw-8);
-    var markerShift = Math.sin(autoRot * 2 + autoRot * 2) * (gh * 0.35);
-    ctx.beginPath();
-    ctx.arc(markerX, topY + gh/2 - markerShift, 5, 0, Math.PI*2);
-    ctx.fillStyle = '#ff6666';
-    ctx.fill();
-    text('← fringe shift as apparatus rotates', gx + 6, topY + gh - 14, '#ffaaaa', 'left', 11);
+    var mx = gx + 2 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw - 4);
+    var my = topY + gh/2 - Math.sin(autoRot * 4) * (gh * 0.34);
+    ctx.beginPath(); ctx.arc(mx, my, 5, 0, Math.PI*2); ctx.fillStyle = '#ff6666'; ctx.fill();
+    t_('Fringes should shift as device rotates', gx + 4, topY + gh - 5, '#ffaaaa', 'left', 10);
 
-    // Bottom graph: MEASURED fringe shift (flat zero line = null result)
-    drawGraphBox(botY, 'What Michelson actually measured', '#aaffaa');
-    ctx.beginPath();
-    ctx.strokeStyle = '#66ff88';
-    ctx.lineWidth   = 3;
-    ctx.moveTo(gx + 4, botY + gh/2);
-    ctx.lineTo(gx + gw - 4, botY + gh/2);
-    ctx.stroke();
-    // Marker at current angle — stays at zero
-    var markerX2 = gx + 4 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw-8);
-    ctx.beginPath();
-    ctx.arc(markerX2, botY + gh/2, 5, 0, Math.PI*2);
-    ctx.fillStyle = '#66ff88';
-    ctx.fill();
-    boldText('Zero fringe shift — at every angle', gx + 6, botY + gh - 14, '#aaffaa', 'left', 10);
+    // Bottom: measured (flat zero)
+    graphBox(botY, 'Measured (actual result)', '#aaffaa');
+    ctx.beginPath(); ctx.strokeStyle = '#66ff88'; ctx.lineWidth = 3;
+    ctx.moveTo(gx + 2, botY + gh/2); ctx.lineTo(gx + gw - 2, botY + gh/2); ctx.stroke();
+    var mx2 = gx + 2 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw - 4);
+    ctx.beginPath(); ctx.arc(mx2, botY + gh/2, 5, 0, Math.PI*2); ctx.fillStyle = '#66ff88'; ctx.fill();
+    b_('No shift — at any angle', gx + 4, botY + gh - 5, '#aaffaa', 'left', 11);
 
-    // Verdict box
-    var vx = gx, vy = botY + gh + 10;
-    ctx.fillStyle = 'rgba(100,255,120,0.08)';
-    ctx.fillRect(vx, vy, gw, 26);
-    boldText('The null result: the aether does not exist.', vx + 8, vy + 18, '#aaffaa', 'left', 13);
+    // Verdict banner
+    var vy = botY + gh + 6;
+    if (vy + 26 < H) {
+      ctx.fillStyle = 'rgba(100,255,120,0.07)';
+      ctx.fillRect(gx, vy, gw, 22);
+      b_('Null result: the aether does not exist.', gx + 8, vy + 15, '#aaffaa', 'left', 12);
+    }
   }
 
-  // ── MODE 3: Arm Ratio — Interferometer Sensitivity ─────────────
-  // Shows how equal arms → null, unequal arms → visible fringes
-  // Teaches HOW the interferometer works as a measuring tool
+  // ── MODE 3: Arm Ratio ────────────────────────────────────────────
   function drawMode3() {
-    var ARM1 = Math.min(W, H) * 0.24;
+    var ARM1 = Math.min(W * 0.22, H * 0.30);
     var ARM2 = ARM1 * armRatio;
-    var cx   = W * 0.35, cy = H * 0.50;
+    var cx   = W * 0.28, cy = H * 0.48;
 
-    drawInterferometer(cx, cy, 0, ARM1, ARM2, null);
+    drawInterferometer(cx, cy, 0, ARM1, ARM2, null, true);
 
-    // Arm length labels showing actual path difference
-    var pathDiff = 2 * (ARM2 - ARM1); // round-trip difference in display px (visual only)
-    text('L₁ (fixed)', cx + ARM1 * 0.5, cy + 16, C_ARM1, 'center', 10);
-    text('L₂ = ' + armRatio.toFixed(3) + ' × L₁', cx + 18, cy - ARM2 * 0.55, C_ARM2, 'left', 10);
+    // Arm length labels — avoid overlap with mirrors
+    t_('L₁', cx + ARM1 * 0.45, cy + 16, C_ARM1, 'center', 11);
+    t_('L₂ = ' + armRatio.toFixed(3) + '×', cx + 14, cy - ARM2 * 0.55, C_ARM2, 'left', 11);
 
-    // Path difference label
-    var pdText = Math.abs(armRatio - 1.0) < 0.003
-      ? 'ΔL = 0  →  null result'
-      : 'ΔL = ' + ((armRatio - 1).toFixed(3)) + ' × L₁';
-    boldText(pdText, cx - ARM1 * 0.3, cy + ARM1 * 0.7 + 14,
-      Math.abs(armRatio - 1.0) < 0.003 ? '#aaffaa' : '#ffaa66', 'center', 11);
-
-    // Detector at bottom
-    var detX = cx - 17, detY = cy + ARM1 * 0.70;
+    // Path difference
     var isNull = Math.abs(armRatio - 1.0) < 0.003;
-    var fringeShift = (armRatio - 1.0) * 12;
-    drawDetector(detX, detY, fringeShift, isNull, isNull ? 'Equal arms' : 'Unequal arms');
+    var pdText = isNull ? 'ΔL = 0  →  null result' : 'ΔL = ' + (armRatio - 1).toFixed(3) + ' × L₁';
+    b_(pdText, cx, cy + ARM1 * 0.80 + 10, isNull ? '#aaffaa' : '#ffaa66', 'center', 11);
 
-    // Right side explanation
-    var rx = W * 0.65, ry = H * 0.10;
-    boldText('Interferometer sensitivity', rx, ry, C_TEXT, 'left', 14);
+    // Detector
+    var detY = cy + ARM1 * 0.80;
+    drawDetector(cx, detY, (armRatio - 1) * 12, isNull, isNull ? 'Equal arms' : 'Unequal arms');
+
+    // Right panel
+    var rx = W * 0.56, ry = H * 0.08, rw = W - rx - 10;
+    b_('Interferometer sensitivity', rx, ry, C_TEXT, 'left', 13);
 
     var lines = [
-      { t: 'When both arms are equal (ratio 1.000):', c: C_MUTED },
-      { t: '  Both beams travel the same total distance.', c: C_MUTED },
-      { t: '  They recombine in phase → no fringes.', c: '#aaffaa' },
-      { t: '', c: C_MUTED },
-      { t: 'When one arm is longer:', c: C_MUTED },
-      { t: '  One beam travels a longer path.', c: C_MUTED },
-      { t: '  Phase difference → bright/dark fringes appear.', c: '#ffaa66' },
-      { t: '', c: C_MUTED },
-      { t: 'Michelson could detect a shift of 0.01 fringes.', c: C_MUTED },
-      { t: 'Aether theory predicted ~0.4 fringes.', c: '#ff8888' },
-      { t: 'They measured: 0.00 fringes.', c: '#aaffaa' }
+      ['Equal arms (1.000):', C_MUTED],
+      ['  Same path length → no phase shift.', '#aaffaa'],
+      ['  Detector shows uniform grey.', '#aaffaa'],
+      ['', C_MUTED],
+      ['Unequal arms:', C_MUTED],
+      ['  Path difference → interference fringes.', '#ffaa66'],
+      ['  Brighter difference = bigger shift.', '#ffaa66'],
+      ['', C_MUTED],
+      ['Michelson sensitivity: 0.01 fringes.', C_MUTED],
+      ['Aether prediction: ~0.4 fringes.', '#ff8888'],
+      ['Measured: 0.00 fringes.', '#aaffaa']
     ];
     lines.forEach(function(l, i) {
-      if (l.t) text(l.t, rx, ry + 22 + i * 18, l.c, 'left', 12);
+      if (l[0]) t_(l[0], rx, ry + 22 + i * 17, l[1], 'left', 11);
     });
-
-    // Sensitivity indicator
-    var sensY = ry + 20 + lines.length * 15 + 8;
-    var expectedShift = 0.4; // theoretical
-    boldText('Expected: ~0.4λ  |  Measured: 0.00λ', rx, sensY, C_MUTED, 'left', 10);
   }
 
-  // ── Main draw ───────────────────────────────────────────────────
+  // ── Main draw ────────────────────────────────────────────────────
   function drawFrame() {
     ctx.clearRect(0, 0, W, H);
+    // Clip everything to canvas bounds
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
     if      (currentMode === 1) drawMode1();
     else if (currentMode === 2) drawMode2();
     else                        drawMode3();
+    ctx.restore();
 
-    if (running && !reduced) {
-      t += 0.022;
-      raf = requestAnimationFrame(drawFrame);
-    }
+    if (running && !reduced) { t += 0.022; raf = requestAnimationFrame(drawFrame); }
   }
 
   function drawStatic() { drawFrame(); }
 
-  // ── Controls wiring ─────────────────────────────────────────────
-  var controls    = document.getElementById('sim-controls-026');
+  // ── Controls ─────────────────────────────────────────────────────
+  var controls     = document.getElementById('sim-controls-026');
   var rotSliderRow = controls ? controls.querySelector('.row-rotation')  : null;
   var armSliderRow = controls ? controls.querySelector('.row-arm-ratio') : null;
   var rotSlider    = document.getElementById('rot-slider');
@@ -390,9 +301,9 @@
   var hintEl       = document.getElementById('mode-hint');
 
   var HINTS = {
-    1: 'Watch the light beam bounce between the two mirrors and recombine at the detector.',
-    2: 'The apparatus rotates continuously. Top graph = what aether theory predicted. Bottom = what was actually measured.',
-    3: 'Change the arm ratio. Equal arms (1.000) = null result. Any difference creates fringes.'
+    1: 'Watch the light beam bounce between mirrors and recombine at the detector.',
+    2: 'Apparatus rotates automatically. Top = aether prediction. Bottom = actual measurement.',
+    3: 'Drag the arm ratio. At 1.000 (equal arms) the result is null. Any difference creates fringes.'
   };
 
   function setMode(m) {
@@ -424,9 +335,7 @@
   }
   if (controls) {
     controls.querySelectorAll('.mode-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        setMode(parseInt(btn.dataset.mode, 10));
-      });
+      btn.addEventListener('click', function() { setMode(parseInt(btn.dataset.mode, 10)); });
     });
   }
 
