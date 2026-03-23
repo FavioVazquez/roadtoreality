@@ -54,10 +54,10 @@
     ctx.translate(cx, cy);
     ctx.rotate(rotRad);
 
-    // Arms
-    ctx.strokeStyle = 'rgba(82,133,200,0.4)'; ctx.lineWidth = 2;
+    // Arms — drawn with higher opacity so they're visible alongside splitter
+    ctx.strokeStyle = 'rgba(82,133,200,0.75)'; ctx.lineWidth = 2.5;
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(arm1, 0); ctx.stroke();
-    ctx.strokeStyle = 'rgba(200,82,82,0.4)';
+    ctx.strokeStyle = 'rgba(200,82,82,0.75)'; ctx.lineWidth = 2.5;
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -arm2); ctx.stroke();
 
     // Mirrors
@@ -66,9 +66,9 @@
     ctx.strokeStyle = C_ARM2;
     ctx.beginPath(); ctx.moveTo(-13, -arm2); ctx.lineTo(13, -arm2); ctx.stroke();
 
-    // Beam splitter
-    ctx.strokeStyle = C_BEAM; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(-9, -9); ctx.lineTo(9, 9); ctx.stroke();
+    // Beam splitter — drawn last so it sits on top of arm start
+    ctx.strokeStyle = C_BEAM; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(-10, -10); ctx.lineTo(10, 10); ctx.stroke();
 
     if (showLabels) {
       b_('M₁', arm1 + 7, 4, C_ARM1, 'left', 11);
@@ -239,18 +239,18 @@
 
     drawInterferometer(cx, cy, 0, ARM1, ARM2, null, true);
 
-    // Arm length labels — avoid overlap with mirrors
+    // Arm length labels — mid-arm, clear of mirrors and splitter
     t_('L₁', cx + ARM1 * 0.45, cy + 16, C_ARM1, 'center', 11);
     t_('L₂ = ' + armRatio.toFixed(3) + '×', cx + 14, cy - ARM2 * 0.55, C_ARM2, 'left', 11);
 
-    // Path difference
+    // Detector — pushed further down to leave room for ΔL label above it
     var isNull = Math.abs(armRatio - 1.0) < 0.003;
-    var pdText = isNull ? 'ΔL = 0  →  null result' : 'ΔL = ' + (armRatio - 1).toFixed(3) + ' × L₁';
-    b_(pdText, cx, cy + ARM1 * 0.80 + 10, isNull ? '#aaffaa' : '#ffaa66', 'center', 11);
-
-    // Detector
-    var detY = cy + ARM1 * 0.80;
+    var detY   = cy + ARM1 * 1.05;
     drawDetector(cx, detY, (armRatio - 1) * 12, isNull, isNull ? 'Equal arms' : 'Unequal arms');
+
+    // ΔL label — sits between splitter and detector, clear of both
+    var pdText = isNull ? 'ΔL = 0  →  null result' : 'ΔL = ' + (armRatio - 1).toFixed(3) + ' × L₁';
+    b_(pdText, cx, cy + ARM1 * 0.65, isNull ? '#aaffaa' : '#ffaa66', 'center', 12);
 
     // Right panel
     var rx = W * 0.56, ry = H * 0.08, rw = W - rx - 10;
