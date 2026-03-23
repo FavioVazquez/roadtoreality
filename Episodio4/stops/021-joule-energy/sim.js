@@ -1,4 +1,4 @@
-/* sim.js — 021 Joule: falling weight heats water via paddle — wired sliders */
+/* sim.js — 021 Joule: PE→KE→Heat conversion with 3-bar energy display */
 (function () {
   'use strict';
   var mount = document.getElementById('sim-mount');
@@ -16,217 +16,270 @@
   var t = 0;
   var running = false;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var COLOR = '#5285c8';
 
-  // Physics params (slider-driven)
-  var dropHeight = 1.5; // m
-  var mass       = 2.0; // kg
+  var dropHeight = 1.5;
+  var mass       = 2.0;
   var G = 9.8;
 
-  function totalEnergy() { return mass * G * dropHeight; } // J
+  function E_total() { return mass * G * dropHeight; }
+
+  // Cycle is split into two equal phases:
+  //   Phase A (0–0.5): weight falls   → PE converts to KE
+  //   Phase B (0.5–1): paddle spins   → KE converts to Heat
+  var PERIOD = 6;
+
+  function energies(cycle) {
+    var E = E_total();
+    var pe, ke, heat;
+    if (cycle < 0.5) {
+      var f = cycle / 0.5; // 0→1 during fall
+      pe   = E * (1 - f);
+      ke   = E * f;
+      heat = 0;
+    } else {
+      var f2 = (cycle - 0.5) / 0.5; // 0→1 during paddle
+      pe   = 0;
+      ke   = E * (1 - f2);
+      heat = E * f2;
+    }
+    return { pe: pe, ke: ke, heat: heat, total: E };
+  }
 
   function resize() {
-    W = mount.clientWidth  || 600;
+    W = mount.clientWidth  || 640;
     H = mount.clientHeight || 360;
     canvas.width  = W;
     canvas.height = H;
   }
 
-  // Layout constants (recomputed after resize)
-  function boxLayout() {
-    return {
-      boxX: W * 0.44,
-      boxW: W * 0.26,
-      boxH: H * 0.30,
-      boxY: H * 0.48
-    };
-  }
-
-  var PERIOD = 5; // seconds per drop
+  // Colors
+  var C_PE   = '#5285c8'; // blue
+  var C_KE   = '#52c882'; // green
+  var C_HEAT = '#c87040'; // orange
 
   function drawFrame() {
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(82,133,200,0.06)';
+    ctx.fillStyle = 'rgba(10,10,20,0.0)';
     ctx.fillRect(0, 0, W, H);
 
-    var b     = boxLayout();
     var cycle = (t % PERIOD) / PERIOD;
+    var en    = energies(cycle);
 
-    // Drop range scales with height slider: taller → weight starts higher
-    var dropFrac  = Math.min(dropHeight / 3.0, 1.0); // 0–1 relative to max
-    var weightX   = W * 0.22;
-    var ropeTopY  = H * 0.06;
-    var weightY0  = ropeTopY + (1.0 - dropFrac) * H * 0.25; // higher slider → higher start
-    var weightYMax = b.boxY - 10;
-    var weightY   = weightY0 + cycle * (weightYMax - weightY0);
+    var splitX = Math.floor(W * 0.50);
 
-    // Weight block size scales with mass
+    // ── LEFT: apparatus ──────────────────────────────────────────
+    var weightX   = splitX * 0.30;
+    var ropeTopY  = H * 0.07;
+    var dropFrac  = Math.min(dropHeight / 3.0, 1.0);
+    var weightY0  = ropeTopY + (1 - dropFrac) * H * 0.20;
+    var weightYMax = H * 0.54;
+
+    // weight only falls in phase A; in phase B it rests at bottom
+    var fallPhase = Math.min(cycle / 0.5, 1.0);
+    var weightY   = weightY0 + fallPhase * (weightYMax - weightY0);
     var wHalf = Math.max(14, Math.min(26, 14 + (mass / 5.0) * 12));
     var wH    = wHalf * 1.4;
-    var temp  = 20 + cycle * (totalEnergy() * 0.12); // °C rise scales with E
+
+    // water box
+    var bX = splitX * 0.65;
+    var bW = splitX * 0.55;
+    var bH = H * 0.28;
+    var bY = H * 0.52;
 
     // Pulley
     ctx.beginPath();
     ctx.arc(weightX, ropeTopY + 8, 10, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(82,133,200,0.35)';
+    ctx.fillStyle = 'rgba(82,133,200,0.3)';
     ctx.fill();
-    ctx.strokeStyle = COLOR;
+    ctx.strokeStyle = C_PE;
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Vertical rope
-    ctx.strokeStyle = 'rgba(82,133,200,0.55)';
+    // Rope vertical
+    ctx.strokeStyle = 'rgba(82,133,200,0.5)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(weightX, ropeTopY + 18);
     ctx.lineTo(weightX, weightY);
     ctx.stroke();
 
-    // Horizontal rope to paddle box
+    // Rope horizontal to paddle
     ctx.beginPath();
     ctx.moveTo(weightX + 10, ropeTopY + 8);
-    ctx.lineTo(b.boxX, ropeTopY + 8);
-    ctx.lineTo(b.boxX, b.boxY + b.boxH * 0.35);
+    ctx.lineTo(bX, ropeTopY + 8);
+    ctx.lineTo(bX, bY + bH * 0.35);
     ctx.stroke();
 
-    // Weight block
-    ctx.fillStyle = 'rgba(82,133,200,0.75)';
+    // Weight block — color reflects current energy state
+    var wColor = cycle < 0.5 ? C_KE : C_HEAT;
+    ctx.fillStyle = wColor.replace('#', 'rgba(').replace(/([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/, function(m, r, g, b) {
+      return parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16);
+    }) + ',0.75)';
+    // simpler: just use static colors
+    ctx.fillStyle = cycle < 0.5 ? 'rgba(82,200,130,0.75)' : 'rgba(200,112,64,0.75)';
     ctx.fillRect(weightX - wHalf, weightY, wHalf * 2, wH);
-    ctx.strokeStyle = COLOR;
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = cycle < 0.5 ? C_KE : C_HEAT;
+    ctx.lineWidth = 2;
     ctx.strokeRect(weightX - wHalf, weightY, wHalf * 2, wH);
-
-    // Mass label on weight
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 10px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(mass.toFixed(1) + 'kg', weightX, weightY + wH * 0.6);
+    ctx.fillText(mass.toFixed(1) + 'kg', weightX, weightY + wH * 0.62);
 
-    // Drop height label — left of rope, scales with arrow length
-    var arrowMidY = (weightY0 + weightYMax) / 2;
-    ctx.strokeStyle = 'rgba(82,133,200,0.45)';
+    // height arrow (dashed)
+    ctx.save();
+    ctx.strokeStyle = 'rgba(82,133,200,0.4)';
     ctx.lineWidth = 1;
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
-    ctx.moveTo(weightX - wHalf - 14, weightY0);
-    ctx.lineTo(weightX - wHalf - 14, weightYMax);
+    ctx.moveTo(weightX - wHalf - 12, weightY0);
+    ctx.lineTo(weightX - wHalf - 12, weightYMax);
     ctx.stroke();
     ctx.setLineDash([]);
-    // arrowheads
-    ctx.fillStyle = 'rgba(82,133,200,0.6)';
-    ctx.beginPath();
-    ctx.moveTo(weightX - wHalf - 14, weightY0);
-    ctx.lineTo(weightX - wHalf - 18, weightY0 + 8);
-    ctx.lineTo(weightX - wHalf - 10, weightY0 + 8);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(weightX - wHalf - 14, weightYMax);
-    ctx.lineTo(weightX - wHalf - 18, weightYMax - 8);
-    ctx.lineTo(weightX - wHalf - 10, weightYMax - 8);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(82,133,200,0.85)';
+    ctx.restore();
+    ctx.fillStyle = 'rgba(82,133,200,0.75)';
     ctx.font = '10px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('h=' + dropHeight.toFixed(1) + 'm', weightX - wHalf - 14, arrowMidY);
+    ctx.fillText('h=' + dropHeight.toFixed(1) + 'm', weightX - wHalf - 12, (weightY0 + weightYMax) / 2);
 
-    // Arrived label
-    if (cycle > 0.88) {
-      ctx.fillStyle = 'rgba(82,200,133,0.9)';
-      ctx.font = 'bold 10px monospace';
+    // PE label above weight when at top
+    if (cycle < 0.08 || cycle > 0.96) {
+      ctx.fillStyle = C_PE;
+      ctx.font = 'bold 11px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('arrived', weightX, weightYMax + wH + 14);
+      ctx.fillText('PE = ' + en.pe.toFixed(1) + ' J', weightX, weightY0 - 8);
+    }
+    // KE label beside weight while falling
+    if (cycle >= 0.08 && cycle < 0.48) {
+      ctx.fillStyle = C_KE;
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('KE = ' + en.ke.toFixed(1) + ' J', weightX + wHalf + 6, weightY + wH / 2);
     }
 
-    // Water box — color shifts from blue to orange with heat
-    var r = Math.round(82  + cycle * 120);
-    var g = Math.round(133 - cycle * 50);
-    var bl= Math.round(200 - cycle * 120);
-    ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + bl + ',0.28)';
-    ctx.fillRect(b.boxX - b.boxW/2, b.boxY, b.boxW, b.boxH);
-    ctx.strokeStyle = COLOR;
+    // Water box — heats up in phase B
+    var heatProgress = cycle < 0.5 ? 0 : (cycle - 0.5) / 0.5;
+    var rr = Math.round(82  + heatProgress * 120);
+    var rg = Math.round(133 - heatProgress * 50);
+    var rb = Math.round(200 - heatProgress * 130);
+    ctx.fillStyle = 'rgba(' + rr + ',' + rg + ',' + rb + ',0.28)';
+    ctx.fillRect(bX - bW/2, bY, bW, bH);
+    ctx.strokeStyle = heatProgress > 0.1 ? C_HEAT : C_PE;
     ctx.lineWidth = 2;
-    ctx.strokeRect(b.boxX - b.boxW/2, b.boxY, b.boxW, b.boxH);
-
-    ctx.fillStyle = 'rgba(82,133,200,0.65)';
+    ctx.strokeRect(bX - bW/2, bY, bW, bH);
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.font = '11px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('water', b.boxX, b.boxY - 6);
+    ctx.fillText('water', bX, bY - 6);
+
+    // Heat label on water box when warming
+    if (heatProgress > 0.05) {
+      ctx.fillStyle = C_HEAT;
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Heat = ' + en.heat.toFixed(1) + ' J', bX, bY + bH + 16);
+    }
 
     // Paddle
     ctx.save();
-    ctx.translate(b.boxX, b.boxY + b.boxH * 0.5);
+    ctx.translate(bX, bY + bH * 0.5);
     ctx.rotate(t * 3.5);
-    ctx.strokeStyle = 'rgba(82,133,200,0.9)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.8)';
     ctx.lineWidth = 3;
     for (var a = 0; a < 4; a++) {
       var ang = a * Math.PI / 2;
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(Math.cos(ang) * 18, Math.sin(ang) * 18);
+      ctx.lineTo(Math.cos(ang) * 16, Math.sin(ang) * 16);
       ctx.stroke();
     }
     ctx.restore();
 
-    // --- Energy pie chart (right panel) ---
-    var pieCX = W * 0.80;
-    var pieCY = H * 0.30;
-    var pieR  = Math.min(W, H) * 0.10;
-
-    var heatFrac = cycle;
-    var mechFrac = 1 - cycle;
-    var sa = -Math.PI / 2;
-
-    if (mechFrac > 0.001) {
-      ctx.beginPath();
-      ctx.moveTo(pieCX, pieCY);
-      ctx.arc(pieCX, pieCY, pieR, sa, sa + mechFrac * Math.PI * 2);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(82,133,200,0.75)';
-      ctx.fill();
+    // Phase label
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'left';
+    if (cycle < 0.5) {
+      ctx.fillText('↓ falling: PE → KE', 6, H - 8);
+    } else {
+      ctx.fillText('↺ paddle: KE → Heat', 6, H - 8);
     }
-    if (heatFrac > 0.001) {
-      ctx.beginPath();
-      ctx.moveTo(pieCX, pieCY);
-      ctx.arc(pieCX, pieCY, pieR, sa + mechFrac * Math.PI * 2, sa + Math.PI * 2);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(200,120,60,0.75)';
-      ctx.fill();
-    }
-    ctx.beginPath();
-    ctx.arc(pieCX, pieCY, pieR, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(82,133,200,0.4)';
+
+    // Divider
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(splitX, 0);
+    ctx.lineTo(splitX, H);
     ctx.stroke();
 
-    ctx.fillStyle = 'rgba(82,133,200,0.7)';
-    ctx.font = '10px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('energy', pieCX, pieCY - pieR - 12);
-    ctx.fillText('conversion', pieCX, pieCY - pieR - 2);
+    // ── RIGHT: energy bar chart ───────────────────────────────────
+    var gx = splitX + 16;
+    var gw = W - splitX - 24;
 
-    // Legend + readouts below pie
-    var readY = pieCY + pieR + 14;
-    ctx.font = '10px monospace';
-    ctx.fillStyle = 'rgba(82,133,200,0.85)';
-    ctx.textAlign = 'left';
-    ctx.fillRect(pieCX - 40, readY, 10, 8);
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.fillText('mech', pieCX - 26, readY + 8);
-
-    ctx.fillStyle = 'rgba(200,120,60,0.85)';
-    ctx.fillRect(pieCX + 8, readY, 10, 8);
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.fillText('heat', pieCX + 22, readY + 8);
-
-    // Energy values
-    var E = totalEnergy();
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.font = '11px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('E = mgh = ' + E.toFixed(1) + ' J', pieCX, readY + 26);
-    ctx.fillText('T = ' + temp.toFixed(1) + ' \u00b0C', pieCX, readY + 42);
-
+    ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'left';
+    ctx.fillText('Energy (Joules)', gx, 20);
+
+    var E = en.total;
+    var bars = [
+      { label: 'Potential (PE)',  val: en.pe,   color: C_PE   },
+      { label: 'Kinetic (KE)',    val: en.ke,   color: C_KE   },
+      { label: 'Heat (Q)',        val: en.heat, color: C_HEAT }
+    ];
+    var barH    = Math.floor((H - 60) / 4);
+    var barGap  = Math.floor(barH * 0.55);
+    var labelW  = 88;
+    var maxBarW = gw - labelW - 52;
+
+    bars.forEach(function (b, i) {
+      var by = 34 + i * (barH + barGap);
+      var bw = E > 0 ? (b.val / E) * maxBarW : 0;
+
+      // label
+      ctx.fillStyle = b.color;
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(b.label, gx, by + barH * 0.75);
+
+      // bar background
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.fillRect(gx + labelW, by, maxBarW, barH);
+
+      // bar fill
+      if (bw > 1) {
+        ctx.fillStyle = b.color;
+        ctx.globalAlpha = 0.8;
+        ctx.fillRect(gx + labelW, by, bw, barH);
+        ctx.globalAlpha = 1.0;
+      }
+
+      // value text
+      ctx.fillStyle = b.color;
+      ctx.font = 'bold 11px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(b.val.toFixed(1) + ' J', gx + labelW + maxBarW + 6, by + barH * 0.75);
+    });
+
+    // Total line
+    var totY = 34 + 3 * (barH + barGap);
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(gx, totY);
+    ctx.lineTo(gx + gw, totY);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = 'bold 11px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('Total: ' + E.toFixed(1) + ' J  (conserved)', gx, totY + 16);
+
+    // Equation
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('E = mgh = ' + mass.toFixed(1) + ' × 9.8 × ' + dropHeight.toFixed(1) + ' = ' + E.toFixed(1) + ' J', gx, H - 8);
 
     t += 0.025;
     if (running && !reduced) raf = requestAnimationFrame(drawFrame);
@@ -244,7 +297,7 @@
     heightSlider.addEventListener('input', function () {
       dropHeight = parseFloat(heightSlider.value);
       if (heightLabel) heightLabel.textContent = dropHeight.toFixed(1) + ' m';
-      t = 0; // restart drop from top
+      t = 0;
       if (!running) drawStatic();
     });
   }
@@ -258,10 +311,7 @@
   }
 
   resize();
-  window.addEventListener('resize', function () {
-    resize();
-    if (!running) drawStatic();
-  });
+  window.addEventListener('resize', function () { resize(); if (!running) drawStatic(); });
 
   window.SimAPI = {
     start:   function () { if (running) return; running = true; if (reduced) { drawStatic(); return; } raf = requestAnimationFrame(drawFrame); },
