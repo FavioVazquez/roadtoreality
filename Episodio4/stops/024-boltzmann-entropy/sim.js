@@ -114,58 +114,32 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     BUILD CONTROLS
+     WIRE CONTROLS (declared in HTML)
   ───────────────────────────────────────────────────────── */
-  var ctrlRow = document.querySelector('.sim-controls .sim-actions');
-  if (ctrlRow) {
-    /* Temperature slider */
-    var tempWrap = document.createElement('div');
-    tempWrap.style.cssText = 'display:flex;align-items:center;gap:8px;flex:1;min-width:0;';
+  var tempSlider  = document.getElementById('temperature-slider');
+  var tempVal     = document.getElementById('temperature-readout');
+  var wallBtn     = document.getElementById('remove-partition-btn');
 
-    var tempLbl = document.createElement('label');
-    tempLbl.textContent = 'Temp:';
-    tempLbl.style.cssText = 'font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;';
-
-    var tempSlider = document.createElement('input');
-    tempSlider.type  = 'range';
-    tempSlider.min   = '20';
-    tempSlider.max   = '300';
-    tempSlider.value = '100';
-    tempSlider.step  = '1';
-    tempSlider.style.cssText = 'flex:1;accent-color:#5285c8;cursor:pointer;';
-
-    var tempVal = document.createElement('span');
-    tempVal.style.cssText = 'font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:3.5em;text-align:right;';
-    tempVal.textContent = '1.0 T';
-
+  if (tempSlider) {
     tempSlider.addEventListener('input', function () {
-      var newT = parseInt(tempSlider.value, 10) / 100;
+      /* slider range 100–1500; map to temperature 0.2–3.0 via /500 */
+      var newT = parseInt(tempSlider.value, 10) / 500;
       rescaleLeftSpeeds(temperature, newT);
       temperature = newT;
-      tempVal.textContent = newT.toFixed(1) + ' T';
+      if (tempVal) tempVal.textContent = newT.toFixed(1) + ' T';
     });
+  }
 
-    tempWrap.appendChild(tempLbl);
-    tempWrap.appendChild(tempSlider);
-    tempWrap.appendChild(tempVal);
-    ctrlRow.insertBefore(tempWrap, ctrlRow.firstChild);
-
-    /* Remove-wall button */
-    var wallBtn = document.createElement('button');
-    wallBtn.className   = 'sim-btn';
-    wallBtn.textContent = 'Remove Wall';
-    wallBtn.title       = 'Open the partition — watch entropy climb';
-    wallBtn.style.cssText = 'white-space:nowrap;';
+  if (wallBtn) {
     wallBtn.addEventListener('click', function () {
       wallOpen = true;
       wallBtn.disabled = true;
       wallBtn.style.opacity = '0.5';
     });
-    ctrlRow.appendChild(wallBtn);
-
-    /* Expose wallBtn for reset */
-    window._dopplerWallBtn = wallBtn;
   }
+
+  /* Expose wallBtn for reset */
+  window._dopplerWallBtn = wallBtn;
 
   /* ─────────────────────────────────────────────────────────
      PHYSICS HELPERS

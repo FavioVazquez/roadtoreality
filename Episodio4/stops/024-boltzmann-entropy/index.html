@@ -70,6 +70,12 @@
       <div class="sim-actions" style="display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap;">
         <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
         <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+        <button class="sim-btn" id="remove-partition-btn" style="white-space:nowrap;" title="Open the partition — watch entropy climb">Remove Wall</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;">
+        <label for="temperature-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;">Temperature</label>
+        <input type="range" id="temperature-slider" min="100" max="1500" step="50" value="500" style="flex:1;accent-color:#5285c8;cursor:pointer;">
+        <span id="temperature-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:3.5em;text-align:right;">1.0 T</span>
       </div>
     </div>
     <div class="sim-caption">
