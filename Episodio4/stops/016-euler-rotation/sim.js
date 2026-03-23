@@ -19,8 +19,8 @@
   // Physics params (wired to sliders)
   var torque = 5.0;  // N·m
   var mass   = 2.0;  // kg
-  var R      = 0.12; // m — radius for disk & ring
-  var L      = 0.28; // m — half-length for rod
+  var R      = 0.50; // m — radius for disk & ring  (larger → visible divergence)
+  var L      = 1.00; // m — length for rod
 
   // Simulation time
   var simTime = 0;
@@ -289,16 +289,25 @@
   var massSlider   = document.getElementById('mass-slider');
   var massLabel    = document.getElementById('mass-label');
 
+  function resetState() {
+    simTime = 0;
+    shapes.forEach(function(s) { s.omega = 0; s.angle = 0; s.history = []; });
+  }
+
   if (torqueSlider) {
     torqueSlider.addEventListener('input', function() {
       torque = parseFloat(torqueSlider.value);
       if (torqueLabel) torqueLabel.textContent = torque.toFixed(1) + ' N·m';
+      resetState();
+      if (!running) drawStatic();
     });
   }
   if (massSlider) {
     massSlider.addEventListener('input', function() {
       mass = parseFloat(massSlider.value);
       if (massLabel) massLabel.textContent = mass.toFixed(1) + ' kg';
+      resetState();
+      if (!running) drawStatic();
     });
   }
 
