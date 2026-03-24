@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kepler discovered that planets trace ellipses, sweep equal areas in equal times, and that orbital periods follow a precise mathematical law.">
+  <meta property="og:title" content="Kepler's Laws of Planetary Motion — How Physics Works">
+  <meta property="og:description" content="Kepler discovered that planets trace ellipses, sweep equal areas in equal times, and that orbital periods follow a precise mathematical law.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/011-kepler-laws/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Kepler's Laws of Planetary Motion — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "011-kepler-laws",
+  "order": 11,
+  "era": "revolution",
+  "title": "Kepler's Laws of Planetary Motion",
+  "prev": "010-galileo-pendulum",
+  "prevTitle": "Galileo's Pendulum",
+  "next": "012-newton-laws",
+  "nextTitle": "Newton's Laws of Motion"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="revolution">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Scientific Revolution · 1609–1619</div>
+    <h1 class="stop-header__title">Kepler's Laws of Planetary Motion</h1>
+    <p class="stop-header__subtitle">Orbits are ellipses. Time moves unequally.</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1609–1619</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Johannes Kepler</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Kepler spent years staring at Tycho Brahe's precise observational data, trying to fit planets to perfect circles. Nothing worked — there was always a tiny error. Finally, in frustration, he tried an ellipse. It fit perfectly.
+    </p>
+    <p>
+      He then discovered something stranger: planets don't move at constant speed. They speed up near the Sun and slow down far away, but always sweep out the same area of space in the same amount of time. Watch the shaded triangle below — it stays constant even as the planet's speed changes.
+    </p>
+    <p>
+      Drag the orbital eccentricity slider to change the ellipse shape. Watch how the equal-areas law plays out differently for rounder vs. more stretched orbits.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:420px;" aria-label="Interactive: Kepler's equal-areas law with adjustable orbital eccentricity">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="ecc-slider">
+          Eccentricity
+          <span class="sim-control__value" id="ecc-val">0.4 (like Mercury)</span>
+        </label>
+        <input type="range" id="ecc-slider" min="0.0" max="0.9" step="0.05" value="0.4" aria-label="Orbital eccentricity">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="law-select">
+          Highlight
+          <span class="sim-control__value" id="law-val">2nd Law (equal areas)</span>
+        </label>
+        <input type="range" id="law-select" min="1" max="3" step="1" value="2" aria-label="Which Kepler law to highlight">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span>The shaded triangles all have equal area — even though the planet moves faster near perihelion.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Three Laws</h3>
+    <p><strong>First Law (1609):</strong> Planets orbit the Sun in ellipses, with the Sun at one focus — not the center.</p>
+    <p><strong>Second Law (1609):</strong> A line from the Sun to a planet sweeps out equal areas in equal times. This means planets move faster when closer to the Sun (perihelion) and slower when farther away (aphelion).</p>
+    <p><strong>Third Law (1619):</strong> The square of a planet's orbital period is proportional to the cube of its average distance from the Sun: T² ∝ a³. This single equation links all planets in one mathematical relationship.</p>
+    <p>Kepler had no idea <em>why</em> these laws held. They were purely empirical — extracted from data through years of painstaking calculation. It took Newton, 70 years later, to show they all follow from a single law of gravitation.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Planets orbit in ellipses, not circles — the Sun is at one focus, not the center.</li>
+      <li>The equal-areas law (2nd law) means planets speed up near the Sun and slow down far away.</li>
+      <li>Kepler found these patterns purely empirically. Newton later explained them with gravitation.</li>
+    </ul>
+    <p>$$T^2 = \frac{4\pi^2}{GM} a^3$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Kepler described the geometry of orbits but couldn't explain it. A generation later, Isaac Newton would derive all three of Kepler's laws from a single force law — and in doing so, unify earthly and celestial mechanics for the first time.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

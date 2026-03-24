@@ -5,7 +5,7 @@ import { Resvg } from '@resvg/resvg-js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot  = path.resolve(__dirname, '..');
-const stopsDir  = path.join(repoRoot, 'Episodio4', 'stops');
+const stopsDir  = path.join(repoRoot, 'HowPhysicsWorks', 'stops');
 
 const stopDirs = fs.readdirSync(stopsDir).filter(name =>
   fs.statSync(path.join(stopsDir, name)).isDirectory()

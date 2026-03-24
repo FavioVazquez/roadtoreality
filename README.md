@@ -56,9 +56,9 @@ The culmination of the methodology built across episodes 2 and 3: a full softwar
 
 The project is a static interactive website walking through 2,500 years of physics history via 50 stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop pairs a narrative essay with a Canvas-based interactive simulation. 25 of 50 simulations are complete, covering Ancient Physics, the Scientific Revolution, and Classical Physics (through 1887).
 
-**Live site:** [roadtoreality.dev/Episodio4](https://roadtoreality.dev/Episodio4/) — built with zero backend, zero build step, pure HTML/CSS/JS.
+**Live site:** [roadtoreality.dev/HowPhysicsWorks](https://roadtoreality.dev/HowPhysicsWorks/) — built with zero backend, zero build step, pure HTML/CSS/JS.
 
-See [`Episodio4/`](./Episodio4/) for all site code and [`Episodio4/README.md`](./Episodio4/README.md) for technical documentation.
+See [`HowPhysicsWorks/`](./HowPhysicsWorks/) for all site code and [`HowPhysicsWorks/README.md`](./HowPhysicsWorks/README.md) for technical documentation.
 
 The full planning process is documented in [`.planning/`](./.planning/) — every phase, decision, requirement, and UAT result kept as first-class artifacts. 9 phases complete, v2.0 milestone in progress.
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Archimedes discovered that buoyancy equals the weight of displaced fluid. Drag objects into water and see it happen.">
+  <meta property="og:title" content="Archimedes and Buoyancy — How Physics Works">
+  <meta property="og:description" content="Drag objects of different densities into water. The displaced volume equals the buoyant force — Archimedes discovered this in his bath.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/005-archimedes-buoyancy/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Archimedes and Buoyancy — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "005-archimedes-buoyancy",
+  "order": 5,
+  "era": "ancient",
+  "title": "Archimedes and Buoyancy",
+  "prev": "004-aristotle-motion",
+  "prevTitle": "Aristotle's Theory of Motion",
+  "next": "006-eratosthenes-earth",
+  "nextTitle": "Eratosthenes Measures the Earth"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="ancient">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~250 BCE</div>
+    <h1 class="stop-header__title">Archimedes and Buoyancy</h1>
+    <p class="stop-header__subtitle">Eureka! Why things float</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~250 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Archimedes of Syracuse</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      The king of Syracuse had a problem: was his gold crown really gold, or had the craftsman mixed in cheaper silver? He asked Archimedes to find out without melting the crown. The answer came in the bath.
+    </p>
+    <p>
+      Archimedes noticed that his body displaced water when he got in. He realized the volume of water displaced equals the volume of the submerged object — and that the water pushes back with a force equal to its own weight. This is the buoyant force.
+    </p>
+    <p>
+      Click an object below to drop it into the water. Dense objects sink; less dense ones float. Watch the water level rise exactly as much as the object's volume.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:420px;" aria-label="Interactive: Drop objects into water and observe buoyancy">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label">
+          Choose object
+          <span class="sim-control__value" id="obj-name">Wood</span>
+        </label>
+        <input type="range" id="obj-slider" min="0" max="4" step="1" value="0" aria-label="Choose object material">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Drop it!</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Select an object and press Drop to place it in the water.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Principle</h3>
+    <p>Archimedes' principle states: an object submerged in fluid experiences an upward buoyant force equal to the weight of the fluid it displaces. If that force is greater than the object's weight, the object floats. If less, it sinks.</p>
+    <p>This is why a massive steel ship floats — its hollow interior displaces far more water than its hull weighs. And why a solid steel ball sinks — it displaces less water than its weight requires.</p>
+    <p>Archimedes reportedly ran naked through the streets of Syracuse shouting "Eureka!" (I have found it!) when he made the connection. He then used it to prove the crown had been adulterated — the crown displaced more water than an equal weight of pure gold would have, revealing its lower density.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Buoyant force = weight of displaced fluid. If buoyancy exceeds gravity, the object floats.</li>
+      <li>What matters is density (mass per volume), not mass alone. A hollow steel ship floats; a solid steel ball sinks.</li>
+      <li>Archimedes' insight was the first quantitative principle in fluid mechanics — 2,000 years before Newton.</li>
+    </ul>
+    <p>$$F_b = \rho_{\text{fluid}} \cdot V_{\text{displaced}} \cdot g$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Archimedes was remarkable for applying precise mathematics to physical problems. The next stop shows another ancient scientist doing something even more audacious: calculating the size of the entire Earth with a stick and some shadows.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

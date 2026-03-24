@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * generate-og-svgs.mjs
- * Reads Episodio4/assets/data/stops.json and writes one 1200x630 SVG
- * Open Graph image per stop to Episodio4/stops/{stop-id}/og-image.svg
+ * Reads HowPhysicsWorks/assets/data/stops.json and writes one 1200x630 SVG
+ * Open Graph image per stop to HowPhysicsWorks/stops/{stop-id}/og-image.svg
  *
  * Run from repo root:
  *   node scripts/generate-og-svgs.mjs
@@ -178,7 +178,7 @@ function generateSVG(stop) {
 // ------------------------------------------------------------------
 // Main
 // ------------------------------------------------------------------
-const stopsPath = join(ROOT, 'Episodio4', 'assets', 'data', 'stops.json');
+const stopsPath = join(ROOT, 'HowPhysicsWorks', 'assets', 'data', 'stops.json');
 const data      = JSON.parse(readFileSync(stopsPath, 'utf8'));
 const stops     = data.stops;
 
@@ -186,7 +186,7 @@ let written = 0;
 let errors  = 0;
 
 for (const stop of stops) {
-  const outPath = join(ROOT, 'Episodio4', stop.path, 'og-image.svg');
+  const outPath = join(ROOT, 'HowPhysicsWorks', stop.path, 'og-image.svg');
   try {
     const svg = generateSVG(stop);
     writeFileSync(outPath, svg, 'utf8');

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aristotle believed heavier objects fall faster. Drop two masses and see for yourself.">
+  <meta property="og:title" content="Aristotle's Theory of Motion — How Physics Works">
+  <meta property="og:description" content="Aristotle believed heavier objects fall faster than lighter ones. This simulation lets you test his prediction against reality.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/004-aristotle-motion/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Aristotle's Theory of Motion — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "004-aristotle-motion",
+  "order": 4,
+  "era": "ancient",
+  "title": "Aristotle's Theory of Motion",
+  "prev": "003-democritus-atoms",
+  "prevTitle": "Democritus and the Atom",
+  "next": "005-archimedes-buoyancy",
+  "nextTitle": "Archimedes and Buoyancy"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="ancient">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~350 BCE</div>
+    <h1 class="stop-header__title">Aristotle's Theory of Motion</h1>
+    <p class="stop-header__subtitle">Why heavy things fall faster (they don't)</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~350 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Aristotle</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Aristotle taught that heavier objects fall faster than lighter ones — proportionally. A 10 kg stone should fall 10 times faster than a 1 kg stone. This seemed obvious. Rocks fall, feathers float. For 1,800 years, no one seriously challenged it.
+    </p>
+    <p>
+      Press Play and drop two balls of different masses. Watch what actually happens. Then adjust the masses with the sliders and try to make them land at different times. You'll find you can't — unless you add air resistance.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:400px;" aria-label="Interactive: Drop two balls of different masses">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="mass1-slider">
+          Left ball mass
+          <span class="sim-control__value" id="mass1-val">1 kg</span>
+        </label>
+        <input type="range" id="mass1-slider" min="1" max="10" step="1" value="1" aria-label="Left ball mass in kg">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="mass2-slider">
+          Right ball mass
+          <span class="sim-control__value" id="mass2-val">10 kg</span>
+        </label>
+        <input type="range" id="mass2-slider" min="1" max="10" step="1" value="10" aria-label="Right ball mass in kg">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="air-slider">
+          Air resistance
+          <span class="sim-control__value" id="air-val">None</span>
+        </label>
+        <input type="range" id="air-slider" min="0" max="3" step="1" value="0" aria-label="Air resistance level">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Drop!</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Press Drop to release both balls simultaneously.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>What Aristotle Believed</h3>
+    <p>Aristotle's theory was part of a larger framework: everything has a "natural place." Earth and water belong below, fire and air above. Heavy objects (more earth) fall faster because they are "seeking" their natural place more urgently. Light objects (more air) rise. It was internally consistent and matched casual observation.</p>
+    <p>Galileo is credited with disproving this — possibly by dropping balls from the Leaning Tower of Pisa, though historians debate whether that demonstration actually happened. What he definitely did was roll balls down inclined planes and measure times precisely. The result: all objects accelerate at the same rate regardless of mass (ignoring air resistance).</p>
+    <p>The only case where Aristotle's intuition seems right is when air resistance is significant — a feather falls slowly not because it's light, but because its large surface area creates more drag relative to its weight. With air resistance off, mass doesn't matter at all.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>All objects fall at the same rate regardless of mass — in the absence of air resistance.</li>
+      <li>Aristotle's theory felt obvious because air resistance is real and everyday objects experience it differently.</li>
+      <li>This error persisted for 1,800 years because no one did a careful, controlled experiment to check it.</li>
+    </ul>
+    <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-4);">Aristotle believed:</p>
+    <p>$$v \propto \frac{F}{m}$$</p>
+    <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Newton corrected this to:</p>
+    <p>$$a = \frac{F}{m}$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>While Aristotle was wrong about falling objects, he was at least asking good questions about motion. A century later, Archimedes tackled a different kind of motion — things moving through water — and got it exactly right.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

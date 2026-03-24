@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eratosthenes calculated Earth's circumference with two sticks and their shadows. He was accurate to within 2%.">
+  <meta property="og:title" content="Eratosthenes Measures the Earth — How Physics Works">
+  <meta property="og:description" content="Eratosthenes calculated the Earth's circumference using two sticks and their shadows on the same day. He was accurate to within 2%.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/006-eratosthenes-earth/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Eratosthenes Measures the Earth — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "006-eratosthenes-earth",
+  "order": 6,
+  "era": "ancient",
+  "title": "Eratosthenes Measures the Earth",
+  "prev": "005-archimedes-buoyancy",
+  "prevTitle": "Archimedes and Buoyancy",
+  "next": "007-ptolemy-geocentric",
+  "nextTitle": "Ptolemy's Geocentric Model"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="ancient">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~240 BCE</div>
+    <h1 class="stop-header__title">Eratosthenes Measures the Earth</h1>
+    <p class="stop-header__subtitle">A stick, a shadow, and the size of a world</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~240 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Eratosthenes of Cyrene</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Eratosthenes was the chief librarian of Alexandria. He read in a scroll that in the city of Syene (modern Aswan), on the summer solstice, the sun shone directly down a deep well — no shadow at all. In Alexandria, 800 km north, a vertical stick always cast a shadow on that day.
+    </p>
+    <p>
+      He realized this could only happen on a curved surface. By measuring the angle of Alexandria's shadow and knowing the distance between the cities, he calculated Earth's circumference. His answer: about 40,000 km. The modern value is 40,075 km.
+    </p>
+    <p>
+      Drag the slider to change the angle of sunlight, and watch how the two cities' shadows reveal Earth's curvature.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:400px;" aria-label="Interactive: Two sticks, two shadows, calculate Earth's circumference">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="distance-slider">
+          Distance between cities
+          <span class="sim-control__value" id="distance-val">800 km</span>
+        </label>
+        <input type="range" id="distance-slider" min="200" max="2000" step="100" value="800" aria-label="Distance between the two cities in km">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Measure!</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Press Measure to calculate. Slider changes the assumed walking distance between cities — the sticks stay fixed (real geography), but the circumference estimate changes.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Geometry</h3>
+    <p>The key insight: if the Earth is spherical, parallel rays of sunlight hit different latitudes at different angles. In Syene (on the Tropic of Cancer at solstice), the sun is directly overhead — angle 0°. In Alexandria, the same sunlight hits at an angle of about 7.2°.</p>
+    <p>That 7.2° is 1/50th of a full 360° circle. So if the distance between the cities (800 km) equals 1/50th of the circumference, the full circumference must be 50 × 800 = 40,000 km. That's all the mathematics required.</p>
+    <p>Eratosthenes lived before calculators, telescopes, or any precision instruments beyond a stick and a measuring cord. His result remained the best estimate of Earth's size for over a thousand years.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Eratosthenes used the shadow angle difference between two cities to measure Earth's circumference — and got within 2% of the correct answer.</li>
+      <li>The only inputs he needed: the shadow angle at one city, and the distance between the two cities.</li>
+      <li>This is one of the most elegant experiments in history: profound result from the simplest possible observation.</li>
+    </ul>
+    <p>$$C = \frac{360°}{\theta} \cdot d$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Knowing Earth's size was useful, but ancient astronomers wanted something bigger: a map of the entire solar system. The dominant model for the next 1,400 years would be Ptolemy's — and it was spectacularly wrong in one fundamental way.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

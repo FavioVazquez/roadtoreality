@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls.">
+  <meta property="og:title" content="Bernoulli's Principle — How Physics Works">
+  <meta property="og:description" content="As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/015-bernoulli-fluids/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Bernoulli's Principle — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "015-bernoulli-fluids",
+  "order": 15,
+  "era": "classical",
+  "title": "Bernoulli's Principle",
+  "prev": "014-hooke-elasticity",
+  "prevTitle": "Hooke's Law and Elasticity",
+  "next": "016-euler-rotation",
+  "nextTitle": "Euler and Rigid Body Rotation"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="classical">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Classical Physics · 1738</div>
+    <h1 class="stop-header__title">Bernoulli's Principle</h1>
+    <p class="stop-header__subtitle">Why airplanes fly and curveballs curve</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1738</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Daniel Bernoulli</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>In 1738, Daniel Bernoulli published <em>Hydrodynamica</em> and made a startling observation: when a fluid is forced through a narrow section of pipe, it speeds up — and as it speeds up, its pressure drops. The two effects are inseparable. Energy is conserved, but it trades between kinetic and pressure form.</p>
+    <p>The venturi tube below makes this visible. Watch the manometer columns fall at the throat. Adjust the throat width to squeeze the flow harder. The pressure graph on the right traces the full profile from inlet to outlet.</p>
+  </div>
+  <div class="sim-wrapper content-column" data-autoplay="true">
+    <div class="sim-container" id="sim-mount" aria-label="Bernoulli's Principle — venturi tube simulation">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-controls__row">
+        <label class="sim-label" for="throat-slider">Throat width</label>
+        <input class="sim-slider" type="range" id="throat-slider" min="0.15" max="0.60" step="0.01" value="0.35" aria-label="Throat width ratio">
+        <span class="sim-value" id="throat-label">35%</span>
+      </div>
+      <div class="sim-controls__row">
+        <label class="sim-label" for="speed-slider">Flow speed</label>
+        <input class="sim-slider" type="range" id="speed-slider" min="0.3" max="2.0" step="0.1" value="1.0" aria-label="Flow speed">
+        <span class="sim-value" id="speed-label">1.0 m/s</span>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Left: venturi tube with particle flow and pressure columns. Right: pressure vs. position graph.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The continuity equation</h3>
+    <p>Before Bernoulli, fluids already obeyed one simple rule: what flows in must flow out. For an incompressible fluid, the product of cross-sectional area and velocity is constant:</p>
+    <p class="katex-block">$$A_1 v_1 = A_2 v_2$$</p>
+    <p>A narrower throat means a higher velocity. That is the continuity equation — purely geometric, no energy required.</p>
+    <h3>Where pressure enters</h3>
+    <p>Bernoulli's insight was to apply conservation of energy to a fluid element moving along a streamline. The total energy per unit volume — pressure energy, kinetic energy, and gravitational potential — stays constant:</p>
+    <p class="katex-block">$$P + \tfrac{1}{2}\rho v^2 + \rho g h = \text{const}$$</p>
+    <p>At constant height this simplifies to \(P + \tfrac{1}{2}\rho v^2 = \text{const}\). If \(v\) rises at the throat (continuity demands it), \(P\) must fall by exactly \(\tfrac{1}{2}\rho(v_2^2 - v_1^2)\). That pressure difference is what holds aircraft aloft.</p>
+    <h3>Real applications</h3>
+    <p>Airfoil lift, the curveball's break, carburetors, atomizers, venturi flowmeters — all follow the same exchange. Faster fluid, lower pressure. The principle is deceptively simple and extraordinarily useful.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Equation</div>
+    <ul class="takeaway-box__list">
+      <li>\(P + \tfrac{1}{2}\rho v^2 = \text{const}\) — along a streamline at constant height. Where fluid speeds up, pressure drops by \(\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)\). This pressure difference is what lifts every aircraft in the sky.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Bernoulli handled fluids in motion. Euler next formalized how solid rigid bodies rotate — the mathematics that keeps gyroscopes upright and satellites stable.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Democritus proposed that all matter is made of indivisible atoms — 2,300 years before proof.">
+  <meta property="og:title" content="Democritus and the Atom — How Physics Works">
+  <meta property="og:description" content="Democritus proposed that all matter is made of indivisible particles — atoms — moving through empty void. He was right, 2,300 years before proof.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/003-democritus-atoms/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Democritus and the Atom — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "003-democritus-atoms",
+  "order": 3,
+  "era": "ancient",
+  "title": "Democritus and the Atom",
+  "prev": "002-pythagoras-harmony",
+  "prevTitle": "Pythagoras and Mathematical Harmony",
+  "next": "004-aristotle-motion",
+  "nextTitle": "Aristotle's Theory of Motion"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="ancient">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~400 BCE</div>
+    <h1 class="stop-header__title">Democritus and the Atom</h1>
+    <p class="stop-header__subtitle">Cut matter in half. Keep cutting. Where does it stop?</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~400 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Democritus</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Democritus asked one of the oldest questions in physics: if you keep cutting a piece of matter in half, do you ever reach something you cannot cut? He said yes — and called it the <em>atomos</em>, the uncuttable. He was right about the concept 2,300 years before anyone could prove it.
+    </p>
+    <p>
+      Drag the slider to zoom into matter. At each scale, you see a different level of structure — grain, molecule, atom, nucleus. Notice what changes and what stays the same.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:380px;" aria-label="Interactive: Zoom into matter from macroscopic to atomic scale">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="zoom-slider">
+          Zoom level
+          <span class="sim-control__value" id="zoom-label">Grain of sand</span>
+        </label>
+        <input type="range" id="zoom-slider" min="0" max="4" step="1" value="0" aria-label="Zoom into matter">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Auto-zoom</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span>Drag the slider to zoom in. Each level reveals a new layer of structure.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Radical Idea</h3>
+    <p>Democritus's teacher Leucippus had the seed of the idea, but Democritus developed it fully: all matter consists of atoms (indivisible) moving through void (empty space). Different atoms have different shapes and sizes — and their arrangements produce everything we see. Iron is made of smooth, interlocking atoms. Water of round, slippery ones. Fire of sharp, fast ones.</p>
+    <p>Aristotle rejected the idea completely. His influence was so great that atomism was largely forgotten for 2,000 years. Only in 1803 did John Dalton revive it with experimental evidence. In 1905, Einstein's analysis of Brownian motion finally proved atoms are real.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>Democritus proposed that matter has a smallest indivisible unit — the atom — more than 2,000 years before experimental proof.</li>
+      <li>He was right about the concept but wrong about the details (atoms are divisible into protons, neutrons, and electrons).</li>
+      <li>His idea was suppressed for 2,000 years by Aristotle's authority — a lesson in how wrong consensus can persist.</li>
+    </ul>
+    <p>$$\text{matter} = \text{atoms} + \text{void}$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>While Democritus was thinking about the smallest possible things, Aristotle was busy building a complete theory of everything — including why objects fall. He was spectacularly wrong, but for 1,800 years nobody knew it.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>
