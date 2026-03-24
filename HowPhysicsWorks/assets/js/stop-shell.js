@@ -242,7 +242,7 @@
     var longPost = _buildLongPost(cfg);
 
     /* og-image download URL — same dir as the current page */
-    var ogUrl = window.location.href.replace(/\/?$/, '/').replace(/index\.html$/, '') + 'og-image.png';
+    var ogUrl = window.location.href.replace(/index\.html$/, '').replace(/\/?$/, '/') + 'og-image.png';
 
     var div = document.createElement('div');
     div.className = 'stop-share content-column';
@@ -268,18 +268,19 @@
     var longBtn = div.querySelector('.share-btn--long');
     longBtn.addEventListener('click', function () {
       var btn = this;
+      var intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(longPost);
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(longPost).then(function () {
-          btn.textContent = '✓ Copied — paste on X';
+          btn.textContent = '✓ Copied!';
           btn.classList.add('share-btn--feedback');
           setTimeout(function () {
             btn.innerHTML = '<span class="share-btn__icon">𝕏</span> Long post';
             btn.classList.remove('share-btn--feedback');
           }, 3000);
-          window.open('https://x.com/compose/tweet', '_blank', 'noopener');
+          window.open(intent, '_blank', 'noopener,width=600,height=600');
         });
       } else {
-        window.open('https://x.com/compose/tweet', '_blank', 'noopener');
+        window.open(intent, '_blank', 'noopener,width=600,height=600');
       }
     });
   }
