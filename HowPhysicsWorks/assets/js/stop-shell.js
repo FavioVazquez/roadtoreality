@@ -235,8 +235,6 @@
 
   function _renderShare(cfg) {
     if (!cfg) return;
-    var nav = document.getElementById('stop-nav');
-    if (!nav) return;
 
     var tweet    = _buildTweet(cfg);
     var longPost = _buildLongPost(cfg);
@@ -258,7 +256,15 @@
         '↓ screenshot' +
       '</a>';
 
-    nav.parentNode.insertBefore(div, nav);
+    /* Insert after .stop-header, before the intro */
+    var header = document.querySelector('.stop-header');
+    if (header && header.parentNode) {
+      header.parentNode.insertBefore(div, header.nextSibling);
+    } else {
+      /* Fallback: before #stop-nav */
+      var nav = document.getElementById('stop-nav');
+      if (nav) nav.parentNode.insertBefore(div, nav);
+    }
 
     div.querySelector('.share-btn--tweet').addEventListener('click', function () {
       var intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet);
