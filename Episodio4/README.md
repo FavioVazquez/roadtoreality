@@ -2,7 +2,7 @@
 
 An interactive history of physics — 50 stops from Thales (~600 BCE) to the contemporary frontiers. Each stop is a self-contained page with a narrative essay and a Canvas-based interactive simulation.
 
-**Live site:** GitHub Pages (see deployment section below)
+**Live site:** [roadtoreality.dev](https://roadtoreality.dev/Episodio4)
 
 ---
 
@@ -133,19 +133,26 @@ Episodio4/
 │   ├── fonts/
 │   │   ├── CormorantGaramond-*.woff2
 │   │   └── DMSans-*.woff2
-│   └── js/
-│       ├── nav.js                  ← Renders card grid from stops.json
-│       ├── progress.js             ← localStorage visited-stop tracking
-│       ├── stop-shell.js           ← Per-stop: breadcrumb, nav, SimAPI wiring
-│       └── vendor/
-│           ├── p5.min.js           ← p5.js v1.9.4 (available for future sims)
-│           └── matter.min.js       ← Matter.js v0.19.0 (available for future sims)
+│   ├── js/
+│   │   ├── nav.js                  ← Renders card grid from stops.json
+│   │   ├── progress.js             ← localStorage visited-stop tracking
+│   │   ├── search.js               ← Fuse.js fuzzy search modal (Cmd/Ctrl+K)
+│   │   ├── stop-shell.js           ← Per-stop: breadcrumb, nav, SimAPI wiring
+│   │   └── vendor/
+│   │       ├── fuse.min.js         ← Fuse.js v7 (client-side search)
+│   │       ├── p5.min.js           ← p5.js v1.9.4 (available for future sims)
+│   │       └── matter.min.js       ← Matter.js v0.19.0 (available for future sims)
+│   └── katex/                      ← Self-hosted KaTeX (math rendering)
+│       ├── katex.min.css
+│       ├── katex.min.js
+│       ├── auto-render.min.js
+│       └── fonts/
 └── stops/
-    ├── 001-thales-natural-causes/
+    ├── 001-thales-natural-causes/  ← 25 stops have full sim.js (stops 001–026)
     │   ├── index.html
     │   └── sim.js
-    ├── 002-pythagoras-harmony/
-    │   └── index.html              ← Stub (placeholder sim slot)
+    ├── 027-planck-blackbody/       ← Stops 027–050: HTML shell, sim coming in later phases
+    │   └── index.html
     └── ... (50 total)
 ```
 
@@ -158,7 +165,9 @@ Episodio4/
 | HTML | Plain HTML5 | No template engine |
 | CSS | CSS4 — oklch, clamp(), custom properties | No preprocessor |
 | JavaScript | ES5 IIFEs | No bundler, no TypeScript |
-| Simulations | Vanilla Canvas 2D | p5.js/Matter.js vendored but not yet used |
+| Simulations | Vanilla Canvas 2D | p5.js/Matter.js vendored, available for future sims |
+| Math rendering | KaTeX (auto-render) | Self-hosted; `\(...\)` for inline, `$$...$$` for display |
+| Search | Fuse.js (fuzzy) | Client-side full-text search across all 50 stops |
 | Physics — simple | Euler integration | Free fall, buoyancy, friction |
 | Physics — orbital/pendulum | RK4 integration | Kepler, Newton cannon, pendulum |
 | Display font | Cormorant Garamond | Self-hosted WOFF2, 4 weights |
