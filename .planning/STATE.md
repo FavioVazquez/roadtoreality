@@ -6,7 +6,7 @@ Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
 Status: Phase 09 ✓ complete + verified — all 12 Classical Physics stops (015–026) pass UAT round 2
-Last activity: 2026-03-24 — Quick task 003: GitHub repo link + orbital favicon added to landing page and all 50 stops.
+Last activity: 2026-03-24 — Fix: GitHub repo link color corrected to --color-gold (color-accent was undefined).
 
 ### Quick Tasks Completed
 
