@@ -2,7 +2,7 @@
 
 An interactive history of physics — 50 stops from Thales (~600 BCE) to the contemporary frontiers. Each stop is a self-contained page with a narrative essay and a Canvas-based interactive simulation.
 
-**Live site:** [howphysicsworks.roadtoreality.dev](https://howphysicsworks.roadtoreality.dev)
+**Live site:** [roadtoreality.dev](https://roadtoreality.dev/Episodio4)
 
 ---
 

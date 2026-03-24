@@ -4,6 +4,7 @@
 # Allow only what belongs in the repo
 !.gitignore
 !.nojekyll
+!CNAME
 !README.md
 !index.html
 !.planning/
