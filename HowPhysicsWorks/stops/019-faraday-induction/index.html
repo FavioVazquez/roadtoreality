@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
+  <meta property="og:title" content="Faraday's Electromagnetic Induction — How Physics Works">
+  <meta property="og:description" content="Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/019-faraday-induction/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Faraday's Electromagnetic Induction — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "019-faraday-induction",
+  "order": 19,
+  "era": "classical",
+  "title": "Faraday's Electromagnetic Induction",
+  "prev": "018-volta-battery",
+  "prevTitle": "Volta and the Electric Battery",
+  "next": "020-carnot-heat-engine",
+  "nextTitle": "Carnot and the Heat Engine"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="classical">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Classical Physics · 1831</div>
+    <h1 class="stop-header__title">Faraday's Electromagnetic Induction</h1>
+    <p class="stop-header__subtitle">Move a magnet through a coil — electricity appears</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1831</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Michael Faraday</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Move the magnet through the coil below and watch the galvanometer needle respond to the <em>rate of change</em> of flux, not to flux itself. Pull the magnet back out and the needle flips direction — Lenz's law in action.</p>
+  </div>
+  <div class="sim-wrapper content-column" data-autoplay="true">
+    <div class="sim-container" id="sim-mount" aria-label="Faraday's Electromagnetic Induction — interactive simulation">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="magnet-position-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Magnet position:</label>
+          <input id="magnet-position-slider" type="range" min="0" max="1" step="0.01" value="0.2" style="flex:1;" aria-label="Magnet position left to right">
+          <span id="magnet-position-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">far left</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <button id="auto-oscillate-btn" class="sim-btn" style="font-size:var(--text-sm);">Auto Oscillate</button>
+          <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Watch the needle reverse as the magnet changes direction</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Drag the slider to move the magnet. Auto Oscillate runs it continuously. Notice the needle reverses when the magnet changes direction.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>What's happening</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The galvanometer needle is driven by the <em>time-derivative</em> of magnetic flux through the coil — dΦ/dt — not by the flux itself. When the magnet sits still, no current flows. Only movement creates induction. And when the magnet reverses direction, the induced current reverses too (Lenz's law).</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Concepts</div>
+    <ul class="takeaway-box__list">
+      <li>A changing magnetic flux through a coil induces an electromotive force (EMF). The magnitude depends on how fast the flux changes — not on the flux itself.</li>
+      <li>$$\mathcal{E} = -\frac{d\Phi_B}{dt}$$</li>
+      <li>Lenz's law: the induced current opposes the change that caused it. Move the magnet in &rarr; current one way; pull it out &rarr; current reverses.</li>
+      <li>$$\Phi_B = \int \mathbf{B} \cdot d\mathbf{A}$$</li>
+      <li>Every generator, transformer, and induction motor in the world runs on this principle.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Faraday gave us generators. Carnot asked a harder question: how much work can you extract from heat? His answer set a fundamental limit that no engineer has ever beaten — and never will.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

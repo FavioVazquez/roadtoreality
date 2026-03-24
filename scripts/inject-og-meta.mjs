@@ -10,7 +10,7 @@ function escapeHtmlAttr(str) {
   return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
 
-const stopsJsonPath = path.join(repoRoot, 'Episodio4', 'assets', 'data', 'stops.json');
+const stopsJsonPath = path.join(repoRoot, 'HowPhysicsWorks', 'assets', 'data', 'stops.json');
 const stopsData = JSON.parse(fs.readFileSync(stopsJsonPath, 'utf8'));
 const stops = stopsData.stops;
 
@@ -19,7 +19,7 @@ let skipped = 0;
 let errors = 0;
 
 for (const stop of stops) {
-  const htmlPath = path.join(repoRoot, 'Episodio4', 'stops', stop.id, 'index.html');
+  const htmlPath = path.join(repoRoot, 'HowPhysicsWorks', 'stops', stop.id, 'index.html');
 
   let html;
   try {
@@ -37,7 +37,7 @@ for (const stop of stops) {
 
   const escapedTitle = escapeHtmlAttr(stop.title);
   const escapedDescription = escapeHtmlAttr(stop.description);
-  const ogImageUrl = `https://faviovazquez.github.io/roadtoreality/Episodio4/stops/${stop.id}/og-image.png`;
+  const ogImageUrl = `https://faviovazquez.github.io/roadtoreality/HowPhysicsWorks/stops/${stop.id}/og-image.png`;
 
   const injectionBlock =
     `\n  <meta property="og:title" content="${escapedTitle} — How Physics Works">` +

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality.">
+  <meta property="og:title" content="Pythagoras and Mathematical Harmony — How Physics Works">
+  <meta property="og:description" content="Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/002-pythagoras-harmony/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Pythagoras and Mathematical Harmony — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "002-pythagoras-harmony",
+  "order": 2,
+  "era": "ancient",
+  "title": "Pythagoras and Mathematical Harmony",
+  "prev": "001-thales-natural-causes",
+  "prevTitle": "Thales and Natural Causes",
+  "next": "003-democritus-atoms",
+  "nextTitle": "Democritus and the Atom"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="ancient">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Ancient &amp; Classical"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Ancient &amp; Classical · ~500 BCE</div>
+    <h1 class="stop-header__title">Pythagoras and Mathematical Harmony</h1>
+    <p class="stop-header__subtitle">Music, numbers, and the shape of the cosmos</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">~500 BCE</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Pythagoras</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality. When he plucked strings of different lengths, he found that simple integer ratios produced consonant sounds: a 2:1 ratio gives an octave, 3:2 a perfect fifth. This was the first time anyone had linked abstract number to physical phenomenon.</p>
+  </div>
+  <div class="sim-wrapper content-column" data-autoplay="false">
+    <div class="sim-container" id="sim-mount" aria-label="Pythagoras and Mathematical Harmony — teaser animation">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript>
+        <div class="sim-placeholder">
+          <div class="sim-placeholder__text">Simulation requires JavaScript</div>
+        </div>
+      </noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-ratio-buttons" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
+        <button class="sim-btn" data-ratio="1/1" aria-label="Unison — ratio 1:1">1:1 Unison</button>
+        <button class="sim-btn" data-ratio="2/1" aria-label="Octave — ratio 2:1">2:1 Octave</button>
+        <button class="sim-btn" data-ratio="3/2" aria-label="Perfect Fifth — ratio 3:2">3:2 Fifth</button>
+        <button class="sim-btn" data-ratio="4/3" aria-label="Perfect Fourth — ratio 4:3">4:3 Fourth</button>
+        <button class="sim-btn" data-ratio="5/4" aria-label="Major Third — ratio 5:4">5:4 Major Third</button>
+        <button class="sim-btn" data-ratio="9/8" aria-label="Whole Tone — ratio 9:8">9:8 Whole Tone</button>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Click a ratio button to hear the interval and see its standing wave pattern</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>How to explore</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Click any ratio button to hear Pythagoras's intervals — the browser plays a sine tone at 220 Hz × ratio</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch the standing wave change: the harmonic number n shows how many half-wavelengths fit the string</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Node points (fixed dots) show where the string never moves — the signature of whole-number harmonics</li>
+    </ul>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Concept</div>
+    <ul class="takeaway-box__list">
+      <li>Mathematics is not just a tool for describing nature — Pythagoras argued it is the very substance of nature. Every physical law we have discovered since is written in mathematics.</li>
+      <li>$$f_n = n \cdot f_1, \quad n = 1, 2, 3, \ldots$$</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Pythagoras showed that number governs harmony. Next, Democritus asked an even deeper question: what is matter itself made of — and can you divide it forever?</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

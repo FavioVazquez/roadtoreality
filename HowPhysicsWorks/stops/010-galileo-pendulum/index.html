@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Galileo discovered that a pendulum's period depends only on its length, not its mass. Change both and see for yourself.">
+  <meta property="og:title" content="Galileo's Pendulum — How Physics Works">
+  <meta property="og:description" content="Galileo noticed the cathedral chandelier swinging — and timed it with his own pulse. Change the mass; the period stays the same. Change the length; it changes.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/010-galileo-pendulum/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Galileo's Pendulum — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "010-galileo-pendulum",
+  "order": 10,
+  "era": "revolution",
+  "title": "Galileo's Pendulum",
+  "prev": "009-galileo-inclined-plane",
+  "prevTitle": "Galileo's Inclined Plane",
+  "next": "011-kepler-laws",
+  "nextTitle": "Kepler's Laws of Planetary Motion"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="revolution">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Scientific Revolution · 1602</div>
+    <h1 class="stop-header__title">Galileo's Pendulum</h1>
+    <p class="stop-header__subtitle">The clock hiding in a chandelier</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1602</span>
+      <span>·</span>
+      <span class="stop-header__scientist">Galileo Galilei</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>
+      Galileo was sitting in the Pisa cathedral, bored during a long service, when he noticed a chandelier swinging in a draft. He timed it with his pulse and made a startling observation: no matter how wide or narrow the swing, it took the same amount of time.
+    </p>
+    <p>
+      Try it below. Drag the length slider and watch the period change. Then drag the mass slider — the period stays exactly the same. Mass doesn't matter. Only length does. This single discovery made accurate clocks possible.
+    </p>
+  </div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:400px;" aria-label="Interactive: Pendulum with adjustable length and mass">
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div class="sim-control">
+        <label class="sim-control__label" for="length-slider">
+          Length
+          <span class="sim-control__value" id="length-val">1.0 m</span>
+        </label>
+        <input type="range" id="length-slider" min="0.2" max="3.0" step="0.1" value="1.0" aria-label="Pendulum length in metres">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="mass-slider-pend">
+          Mass
+          <span class="sim-control__value" id="mass-val-pend">1 kg</span>
+        </label>
+        <input type="range" id="mass-slider-pend" min="1" max="10" step="1" value="1" aria-label="Pendulum bob mass in kg">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="angle-slider-pend">
+          Release angle
+          <span class="sim-control__value" id="angle-val-pend">15°</span>
+        </label>
+        <input type="range" id="angle-slider-pend" min="5" max="80" step="5" value="15" aria-label="Release angle in degrees">
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption" aria-live="polite">
+      <div class="sim-caption__dot"></div>
+      <span id="sim-status">Change the length and watch the period change. Change the mass — it doesn't matter.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Physics</h3>
+    <p>For small angles, the period of a pendulum is T = 2π√(L/g), where L is the length and g is gravitational acceleration. Notice what's missing from that formula: mass. Galileo's observation was correct — mass has no effect on the period whatsoever.</p>
+    <p>This property — isochronism — makes pendulums ideal for timekeeping. Christiaan Huygens built the first pendulum clock in 1656, and for two centuries, pendulum clocks were the most accurate timekeepers ever made. Navigation, astronomy, and the Industrial Revolution all depended on them.</p>
+    <p>The formula breaks down at large angles (above ~15°), where the period gets slightly longer. This is a real-world effect — try setting the angle to 80° and watching the period increase slightly compared to a 15° swing.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Takeaway</div>
+    <ul class="takeaway-box__list">
+      <li>A pendulum's period depends only on its length: T = 2π√(L/g). Mass has no effect.</li>
+      <li>This property (isochronism) made pendulum clocks possible — the most precise timekeepers for two centuries.</li>
+      <li>The formula is approximate; at large angles the period increases slightly. Galileo noticed this too.</li>
+    </ul>
+    <p>$$T = 2\pi\sqrt{\frac{L}{g}}$$</p>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Galileo gave us the tools to measure motion precisely. The next step was understanding why planets move the way they do. Johannes Kepler had been staring at Tycho Brahe's astronomical data for years, and he was about to find three laws hiding in the numbers.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
+  <script defer src="../../assets/katex/katex.min.js"></script>
+  <script defer src="../../assets/katex/auto-render.min.js"></script>
+  <script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>

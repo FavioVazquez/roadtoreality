@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Joule showed that mechanical work can be converted to heat with a precise ratio — establishing conservation of energy as a universal law.">
+  <meta property="og:title" content="Joule and Conservation of Energy — How Physics Works">
+  <meta property="og:description" content="Joule showed that mechanical work can be converted to heat with a precise ratio — establishing conservation of energy as a universal law.">
+  <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/021-joule-energy/og-image.png">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Joule and Conservation of Energy — How Physics Works</title>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+</head>
+<body>
+<script id="stop-config" type="application/json">
+{
+  "id": "021-joule-energy",
+  "order": 21,
+  "era": "classical",
+  "title": "Joule and Conservation of Energy",
+  "prev": "020-carnot-heat-engine",
+  "prevTitle": "Carnot and the Heat Engine",
+  "next": "022-maxwell-equations",
+  "nextTitle": "Maxwell's Equations"
+}
+</script>
+<header class="site-header" role="banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;gap:1rem;">
+    <a href="../../index.html" class="site-header__logo">How <span>Physics</span> Works</a>
+    <span id="stop-counter" class="site-header__tagline"></span>
+    <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
+      <span class="search-trigger__icon">&#x2315;</span>
+      <span>Search</span>
+      <span class="search-trigger__kbd" id="search-trigger-hint"></span>
+    </button>
+  </div>
+</header>
+<script>
+  (function () {
+    var hint = document.getElementById('search-trigger-hint');
+    if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
+  }());
+</script>
+<main class="stop-page container" data-era="classical">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
+  <header class="stop-header">
+    <div class="stop-header__era">Classical Physics · 1843</div>
+    <h1 class="stop-header__title">Joule and Conservation of Energy</h1>
+    <p class="stop-header__subtitle">Heat is just motion in disguise</p>
+    <div class="stop-header__meta">
+      <span class="stop-header__year">1843</span>
+      <span>·</span>
+      <span class="stop-header__scientist">James Prescott Joule</span>
+    </div>
+  </header>
+  <div class="stop-intro content-column">
+    <p>James Prescott Joule was a brewer who became one of the most precise experimentalists in history. He showed that mechanical work and heat are interchangeable — that they are both forms of the same thing, energy. His paddle-wheel experiment measured the conversion ratio with extraordinary accuracy, and in doing so established the first law of thermodynamics: energy is conserved across all its forms.</p>
+  </div>
+  <div class="sim-wrapper content-column" data-autoplay="true">
+    <div class="sim-container" id="sim-mount" aria-label="Joule's weight-drop apparatus — live energy pie chart">
+      <div class="stop-skeleton" aria-hidden="true"></div>
+      <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
+    </div>
+    <div class="sim-controls">
+      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="drop-height-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Drop height (m):</label>
+          <input id="drop-height-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.5" style="flex:1;" aria-label="Drop height 0.5 to 3.0 meters">
+          <span id="drop-height-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.5 m</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <label for="mass-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Mass (kg):</label>
+          <input id="mass-slider" type="range" min="0.5" max="5.0" step="0.1" value="2.0" style="flex:1;" aria-label="Weight mass 0.5 to 5.0 kg">
+          <span id="mass-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">2.0 kg</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;align-self:flex-end;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+      </div>
+    </div>
+    <div class="sim-caption">
+      <div class="sim-caption__dot"></div>
+      <span>Watch how PE converts to KE and then to heat as the weight falls. Try different masses and heights.</span>
+    </div>
+  </div>
+  <div class="stop-body content-column">
+    <h3>The Experiment</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">Joule suspended a known mass from a cord wound around a paddle-wheel axle. When the mass fell, it rotated the paddle through water. The temperature rise in the water was measured with extraordinary precision — a few thousandths of a degree per drop. By repeating the experiment thousands of times and accumulating the effect, Joule established that 4.184 joules of mechanical work raise one gram of water by one degree Celsius.</p>
+    <h3 style="margin-top:1.25rem;">Why It Was Controversial</h3>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">In 1843, most physicists believed in caloric — a weightless fluid that flowed from hot bodies to cold ones. Joule's result implied that heat is not a substance but a mode of motion. The temperature rise is tiny (drop a 2 kg weight from 1.5 m and you heat 1 kg of water by just 0.007°C), but it is perfectly reproducible — which is the whole point.</p>
+  </div>
+  <div class="takeaway-box content-column">
+    <div class="takeaway-box__title">Key Concepts</div>
+    <ul class="takeaway-box__list">
+      <li>Energy is conserved — it changes form, but the total never changes. Joule proved that mechanical work and heat are interchangeable.</li>
+      <li>$$E_{\text{total}} = mgh = \underbrace{mg(h-y)}_{\text{PE}} + \underbrace{\tfrac{1}{2}mv^2}_{\text{KE}} + \underbrace{Q}_{\text{heat}}$$</li>
+      <li>Joule's mechanical equivalent of heat: \(1 \text{ cal} = 4.184 \text{ J}\)</li>
+      <li>This result unified mechanics and thermodynamics, displacing the caloric theory of heat. It became the foundation of the first law of thermodynamics.</li>
+    </ul>
+  </div>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">→</span>
+    <span>Joule established that energy is conserved across forms. Maxwell went on to show that electricity and magnetism are aspects of the same field — and that light is an electromagnetic wave propagating at a speed derivable from first principles.</span>
+  </div>
+  <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
+</main>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<!-- Search modal -->
+<div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
+  <div class="search-modal__input-row">
+    <span class="search-modal__icon" aria-hidden="true">&#x2315;</span>
+    <input class="search-modal__input" type="text" placeholder="Search stops, scientists, concepts…" autocomplete="off" spellcheck="false" aria-label="Search query">
+    <button class="search-modal__close" aria-label="Close search (Escape)">esc</button>
+  </div>
+  <div class="search-modal__results" role="listbox" aria-label="Search results">
+    <div class="search-modal__empty">Type to search all 50 stops…</div>
+  </div>
+  <div class="search-modal__footer">
+    <span class="search-modal__hint"><kbd>↑↓</kbd> navigate</span>
+    <span class="search-modal__hint"><kbd>↵</kbd> open</span>
+    <span class="search-modal__hint"><kbd>esc</kbd> close</span>
+  </div>
+</div>
+<div class="search-overlay" aria-hidden="true"></div>
+<script>window.STOPS_DATA_PATH = '../../assets/data/stops.json';</script>
+<script src="../../assets/js/vendor/fuse.min.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/progress.js"></script>
+<script src="sim.js"></script>
+<script src="../../assets/js/stop-shell.js"></script>
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/auto-render.min.js"></script>
+<script defer src="../../assets/js/katex-init.js"></script>
+</body>
+</html>
