@@ -13,6 +13,8 @@
 !Episodio4/**
 !scripts/
 !scripts/**
+!assets/
+!assets/**
 
 !package.json
 !package-lock.json
