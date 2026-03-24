@@ -6,7 +6,7 @@ Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
 Status: Phase 09 ✓ complete + verified — all 12 Classical Physics stops (015–026) pass UAT round 2
-Last activity: 2026-03-24 — Fix: GitHub repo link color corrected to --color-gold (color-accent was undefined).
+Last activity: 2026-03-24 — Quick task 004: Episodio4/ renamed to HowPhysicsWorks/ across all 268 files.
 
 ### Quick Tasks Completed
 
@@ -15,6 +15,7 @@ Last activity: 2026-03-24 — Fix: GitHub repo link color corrected to --color-g
 | 001 | Update episodio4.md with phases 7 & 8 + upcoming phases preview | 2026-03-23 | 20652f6 | .planning/quick/001-update-episodio4-phases-7-8/ |
 | 002 | Add subtle Learnship attribution to How Physics Works footer | 2026-03-23 | d9af0ea | .planning/quick/002-add-learnship-attribution/ |
 | 003 | Add GitHub repo link and favicon to How Physics Works | 2026-03-24 | dde54a5 | .planning/quick/003-github-link-and-favicon/ |
+| 004 | Rename Episodio4/ → HowPhysicsWorks/ across all files | 2026-03-24 | 0a2bc6c | .planning/quick/004-rename-episodio4-howphysicsworks/ |
 
 ## Completed Phases
 
