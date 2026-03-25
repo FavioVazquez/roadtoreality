@@ -36,7 +36,7 @@ Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout 
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (25)
+## Full Simulations Built (32)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
@@ -63,6 +63,13 @@ Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout 
 - 024 Boltzmann: two-panel — elastic collision gas + MB histogram, partition wall + entropy meter
 - 025 Hertz: oscillating dipole, sin²θ radiation pattern
 - 026 Michelson-Morley: three-mode narrative (Setup / Expected vs Found / Arm Ratio)
+- 027 Planck: Rayleigh-Jeans vs Planck curve comparison, temperature + h sliders, UV catastrophe visualized
+- 028 Photoelectric: frequency + intensity dual sliders, KE readout, stopping voltage, threshold frequency
+- 029 SR Time Dilation: twin paradox, velocity slider, age gap readout, clock comparison
+- 030 SR Length Contraction: ruler squash animation with train-car silhouette, velocity slider, ghost outline
+- 031 E = mc²: glowing energy sphere scaled logarithmically to mass, landmark lines (TNT/Hiroshima/city), shockwave ring animation, velocity + SR energy bars
+- 032 Rutherford: gold foil scattering stream (8-particle pool, Coulomb deflection) + manual aim mode, nuclear charge slider, H/C/Fe/Au presets, element label
+- 033 Bohr: classical spiral collapse (3.5 s) → quantized orbits toggle, orbit ring click → Balmer emission, spectrum bar with glow + white flash + dedup
 
 ## Milestone
 

@@ -54,13 +54,13 @@ The episode introduced `learnship`: an agentic workflow system that structures A
 
 The culmination of the methodology built across episodes 2 and 3: a full software project planned and executed using the `learnship` agentic workflow system, built in public.
 
-The project is a static interactive website walking through 2,500 years of physics history via 50 stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop pairs a narrative essay with a Canvas-based interactive simulation. 25 of 50 simulations are complete, covering Ancient Physics, the Scientific Revolution, and Classical Physics (through 1887).
+The project is a static interactive website walking through 2,500 years of physics history via 50 stops — from Thales (~600 BCE) to the contemporary frontiers. Each stop pairs a narrative essay with a Canvas-based interactive simulation. 32 of 50 simulations are complete, covering Ancient Physics, the Scientific Revolution, Classical Physics (through 1887), and Modern Physics (Planck through Bohr, 1900–1913).
 
 **Live site:** [roadtoreality.dev/HowPhysicsWorks](https://roadtoreality.dev/HowPhysicsWorks/) — built with zero backend, zero build step, pure HTML/CSS/JS.
 
 See [`HowPhysicsWorks/`](./HowPhysicsWorks/) for all site code and [`HowPhysicsWorks/README.md`](./HowPhysicsWorks/README.md) for technical documentation.
 
-The full planning process is documented in [`.planning/`](./.planning/) — every phase, decision, requirement, and UAT result kept as first-class artifacts. 9 phases complete, v2.0 milestone in progress.
+The full planning process is documented in [`.planning/`](./.planning/) — every phase, decision, requirement, and UAT result kept as first-class artifacts. 10 phases complete, v2.0 milestone in progress.
 
 ---
 
