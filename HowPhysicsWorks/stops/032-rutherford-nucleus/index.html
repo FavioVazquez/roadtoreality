@@ -63,41 +63,50 @@
     <p>Rutherford fired alpha particles at gold foil. Most passed straight through — but a few bounced directly back. The atom has a tiny, dense nucleus at its center.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Rutherford and the Atomic Nucleus — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Rutherford and the Atomic Nucleus — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="mode-toggle">Switch to Manual Aim</button>
+        <div style="display:flex;align-items:center;gap:0.5rem;flex:1;min-width:180px;">
+          <label for="nucleus-charge-slider" style="font-size:var(--text-sm);white-space:nowrap;">Nuclear Charge Z</label>
+          <input type="range" id="nucleus-charge-slider" min="1" max="79" step="1" value="79" style="flex:1;">
+          <span id="nucleus-charge-readout" style="font-size:var(--text-sm);white-space:nowrap;min-width:90px;">Z = 79 (Gold)</span>
+        </div>
+        <div id="aim-slider-row" style="display:none;align-items:center;gap:0.5rem;flex:1;min-width:180px;">
+          <label for="aim-slider" style="font-size:var(--text-sm);white-space:nowrap;">Impact Parameter b</label>
+          <input type="range" id="aim-slider" min="0" max="100" step="1" value="50" style="flex:1;">
+          <span id="aim-readout" style="font-size:var(--text-sm);white-space:nowrap;min-width:90px;">b = medium</span>
+        </div>
+      </div>
+      <div class="sim-actions" style="margin-left:auto;margin-top:0.5rem;">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span>Interactive — watch statistical scattering in stream mode, or aim manually.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Fire alpha particles at a gold foil and track their trajectories</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe that most pass straight through — most of the atom is empty</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Derive the nuclear radius from the closest-approach distance of back-scattered particles</li>
-    </ul>
+    <h3>The Plum Pudding Model (Wrong)</h3>
+    <p>In 1909, the prevailing model of the atom — Thomson's "plum pudding" — had positive charge spread uniformly throughout the atom, with electrons embedded like raisins in dough. Under this model, alpha particles should barely deflect when passing through gold foil. The positive charge would be too diffuse to cause significant scattering.</p>
+    <h3>The Unexpected Result</h3>
+    <p>Most alpha particles did pass straight through — confirming the atom is mostly empty space. But about 1 in 8000 scattered at angles greater than 90 degrees. Rutherford said this was "as if you fired a 15-inch shell at tissue paper and it came back and hit you." No diffuse charge distribution could cause that.</p>
+    <h3>The Nuclear Model</h3>
+    <p>The only way to explain the backscattering was if all the positive charge — and nearly all the mass — was concentrated in an impossibly tiny region at the center. Rutherford called it the nucleus. It is 100,000 times smaller than the atom itself. The electrons orbit this nucleus in the vast empty space around it.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
-    <ul class="takeaway-box__list">
-      <li>The atom consists mostly of empty space, with a tiny, dense, positively charged nucleus at its center. The nucleus is 100,000 times smaller than the atom — but contains almost all its mass.</li>
-    </ul>
+    <div class="takeaway-box__title">Rutherford Scattering Formula</div>
+    <p>$$\cot\!\left(\frac{\theta}{2}\right) = \frac{2b \, E_k}{k Z_1 Z_2 e^2}$$</p>
+    <p>Larger $b$ (impact parameter) = smaller deflection angle $\theta$. A head-on collision ($b = 0$) gives backscatter ($\theta = 180°$).</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>The nucleus was discovered. But electrons could not orbit it stably according to classical physics. Bohr fixed this by quantizing the electron's allowed orbits.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
