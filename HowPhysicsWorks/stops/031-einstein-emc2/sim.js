@@ -39,7 +39,7 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── State ── */
-  var massSliderVal = 150;   /* 0–300 logarithmic scale */
+  var massSliderVal = 300;   /* 0–600 logarithmic scale; 300 = 1g, 600 = 1kg */
   var massKg        = 0;
   var restEnergyJ   = 0;
   var betaVel       = 0;     /* v / c */
@@ -79,8 +79,11 @@
 
   /* ── Compute physics from slider state ── */
   function computePhysics() {
-    /* Mass: slider 0–300 → 10^(val/100 - 3) grams → kg */
-    massKg       = Math.pow(10, massSliderVal / 100 - 3) / 1000;
+    /* Mass: slider 0–600 → 10^(val/100 - 6) kg
+       slider=0 → 10^(-6) kg = 1 µg
+       slider=300 → 10^(-3) kg = 1 g
+       slider=600 → 10^0 kg = 1 kg */
+    massKg       = Math.pow(10, massSliderVal / 100 - 6);
     restEnergyJ  = massKg * C2;
 
     /* Velocity panel */
@@ -391,10 +394,10 @@
     },
     reset: function () {
       window.SimAPI.pause();
-      massSliderVal = 150;
+      massSliderVal = 300;
       betaVel       = 0;
       glowT         = 0;
-      if (massSliderEl) { massSliderEl.value = '150'; }
+      if (massSliderEl) { massSliderEl.value = '300'; }
       if (velSliderEl)  { velSliderEl.value  = '0'; }
       computePhysics();
       updateMassReadout();
