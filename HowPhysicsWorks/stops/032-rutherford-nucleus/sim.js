@@ -107,17 +107,46 @@
     }
   }
 
+  function buildAimPathPoints(b, sign, theta) {
+    /* Build ~60 {x,y} positions following the hyperbolic deflection path.
+       Incoming: from left edge to foil at cx, along y = cy + sign*b.
+       Outgoing: from foil in the scattered direction. */
+    var fx = foilX();
+    var ys = cy + sign * b;
+    var outAngle = sign >= 0 ? -(Math.PI - theta) : (Math.PI - theta);
+    var pts = [];
+    var N = 60;
+    /* first half: incoming (30 points from left edge to foil) */
+    for (var i = 0; i <= 30; i++) {
+      var t = i / 30;
+      pts.push({ x: t * fx, y: ys });
+    }
+    /* second half: outgoing (30 points from foil to far edge) */
+    var lineLen = Math.max(W, H) * 1.2;
+    for (var j = 1; j <= 30; j++) {
+      var s = j / 30;
+      pts.push({
+        x: fx + s * lineLen * Math.cos(outAngle),
+        y: ys + s * lineLen * Math.sin(outAngle)
+      });
+    }
+    return pts;
+  }
+
   function resetAimParticle() {
     var b = aimB;
     var sign = b >= 0 ? 1 : -1;
     b = Math.abs(b);
     aimTheta = rutherfordTheta(b);
     aimDone = true;
+    var pathPoints = buildAimPathPoints(b, sign, aimTheta);
     aimParticle = {
       b: b,
       sign: sign,
       theta: aimTheta,
-      ySource: cy + sign * b
+      ySource: cy + sign * b,
+      progress: 0,
+      pathPoints: pathPoints
     };
   }
 
@@ -287,8 +316,21 @@
       ctx.lineTo(fx + lineLen * Math.cos(outAngle), ys + lineLen * Math.sin(outAngle));
       ctx.stroke();
 
-      /* alpha particle dot at foil junction */
-      drawAlpha(fx, ys, 1);
+      /* animated alpha particle dot along path */
+      if (aimParticle && aimParticle.pathPoints && aimParticle.pathPoints.length > 1) {
+        var pts = aimParticle.pathPoints;
+        var prog = aimParticle.progress;
+        var idx = prog * (pts.length - 1);
+        var lo = Math.floor(idx);
+        var hi = Math.min(lo + 1, pts.length - 1);
+        var frac = idx - lo;
+        var ax = pts[lo].x + frac * (pts[hi].x - pts[lo].x);
+        var ay = pts[lo].y + frac * (pts[hi].y - pts[lo].y);
+        drawAlpha(ax, ay, 1);
+      } else {
+        /* fallback: static dot at foil junction */
+        drawAlpha(fx, ys, 1);
+      }
 
       /* angle arc */
       var arcR = 30;
@@ -408,6 +450,11 @@
     if (mode === 'stream') {
       drawStreamFrame();
     } else {
+      /* advance aim particle progress */
+      if (aimParticle) {
+        aimParticle.progress += 0.008;
+        if (aimParticle.progress >= 1.0) aimParticle.progress = 0;
+      }
       drawAimMode();
     }
     raf = requestAnimationFrame(loop);
@@ -425,9 +472,8 @@
         if (chargeReadout) {
           chargeReadout.textContent = 'Z = ' + Z + (Z === 79 ? ' (Gold)' : Z === 1 ? ' (Hydrogen)' : '');
         }
-        if (mode === 'aim') resetAimParticle();
-        else initParticles();
-        if (!running) drawStatic();
+        if (mode === 'aim') { resetAimParticle(); if (!running) drawAimMode(); }
+        else { initParticles(); if (!running) drawStatic(); }
       });
     }
 
@@ -442,14 +488,15 @@
           var aimRow = document.getElementById('aim-slider-row');
           if (aimRow) aimRow.style.display = 'flex';
           resetAimParticle();
+          if (!running) drawAimMode();
         } else {
           mode = 'stream';
           modeBtn.textContent = 'Switch to Manual Aim';
           var aimRow2 = document.getElementById('aim-slider-row');
           if (aimRow2) aimRow2.style.display = 'none';
           initParticles();
+          if (!running) drawStatic();
         }
-        if (!running) drawStatic();
       });
     }
 
@@ -492,8 +539,12 @@
     reset: function () {
       window.SimAPI.pause();
       initParticles();
-      resetAimParticle();
-      drawStatic();
+      if (mode === 'aim') {
+        resetAimParticle();
+        drawAimMode();
+      } else {
+        drawStatic();
+      }
     },
     destroy: function () {
       window.SimAPI.pause();
