@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
-Plan: —
-Status: Phase 10 context captured — ready for planning
-Last activity: 2026-03-25 — discuss-phase 10 complete. All 4 gray areas discussed: SR visualization (twin paradox + ruler squash), Planck/Photoelectric sim formats, E=mc² mass→energy slider with scale references, Rutherford gold foil + Bohr classical-collapse-then-quantum. CONTEXT.md written.
+Plan: 10-03 complete
+Status: Phase 10 in progress — plans 10-01, 10-02, 10-03 complete
+Last activity: 2026-03-25 — Plan 10-03 complete. Stop 031 (E = mc²) full interactive sim: logarithmic mass slider with TNT/bomb/city-power scale references, velocity slider with relativistic energy bars, KaTeX equations in takeaway box. stops.json isStub: false for order 31.
 
 ### Quick Tasks Completed
 
@@ -109,6 +109,11 @@ All site code lives in: `Episodio4/`
 ### Phase 08 Plans Progress
 - 08-01: Stop 002 Pythagoras — complete (2026-03-22): Web Audio + Canvas standing wave sim, 6 ratio buttons
 - 08-02: Stop 014 Hooke's Law — complete (2026-03-22): spring + F vs. x graph, 3 materials, snap animation
+
+### Phase 10 Plans Progress
+- 10-01: Stops 027-028 (Planck + Photoelectric) — complete (2026-03-25)
+- 10-02: Stops 029-030 (SR Time + SR Length) — complete (2026-03-25)
+- 10-03: Stop 031 (E = mc²) — complete (2026-03-25): logarithmic mass slider, scale references (TNT/bombs/city power), velocity slider with SR energy bars, KaTeX equations
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
