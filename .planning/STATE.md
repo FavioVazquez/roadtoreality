@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
-Status: Phase 09 ✓ complete + verified — all 12 Classical Physics stops (015–026) pass UAT round 2
-Last activity: 2026-03-24 — Quick task 005 complete + UAT fixes: X share buttons (tweet + long post + screenshot) at top of every stop. Fixed long post blank composer, screenshot 404, and share position.
+Status: Phase 10 context captured — ready for planning
+Last activity: 2026-03-25 — discuss-phase 10 complete. All 4 gray areas discussed: SR visualization (twin paradox + ruler squash), Planck/Photoelectric sim formats, E=mc² mass→energy slider with scale references, Rutherford gold foil + Bohr classical-collapse-then-quantum. CONTEXT.md written.
 
 ### Quick Tasks Completed
 
