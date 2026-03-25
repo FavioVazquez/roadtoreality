@@ -28,9 +28,11 @@
     canvas.height = ch * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cx = W / 2;
-    cy = H * 0.46;
-    r_max = Math.min(W, H) * 0.38;
+    cy = H * 0.40;
+    r_max = Math.min(W, H) * 0.30;
     r_min = 6;
+    /* Scale orbit radii to canvas so they never overlap the spectrum bar */
+    BOHR_RADII = [0, r_max * 0.17, r_max * 0.40, r_max * 0.70, r_max];
   }
 
   /* ---- Global state ---- */
@@ -50,7 +52,7 @@
   var bohrLevel = 3;
   var bohrAngle = 0;
   /* BOHR_RADII index 0 unused; n=1..4 */
-  var BOHR_RADII = [0, 28, 62, 108, 162];
+  var BOHR_RADII = [0, 0, 0, 0, 0]; /* populated in resize() */
   var BOHR_SPEEDS = [0, 0.08, 0.038, 0.024, 0.017];
   var spectrumLines = [];
   var flashLines = {};   /* key: rounded wavelength string, value: frame countdown */
@@ -62,12 +64,12 @@
 
   /* Spectrum bar layout */
   var specBarW = 260;
-  var specBarH = 36;
+  var specBarH = 28;
 
   function specLayout() {
     return {
       x: cx - specBarW / 2,
-      y: H - 95,
+      y: H - 62,
       w: specBarW,
       h: specBarH
     };
