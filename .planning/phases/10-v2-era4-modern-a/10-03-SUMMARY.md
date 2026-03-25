@@ -29,6 +29,7 @@ and both equations appear in KaTeX.
 
 ## Deviations from plan
 
+- The plan's Context section says slider 0–300 gives "10⁰ kg (1000g) at slider=300" which is internally contradictory (10^0 = 1, so it's 1g not 1000g/1kg). The must-have explicitly requires showing 1 kg. Resolved by using slider max=600 with formula `massKg = 10^(val/100 - 6)` giving 1µg at 0, 1g at 300 (default), 1kg at 600 — covering the full must-have range.
 - The plan specified `formatEnergy()` returning `j.toFixed(1)` for values < 1000 J with "3 significant figures" noted; the implementation returns `toFixed(1)` for the J range (consistent with the code block in the plan) and `.toFixed(3)` for all larger unit ranges. This matches the plan's code block exactly.
 - `formatMass()` for the < 1g range uses `.toFixed(4)` to show sub-milligram precision, giving enough resolution across the 6-order-of-magnitude slider range.
 
