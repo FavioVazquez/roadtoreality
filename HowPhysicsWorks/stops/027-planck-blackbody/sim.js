@@ -230,7 +230,7 @@
   /* ── Animation loop: auto temperature sweep ── */
   function drawFrame() {
     /* Oscillate temperature between 1000–10000 K at ~200 K/s (60fps → Δ~3.3 K/frame) */
-    var T = 5500 + 4500 * Math.sin(animT * 0.018);
+    var T = temperature + 1500 * Math.sin(animT * 0.018);
     drawScene(T, hFactor);
     animT += 1;
     if (running && !reduced) {
@@ -265,7 +265,7 @@
     tempSlider.addEventListener('input', function () {
       temperature = parseInt(tempSlider.value, 10);
       if (tempReadout) tempReadout.textContent = temperature + ' K';
-      if (!running) drawStatic();
+      drawStatic();
     });
   }
 
