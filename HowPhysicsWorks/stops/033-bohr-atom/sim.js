@@ -61,8 +61,8 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Spectrum bar layout */
-  var specBarW = 220;
-  var specBarH = 18;
+  var specBarW = 260;
+  var specBarH = 36;
 
   function specLayout() {
     return {
@@ -306,12 +306,6 @@
     ctx.fillStyle = 'rgba(8,0,18,0.95)';
     ctx.fillRect(0, 0, W, H);
 
-    /* Decrement flash countdowns */
-    var keys = Object.keys(flashLines);
-    for (var ki = 0; ki < keys.length; ki++) {
-      if (flashLines[keys[ki]] > 0) flashLines[keys[ki]] -= 1;
-    }
-
     drawOrbitRings();
     drawNucleus(false);
 
@@ -324,6 +318,12 @@
 
     drawPhotons();
     drawSpectrumBar();
+
+    /* Decrement flash countdowns after drawing */
+    var keys = Object.keys(flashLines);
+    for (var ki = 0; ki < keys.length; ki++) {
+      if (flashLines[keys[ki]] > 0) flashLines[keys[ki]] -= 1;
+    }
 
     /* Energy label */
     var en = (-13.6 / (bohrLevel * bohrLevel)).toFixed(2);
