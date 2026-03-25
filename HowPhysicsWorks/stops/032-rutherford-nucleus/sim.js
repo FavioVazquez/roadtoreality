@@ -440,7 +440,7 @@
           modeBtn.textContent = 'Switch to Stream Mode';
           /* show aim slider */
           var aimRow = document.getElementById('aim-slider-row');
-          if (aimRow) aimRow.style.display = '';
+          if (aimRow) aimRow.style.display = 'flex';
           resetAimParticle();
         } else {
           mode = 'stream';
