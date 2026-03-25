@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
-Status: Phase 10 ✓ complete — all 7 Modern Physics Part A stops (027–033) pass automated verification (46/46). Awaiting human UAT.
-Last activity: 2026-03-25 — Phase 10 execution complete. All 4 plans shipped: Planck blackbody spectrum, Photoelectric effect, Twin paradox, Length contraction, E=mc² mass-energy, Rutherford gold foil, Bohr classical collapse→quantum.
+Status: Phase 10 UAT gap closure complete — 5 issues fixed (027 slider, 033 Balmer, 032 aim mode + element presets, 031 energy sphere redesign, 030 train car). Awaiting UAT round 2.
+Last activity: 2026-03-25 — Fix plans 10-05 through 10-08 executed: Stop 027 temperature slider works in play mode; Stop 033 Balmer spectrum repaints on click; Stop 032 aim mode fixed + animated particle + element presets; Stop 031 energy sphere with landmark lines + stable formatters; Stop 030 proper train car shape with squashing windows.
 
 ### Quick Tasks Completed
 
