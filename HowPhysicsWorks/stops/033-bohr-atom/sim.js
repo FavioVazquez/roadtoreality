@@ -426,6 +426,7 @@
     }
     if (closestDist < 14 && closest !== -1) {
       triggerJump(closest);
+      if (phase === 'bohr') drawBohr();
     }
   });
 
