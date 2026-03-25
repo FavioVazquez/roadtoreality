@@ -71,10 +71,33 @@
     return kg.toFixed(4) + ' kg';
   }
 
-  function sigfig3(x) {
-    if (x === 0) return '0';
-    var mag = Math.pow(10, Math.floor(Math.log10(Math.abs(x))) - 2);
-    return (Math.round(x / mag) * mag).toPrecision(3);
+  /* ── Stable label formatters (threshold-based, no log10 per frame) ── */
+  function stableEnergyLabel(joules) {
+    var TON = 4.184e9;   /* 1 ton TNT in joules */
+    var tnt = joules / TON;
+    if (tnt >= 1e6)  return (tnt / 1e6).toFixed(2) + ' Mt TNT';
+    if (tnt >= 1e3)  return (tnt / 1e3).toFixed(2) + ' kt TNT';
+    if (tnt >= 1)    return tnt.toFixed(2) + ' t TNT';
+    if (tnt >= 1e-3) return (tnt * 1e3).toFixed(2) + ' kg TNT';
+    return joules.toFixed(2) + ' J';
+  }
+
+  function bombLabel(joules) {
+    var HIROSHIMA = 6.3e13;
+    var n = joules / HIROSHIMA;
+    if (n >= 1000) return Math.round(n / 1000) + 'k Hiroshima bombs';
+    if (n >= 1)    return n.toFixed(1) + ' Hiroshima bombs';
+    return (n * 100).toFixed(1) + '% of Hiroshima bomb';
+  }
+
+  function cityPowerLabel(joules) {
+    var CITY_YEAR = 3.15e16;
+    var years = joules / CITY_YEAR;
+    if (years >= 1)   return years.toFixed(2) + ' city-years of power';
+    var hours = joules / (CITY_YEAR / 8760);
+    if (hours >= 1)   return hours.toFixed(1) + ' city-hours of power';
+    var mins = hours * 60;
+    return mins.toFixed(1) + ' city-minutes of power';
   }
 
   /* ── Compute physics from slider state ── */
@@ -227,53 +250,16 @@
     var refY  = barY + barH + 36;
     var lineH = 18;
 
-    /* TNT equivalent */
-    var ktTNT = restEnergyJ / J_PER_KILOTON_TNT;
-    var tntStr;
-    if (ktTNT < 1) {
-      tntStr = sigfig3(ktTNT * 1000) + ' tons TNT';
-    } else if (ktTNT < 1000) {
-      tntStr = sigfig3(ktTNT) + ' kilotons TNT';
-    } else {
-      tntStr = sigfig3(ktTNT / 1000) + ' megatons TNT';
-    }
-
-    /* Atomic bombs */
-    var bombs = restEnergyJ / J_PER_HIROSHIMA;
-    var bombStr;
-    if (bombs < 0.001) {
-      bombStr = '< 0.001 Hiroshima bombs';
-    } else if (bombs < 1000) {
-      bombStr = sigfig3(bombs) + ' Hiroshima-scale bomb' + (bombs >= 2 ? 's' : '');
-    } else {
-      bombStr = sigfig3(bombs / 1000) + ' thousand Hiroshima bombs';
-    }
-
-    /* City power hours */
-    var cityHrs = restEnergyJ / J_PER_CITY_HOUR;
-    var cityStr;
-    if (cityHrs < 0.001) {
-      cityStr = '< 0.001 hours';
-    } else if (cityHrs < 1) {
-      cityStr = sigfig3(cityHrs * 60) + ' min power (1 GW city)';
-    } else if (cityHrs < 1000) {
-      cityStr = sigfig3(cityHrs) + ' hours power (1 GW city)';
-    } else if (cityHrs < 1e6) {
-      cityStr = sigfig3(cityHrs / 1000) + ' thousand hours power (1 GW city)';
-    } else {
-      cityStr = sigfig3(cityHrs / 1e6) + ' million hours power (1 GW city)';
-    }
-
     ctx.font = '12px monospace';
 
     ctx.fillStyle = C_GOLD;
-    ctx.fillText('\u2248 ' + tntStr, x, refY);
+    ctx.fillText('\u2248 ' + stableEnergyLabel(restEnergyJ), x, refY);
 
     ctx.fillStyle = 'rgba(255,120,120,0.9)';
-    ctx.fillText('\u2248 ' + bombStr, x, refY + lineH);
+    ctx.fillText('\u2248 ' + bombLabel(restEnergyJ), x, refY + lineH);
 
     ctx.fillStyle = C_TEAL;
-    ctx.fillText('\u2248 ' + cityStr, x, refY + lineH * 2);
+    ctx.fillText('\u2248 ' + cityPowerLabel(restEnergyJ), x, refY + lineH * 2);
   }
 
   /* ── Velocity / SR energy panel ── */
