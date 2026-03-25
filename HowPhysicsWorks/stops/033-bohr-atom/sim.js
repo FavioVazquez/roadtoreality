@@ -53,6 +53,7 @@
   var BOHR_RADII = [0, 28, 62, 108, 162];
   var BOHR_SPEEDS = [0, 0.08, 0.038, 0.024, 0.017];
   var spectrumLines = [];
+  var flashLines = {};   /* key: rounded wavelength string, value: frame countdown */
   var photons = [];
 
   var raf = null;
@@ -195,16 +196,33 @@
     }
     ctx.textAlign = 'left';
 
-    /* accumulated emission lines */
+    /* accumulated emission lines — glow pass + core line + white flash */
     for (var i = 0; i < spectrumLines.length; i++) {
       var line = spectrumLines[i];
+      var key = Math.round(line.lambda_nm).toString();
+      var flash = flashLines[key] || 0;
+      var flashFrac = flash / 20;  /* 1.0 when just added, 0 when settled */
+
+      /* glow pass — wide soft line behind */
       ctx.strokeStyle = line.color;
-      ctx.lineWidth = 2;
-      ctx.globalAlpha = 0.85;
+      ctx.lineWidth = 6;
+      ctx.globalAlpha = 0.25 + flashFrac * 0.3;
       ctx.beginPath();
       ctx.moveTo(line.x, s.y);
       ctx.lineTo(line.x, s.y + s.h);
       ctx.stroke();
+
+      /* core line */
+      ctx.lineWidth = 3;
+      ctx.globalAlpha = flashFrac > 0 ? 0.5 + flashFrac * 0.5 : 0.9;
+      ctx.strokeStyle = flashFrac > 0
+        ? 'rgba(255,255,255,' + (0.4 + flashFrac * 0.6) + ')'
+        : line.color;
+      ctx.beginPath();
+      ctx.moveTo(line.x, s.y);
+      ctx.lineTo(line.x, s.y + s.h);
+      ctx.stroke();
+
       ctx.globalAlpha = 1;
     }
   }
@@ -287,6 +305,12 @@
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = 'rgba(8,0,18,0.95)';
     ctx.fillRect(0, 0, W, H);
+
+    /* Decrement flash countdowns */
+    var keys = Object.keys(flashLines);
+    for (var ki = 0; ki < keys.length; ki++) {
+      if (flashLines[keys[ki]] > 0) flashLines[keys[ki]] -= 1;
+    }
 
     drawOrbitRings();
     drawNucleus(false);
@@ -383,12 +407,23 @@
       var vy = (ey - cy) / r * speed;
       photons.push({ x: ex, y: ey, vx: vx, vy: vy, color: color, life: 80 });
 
-      /* add spectrum line if visible range */
+      /* add spectrum line if visible range — deduplicate within ±3nm */
       if (lambda_nm >= 380 && lambda_nm <= 700) {
         var lx = lambdaToX(lambda_nm);
         var s = specLayout();
         if (lx >= s.x && lx <= s.x + s.w) {
-          spectrumLines.push({ lambda_nm: lambda_nm, x: lx, color: color });
+          var isDuplicate = false;
+          for (var si = 0; si < spectrumLines.length; si++) {
+            if (Math.abs(spectrumLines[si].lambda_nm - lambda_nm) < 3) {
+              isDuplicate = true;
+              flashLines[Math.round(lambda_nm).toString()] = 20;
+              break;
+            }
+          }
+          if (!isDuplicate) {
+            spectrumLines.push({ lambda_nm: lambda_nm, x: lx, color: color });
+            flashLines[Math.round(lambda_nm).toString()] = 20;
+          }
         }
       }
     } else {
@@ -443,6 +478,7 @@
           bohrLevel = 3;
           bohrAngle = 0;
           spectrumLines = [];
+          flashLines = {};
           photons = [];
           collapseBohrBtn.textContent = 'Restart Classical';
           var hintEl = document.getElementById('bohr-hint');
@@ -457,6 +493,7 @@
           flashAlpha = 0;
           trailPositions = [];
           spectrumLines = [];
+          flashLines = {};
           photons = [];
           collapseBohrBtn.disabled = true;
           collapseBohrBtn.textContent = 'Switch to Bohr Model';
@@ -496,6 +533,7 @@
       flashAlpha = 0;
       trailPositions = [];
       spectrumLines = [];
+      flashLines = {};
       photons = [];
       bohrLevel = 3;
       bohrAngle = 0;
