@@ -63,41 +63,42 @@
     <p>Objects moving at high speed are measured as shorter along their direction of motion. Space itself compresses for fast-moving things.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Special Relativity: Length Contraction — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Special Relativity: Length Contraction — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
+      <div class="sim-control-row" style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+        <label for="velocity-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Velocity</label>
+        <input type="range" id="velocity-slider" min="0" max="990" step="10" value="0" style="flex:1;min-width:120px;">
+        <span id="velocity-readout" style="font-size:var(--text-sm);font-family:monospace;color:var(--color-text-secondary);white-space:nowrap;">v&nbsp;=&nbsp;0.000c &nbsp; L&nbsp;=&nbsp;100.0&nbsp;m</span>
+      </div>
       <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span>Interactive &mdash; drag velocity to watch the ruler contract.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Accelerate an object toward c and watch its measured length contract</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Compare proper length to measured length at different velocities</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore why Lorentz contraction is real, not an optical illusion</li>
-    </ul>
+    <h3>Space Compresses at High Speed</h3>
+    <p>A meter stick moving past you at relativistic speed is measured as shorter along its direction of motion. At 99% the speed of light, it measures only about 14 cm &mdash; not because it physically changed, but because of the geometry of spacetime.</p>
+    <h3>Only Along the Direction of Motion</h3>
+    <p>Length contraction is strictly along the direction of travel. The height and width perpendicular to motion are unchanged. A sphere moving at 0.99c looks like a flattened disk to a stationary observer.</p>
+    <h3>The Same Root Cause as Time Dilation</h3>
+    <p>Time dilation and length contraction are two sides of the same spacetime geometry. They are both required to keep the speed of light constant for all inertial observers. You cannot have one without the other.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
-    <ul class="takeaway-box__list">
-      <li>Moving objects are shorter in their direction of motion: L = L₀/γ. Combined with time dilation, this ensures the speed of light is the same in all inertial frames.</li>
-    </ul>
+    <div class="takeaway-box__formula">$$L = \frac{L_0}{\gamma} = L_0 \sqrt{1 - \frac{v^2}{c^2}}$$</div>
+    <p style="margin-top:0.5rem;font-size:var(--text-sm);color:var(--color-text-secondary);">At $v = 0.99c$, a 100-meter ruler is measured as only $\approx 14.1$ meters long.</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Space and time both transform. Einstein then made his most startling leap: if energy and mass are related, they must be equivalent — and the conversion factor is c².</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
