@@ -63,41 +63,49 @@
     <p>Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the Nobel Prize and proved light comes in photons.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Einstein and the Photoelectric Effect — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Einstein and the Photoelectric Effect — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
+      <div class="sim-control-row">
+        <label class="sim-label" for="frequency-slider">Light Frequency</label>
+        <input type="range" id="frequency-slider" min="1" max="100" step="1" value="40" class="sim-slider">
+        <span id="frequency-readout" class="sim-readout">Below threshold</span>
+      </div>
+      <div class="sim-control-row">
+        <label class="sim-label" for="intensity-slider">Intensity</label>
+        <input type="range" id="intensity-slider" min="1" max="100" step="1" value="50" class="sim-slider">
+        <span id="intensity-readout" class="sim-readout">50%</span>
+      </div>
       <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span>Interactive &mdash; adjust frequency and intensity to test the quantum prediction.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Vary light frequency and intensity — observe when electrons are ejected</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Confirm that only frequency (not intensity) determines ejection energy</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Measure the work function for different metals</li>
-    </ul>
+    <h3>The Classical Prediction (Wrong)</h3>
+    <p>Classical wave theory predicted that if you shone bright enough light on metal, eventually enough energy would accumulate to eject electrons. The brighter the light, the more energy deposited — so crank up the intensity long enough and electrons would eventually escape. Try it: drag the intensity slider to maximum while the frequency slider is below the threshold. Nothing happens. No electrons, no matter how bright the light.</p>
+    <h3>Einstein's Insight: Photons</h3>
+    <p>In 1905 Einstein proposed that light comes in discrete packets — photons — each carrying energy E&nbsp;=&nbsp;hf. Only a photon with enough frequency (enough energy per packet) can knock an electron loose. More photons means more intensity, but each photon still carries the same energy. Intensity controls the <em>rate</em> of ejection; frequency controls whether ejection is possible at all.</p>
+    <h3>The Work Function</h3>
+    <p>Each metal has a characteristic work function &phi; — the minimum energy needed to free an electron from the surface. Any energy beyond &phi; becomes kinetic energy of the ejected electron: KE&nbsp;=&nbsp;hf&nbsp;&minus;&nbsp;&phi;. This linear relationship between KE and frequency (not intensity) was Einstein's key prediction, verified experimentally by Millikan in 1916.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
-    <ul class="takeaway-box__list">
-      <li>Light is quantized into photons of energy E = hf. A photon ejects an electron only if its energy exceeds the work function φ. Intensity adds more photons — not more energy per photon.</li>
-    </ul>
+    <div class="takeaway-box__title">Key Equation</div>
+    <div class="takeaway-box__list">
+      <p>$$KE = hf - \varphi$$</p>
+      <p>Above the threshold frequency \(f_0 = \varphi/h\), kinetic energy increases linearly with \(f\), not with intensity.</p>
+    </div>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Light is a particle. And a wave. Einstein went further: if the speed of light is constant for all observers, space and time themselves must be relative — moving clocks run slow.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

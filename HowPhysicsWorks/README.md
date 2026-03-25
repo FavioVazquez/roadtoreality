@@ -148,10 +148,10 @@ HowPhysicsWorks/
 │       ├── auto-render.min.js
 │       └── fonts/
 └── stops/
-    ├── 001-thales-natural-causes/  ← 25 stops have full sim.js (stops 001–026)
+    ├── 001-thales-natural-causes/  ← 32 stops have full sim.js (stops 001–033)
     │   ├── index.html
     │   └── sim.js
-    ├── 027-planck-blackbody/       ← Stops 027–050: HTML shell, sim coming in later phases
+    ├── 034-de-broglie-waves/       ← Stops 034–050: HTML shell, sim coming in later phases
     │   └── index.html
     └── ... (50 total)
 ```

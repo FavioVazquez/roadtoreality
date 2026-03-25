@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 10 — Era 4: Modern Physics Part A
+Phase: 10 — Era 4: Modern Physics Part A ✓ COMPLETE
 Plan: —
-Status: Phase 09 ✓ complete + verified — all 12 Classical Physics stops (015–026) pass UAT round 2
-Last activity: 2026-03-24 — Quick task 005 complete + UAT fixes: X share buttons (tweet + long post + screenshot) at top of every stop. Fixed long post blank composer, screenshot 404, and share position.
+Status: Phase 10 UAT complete — all 7 stops (027–033) pass. Ready for Phase 11.
+Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout finalized (scaled orbits, repositioned bar, separated title/tick labels).
 
 ### Quick Tasks Completed
 
@@ -36,7 +36,7 @@ Last activity: 2026-03-24 — Quick task 005 complete + UAT fixes: X share butto
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (25)
+## Full Simulations Built (32)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
@@ -63,6 +63,13 @@ Last activity: 2026-03-24 — Quick task 005 complete + UAT fixes: X share butto
 - 024 Boltzmann: two-panel — elastic collision gas + MB histogram, partition wall + entropy meter
 - 025 Hertz: oscillating dipole, sin²θ radiation pattern
 - 026 Michelson-Morley: three-mode narrative (Setup / Expected vs Found / Arm Ratio)
+- 027 Planck: Rayleigh-Jeans vs Planck curve comparison, temperature + h sliders, UV catastrophe visualized
+- 028 Photoelectric: frequency + intensity dual sliders, KE readout, stopping voltage, threshold frequency
+- 029 SR Time Dilation: twin paradox, velocity slider, age gap readout, clock comparison
+- 030 SR Length Contraction: ruler squash animation with train-car silhouette, velocity slider, ghost outline
+- 031 E = mc²: glowing energy sphere scaled logarithmically to mass, landmark lines (TNT/Hiroshima/city), shockwave ring animation, velocity + SR energy bars
+- 032 Rutherford: gold foil scattering stream (8-particle pool, Coulomb deflection) + manual aim mode, nuclear charge slider, H/C/Fe/Au presets, element label
+- 033 Bohr: classical spiral collapse (3.5 s) → quantized orbits toggle, orbit ring click → Balmer emission, spectrum bar with glow + white flash + dedup
 
 ## Milestone
 
@@ -109,6 +116,17 @@ All site code lives in: `Episodio4/`
 ### Phase 08 Plans Progress
 - 08-01: Stop 002 Pythagoras — complete (2026-03-22): Web Audio + Canvas standing wave sim, 6 ratio buttons
 - 08-02: Stop 014 Hooke's Law — complete (2026-03-22): spring + F vs. x graph, 3 materials, snap animation
+
+### Phase 10 Plans Progress
+- 10-01: Stops 027-028 (Planck + Photoelectric) — complete (2026-03-25)
+- 10-02: Stops 029-030 (SR Time + SR Length) — complete (2026-03-25)
+- 10-03: Stop 031 (E = mc²) — complete (2026-03-25): logarithmic mass slider, scale references (TNT/bombs/city power), velocity slider with SR energy bars, KaTeX equations
+- 10-04: Stops 032-033 (Rutherford + Bohr) — complete (2026-03-25): Rutherford 8-particle pool with Coulomb deflection + aim mode; Bohr classical collapse 3.5s + quantized orbits + Balmer spectrum bar
+- 10-05-FIX: Stop 027 temperature slider + Stop 033 spectrum repaint — complete (2026-03-25): anchored drawFrame sweep to live slider value; added drawBohr() call after click handler triggerJump
+- 10-06-FIX: Stop 032 aim mode fixes + enhancements — complete (2026-03-25): display:flex toggle fix, animated alpha particle in aim mode, dynamic element label via Z lookup, H/C/Fe/Au preset buttons
+- 10-07-FIX: Stop 031 E=mc² redesign — complete (2026-03-25): replaced sigfig3 flickering labels with stable threshold formatters; replaced bar panel with glowing energy sphere + landmark lines
+- 10-08-FIX: Stop 030 train car silhouette — complete (2026-03-25): drawCar() helper with body gradient, roof panel, squashing windows, fixed-size wheels, ghost dashed outline; drawTicks() removed
+- 10-09-FIX: Stops 031/032/033 UAT round-2 fixes — complete (2026-03-25): 031 expanding shockwave rings; 032 aim slider max-width; 033 Balmer glow+flash+dedup
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages

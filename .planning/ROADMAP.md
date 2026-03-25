@@ -141,11 +141,12 @@ Each plan: implement `sim.js`, update `index.html` with KaTeX equations and stop
 
 **Requirements:** SIM-MOD-01–07
 **Dir:** `10-v2-era4-modern-a`
+**Status:** ✓ Complete — 2026-03-25
 
-**Plan 10-01: Stops 027 + 028 — Planck + Photoelectric Effect**
-**Plan 10-02: Stops 029 + 030 — Time Dilation + Length Contraction**
-**Plan 10-03: Stop 031 — E = mc²**
-**Plan 10-04: Stops 032 + 033 — Rutherford + Bohr**
+**Plan 10-01: Stops 027 + 028 — Planck + Photoelectric Effect** ✓ *complete 2026-03-25*
+**Plan 10-02: Stops 029 + 030 — Time Dilation + Length Contraction** ✓ *complete 2026-03-25*
+**Plan 10-03: Stop 031 — E = mc²** ✓ *complete 2026-03-25*
+**Plan 10-04: Stops 032 + 033 — Rutherford + Bohr** ✓ *complete 2026-03-25*
 
 ---
 

@@ -63,41 +63,50 @@
     <p>Planck could only explain the glow of hot objects by assuming energy is quantized — emitted in discrete packets. He called it 'a desperate act.'</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Planck and Blackbody Radiation — teaser animation">
+    <div class="sim-container" id="sim-mount" aria-label="Planck and Blackbody Radiation — interactive simulation">
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
+      <div class="sim-control-row">
+        <label class="sim-label" for="temperature-slider">Temperature</label>
+        <input type="range" id="temperature-slider" min="1000" max="10000" step="100" value="4000" class="sim-slider">
+        <span id="temperature-readout" class="sim-readout">4000 K</span>
+      </div>
+      <div class="sim-control-row">
+        <label class="sim-label" for="h-slider">Planck constant h &times;</label>
+        <input type="range" id="h-slider" min="1" max="100" step="1" value="100" class="sim-slider">
+        <span id="h-readout" class="sim-readout">1.00</span>
+      </div>
       <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span>Interactive simulation &mdash; drag the sliders to explore quantization.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Adjust temperature and watch the blackbody spectrum shift (Wien's law)</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how the Rayleigh-Jeans law diverges at high frequencies (the catastrophe)</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe how Planck's quantization formula resolves the divergence</li>
-    </ul>
+    <h3>The Ultraviolet Catastrophe</h3>
+    <p>Classical physics, as captured by the Rayleigh-Jeans law, predicted that a hot object should emit infinite energy at high frequencies. Heat up any oven and you should instantly be blasted with deadly X-rays and gamma rays. Obviously this never happens — but the equations insisted it should. Physicists called this absurd prediction the <em>ultraviolet catastrophe</em>.</p>
+    <h3>Planck's Desperate Act</h3>
+    <p>In 1900, Max Planck found the correct formula by assuming that energy could only be emitted in discrete packets proportional to frequency: E = hf, where h is now called Planck's constant. Planck himself described this assumption as "a desperate act" — a mathematical trick to fix the equations, not a physical claim he believed. It took Einstein to take the idea seriously.</p>
+    <h3>Wien's Displacement Law</h3>
+    <p>The peak of the blackbody spectrum shifts to higher frequencies (shorter wavelengths) as temperature increases. Hot stars are blue-white; cooler stars are red. Our Sun peaks in the yellow-green. You can see this in the simulation: drag the temperature slider and watch the peak move.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
-    <ul class="takeaway-box__list">
-      <li>E = hf. Energy comes in discrete packets (quanta) proportional to frequency. Planck's constant h = 6.626 × 10⁻³⁴ J·s is the fundamental quantum of action.</li>
-    </ul>
+    <div class="takeaway-box__title">Key Equations</div>
+    <div class="takeaway-box__list">
+      <p>$$E = hf$$</p>
+      <p>$$B(\nu, T) = \frac{2h\nu^3}{c^2} \cdot \frac{1}{e^{h\nu/k_BT} - 1}$$</p>
+      <p>When \(h \to 0\), Planck's formula reduces to the classical Rayleigh-Jeans law \(B \propto \nu^2 T\). Drag the h slider to the left to see both curves converge.</p>
+    </div>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Planck quantized energy as a mathematical trick. Einstein took it literally and used it to explain the photoelectric effect — proving that light itself comes in packets we now call photons.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

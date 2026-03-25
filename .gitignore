@@ -9,6 +9,8 @@
 !index.html
 !.planning/
 !.planning/**
+!docs/
+!docs/**
 !HowPhysicsWorks/
 !HowPhysicsWorks/**
 !scripts/
