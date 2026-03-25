@@ -67,7 +67,7 @@
   function specLayout() {
     return {
       x: cx - specBarW / 2,
-      y: H - 44,
+      y: H - 95,
       w: specBarW,
       h: specBarH
     };
@@ -191,7 +191,7 @@
     for (var ti = 0; ti < ticks.length; ti++) {
       var tx = lambdaToX(ticks[ti]);
       if (tx >= s.x && tx <= s.x + s.w) {
-        ctx.fillText(ticks[ti], tx, s.y + s.h + 11);
+        ctx.fillText(ticks[ti], tx, s.y - 3);
       }
     }
     ctx.textAlign = 'left';
