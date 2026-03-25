@@ -5,8 +5,8 @@
 Milestone: v2.0 — Full Spectrum
 Phase: 10 — Era 4: Modern Physics Part A
 Plan: —
-Status: Phase 10 UAT gap closure complete — 5 issues fixed (027 slider, 033 Balmer, 032 aim mode + element presets, 031 energy sphere redesign, 030 train car). Awaiting UAT round 2.
-Last activity: 2026-03-25 — Fix plans 10-05 through 10-08 executed: Stop 027 temperature slider works in play mode; Stop 033 Balmer spectrum repaints on click; Stop 032 aim mode fixed + animated particle + element presets; Stop 031 energy sphere with landmark lines + stable formatters; Stop 030 proper train car shape with squashing windows.
+Status: Phase 10 UAT round-2 gap closure complete — 3 additional issues fixed (031 shockwave rings, 032 slider overflow, 033 Balmer glow + flash + dedup). Ready for UAT round 3.
+Last activity: 2026-03-25 — Fix plan 10-09 executed: Stop 031 expanding shockwave rings animation; Stop 032 aim slider max-width overflow fix; Stop 033 Balmer lines 3px+glow, white flash on new line, deduplication within ±3nm.
 
 ### Quick Tasks Completed
 
@@ -119,6 +119,7 @@ All site code lives in: `Episodio4/`
 - 10-06-FIX: Stop 032 aim mode fixes + enhancements — complete (2026-03-25): display:flex toggle fix, animated alpha particle in aim mode, dynamic element label via Z lookup, H/C/Fe/Au preset buttons
 - 10-07-FIX: Stop 031 E=mc² redesign — complete (2026-03-25): replaced sigfig3 flickering labels with stable threshold formatters; replaced bar panel with glowing energy sphere + landmark lines
 - 10-08-FIX: Stop 030 train car silhouette — complete (2026-03-25): drawCar() helper with body gradient, roof panel, squashing windows, fixed-size wheels, ghost dashed outline; drawTicks() removed
+- 10-09-FIX: Stops 031/032/033 UAT round-2 fixes — complete (2026-03-25): 031 expanding shockwave rings; 032 aim slider max-width; 033 Balmer glow+flash+dedup
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
