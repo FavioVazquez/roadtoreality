@@ -52,6 +52,9 @@
   var running = false;
   var glowT   = 0;
 
+  /* Shockwave rings: each { r, alpha } */
+  var rings = [];
+
   /* ── Helpers ── */
   function formatEnergy(j) {
     if (j <= 0)    return '0 J';
@@ -184,6 +187,37 @@
 
     if (running && !reduced) {
       glowT += 0.05;
+
+      /* Spawn a new ring every 40 frames (~1.5 s at 60fps / 2 s slower) */
+      var frameCount = Math.round(glowT / 0.05);
+      if (frameCount % 40 === 0) {
+        var sphereAreaTop2 = 8 + 22;
+        var labelAreaH2   = 52;
+        var sphereAreaH2  = (H * 0.60 - 8) - labelAreaH2 - 22;
+        var maxR2 = sphereAreaH2 * 0.38;
+        var spawnR = energyToRadius(restEnergyJ, maxR2);
+        rings.push({ r: spawnR, alpha: 0.7 });
+      }
+
+      /* Draw and advance rings */
+      var sphereAreaTop3 = 8 + 22;
+      var labelAreaH3    = 52;
+      var sphereAreaH3   = (H * 0.60 - 8) - labelAreaH3 - 22;
+      var ringCX = PAD + (W - PAD * 2) / 2;
+      var ringCY = sphereAreaTop3 + sphereAreaH3 * 0.52;
+
+      for (var ri = rings.length - 1; ri >= 0; ri--) {
+        var ring = rings[ri];
+        ctx.beginPath();
+        ctx.arc(ringCX, ringCY, ring.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,200,80,' + ring.alpha + ')';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ring.r += 1.5;
+        ring.alpha -= 0.012;
+        if (ring.alpha <= 0) rings.splice(ri, 1);
+      }
+
       raf = requestAnimationFrame(drawFrame);
     }
   }
@@ -236,9 +270,7 @@
     /* Compute radius for current energy */
     var r = energyToRadius(restEnergyJ, maxR);
 
-    /* Gentle pulse: ±2px when running */
-    var pulse = (running && !reduced) ? 2 * Math.sin(glowT * 1.2) : 0;
-    var rDraw = Math.max(4, r + pulse);
+    var rDraw = Math.max(4, r);
 
     /* Draw landmark lines first (behind sphere) */
     var lineX0 = x;
@@ -421,6 +453,7 @@
     },
     pause: function () {
       running = false;
+      rings = [];
       if (raf) { cancelAnimationFrame(raf); raf = null; }
     },
     reset: function () {
@@ -428,6 +461,7 @@
       massSliderVal = 300;
       betaVel       = 0;
       glowT         = 0;
+      rings         = [];
       if (massSliderEl) { massSliderEl.value = '300'; }
       if (velSliderEl)  { velSliderEl.value  = '0'; }
       computePhysics();
