@@ -551,7 +551,7 @@
       "year": 1905,
       "yearLabel": "1905",
       "scientist": "Albert Einstein",
-      "isStub": true,
+      "isStub": false,
       "description": "Einstein's most famous equation says that mass is concentrated energy. A paperclip contains enough energy to power a city \u2014 if you could release it all.",
       "path": "stops/031-einstein-emc2/",
       "prev": "030-special-relativity-length",
