@@ -176,10 +176,10 @@
     var glow = running ? 0.15 + 0.12 * Math.sin(glowT) : 0;
 
     var PAD    = 20;
-    var panelH = H * 0.56;   /* mass panel: upper 56% */
+    var panelH = H * 0.60;   /* sphere panel: upper 60% */
     var velY   = panelH + 8; /* velocity panel starts here */
 
-    drawMassPanel(PAD, 8, W - PAD * 2, panelH - 8, glow);
+    drawEnergySphere(PAD, 8, W - PAD * 2, panelH - 8, glow);
     drawVelocityPanel(PAD, velY, W - PAD * 2, H - velY - 8, glow);
 
     if (running && !reduced) {
@@ -188,13 +188,34 @@
     }
   }
 
-  /* ── Mass-to-energy panel ── */
-  function drawMassPanel(x, y, w, h, glow) {
+  /* ── Energy sphere panel — replaces the old bar panel ── */
+  /* Logarithm mapping is computed once per call (not per frame from Math.log10 on a
+     per-pixel basis), so it does not cause flickering. */
+  var LOG_MIN = Math.log(1e3);    /* ln(1 kJ) — near-zero mass floor */
+  var LOG_MAX = Math.log(9e16);   /* ln(~1 kg rest energy) */
+
+  /* Landmark thresholds in joules */
+  var LANDMARKS = [
+    { j: 4.184e9,  label: '1 t TNT',      color: 'rgba(240,192,64,0.70)' },
+    { j: 4.184e12, label: '1 kt TNT',     color: 'rgba(240,192,64,0.85)' },
+    { j: 6.3e13,   label: 'Hiroshima',    color: 'rgba(255,120,120,0.85)' },
+    { j: 4.184e15, label: '1 Mt TNT',     color: 'rgba(255,80,80,0.90)' },
+    { j: 3.15e16,  label: 'City (1 yr)',  color: 'rgba(60,184,178,0.90)' }
+  ];
+
+  function energyToRadius(joules, maxR) {
+    var logE = Math.log(Math.max(joules, 1e3));
+    var frac = (logE - LOG_MIN) / (LOG_MAX - LOG_MIN);
+    frac = Math.max(0, Math.min(1, frac));
+    return Math.max(4, frac * maxR);
+  }
+
+  function drawEnergySphere(x, y, w, h, glow) {
     /* Section title */
     ctx.fillStyle = C_MUTED;
     ctx.font = '11px monospace';
     ctx.textAlign = 'left';
-    ctx.fillText('MASS → ENERGY   ( E = mc\u00b2 )', x, y + 13);
+    ctx.fillText('MASS \u2192 ENERGY   ( E = mc\u00b2 )', x, y + 13);
 
     /* divider */
     ctx.strokeStyle = 'rgba(160,92,200,0.25)';
@@ -204,62 +225,86 @@
     ctx.lineTo(x + w, y + 18);
     ctx.stroke();
 
-    var barY  = y + 34;
-    var barH  = 26;
-    var barW  = w;
+    /* Sphere area: upper portion of this panel */
+    var sphereAreaTop = y + 22;
+    var labelAreaH    = 52;   /* space at bottom for text labels */
+    var sphereAreaH   = h - labelAreaH - 22;
+    var cx = x + w / 2;
+    var cy = sphereAreaTop + sphereAreaH * 0.52;
+    var maxR = sphereAreaH * 0.38;
 
-    /* Logarithmic bar: normalize log10(E) to [J_min=1, EJ] */
-    var logEmin = 0;    /* log10(1 J) = 0 */
-    var logEmax = 18;   /* log10(1 EJ) */
-    var logE    = restEnergyJ > 0 ? Math.log10(restEnergyJ) : 0;
-    var frac    = Math.max(0, Math.min(1, (logE - logEmin) / (logEmax - logEmin)));
-    var filledW = frac * barW;
+    /* Compute radius for current energy */
+    var r = energyToRadius(restEnergyJ, maxR);
 
-    /* Background bar */
-    ctx.fillStyle = 'rgba(100,60,140,0.30)';
-    ctx.fillRect(x, barY, barW, barH);
+    /* Gentle pulse: ±2px when running */
+    var pulse = (running && !reduced) ? 2 * Math.sin(glowT * 1.2) : 0;
+    var rDraw = Math.max(4, r + pulse);
 
-    /* Energy bar */
-    if (filledW > 0) {
-      var glowAlpha = glow;
-      var barGrad = ctx.createLinearGradient(x, barY, x + filledW, barY);
-      barGrad.addColorStop(0, 'rgba(160,92,200,' + (0.8 + glowAlpha) + ')');
-      barGrad.addColorStop(1, 'rgba(240,192,64,' + (0.9 + glowAlpha) + ')');
-      ctx.fillStyle = barGrad;
-      ctx.fillRect(x, barY, filledW, barH);
+    /* Draw landmark lines first (behind sphere) */
+    var lineX0 = x;
+    var lineX1 = x + w;
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1;
+
+    for (var i = 0; i < LANDMARKS.length; i++) {
+      var lm = LANDMARKS[i];
+      var lmR = energyToRadius(lm.j, maxR);
+      var lmY = cy - lmR;
+
+      /* Only draw if within sphere area */
+      if (lmY < sphereAreaTop || lmY > cy + maxR) continue;
+
+      /* Highlight if sphere has grown past this landmark */
+      var reached = r >= lmR;
+      ctx.strokeStyle = reached ? lm.color : 'rgba(255,255,255,0.20)';
+      ctx.beginPath();
+      ctx.moveTo(lineX0, lmY);
+      ctx.lineTo(lineX1, lmY);
+      ctx.stroke();
+
+      /* Label on the right */
+      ctx.fillStyle = reached ? lm.color : 'rgba(255,255,255,0.30)';
+      ctx.font = (reached ? 'bold ' : '') + '10px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(lm.label, lineX1, lmY - 3);
     }
 
-    /* Bar border */
-    ctx.strokeStyle = 'rgba(160,92,200,0.5)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(x, barY, barW, barH);
+    ctx.restore();
 
-    /* Energy label above bar */
-    ctx.fillStyle = C_TEXT;
-    ctx.font = 'bold 13px monospace';
+    /* Draw glowing sphere */
+    if (rDraw >= 4) {
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rDraw);
+      var coreAlpha  = Math.min(1, 0.95 + glow * 0.5);
+      var innerAlpha = Math.min(1, 0.80 + glow * 0.3);
+      var outerAlpha = Math.min(1, 0.50 + glow * 0.2);
+      grad.addColorStop(0,   'rgba(255,245,200,' + coreAlpha + ')');
+      grad.addColorStop(0.35,'rgba(255,200,80,'  + innerAlpha + ')');
+      grad.addColorStop(0.70,'rgba(220,100,40,'  + outerAlpha + ')');
+      grad.addColorStop(1,   'rgba(160,50,180,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, rDraw, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    /* Labels below sphere area */
+    var labelY = sphereAreaTop + sphereAreaH + 14;
+
     ctx.textAlign = 'center';
-    ctx.fillText('E = ' + formatEnergy(restEnergyJ), x + barW / 2, barY - 4);
-    ctx.textAlign = 'left';
-
-    /* Mass label */
+    ctx.font = 'bold 13px monospace';
     ctx.fillStyle = C_GOLD;
-    ctx.font = '12px monospace';
-    ctx.fillText('Mass: ' + formatMass(massKg), x, barY + barH + 16);
+    ctx.fillText('\u2248 ' + stableEnergyLabel(restEnergyJ), cx, labelY);
 
-    /* Scale references */
-    var refY  = barY + barH + 36;
-    var lineH = 18;
-
-    ctx.font = '12px monospace';
-
-    ctx.fillStyle = C_GOLD;
-    ctx.fillText('\u2248 ' + stableEnergyLabel(restEnergyJ), x, refY);
-
-    ctx.fillStyle = 'rgba(255,120,120,0.9)';
-    ctx.fillText('\u2248 ' + bombLabel(restEnergyJ), x, refY + lineH);
+    ctx.font = '11px monospace';
+    ctx.fillStyle = 'rgba(255,120,120,0.90)';
+    ctx.fillText(bombLabel(restEnergyJ), cx, labelY + 16);
 
     ctx.fillStyle = C_TEAL;
-    ctx.fillText('\u2248 ' + cityPowerLabel(restEnergyJ), x, refY + lineH * 2);
+    ctx.fillText(cityPowerLabel(restEnergyJ), cx, labelY + 30);
+
+    ctx.textAlign = 'left';
   }
 
   /* ── Velocity / SR energy panel ── */
