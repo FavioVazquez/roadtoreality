@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 10 — Era 4: Modern Physics Part A
+Phase: 10 — Era 4: Modern Physics Part A ✓ COMPLETE
 Plan: —
-Status: Phase 10 UAT round-2 gap closure complete — 3 additional issues fixed (031 shockwave rings, 032 slider overflow, 033 Balmer glow + flash + dedup). Ready for UAT round 3.
-Last activity: 2026-03-25 — Fix plan 10-09 executed: Stop 031 expanding shockwave rings animation; Stop 032 aim slider max-width overflow fix; Stop 033 Balmer lines 3px+glow, white flash on new line, deduplication within ±3nm.
+Status: Phase 10 UAT complete — all 7 stops (027–033) pass. Ready for Phase 11.
+Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout finalized (scaled orbits, repositioned bar, separated title/tick labels).
 
 ### Quick Tasks Completed
 
