@@ -75,6 +75,13 @@
           <input type="range" id="nucleus-charge-slider" min="1" max="79" step="1" value="79" style="flex:1;">
           <span id="nucleus-charge-readout" style="font-size:var(--text-sm);white-space:nowrap;min-width:90px;">Z = 79 (Gold)</span>
         </div>
+        <div class="sim-control-row" style="gap:0.5rem;flex-wrap:wrap;display:flex;align-items:center;">
+          <span class="sim-label" style="font-size:var(--text-sm);">Element:</span>
+          <button class="sim-btn" id="preset-h"  style="padding:0.25rem 0.75rem;font-size:0.85rem;">H (Z=1)</button>
+          <button class="sim-btn" id="preset-c"  style="padding:0.25rem 0.75rem;font-size:0.85rem;">C (Z=6)</button>
+          <button class="sim-btn" id="preset-fe" style="padding:0.25rem 0.75rem;font-size:0.85rem;">Fe (Z=26)</button>
+          <button class="sim-btn" id="preset-au" style="padding:0.25rem 0.75rem;font-size:0.85rem;">Au (Z=79)</button>
+        </div>
         <div id="aim-slider-row" style="display:none;align-items:center;gap:0.5rem;flex:1;min-width:180px;">
           <label for="aim-slider" style="font-size:var(--text-sm);white-space:nowrap;">Impact Parameter b</label>
           <input type="range" id="aim-slider" min="0" max="100" step="1" value="50" style="flex:1;">

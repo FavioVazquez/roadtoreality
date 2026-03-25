@@ -530,6 +530,25 @@
         }
       });
     }
+
+    /* Element preset buttons */
+    var presets = [
+      { id: 'preset-h',  value: '1'  },
+      { id: 'preset-c',  value: '6'  },
+      { id: 'preset-fe', value: '26' },
+      { id: 'preset-au', value: '79' }
+    ];
+    for (var pi = 0; pi < presets.length; pi++) {
+      (function (preset) {
+        var btn = document.getElementById(preset.id);
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+          if (!chargeSlider) return;
+          chargeSlider.value = preset.value;
+          chargeSlider.dispatchEvent(new Event('input'));
+        });
+      }(presets[pi]));
+    }
   }
 
   /* ---- SimAPI ---- */
