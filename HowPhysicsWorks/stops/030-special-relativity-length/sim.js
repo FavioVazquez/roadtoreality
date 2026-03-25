@@ -1,4 +1,4 @@
-/* sim.js — 030 Special Relativity: Length Contraction — interactive ruler */
+/* sim.js — 030 Special Relativity: Length Contraction — train car */
 (function () {
   'use strict';
 
@@ -52,10 +52,6 @@
   var running = false;
   var carX    = 0;    /* horizontal position offset for animation */
 
-  /* Colors */
-  var COL_ACCENT  = '#a05cc8';
-  var COL_DIM     = 'rgba(200,200,220,0.45)';
-
   /* Slider wiring */
   var slider  = document.getElementById('velocity-slider');
   var readout = document.getElementById('velocity-readout');
@@ -81,21 +77,172 @@
     updateFromSlider();
   }
 
-  /* Base width of ruler at rest (pixels) */
+  /* Base width of car body at rest (pixels) */
   function baseWidth() { return W * 0.68; }
 
-  /* Draw tick marks on a ruler */
-  function drawTicks(x0, y, pxWidth, n, h, color) {
-    var spacing = pxWidth / n;
-    for (var i = 0; i <= n; i++) {
-      var tx = x0 + i * spacing;
-      var th = (i % (n / 2) === 0) ? h * 0.65 : (i % (n / 10) === 0 ? h * 0.45 : h * 0.28);
+  /* Rounded rectangle path helper (ES5) */
+  function roundedRect(x, y, w, h, r) {
+    var rr = Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2);
+    if (rr < 0) { rr = 0; }
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.lineTo(x + w - rr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
+    ctx.lineTo(x + w, y + h - rr);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
+    ctx.lineTo(x + rr, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+    ctx.lineTo(x, y + rr);
+    ctx.quadraticCurveTo(x, y, x + rr, y);
+    ctx.closePath();
+  }
+
+  /* Draw a train car silhouette.
+   *   cx, cy  — centre of the car body
+   *   w       — current width (contracted or rest)
+   *   h       — fixed body height (never changes)
+   *   isGhost — if true: dashed outline only, no fill
+   */
+  function drawCar(cx, cy, w, h, isGhost) {
+    var x0 = cx - w / 2;  /* left edge of body */
+    var y0 = cy - h / 2;  /* top edge of body */
+
+    var bodyRadius = Math.min(8, h * 0.15);
+    var roofH      = h * 0.18;
+    var roofInset  = w * 0.06;
+    var roofW      = w - 2 * roofInset;
+    var roofY      = y0 - roofH;
+
+    /* Wheel geometry (does not scale with w on radius, but x positions do) */
+    var wheelR      = Math.max(5, h * 0.18);
+    var wheelY      = cy + h / 2 + wheelR * 0.55;
+    var wheelPositions = [x0 + w * 0.15, x0 + w * 0.35, x0 + w * 0.65, x0 + w * 0.85];
+
+    /* Undercarriage bar */
+    var underH = Math.max(3, h * 0.06);
+    var underW = w * 0.82;
+    var underX = cx - underW / 2;
+    var underY = cy + h / 2 - 1;
+
+    /* Window geometry (scales with w) */
+    var winW    = Math.max(2, w * 0.18);
+    var winH    = h * 0.30;
+    var winY    = cy - h * 0.05 - winH / 2;
+    var winR    = Math.min(3, winW * 0.15, winH * 0.15);
+    var winPositions = [cx - w * 0.25, cx + w * 0.25];
+
+    if (isGhost) {
+      /* Ghost: dashed outline only */
+      ctx.save();
+      ctx.setLineDash([6, 5]);
+      ctx.strokeStyle = 'rgba(160,92,200,0.55)';
+      ctx.lineWidth = 1.5;
+
+      /* Body outline */
+      roundedRect(x0, y0, w, h, bodyRadius);
+      ctx.stroke();
+
+      /* Roof outline */
+      if (roofW > 4) {
+        roundedRect(x0 + roofInset, roofY, roofW, roofH, Math.min(3, roofH * 0.3));
+        ctx.stroke();
+      }
+
+      /* Window outlines */
+      for (var gi = 0; gi < winPositions.length; gi++) {
+        var gwx = winPositions[gi] - winW / 2;
+        if (winW > 3) {
+          roundedRect(gwx, winY, winW, winH, winR);
+          ctx.stroke();
+        }
+      }
+
+      /* Undercarriage */
       ctx.beginPath();
-      ctx.moveTo(tx, y - th / 2);
-      ctx.lineTo(tx, y + th / 2);
-      ctx.strokeStyle = color;
+      ctx.rect(underX, underY, underW, underH);
+      ctx.stroke();
+
+      /* Wheels */
+      for (var gw = 0; gw < wheelPositions.length; gw++) {
+        ctx.beginPath();
+        ctx.arc(wheelPositions[gw], wheelY, wheelR, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.setLineDash([]);
+      ctx.restore();
+      return;
+    }
+
+    /* --- Filled car --- */
+
+    /* Body gradient */
+    var grad = ctx.createLinearGradient(x0, y0, x0, y0 + h);
+    grad.addColorStop(0,   'rgba(52, 48, 90, 0.95)');
+    grad.addColorStop(0.45,'rgba(70, 60, 115, 0.98)');
+    grad.addColorStop(1,   'rgba(35, 30, 65, 0.95)');
+
+    roundedRect(x0, y0, w, h, bodyRadius);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(220,180,255,0.75)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    /* Roof panel */
+    if (roofW > 4) {
+      var roofGrad = ctx.createLinearGradient(x0 + roofInset, roofY, x0 + roofInset, roofY + roofH);
+      roofGrad.addColorStop(0, 'rgba(80, 70, 130, 0.95)');
+      roofGrad.addColorStop(1, 'rgba(55, 48, 100, 0.95)');
+      roundedRect(x0 + roofInset, roofY, roofW, roofH, Math.min(3, roofH * 0.3));
+      ctx.fillStyle = roofGrad;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(200,160,255,0.6)';
       ctx.lineWidth = 1;
       ctx.stroke();
+    }
+
+    /* Windows */
+    for (var wi = 0; wi < winPositions.length; wi++) {
+      var wx = winPositions[wi] - winW / 2;
+      if (winW > 3) {
+        roundedRect(wx, winY, winW, winH, winR);
+        ctx.fillStyle = 'rgba(160,210,255,0.35)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(180,230,255,0.65)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        /* Window reflection glint */
+        if (winW > 8) {
+          ctx.fillStyle = 'rgba(255,255,255,0.18)';
+          ctx.fillRect(wx + winW * 0.1, winY + winH * 0.1, winW * 0.25, winH * 0.25);
+        }
+      }
+    }
+
+    /* Undercarriage bar */
+    ctx.fillStyle = 'rgba(30, 25, 55, 0.9)';
+    ctx.fillRect(underX, underY, underW, underH);
+    ctx.strokeStyle = 'rgba(180,140,240,0.4)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(underX, underY, underW, underH);
+
+    /* Wheels */
+    for (var wh = 0; wh < wheelPositions.length; wh++) {
+      var wxp = wheelPositions[wh];
+      /* Wheel body */
+      ctx.beginPath();
+      ctx.arc(wxp, wheelY, wheelR, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(45, 38, 70, 1)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(180,140,240,0.7)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      /* Wheel hub */
+      ctx.beginPath();
+      ctx.arc(wxp, wheelY, wheelR * 0.35, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(160,92,200,0.6)';
+      ctx.fill();
     }
   }
 
@@ -107,35 +254,13 @@
     ctx.fillRect(0, 0, W, H);
 
     var bw   = baseWidth();
-    var carH = Math.max(22, H * 0.095);
+    var carH = Math.max(28, H * 0.13);
     var contracted = bw * (L / L0);  /* contracted pixel width */
 
-    /* Center baseline */
-    var ghostY = H * 0.42;
-    var carY   = H * 0.62;
-
-    /* Ghost outline — rest length (does NOT move) */
-    var ghostX = (W - bw) / 2;
-
-    ctx.save();
-    ctx.setLineDash([6, 5]);
-    ctx.strokeStyle = 'rgba(160,92,200,0.55)';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(ghostX, ghostY - carH / 2, bw, carH);
-    ctx.setLineDash([]);
-    ctx.restore();
-
-    /* Ghost tick marks */
-    ctx.save();
-    ctx.globalAlpha = 0.4;
-    drawTicks(ghostX, ghostY, bw, 10, carH, 'rgba(160,92,200,0.8)');
-    ctx.restore();
-
-    /* Ghost label */
-    ctx.font = Math.max(9, Math.round(W * 0.018)) + 'px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = 'rgba(160,92,200,0.6)';
-    ctx.fillText('L\u2080 = ' + L0 + ' m  (rest length)', ghostX + bw / 2, ghostY - carH / 2 - 7);
+    /* Car centre positions */
+    var ghostCY = H * 0.38;
+    var carCY   = H * 0.62;
+    var ghostCX = W / 2;
 
     /* Direction of motion arrow */
     var arrY = H * 0.1;
@@ -162,48 +287,31 @@
     ctx.fillStyle = 'rgba(255,220,80,0.7)';
     ctx.fillText('v = ' + beta.toFixed(3) + 'c', W / 2, arrY - 10);
 
-    /* Contracted train car — uses horizontal offset for animation */
-    var carX0 = (W - contracted) / 2 + offsetX;
+    /* Ghost label */
+    ctx.font = Math.max(9, Math.round(W * 0.018)) + 'px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(160,92,200,0.6)';
+    ctx.fillText('L\u2080 = ' + L0 + ' m  (rest length)', ghostCX, ghostCY - carH / 2 - 10);
 
-    /* Gradient fill */
-    var grad = ctx.createLinearGradient(carX0, carY, carX0 + contracted, carY);
-    grad.addColorStop(0, 'rgba(140,110,180,0.75)');
-    grad.addColorStop(0.5, 'rgba(180,150,220,0.85)');
-    grad.addColorStop(1, 'rgba(100,80,140,0.65)');
+    /* Ghost outline — rest length car (does NOT move) */
+    drawCar(ghostCX, ghostCY, bw, carH, true);
 
-    /* Rounded rect helper (ES5) */
-    var rr = Math.min(5, carH * 0.2, contracted * 0.1);
-    ctx.beginPath();
-    ctx.moveTo(carX0 + rr, carY - carH / 2);
-    ctx.lineTo(carX0 + contracted - rr, carY - carH / 2);
-    ctx.quadraticCurveTo(carX0 + contracted, carY - carH / 2, carX0 + contracted, carY - carH / 2 + rr);
-    ctx.lineTo(carX0 + contracted, carY + carH / 2 - rr);
-    ctx.quadraticCurveTo(carX0 + contracted, carY + carH / 2, carX0 + contracted - rr, carY + carH / 2);
-    ctx.lineTo(carX0 + rr, carY + carH / 2);
-    ctx.quadraticCurveTo(carX0, carY + carH / 2, carX0, carY + carH / 2 - rr);
-    ctx.lineTo(carX0, carY - carH / 2 + rr);
-    ctx.quadraticCurveTo(carX0, carY - carH / 2, carX0 + rr, carY - carH / 2);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(220,180,255,0.8)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    /* Tick marks on contracted car */
-    var tickN = Math.max(2, Math.round(10 * (contracted / bw)));
-    drawTicks(carX0, carY, contracted, tickN, carH, 'rgba(255,255,255,0.5)');
+    /* Contracted car — uses horizontal offset for animation */
+    var carCX = W / 2 + offsetX;
+    drawCar(carCX, carCY, contracted, carH, false);
 
     /* Car label */
+    var wheelR = Math.max(5, carH * 0.18);
+    var labelY = carCY + carH / 2 + wheelR * 1.3 + 14;
     ctx.font = Math.max(9, Math.round(W * 0.018)) + 'px monospace';
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgba(220,180,255,0.9)';
-    ctx.fillText('L = ' + L.toFixed(1) + ' m', carX0 + contracted / 2, carY + carH / 2 + 16);
+    ctx.fillText('L = ' + L.toFixed(1) + ' m', carCX, labelY);
 
     /* L readout panel */
     var ratioStr = (L / L0).toFixed(3);
     var panelH  = Math.max(32, H * 0.1);
-    var panelY  = H * 0.83;
+    var panelY  = H * 0.88;
     var panelX  = W * 0.5 - Math.min(W * 0.33, 190);
     var panelW  = Math.min(W * 0.66, 380);
 
