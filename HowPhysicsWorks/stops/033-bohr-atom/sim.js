@@ -169,7 +169,7 @@
     ctx.fillStyle = 'rgba(200,200,200,0.5)';
     ctx.font = '10px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Emission spectrum (Balmer series)', cx, s.y - 6);
+    ctx.fillText('Emission spectrum (Balmer series)', cx, s.y - 16);
     ctx.textAlign = 'left';
 
     /* background gradient */
