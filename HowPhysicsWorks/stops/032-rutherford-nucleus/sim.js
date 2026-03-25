@@ -47,6 +47,18 @@
   var aimTheta = 0;
   var aimDone = false;
 
+  /* ---- Element name lookup ---- */
+  var ELEMENT_NAMES = {
+    1: 'H', 2: 'He', 3: 'Li', 4: 'Be', 5: 'B', 6: 'C',
+    7: 'N', 8: 'O', 10: 'Ne', 11: 'Na', 12: 'Mg', 13: 'Al',
+    14: 'Si', 16: 'S', 17: 'Cl', 18: 'Ar', 20: 'Ca', 26: 'Fe',
+    29: 'Cu', 47: 'Ag', 74: 'W', 78: 'Pt', 79: 'Au', 82: 'Pb',
+    92: 'U'
+  };
+  function elementLabel(Z_val) {
+    return (ELEMENT_NAMES[Z_val] || 'Z=' + Z_val) + ' foil';
+  }
+
   /* ---- Foil x ---- */
   function foilX() { return cx; }
 
@@ -242,7 +254,7 @@
     ctx.restore();
     ctx.fillStyle = 'rgba(255,200,60,0.55)';
     ctx.font = '10px monospace';
-    ctx.fillText('Au foil', fx + 5, 16);
+    ctx.fillText(elementLabel(Z), fx + 5, 16);
   }
 
   function drawAlpha(x, y, alpha) {
