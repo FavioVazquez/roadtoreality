@@ -118,6 +118,7 @@ All site code lives in: `Episodio4/`
 - 10-05-FIX: Stop 027 temperature slider + Stop 033 spectrum repaint — complete (2026-03-25): anchored drawFrame sweep to live slider value; added drawBohr() call after click handler triggerJump
 - 10-06-FIX: Stop 032 aim mode fixes + enhancements — complete (2026-03-25): display:flex toggle fix, animated alpha particle in aim mode, dynamic element label via Z lookup, H/C/Fe/Au preset buttons
 - 10-07-FIX: Stop 031 E=mc² redesign — complete (2026-03-25): replaced sigfig3 flickering labels with stable threshold formatters; replaced bar panel with glowing energy sphere + landmark lines
+- 10-08-FIX: Stop 030 train car silhouette — complete (2026-03-25): drawCar() helper with body gradient, roof panel, squashing windows, fixed-size wheels, ghost dashed outline; drawTicks() removed
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
