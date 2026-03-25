@@ -115,6 +115,7 @@ All site code lives in: `Episodio4/`
 - 10-02: Stops 029-030 (SR Time + SR Length) — complete (2026-03-25)
 - 10-03: Stop 031 (E = mc²) — complete (2026-03-25): logarithmic mass slider, scale references (TNT/bombs/city power), velocity slider with SR energy bars, KaTeX equations
 - 10-04: Stops 032-033 (Rutherford + Bohr) — complete (2026-03-25): Rutherford 8-particle pool with Coulomb deflection + aim mode; Bohr classical collapse 3.5s + quantized orbits + Balmer spectrum bar
+- 10-05-FIX: Stop 027 temperature slider + Stop 033 spectrum repaint — complete (2026-03-25): anchored drawFrame sweep to live slider value; added drawBohr() call after click handler triggerJump
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
