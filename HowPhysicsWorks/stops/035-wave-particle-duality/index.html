@@ -84,7 +84,7 @@
           Slit separation
           <span class="sim-control__value" style="text-transform:none" id="sep-val">1.0 µm</span>
         </label>
-        <input type="range" id="sep-slider" min="0.5" max="3" step="0.1" value="1" aria-label="Distance between the two slits in micrometres" aria-valuetext="1.0 micrometres">
+        <input type="range" id="sep-slider" min="0.5" max="2" step="0.1" value="1" aria-label="Distance between the two slits in micrometres" aria-valuetext="1.0 micrometres">
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
         <button class="sim-btn" id="block-toggle" type="button" aria-pressed="false">Block one slit</button>
@@ -103,7 +103,7 @@
   </div>
   <div class="stop-body content-column">
     <h3>Two Pictures of Light</h3>
-    <p>In the early 1800s Thomas Young passed light through two narrow openings and saw bright and dark bands where the two beams overlapped, the signature of interfering waves<sup><a href="#src-5">[5]</a></sup>. In 1905 Einstein argued that light also carries energy in separate quanta of size $hf$, which explained how light ejects electrons from metals<sup><a href="#src-2">[2]</a></sup>. Neither picture alone covers everything light does.</p>
+    <p>In 1803 Thomas Young split a narrow sunbeam around a thin card and saw bright and dark bands where the two parts overlapped, the signature of interfering waves<sup><a href="#src-5">[5]</a></sup>; he later described the same effect with two pinholes. In 1905 Einstein argued that light also carries energy in separate quanta of size $hf$, which explained how light ejects electrons from metals<sup><a href="#src-2">[2]</a></sup>. Neither picture alone covers everything light does.</p>
     <h3>De Broglie's Proposal</h3>
     <p>In 1923–24, in short notes and then his thesis, de Broglie suggested the same double nature for matter, assigning a particle of momentum $p$ the wavelength<sup><a href="#src-11">[11]</a></sup><sup><a href="#src-1">[1]</a></sup></p>
     <p style="overflow-x:auto;">$$\lambda = \frac{h}{p}$$</p>
@@ -121,7 +121,7 @@
     <p>If the apparatus records which slit each electron went through, the fringes disappear and the dots spread over the smooth pattern of two single slits added together<sup><a href="#src-9">[9]</a></sup>. The "Detect which slit" button switches to that case. The quantum description does not say the electron is "really" a wave or "really" a particle. It gives probabilities, and those probabilities add like waves when the two paths cannot be told apart.</p>
     <p>The same interference has since been seen with neutrons, atoms and molecules; in 1999 it was reported for C<sub>60</sub> molecules of 60 carbon atoms<sup><a href="#src-10">[10]</a></sup>.</p>
     <h3>What the Simulation Assumes</h3>
-    <p>The geometry is illustrative and does not reproduce any particular experiment: slits 0.2 µm wide, a screen 1 m away, and a screen window 80 µm across. Real electron experiments use electron optics to magnify a much finer pattern. The landing points are random draws from $P(y)$, computed from the formula, not data. The arrival rate starts slow so single dots are visible, then speeds up so the pattern builds in seconds; this rate is a display choice.</p>
+    <p>The geometry is illustrative and does not reproduce any particular experiment: slits 0.2 µm wide, a screen 1 m away, and a screen window 80 µm across, and the far-field formula is used throughout even at the widest slit separation, where it is only approximate. Real electron experiments use electron optics to magnify a much finer pattern. The landing points are random draws from $P(y)$, computed from the formula, not data. The arrival rate starts slow so single dots are visible, then speeds up so the pattern builds in seconds; this rate is a display choice.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>

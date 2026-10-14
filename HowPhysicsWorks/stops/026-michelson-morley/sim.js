@@ -115,7 +115,7 @@
     var ph = (beamPhase % 1.25) * tm;
     ctx.fillStyle = COL.beam;
     [[t1, theta, 1], [t2, theta + Math.PI / 2, 2]].forEach(function (q) {
-      var tt = q[0], c = contraction ? 0 : Math.cos(q[1]), out = tt * (1 + bd * c) / 2, d;
+      var tt = q[0], c = contraction ? 0 : Math.cos(q[1]), out = tt * (0.5 + bd * c / (2 * Math.sqrt(1 - bd * bd * Math.sin(q[1]) * Math.sin(q[1])))), d;
       if (ph >= tt) d = 0; else if (ph < out) d = ph / out; else d = 1 - (ph - out) / (tt - out);
       if (q[2] === 1) { ctx.beginPath(); ctx.arc(d * arm, 0, 4, 0, 2 * Math.PI); ctx.fill(); }
       else { ctx.beginPath(); ctx.arc(0, -d * arm, 4, 0, 2 * Math.PI); ctx.fill(); }
@@ -189,8 +189,8 @@
     ctx.fillStyle = COL.beam;
     ctx.beginPath(); ctx.arc(mx, mid - fringeNow() * sy, 4.5, 0, 2 * Math.PI); ctx.fill();
     txt('Fringe position vs angle, 0–360°', r.x, r.y + 2, COL.muted, 11);
-    var lbl = 'curve: model (formula), amplitude ' + A.toFixed(2) + ' · band: 1887 bound < 0.02 (cited)';
-    if (L_.narrow) txt('curve: model, amplitude ' + A.toFixed(2) + ' · band: bound < 0.02', r.x, r.y + 17, COL.muted, 11); else txt(lbl, r.x + r.w, r.y + 2, COL.muted, 11, 'right');
+    var lbl = 'curve: model (formula), amplitude ' + A.toFixed(2) + ' · band: ±0.01, the 1887 bound of 0.02 on the swing (cited)';
+    if (L_.narrow) txt('curve: model, amplitude ' + A.toFixed(2) + ' · band: ±0.01 (bound 0.02 on the swing)', r.x, r.y + 17, COL.muted, 11); else txt(lbl, r.x + r.w, r.y + 2, COL.muted, 11, 'right');
     if (L_.narrow) {
       txt('Model swing, 90° turn: ' + swing90().toFixed(2) + ' fringe · reported < 0.02', r.x, r.y + r.h + 4, COL.text, 12);
     }

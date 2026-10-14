@@ -18,7 +18,7 @@
 
   var HBAR_OVER_M = 1.054571817e-34 / 9.1093837015e-31 * 1e18 / 1e15;  /* nm²/fs, CODATA 2018 */
   var K0 = 3;                 /* carrier wavenumber, 1/nm */
-  var XMIN = -8, XMAX = 16, NX = 320, NK = 256;
+  var XMIN = -12, XMAX = 16, NX = 320, NK = 256;
   var T_WRAP = 12;            /* fs; the run restarts after this */
   var PLAY_RATE = 1.5;        /* simulated fs per real second */
 

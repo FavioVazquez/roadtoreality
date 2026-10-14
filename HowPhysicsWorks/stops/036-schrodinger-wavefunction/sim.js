@@ -34,9 +34,9 @@
   var preset = 'packet', tFs = 0, speed = 0.1, showParts = true;
   var captured = 1, densMax = 1, trace = [];
 
-  var PRESET_SPEED = { one: 1.0, two: 1.0, packet: 0.1 };
+  var PRESET_SPEED = { one: 1.0, two: 1.0, packet: 0.25 };
   var mode = 'box', nState = 1, hState = '1s';
-  var RY_EV = 13.605693, HBAR_EVFS = 0.6582119569, A0_NM = 0.0529177, H_EXT = 12, HG = 150;
+  var RY_EV = 13.5984, HBAR_EVFS = 0.6582119569, A0_NM = 0.0529177, H_EXT = 12, HG = 150;
   var hPsi = null, hMax = 1, hOff = null, hOffCtx = null;
   var COL = { era: 'oklch(0.68 0.20 310)', re: 'oklch(0.72 0.14 200)', im: 'oklch(0.80 0.14 60)', text: 'rgba(255,255,255,0.88)', muted: 'rgba(255,255,255,0.55)', faint: 'rgba(255,255,255,0.15)' };
 
@@ -212,7 +212,7 @@
     ctx.stroke();
     var bxp = gx + bohr / rmax * gw;
     ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(bxp, gy); ctx.lineTo(bxp, gy + gh); ctx.stroke(); ctx.setLineDash([]);
-    txt('Bohr orbit, ' + bohr + ' a₀', bxp + 4, gy + 12, COL.muted, 11);
+    txt('Bohr orbit, ' + bohr + ' a₀', bxp + 4, gy + gh - 6, COL.muted, 11);
     txt('Radial probability r²|R(r)|² (formula)', gx, gy - 6, COL.muted, 11);
     txt('0', gx, gy + gh + 14, COL.muted, 10, 'center'); txt(rmax + ' a₀', gx + gw, gy + gh + 14, COL.muted, 10, 'right');
   }

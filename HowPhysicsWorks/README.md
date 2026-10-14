@@ -151,7 +151,7 @@ HowPhysicsWorks/
     ├── 001-thales-natural-causes/  ← 37 stops have full sim.js (stops 001–037, 048)
     │   ├── index.html
     │   └── sim.js
-    ├── 035-wave-particle-duality/  ← Stops 035–047, 049–050: HTML shell, sim coming in later phases
+    ├── 038-pauli-exclusion/  ← Stops 038–047, 049–050: HTML shell, sim coming in later phases
     │   └── index.html
     └── ... (50 total)
 ```

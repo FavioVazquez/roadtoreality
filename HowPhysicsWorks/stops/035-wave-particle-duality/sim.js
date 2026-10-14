@@ -20,7 +20,7 @@
   var SLIT_W_UM = 0.2;                /* illustrative slit width   */
   var D_M = 1.0;                      /* illustrative screen distance */
   var HALF_WIN_UM = 40;               /* screen window ±40 µm     */
-  var NBINS = 80, MAX_HITS = 6000;
+  var NBINS = 160, MAX_HITS = 6000;
 
   var E_KEV = 50, SEP_UM = 1.0;
   var whichSlit = false, showCurve = true, blocked = false;
