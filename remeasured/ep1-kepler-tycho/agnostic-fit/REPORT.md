@@ -1,17 +1,25 @@
 # What the observations say
 
+> **Referee fixes applied after the freeze** (14 Oct 2026, see `REFEREE.md`): wording and disclosures only. `MODEL.json`, `fit.py` and every number are unchanged; the referee's re-run of `fit.py` reproduced `MODEL.json` byte for byte.
+
 ## Disclosure
 The flags name the planet (Mars) and the sites (Hven, Wandsbek, Benatky, Prague), so I recognise this as the late
-16th-century naked-eye Mars record, and I know the textbook answer. I typed no orbital or planetary number into any fit.
-Every period, size, eccentricity and orientation below comes from a frequency search on these rows followed by least
-squares (see `fit.py`). erfa was used only to rotate each row from "true ecliptic and equinox of date" into one fixed
+16th-century naked-eye Mars record, and I know the textbook answer. No orbital or planetary number entered any fit as a fixed value, bound or check. Three
+*starting magnitudes* were typed: 0.02 and 0.08 for the two eccentricities and 0.03 rad for the inclination
+(`fit.py:353`, `fit.py:410`; the docstring's "every start value comes from a frequency search" is therefore too strong).
+Every other start comes from a frequency search on these rows, and least squares does the rest. The referee refitted
+from e = 0, from e up to 0.3 at other apse directions and from random starts: all converge to the same solution, so
+the typed starts do not reach the result. erfa was used only to rotate each row from "true ecliptic and equinox of date" into one fixed
 frame (mean ecliptic and equinox of JD 2302000, mid-July 1590 by the file's own dates). All angles below are in that frame. Time origin is
 T0 = JD 2302000.0 TT.
 
 ## Protocol in one paragraph
 I wrote `PLAN.md` before any fit (amendments made before the first full run are marked there, and later additions sit
-under "Post hoc"). I fitted on the 159 rows with jd_tt < 2304000.5 and predicted the 28 later rows (1596-1601) with no
-refit. Residual d is the angular distance between the observed and predicted direction, in arcmin. Weights are
+under "Post hoc"). `PLAN.md`, `fit.py` and `MODEL.json` entered the repository in one commit, and short trial fits
+(`work/box.py`, `work/keptry.py`) ran before the first full run, so that the plan and its amendments came before them
+rests on the plan's own statement, not on git history. I fitted on the 159 rows with jd_tt < 2304000.5 and predicted the 28 later rows (1596-1601) with no
+refit. Of those 28, 15 come from one apparition (1600) and one is a 17-degree latitude slip that every model rejects,
+so the held-out median mostly measures 1600. Residual d is the angular distance between the observed and predicted direction, in arcmin. Weights are
 1/sqrt(sigma^2 + 0.5'^2). Outlier rule: a row is rejected if |z| > 5 x the robust (MAD) scale or d > 60'. The same frozen
 scale is used to flag held-out rows. Decision rule: the lowest held-out median d wins; models within 1.25x of it are
 tied, and the tie goes to the lowest training BIC.
@@ -31,17 +39,27 @@ tied, and the tie goes to the lowest training BIC.
 | **H: Kepler ellipses + a = P^(2/3) imposed** (family 7) | 10 | 6 | 1.37 / 5.06 | 1.33 / 2.00 | **2.38** / 192.1 | 2.08 / 3.19 (27) | **180.2** |
 | H: Kepler + rotating apse lines (post hoc) | 13 | 6 | 1.30 / 5.05 | 1.24 / 1.94 | 2.98 / 192.2 | 2.55 / 3.14 (24) | 181.4 |
 
-The held-out RMS over all 28 rows is about 192' for every physical model. A single row causes it: 1598-03-02V has a
+The held-out RMS over all 28 rows is about 192' for every physical model and should not be quoted. A single row causes it: 1598-03-02V has a
 latitude of -14.3 deg, while its neighbours on 03-04, 03-06 and 03-07 sit at +2.54 deg. Every model misses that row by
 1016'. The pre-registered BIC "common inlier set" turned out to hold only 10 rows, because the circle and K=1 models
 reject almost everything. Its values are in `MODEL.json` but carry no information, so the post hoc BIC column refits
 every model on the 153 Kepler-inlier training rows.
 
+Notes on the comparison (referee, post freeze):
+- The smoothing spline cannot extrapolate (its end segment is a cubic), so its 9713' is not a comparison; the
+  flexible-model comparison is the K = 3 harmonic series, 21'.
+- The harmonic series uses the index set |j| + |k| <= K, not PLAN's |j|, |k| <= K (an implementation change, not
+  disclosed at the time); K = 1 therefore has 17 parameters.
+- The geocentric model's uniform circular epicycle cannot carry the observer's eccentricity, so it is handicapped by
+  construction; the equant conclusion rests on the heliocentric equant model.
+- A wider equant multistart (48 starts) gives 4.79' / 15.4' instead of 4.92' / 16.3'; read the equant scores as
+  "about 5' in sample, 15-16' held out".
+
 **Decision.** Two Kepler models sit within 1.25x of the best held-out median: the free one (2.46') and the one with
 the size-period law imposed (2.38'). BIC breaks the tie in favour of the law-imposed model (180.2 vs 185.4; on the
 pre-registered tiny set, 25.5 vs 28.5). Among the families fixed in advance, the free Kepler model wins. The next
 best family is 7x worse on held-out rows (equant circles, 16.3'). The flexible no-physics models fit the training rows
-as well as Kepler does (1.0-1.2'), but they miss the later years by 21' to 160 degrees.
+as well as Kepler does (1.0-1.2'), but the best of them misses the later years by 21'.
 
 ![held-out residuals](heldout_residuals.png)
 
@@ -77,7 +95,8 @@ What it says about how the system works:
    missing eccentricity of the observer's orbit.
 3. **The regularity: size and period are locked.** With the size ratio left free, a_P/a_E = 1.523649 ± 0.000062. The
    periods give (P_P/P_E)^(2/3) = 1.523692. So a³/P² is the same for both orbits to 0.99991 ± 0.00012, and the
-   exponent is q = 0.66662 ± 0.00006, which is 2/3. Imposing it raises χ² by only 0.8 for one fewer parameter, so
+   exponent is q = 0.66662 ± 0.00006, consistent with 2/3 (-0.7σ). With two orbits, q is a measurement from two
+   points, not a test of a power law: what the data show is that a³/P² is the same for both orbits. Imposing it raises χ² by only 0.8 for one fewer parameter, so
    BIC prefers it and the held-out median improves slightly. This is Kepler's third law, recovered blind from
    direction-only data.
 
@@ -90,9 +109,13 @@ What it says about how the system works:
   either reading.
 - **The held-out longitude drift in 1600.** The 1600 Benatky series sits +2' (mean) east of the prediction in
   longitude, while 1596 and 1598 match to about 1'. Letting both apse lines rotate (post hoc) did not help: held-out
-  error went from 2.46' to 2.98', and it needed a meaningless -37 ± 10 deg/century for the inner orbit. So the
-  offset is most likely a systematic of that observing series, or small unmodelled effects (light time, aberration,
-  parallax, each under about 0.5'), rather than a change in the orbits.
+  error went from 2.46' to 2.98', and it needed a meaningless -37 ± 10 deg/century for the inner orbit. The
+  offset is not a data systematic: a referee check made with the modern ephemeris the fit was forbidden to use (the
+  reduction's own per-session check, `../out/BATCH.md`) puts these 15 rows +0.55' from DE441 in longitude, so the
+  model sits about 1.7' west of DE441 there, at the 1600 opposition, four years beyond the training span. That this
+  is the two-body model's limit is inferred, not tested (no two-body fit to the ephemeris was extrapolated): its size
+  matches the expected next correction, the planets' pull (Jupiter moves Mars's mean longitude by up to 0.64' over
+  the span, amplified about 2.7x at opposition), plus unmodelled light time and aberration (under 0.5'). The original wording here ("most likely a systematic of that observing series") was wrong.
 - **Bad rows the model exposes.** The model rejects 6 training rows and 1 held-out row. Shifting the time by exactly
   one day brings three of them to within 2'. That makes them date-convention or day slips:
 
