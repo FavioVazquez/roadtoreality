@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Galaxies rotate too fast for the visible matter inside them to hold together. Something massive and invisible — dark matter — must be providing the extra gravity.">
+  <meta name="description" content="The outer parts of spiral galaxies orbit too fast for the stars and gas we can see. Build the rotation curve of NGC 3198 from its stars, gas and a dark halo, and fit it to the observed curve.">
   <meta property="og:title" content="Dark Matter — How Physics Works">
-  <meta property="og:description" content="Galaxies rotate too fast for the visible matter inside them to hold together. Something massive and invisible — dark matter — must be providing the extra gravity.">
+  <meta property="og:description" content="The outer parts of spiral galaxies orbit too fast for the stars and gas we can see. Build the rotation curve of NGC 3198 from its stars, gas and a dark halo, and fit it to the observed curve.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/046-dark-matter/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -52,7 +52,7 @@
   <header class="stop-header">
     <div class="stop-header__era">Contemporary Physics · 1970s–present</div>
     <h1 class="stop-header__title">Dark Matter</h1>
-    <p class="stop-header__subtitle">85% of the matter in the universe is invisible</p>
+    <p class="stop-header__subtitle">Most of the matter in the universe is not made of atoms</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1970s–present</span>
       <span>·</span>
@@ -60,44 +60,138 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Galaxies rotate too fast for the visible matter inside them to hold together. Something massive and invisible — dark matter — must be providing the extra gravity.</p>
+    <p>
+      In 1933 Fritz Zwicky measured how fast the galaxies of the Coma cluster move and found them far too fast to be held together by the mass their light suggested<sup><a href="#src-1">[1]</a></sup>. Forty years later the same problem turned up inside single galaxies. Vera Rubin and Kent Ford measured the rotation of the Andromeda galaxy from its glowing gas clouds<sup><a href="#src-2">[2]</a></sup>; Albert Bosma followed the neutral hydrogen of spiral galaxies with radio telescopes, far beyond the edge of their starlight<sup><a href="#src-3">[3]</a></sup>; and Rubin, Ford and Norbert Thonnard measured 21 spirals<sup><a href="#src-4">[4]</a></sup>. In galaxy after galaxy the rotation speed stays high, the curve flat, far out where the stars and gas thin out. If gravity is Newton's, a flat curve needs mass that we do not see.
+    </p>
+    <p>
+      The simulation builds the rotation curve of the spiral galaxy NGC 3198 from its parts, and lays it over the curve astronomers observed. It starts with the stars and gas alone. Add a dark halo, adjust it until the curve fits, and watch what the fit can and cannot tell you.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Dark Matter — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:440px;" aria-label="Interactive: rotation-curve builder for the galaxy NGC 3198 with its observed rotation curve">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="ups-slider">
+          Stellar M/L Υ★
+          <span class="sim-control__value" id="ups-val">0.50</span>
+        </label>
+        <input type="range" id="ups-slider" min="0.05" max="1.2" step="0.05" value="0.5" aria-label="Stellar mass-to-light ratio of the disk at 3.6 microns" aria-valuetext="0.50 solar masses per solar luminosity, stellar disk 1.9 times ten to the ten solar masses">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="bulge-slider">
+          Bulge mass
+          <span class="sim-control__value" id="bulge-val">none</span>
+        </label>
+        <input type="range" id="bulge-slider" min="0" max="3" step="0.1" value="0" aria-label="Mass of a central Hernquist bulge, in units of ten to the ten solar masses" aria-valuetext="no bulge">
+      </div>
+      <div class="sim-control" style="flex:1 1 100%">
+        <span class="sim-control__label" id="halo-label">Dark halo</span>
+        <div role="group" aria-labelledby="halo-label" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.25rem;">
+          <button class="sim-btn" type="button" data-halo="none" aria-pressed="true" aria-label="No dark halo: stars and gas only">None</button>
+          <button class="sim-btn" type="button" data-halo="iso" aria-pressed="false" aria-label="Pseudo-isothermal halo with a constant-density core">Pseudo-isothermal</button>
+          <button class="sim-btn" type="button" data-halo="nfw" aria-pressed="false" aria-label="NFW halo, the profile found in cold dark matter simulations">NFW</button>
+        </div>
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="halo1-slider">
+          <span id="halo1-name">Halo v∞</span>
+          <span class="sim-control__value" id="halo1-val">—</span>
+        </label>
+        <input type="range" id="halo1-slider" min="0" max="300" step="1" value="120" disabled aria-label="Asymptotic speed of the pseudo-isothermal halo, km/s" aria-valuetext="no halo selected">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="halo2-slider">
+          <span id="halo2-name">Core radius r_c</span>
+          <span class="sim-control__value" id="halo2-val">—</span>
+        </label>
+        <input type="range" id="halo2-slider" min="0.1" max="30" step="0.1" value="5" disabled aria-label="Core radius of the pseudo-isothermal halo, kpc" aria-valuetext="no halo selected">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="fit-btn" type="button" aria-label="Find the halo parameters that minimise chi-squared for the current stars and bulge">Fit a pseudo-isothermal halo</button>
+        <button class="sim-btn" id="light-toggle" type="button" aria-pressed="false" aria-label="Show the stellar disk curve SPARC computed from the observed light profile">Compare SPARC’s disk from the light</button>
+      </div>
+      <p id="fit-readout" aria-live="polite" style="margin:0;width:100%;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6;"></p>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play or pause the orbiting tracers">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Line the tracers up again and restart the clock">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Visible matter only, Υ★ = 0.50: beyond 2.2 kpc the model is below every observed point, by more than its error bar (rms 54 km/s). Add a halo.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Plot galaxy rotation curves and see they don't match visible mass predictions</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Add a dark matter halo and watch the flat rotation curve emerge</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore the evidence: gravitational lensing, cosmic structure, CMB anisotropies</li>
-    </ul>
+    <h3>What a Rotation Curve Tells You</h3>
+    <p>A star or gas cloud on a circular orbit at radius $r$ moves at the speed $v$ for which gravity supplies exactly the needed inward pull. For a spherical distribution of mass this gives</p>
+    <p style="overflow-x:auto;position:relative;">$$v(r)^2 = \frac{G\,M(&lt;r)}{r}$$</p>
+    <p>where $M(&lt;r)$ is the mass inside the orbit. Outside most of the mass, $M$ stops growing and $v$ falls as $1/\sqrt{r}$, as the planets do around the Sun. A flat curve, $v$ constant, needs $M(&lt;r)$ to keep growing in proportion to $r$. The galaxy view on the left shows what that means in motion: the hollow circles go round at the observed speed, the filled dots at the model's. When the model is short of mass, the outer dots fall behind.</p>
+
+    <h3>The Galaxy and Its Observed Curve</h3>
+    <p>NGC 3198 is a spiral galaxy whose rotation curve is unusually well measured and extends far beyond its stars, which made it a classic test case in the 1980s<sup><a href="#src-5">[5]</a></sup><sup><a href="#src-6">[6]</a></sup>. The 43 points in the plot are the observed curve as tabulated in the SPARC database of Lelli, McGaugh and Schombert<sup><a href="#src-7">[7]</a></sup>, from hydrogen-line and Hα velocities (they cite Begeman 1987 and 1991 and Daigle et al. 2006), with every radius placed at SPARC's distance of 13.8 Mpc from Cepheid stars. Older papers used a smaller distance, so their radii are smaller. The error bars are SPARC's random errors; they do not include the uncertainty in the galaxy's tilt. The table is copied into the page unchanged.</p>
+
+    <h3>Building the Visible Galaxy</h3>
+    <p>The model adds the squares of the speeds that each component would produce on its own:</p>
+    <p style="overflow-x:auto;position:relative;">$$v^2 = v_{\text{bulge}}^2 + v_{\text{disk}}^2 + v_{\text{gas}}\lvert v_{\text{gas}}\rvert + v_{\text{halo}}^2$$</p>
+    <p><strong>Stars.</strong> The stellar disk is a thin exponential disk with surface density $\Sigma(R) = \Sigma_0 e^{-R/R_d}$ and SPARC's scale length $R_d = 3.14$ kpc<sup><a href="#src-7">[7]</a></sup>. A flat disk does not pull like a point mass, and its exact rotation speed was worked out by Freeman<sup><a href="#src-8">[8]</a></sup>:</p>
+    <p style="overflow-x:auto;position:relative;">$$v_{\text{disk}}^2 = 4\pi G\Sigma_0 R_d\, y^2\left[I_0(y)K_0(y) - I_1(y)K_1(y)\right],\qquad y = \frac{R}{2R_d}$$</p>
+    <p>with $I_n$ and $K_n$ modified Bessel functions. It peaks at $2.2\,R_d$ about 8 % below the speed of a point with the same mass. The disk's mass is its 3.6 µm luminosity, $3.83 \times 10^{10}$ solar luminosities<sup><a href="#src-7">[7]</a></sup>, times the mass-to-light ratio $\Upsilon_\star$. Starlight does not tell us $\Upsilon_\star$ precisely; the default 0.5 is the value SPARC adopts at this wavelength<sup><a href="#src-7">[7]</a></sup>.</p>
+    <p><strong>Gas.</strong> The gas contribution is SPARC's, computed from the observed map of neutral hydrogen and multiplied by 1.33 for helium<sup><a href="#src-7">[7]</a></sup>. It is not adjustable here. Near the centre it is slightly negative: a ring of gas outside an orbit pulls outward.</p>
+    <p><strong>Bulge.</strong> SPARC finds no bulge in NGC 3198, so the default is zero. The slider adds a Hernquist bulge<sup><a href="#src-9">[9]</a></sup>, $v^2 = GM_b r/(r+a)^2$ with $a = 0.5$ kpc, for experiments.</p>
+    <p>With stars and gas alone the model curve rises to about 100 km/s near 7 kpc and then falls; at 44 kpc it is 65 km/s against an observed 149 km/s. At $\Upsilon_\star = 0.5$ it lies below every observed point beyond 2.2 kpc. A heavier disk helps only near the centre: even at the slider's largest value, $\Upsilon_\star = 1.2$, the model is below every point beyond 10 kpc.</p>
+
+    <h3>Adding a Dark Halo</h3>
+    <p>Two halo shapes are offered. The pseudo-isothermal halo has a constant-density core, $\rho = \rho_0/[1 + (r/r_c)^2]$, used for NGC 3198 by van Albada and collaborators<sup><a href="#src-5">[5]</a></sup>:</p>
+    <p style="overflow-x:auto;position:relative;">$$v_{\text{halo}}^2 = v_\infty^2\left[1 - \frac{r_c}{r}\arctan\frac{r}{r_c}\right],\qquad v_\infty^2 = 4\pi G\rho_0 r_c^2$$</p>
+    <p>The NFW halo is the shape that dark-matter halos take in cold-dark-matter simulations of structure formation<sup><a href="#src-10">[10]</a></sup>, $\rho \propto 1/[(r/r_s)(1 + r/r_s)^2]$ with $r_s = r_{200}/c$:</p>
+    <p style="overflow-x:auto;position:relative;">$$v_{\text{halo}}^2 = V_{200}^2\,\frac{\ln(1+cx) - cx/(1+cx)}{x\left[\ln(1+c) - c/(1+c)\right]},\qquad x = \frac{r}{r_{200}},\quad r_{200} = \frac{V_{200}}{10\,H_0}$$</p>
+    <p>with $H_0 = 73$ km/s/Mpc, the value SPARC uses<sup><a href="#src-7">[7]</a></sup>. The fit quality is</p>
+    <p style="overflow-x:auto;position:relative;">$$\chi^2 = \sum_{i=1}^{43}\left(\frac{v_{\text{model}}(r_i) - v_i}{\sigma_i}\right)^2,\qquad \nu = N - k$$</p>
+    <p>with $k$ the number of halo parameters adjusted (2, or 0 with no halo). "Fit the halo" finds the two halo parameters that minimise $\chi^2$ for the stars and bulge you have set. At the default $\Upsilon_\star = 0.5$ the simulation's best pseudo-isothermal halo has $v_\infty = 143.8$ km/s and $r_c = 2.98$ kpc, with $\chi^2/\nu = 1.67$ and an rms difference of 4.9 km/s; its best NFW halo has $V_{200} = 114$ km/s and $c = 8.7$, with $\chi^2/\nu = 2.57$ and 8.1 km/s rms. Inside the last point at 44 kpc the fitted halo holds about $1.9 \times 10^{11}$ solar masses, roughly six times the stars and gas together. These are fits of this page's model, not values from the literature.</p>
+
+    <h3>What the Curve Cannot Tell You</h3>
+    <p>The rotation curve demands extra mass, at the latest from 10 kpc outward. It does not say how that mass is split between the disk and the halo, or what shape the halo has in the middle. Change $\Upsilon_\star$ and press "Fit the halo" again: with the pseudo-isothermal halo, $\Upsilon_\star = 0.35$, 0.5 and 0.65 give $\chi^2/\nu$ of 2.6, 1.7 and 1.7, each with a different core radius (2.0, 3.0 and 4.5 kpc). A heavier disk is traded for a halo with a larger core. Van Albada and collaborators pointed out exactly this for NGC 3198 in 1985<sup><a href="#src-5">[5]</a></sup>. Whether real halos have cores, as the pseudo-isothermal shape assumes, or the steep central cusps of the NFW shape is still argued over, galaxy by galaxy<sup><a href="#src-11">[11]</a></sup><sup><a href="#src-12">[12]</a></sup>.</p>
+    <p>The model also has limits of its own. The exponential disk is a smooth stand-in for the measured light. "Compare SPARC's disk from the light" draws SPARC's own disk curve, computed from the observed light profile<sup><a href="#src-7">[7]</a></sup>: inside about 5 kpc the two differ by up to about 25 km/s, because the galaxy is not a perfect exponential, and that is where the fits here are worst. Rotation curves like this one can also be fitted with no dark matter at all, by changing Newton's law at very small accelerations (MOND)<sup><a href="#src-13">[13]</a></sup>; Begeman, Broeils and Sanders did this for NGC 3198 among other galaxies<sup><a href="#src-16">[16]</a></sup>. That is why the other evidence matters.</p>
+
+    <h3>The Other Evidence</h3>
+    <p>Two independent lines of evidence point the same way. Gravitational lensing of the colliding galaxy cluster 1E 0657−558, the Bullet Cluster, shows the mass concentrated where the galaxies are, offset at 8σ from the hot gas that holds most of the ordinary matter<sup><a href="#src-14">[14]</a></sup>. The pattern of peaks in the cosmic microwave background measures the density of ordinary matter and of matter that does not interact with light separately: Planck finds $\Omega_c h^2 = 0.120 \pm 0.001$ for dark matter and $\Omega_b h^2 = 0.0224 \pm 0.0001$ for ordinary (baryonic) matter<sup><a href="#src-15">[15]</a></sup>. From these two cited numbers, about 84 % of the matter in the universe is not made of atoms. What that matter is remains unknown.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>Galaxy rotation curves are flat — outer stars orbit as fast as inner ones. Visible mass alone cannot account for this. About 85% of all matter is dark matter — non-luminous, non-baryonic, and unknown.</li>
+      <li><span>Galaxy rotation curves stay flat far beyond the starlight. With Newton's gravity, the stars and gas of NGC 3198 fall short of the observed speeds beyond 10 kpc for every stellar mass-to-light ratio the slider allows (up to 1.2).</span></li>
+      <li><span>A dark halo fits the observed curve, but the curve alone does not fix the halo's shape or how much of the mass is in the stars.</span></li>
+      <li><span>Lensing and the cosmic microwave background give independent evidence: about 84 % of the matter in the universe is not made of atoms (computed from Planck's cited densities).</span></li>
     </ul>
+    <p style="overflow-x:auto;position:relative;">$$v(r)^2 = \frac{G\,M(&lt;r)}{r}$$</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">A flat curve, $v$ constant, needs $M(&lt;r) \propto r$.</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">F. Zwicky, "Die Rotverschiebung von extragalaktischen Nebeln", <em>Helvetica Physica Acta</em> 6, 110–127 (1933). For the history of this and the later evidence: G. Bertone and D. Hooper, "History of dark matter", <em>Reviews of Modern Physics</em> 90, 045002 (2018).</li>
+      <li id="src-2">V. C. Rubin and W. K. Ford, Jr., "Rotation of the Andromeda Nebula from a Spectroscopic Survey of Emission Regions", <em>The Astrophysical Journal</em> 159, 379 (1970).</li>
+      <li id="src-3">A. Bosma, <em>The distribution and kinematics of neutral hydrogen in spiral galaxies of various morphological types</em>, PhD thesis, University of Groningen (1978).</li>
+      <li id="src-4">V. C. Rubin, W. K. Ford, Jr. and N. Thonnard, "Rotational properties of 21 Sc galaxies with a large range of luminosities and radii, from NGC 4605 (R = 4 kpc) to UGC 2885 (R = 122 kpc)", <em>The Astrophysical Journal</em> 238, 471 (1980).</li>
+      <li id="src-5">T. S. van Albada, J. N. Bahcall, K. Begeman and R. Sancisi, "Distribution of dark matter in the spiral galaxy NGC 3198", <em>The Astrophysical Journal</em> 295, 305 (1985).</li>
+      <li id="src-6">K. G. Begeman, "H I rotation curves of spiral galaxies. I. NGC 3198", <em>Astronomy &amp; Astrophysics</em> 223, 47 (1989).</li>
+      <li id="src-7">F. Lelli, S. S. McGaugh and J. M. Schombert, "SPARC: Mass Models for 175 Disk Galaxies with Spitzer Photometry and Accurate Rotation Curves", <em>The Astronomical Journal</em> 152, 157 (2016); data files at <a href="https://astroweb.case.edu/SPARC/" target="_blank" rel="noopener" style="overflow-wrap:anywhere;">astroweb.case.edu/SPARC</a>. Used: the NGC 3198 rows of the mass-model table (radius, observed speed and error, gas and disk curves) and from the galaxy table D = 13.8 Mpc, $L_{[3.6]} = 38.279 \times 10^9\,L_\odot$, $R_d = 3.14$ kpc, $M_{\rm HI} = 10.869 \times 10^9\,M_\odot$; $\Upsilon_\star = 0.5$ and $H_0 = 73$ km/s/Mpc as adopted there. Rotation-curve references listed for NGC 3198: K. G. Begeman, PhD thesis, Groningen (1987); K. G. Begeman, A. H. Broeils and R. H. Sanders, <em>MNRAS</em> 249, 523 (1991); O. Daigle et al., <em>MNRAS</em> 367, 469 (2006).</li>
+      <li id="src-8">K. C. Freeman, "On the Disks of Spiral and S0 Galaxies", <em>The Astrophysical Journal</em> 160, 811 (1970).</li>
+      <li id="src-9">L. Hernquist, "An analytical model for spherical galaxies and bulges", <em>The Astrophysical Journal</em> 356, 359 (1990).</li>
+      <li id="src-10">J. F. Navarro, C. S. Frenk and S. D. M. White, "The Structure of Cold Dark Matter Halos", <em>The Astrophysical Journal</em> 462, 563 (1996); "A Universal Density Profile from Hierarchical Clustering", <em>ApJ</em> 490, 493 (1997).</li>
+      <li id="src-11">W. J. G. de Blok, "The Core–Cusp Problem", <em>Advances in Astronomy</em> 2010, 789293 (2010).</li>
+      <li id="src-12">P. Li, F. Lelli, S. S. McGaugh and J. M. Schombert, "A Comprehensive Catalog of Dark Matter Halo Models for SPARC Galaxies", <em>The Astrophysical Journal Supplement Series</em> 247, 31 (2020).</li>
+      <li id="src-13">M. Milgrom, "A modification of the Newtonian dynamics as a possible alternative to the hidden mass hypothesis", <em>The Astrophysical Journal</em> 270, 365 (1983).</li>
+      <li id="src-14">D. Clowe et al., "A Direct Empirical Proof of the Existence of Dark Matter", <em>The Astrophysical Journal Letters</em> 648, L109 (2006). Cited: 8σ offset between the total mass and the baryonic mass peaks.</li>
+      <li id="src-15">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited: $\Omega_c h^2 = 0.120 \pm 0.001$, $\Omega_b h^2 = 0.0224 \pm 0.0001$; $0.120/(0.120 + 0.0224) = 0.84$.</li>
+      <li id="src-16">K. G. Begeman, A. H. Broeils and R. H. Sanders, "Extended rotation curves of spiral galaxies: dark haloes and modified dynamics", <em>Monthly Notices of the Royal Astronomical Society</em> 249, 523 (1991).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Matter is mostly dark. Even more mysterious, 68% of the universe is dark energy — the force accelerating the cosmic expansion.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Matter is mostly dark. The universe holds something stranger still: dark energy, which makes the cosmic expansion speed up.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +217,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="When mass is compressed past a critical density, spacetime curves so severely that nothing — not even light — can escape. We now have a photograph.">
+  <meta name="description" content="Inside its Schwarzschild radius 2GM/c², a mass traps even light. Shoot light rays past a black hole: below a critical impact parameter they are captured, and that capture disk is the shadow the Event Horizon Telescope imaged.">
   <meta property="og:title" content="Black Holes — How Physics Works">
-  <meta property="og:description" content="When mass is compressed past a critical density, spacetime curves so severely that nothing — not even light — can escape. We now have a photograph.">
+  <meta property="og:description" content="Inside its Schwarzschild radius 2GM/c², a mass traps even light. Shoot light rays past a black hole: below a critical impact parameter they are captured, and that capture disk is the shadow the Event Horizon Telescope imaged.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/045-black-holes/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -56,48 +56,119 @@
     <div class="stop-header__meta">
       <span class="stop-header__year">Predicted 1916, imaged 2019</span>
       <span>·</span>
-      <span class="stop-header__scientist">Schwarzschild & the EHT</span>
+      <span class="stop-header__scientist">Schwarzschild &amp; the EHT</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>When mass is compressed past a critical density, spacetime curves so severely that nothing — not even light — can escape. We now have a photograph.</p>
+    <p>
+      A few weeks after Einstein published the field equations of general relativity, Karl Schwarzschild solved them exactly for the space and time outside a single, non-spinning spherical mass<sup><a href="#src-1">[1]</a></sup>. His solution has a special radius, $r_s = 2GM/c^2$. When mass is compressed inside its Schwarzschild radius, nothing that crosses that sphere, not even light, can get back out. In 1939 Oppenheimer and Snyder showed, for an idealised star with no pressure left to hold it up, that it collapses through its own Schwarzschild radius<sup><a href="#src-2">[2]</a></sup>. In 2019 the Event Horizon Telescope published an image of the black hole at the centre of the galaxy M87<sup><a href="#src-3">[3]</a></sup>: a bright ring of light around a dark centre. That dark centre is the black hole's shadow, which is more than twice the size of the horizon.
+    </p>
+    <p>
+      The simulation below fires light past a black hole. Set the impact parameter $b$, the distance by which the ray would miss the hole if gravity did nothing, and watch the ray bend, wrap around or fall in. Turn on the beam to see a whole sheet of parallel light and where the shadow comes from.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Black Holes — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: light rays bending around a Schwarzschild black hole">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="sim-control" style="flex:1 1 100%">
+        <label class="sim-control__label" for="b-slider">
+          Impact parameter b
+          <span class="sim-control__value" id="b-val">3.00 r_s</span>
+        </label>
+        <input type="range" id="b-slider" min="0" max="1500" step="1" value="300" aria-label="Impact parameter of the light ray, in Schwarzschild radii (0 to 10 in steps of 0.01, then up to 60)" aria-valuetext="3.00 Schwarzschild radii, escapes">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="graze-btn" type="button" aria-label="Set the impact parameter a hundred-thousandth above the critical value, so the ray skims the photon sphere">Skim the photon sphere</button>
+        <button class="sim-btn" id="far-btn" type="button" aria-label="Set the impact parameter to 50 Schwarzschild radii, the weak-field regime">Far ray: b = 50 r_s</button>
+        <button class="sim-btn" id="beam-toggle" type="button" aria-pressed="false" aria-label="Show a beam of parallel rays at many impact parameters">Show a beam of rays</button>
+      </div>
+      <div class="sim-control" style="flex:1 1 100%">
+        <span class="sim-control__label" id="scale-label">Put real sizes on it</span>
+        <div role="group" aria-labelledby="scale-label" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.25rem;">
+          <button class="sim-btn" type="button" data-body="sun" aria-label="Scale the black hole to the mass of the Sun">Sun</button>
+          <button class="sim-btn" type="button" data-body="earth" aria-label="Scale the black hole to the mass of the Earth">Earth</button>
+          <button class="sim-btn" type="button" data-body="sgra" aria-label="Scale the black hole to Sagittarius A star, at the centre of the Milky Way">Sgr A*</button>
+          <button class="sim-btn" type="button" data-body="m87" aria-label="Scale the black hole to M87 star">M87*</button>
+        </div>
+        <span id="scale-readout" aria-live="polite" style="display:block;margin-top:0.4rem;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6;">Pick a body to put kilometres on the picture.</span>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play or pause the light rays">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the animation">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">b = 3.00 r_s. The ray escapes, bent by almost 100°.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore the Schwarzschild radius — the point of no return</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Trace light ray paths as they bend near the event horizon</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe the accretion disk and jets from a spinning Kerr black hole</li>
-    </ul>
+    <h3>How Light Moves Near a Black Hole</h3>
+    <p>Far from any mass, light travels in straight lines. Near a mass, general relativity says it follows the straightest possible path through curved spacetime, a null geodesic. For Schwarzschild's spacetime the shape of that path can be written exactly. With $r$ the distance from the centre (Schwarzschild's radial coordinate), $\varphi$ the angle around the hole and $u = 1/r$, every light ray obeys<sup><a href="#src-5">[5]</a></sup></p>
+    <p style="overflow-x:auto;position:relative;">$$\frac{d^2u}{d\varphi^2} = -u + \frac{3GM}{c^2}\,u^2$$</p>
+    <p>Without the last term this is the equation of a straight line. The last term is gravity, and it is not an approximation: the simulation integrates this equation step by step (fourth-order Runge–Kutta in $\varphi$), starting from a ray that comes in from very far away with impact parameter $b$. Nothing about the answer is put in by hand; capture, wrapping and bending all come out of the integration.</p>
+
+    <h3>The Photon Sphere and the Capture Radius</h3>
+    <p>Multiplying the equation by $du/d\varphi$ and integrating once gives</p>
+    <p style="overflow-x:auto;position:relative;">$$\left(\frac{du}{d\varphi}\right)^2 = \frac{1}{b^2} - u^2\left(1 - \frac{2GM}{c^2}u\right)$$</p>
+    <p>The ray turns around where the right-hand side reaches zero. The bracketed term $u^2(1 - 2GMu/c^2)$ has a maximum at $u = c^2/(3GM)$, that is at $r = 3GM/c^2 = 1.5\,r_s$. At that radius light can circle the hole: this is the photon sphere, the dashed gold circle. The orbit there is unstable, so a ray that arrives exactly on it circles a few times and then either leaves or falls in. The maximum value of the bracket is $(c^2/GM)^2/27$, so a ray turns around only if</p>
+    <p style="overflow-x:auto;position:relative;">$$b > b_c = 3\sqrt{3}\,\frac{GM}{c^2} = \sqrt{27}\,\frac{GM}{c^2} \approx 2.598\,r_s$$</p>
+    <p>Every ray with a smaller impact parameter passes the photon sphere and crosses the horizon. Press "Skim the photon sphere" to set $b$ one part in $10^5$ above $b_c$: the ray is bent by about 637°, wrapping around the hole almost twice before it leaves. Moving the slider back and forth across 2.60 and 2.59 shows the switch from escaping to captured. Finding that switch by bisection with the simulation's own integrator gives $b_c = 2.5980762\,r_s$, equal to $\sqrt{27}\,GM/c^2$ to better than one part in a billion.</p>
+
+    <h3>The Shadow Is Not the Horizon</h3>
+    <p>Run the light backwards. A camera far away looks towards the hole; each direction it looks in corresponds to a ray with some impact parameter. Rays with $b &lt; b_c$ end on the horizon, so nothing can arrive from those directions. The camera sees a dark disk of radius $b_c \approx 2.6\,r_s$, the shadow, set by the photon sphere and not by the horizon. The horizon, at $r_s$, is itself never seen. The beam view shows the same disk from the other side: every ray inside the red band is captured.</p>
+    <p>The Event Horizon Telescope observed the hot gas around two black holes at a wavelength of 1.3 mm. For M87* it found an emission ring 42 ± 3 µas (millionths of an arcsecond) across<sup><a href="#src-3">[3]</a></sup>; for Sgr A*, at the centre of the Milky Way, a ring 51.8 ± 2.3 µas across<sup><a href="#src-4">[4]</a></sup>. What these images show is light from gas, bent around the photon sphere, framing the shadow. The ring is not the horizon, and its exact size depends on where the gas glows, which the EHT calibrated with simulations<sup><a href="#src-3">[3]</a></sup>.</p>
+    <p>The scale buttons turn the picture into real sizes. For Sgr A* the mass, about $4 \times 10^6$ solar masses, was known from the orbits of stars around it before the image<sup><a href="#src-4">[4]</a></sup>; with the distance of 8178 pc measured from one of those stars<sup><a href="#src-6">[6]</a></sup>, a non-spinning black hole would cast a shadow about 50 µas across, close to the ring that was imaged. For M87* the EHT went the other way and inferred the mass, $(6.5 \pm 0.7) \times 10^9$ solar masses at 16.8 Mpc, from the ring itself<sup><a href="#src-3">[3]</a></sup>, so the 39.7 µas the formula gives for that mass is a consistency check rather than a test.</p>
+
+    <h3>Far from the Hole: Einstein's 4GM/(c²b)</h3>
+    <p>When $b$ is much larger than $r_s$, the ray passes far outside the photon sphere and bends only slightly. To first order in $GM/(c^2 b)$ the deflection angle is</p>
+    <p style="overflow-x:auto;position:relative;">$$\delta \approx \frac{4GM}{c^2 b}$$</p>
+    <p>the value Einstein obtained in 1915<sup><a href="#src-7">[7]</a></sup>. For light grazing the Sun it is 1.75″, and the 1919 eclipse expeditions found deflections consistent with it<sup><a href="#src-8">[8]</a></sup>. Press "Far ray" to set $b = 50\,r_s$: the simulation's ray bends by 2.362°, while the formula gives 2.292°. The 3 % difference is real, not numerical error. The next term in the expansion, $\tfrac{15\pi}{4}\,(GM/c^2 b)^2$<sup><a href="#src-9">[9]</a></sup>, accounts for it: at $b = 50\,r_s$ it adds 0.068° and brings the series within 0.003° of the integrated ray. The first-order formula is within 2 % of the exact bending only beyond about 75 $r_s$, and within 1 % beyond about 150 $r_s$. Near $b_c$ it fails completely: at $b = 3\,r_s$ the ray bends by 98.5°, against 38.2° from the formula.</p>
+
+    <h3>When Black Holes Collide</h3>
+    <p>In 1971 Stephen Hawking proved that in classical general relativity the total area of black-hole horizons can never decrease<sup><a href="#src-10">[10]</a></sup>. For a non-spinning hole the area is $A = 4\pi r_s^2 = 16\pi G^2M^2/c^4$; for a spinning one it also depends on the spin. When two black holes merge, the remnant must have more horizon area than the two had together, even though the merger radiates away mass-energy as gravitational waves. LIGO and Virgo tested this with GW150914<sup><a href="#src-11">[11]</a></sup><sup><a href="#src-12">[12]</a></sup>. The much louder signal GW250114 confirmed that the remnant's area is larger than the sum of the initial areas to high credibility<sup><a href="#src-13">[13]</a></sup>.</p>
+
+    <h3>What the Simulation Leaves Out</h3>
+    <p>The black hole here does not spin. Real astrophysical black holes do, and a spinning (Kerr) black hole casts a shadow of slightly different size and, seen from most angles, slightly flattened shape. The picture is drawn in Schwarzschild's coordinates $r$ and $\varphi$ laid flat on the screen; that is a choice of map, not what an observer would photograph. The moving dot travels at a steady pace along the path so the shape is easy to follow; it does not show the timing of the light, which in these coordinates seems to slow down near the horizon. There is no glowing gas: the bright ring the EHT sees would come from light emitted around the hole and bent on its way to us, which needs a model of that gas.</p>
   </div>
+  <section class="takeaway-box content-column" id="remeasured-area-law" data-remeasured="pending" aria-labelledby="remeasured-area-title" style="border-left-style:dashed;">
+    <div class="takeaway-box__title" id="remeasured-area-title">Re-measured: horizon area before and after the merger, coming soon</div>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;margin:0;">A separate project will analyse the public strain data of a binary black-hole merger and report its own values here for the horizon areas before and after. Until then, no measured value is shown on this page: the numbers above are cited from the sources below or computed from textbook formulas.</p>
+  </section>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>When mass is compressed inside its Schwarzschild radius Rs = 2GM/c², spacetime curves so severely that not even light can escape. We now have direct photographs of black hole event horizons.</li>
+      <li><span>When mass is compressed inside its Schwarzschild radius $r_s = 2GM/c^2$, not even light can escape: 2.95 km for the mass of the Sun, 8.9 mm for the Earth.</span></li>
+      <li><span>Light can circle the hole on the photon sphere at $1.5\,r_s$. Rays with impact parameter below $b_c = \sqrt{27}\,GM/c^2$, about $2.6\,r_s$, are captured.</span></li>
+      <li><span>We now have images of the shadow a black hole casts on the light around it. The shadow is set by $b_c$; the horizon itself is not seen.</span></li>
     </ul>
+    <p style="overflow-x:auto;position:relative;">$$b_c = 3\sqrt{3}\,\frac{GM}{c^2}$$</p>
+    <p style="overflow-x:auto;position:relative;">$$\delta \approx \frac{4GM}{c^2 b}\quad (b \gg r_s)$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">K. Schwarzschild, "Über das Gravitationsfeld eines Massenpunktes nach der Einsteinschen Theorie", <em>Sitzungsberichte der Königlich Preussischen Akademie der Wissenschaften</em>, 189–196 (1916).</li>
+      <li id="src-2">J. R. Oppenheimer and H. Snyder, "On Continued Gravitational Contraction", <em>Physical Review</em> 56, 455–459 (1939).</li>
+      <li id="src-3">Event Horizon Telescope Collaboration, "First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole", <em>The Astrophysical Journal Letters</em> 875, L1 (2019); and paper VI of the same series, <em>ApJL</em> 875, L6 (2019). Cited: ring diameter 42 ± 3 µas, angular gravitational radius $GM/(Dc^2) = 3.8 \pm 0.4$ µas, mass $(6.5 \pm 0.7) \times 10^9\,M_\odot$ at 16.8 Mpc, mass inferred from the ring with simulations of the emitting gas.</li>
+      <li id="src-4">Event Horizon Telescope Collaboration, "First Sagittarius A* Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole in the Center of the Milky Way", <em>The Astrophysical Journal Letters</em> 930, L12 (2022). Cited: ring diameter 51.8 ± 2.3 µas; mass about $4 \times 10^6\,M_\odot$ from stellar orbits.</li>
+      <li id="src-5">C. W. Misner, K. S. Thorne and J. A. Wheeler, <em>Gravitation</em> (W. H. Freeman, 1973), chapter 25, for the orbit equation of light in the Schwarzschild geometry, the photon sphere and the capture cross-section.</li>
+      <li id="src-6">GRAVITY Collaboration, "A geometric distance measurement to the Galactic center black hole with 0.3% uncertainty", <em>Astronomy &amp; Astrophysics</em> 625, L10 (2019). Cited: $R_0 = 8178 \pm 13\,(\text{stat}) \pm 22\,(\text{sys})$ pc.</li>
+      <li id="src-7">A. Einstein, "Erklärung der Perihelbewegung des Merkur aus der allgemeinen Relativitätstheorie", <em>Sitzungsberichte der Preussischen Akademie der Wissenschaften</em>, 831–839 (1915). The same paper gives 1.7″ for light grazing the Sun.</li>
+      <li id="src-8">F. W. Dyson, A. S. Eddington and C. Davidson, "A Determination of the Deflection of Light by the Sun's Gravitational Field, from Observations Made at the Total Eclipse of May 29, 1919", <em>Philosophical Transactions of the Royal Society A</em> 220, 291–333 (1920).</li>
+      <li id="src-9">C. R. Keeton and A. O. Petters, "Formalism for testing theories of gravity using lensing by compact objects: Static, spherically symmetric case", <em>Physical Review D</em> 72, 104006 (2005). Cited: the second-order term $\tfrac{15\pi}{4}(GM/c^2b)^2$ of the Schwarzschild deflection.</li>
+      <li id="src-10">S. W. Hawking, "Gravitational Radiation from Colliding Black Holes", <em>Physical Review Letters</em> 26, 1344–1346 (1971).</li>
+      <li id="src-11">B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration), "Observation of Gravitational Waves from a Binary Black Hole Merger", <em>Physical Review Letters</em> 116, 061102 (2016).</li>
+      <li id="src-12">M. Isi, W. M. Farr, M. Giesler, M. A. Scheel and S. A. Teukolsky, "Testing the Black-Hole Area Law with GW150914", <em>Physical Review Letters</em> 127, 011103 (2021).</li>
+      <li id="src-13">A. G. Abac et al. (LIGO Scientific, Virgo and KAGRA Collaborations), "GW250114: Testing Hawking's Area Law and the Kerr Nature of Black Holes", <em>Physical Review Letters</em> 135, 111403 (2025), arXiv:2509.08054.</li>
+      <li>Physical constants: IAU 2015 Resolution B3 nominal values $GM_\odot = 1.3271244 \times 10^{20}$ m³ s⁻², $GM_\oplus = 3.986004 \times 10^{14}$ m³ s⁻² and $R_\odot = 6.957 \times 10^8$ m.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Black holes warp spacetime. Most of the matter in the universe is invisible. Vera Rubin's galaxy rotation curves revealed dark matter — and it still defies explanation.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>A black hole is mass we cannot see but whose nature we understand. Galaxies hold far more mass that we cannot see, and of that we still do not know what it is. Vera Rubin's galaxy rotation curves made the case for dark matter.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +194,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
