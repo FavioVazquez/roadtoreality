@@ -63,12 +63,18 @@
 
     return '<' + tag + ' ' + attrs + '>' +
       '<div class="stop-card__visited-badge" aria-label="Visited"></div>' +
-      '<div class="stop-card__number">' + String(stop.order).padStart(3, '0') + '</div>' +
-      '<div class="stop-card__title">' + _esc(stop.title) + '</div>' +
-      '<div class="stop-card__subtitle">' + _esc(stop.subtitle) + '</div>' +
-      '<div class="stop-card__meta">' +
-        '<span class="stop-card__year">' + _esc(stop.yearLabel) + '</span>' +
-        '<span class="stop-card__scientist">' + _esc(stop.scientist) + '</span>' +
+      /* still frame from the stop's own simulation (decorative: the title says what it is) */
+      '<div class="stop-card__thumb">' +
+        '<img src="assets/img/thumbs/' + stop.id + '.webp" width="640" height="400" alt="" loading="lazy" decoding="async">' +
+      '</div>' +
+      '<div class="stop-card__body">' +
+        '<div class="stop-card__number">' + String(stop.order).padStart(3, '0') + '</div>' +
+        '<div class="stop-card__title">' + _esc(stop.title) + '</div>' +
+        '<div class="stop-card__subtitle">' + _esc(stop.subtitle) + '</div>' +
+        '<div class="stop-card__meta">' +
+          '<span class="stop-card__year">' + _esc(stop.yearLabel) + '</span>' +
+          '<span class="stop-card__scientist">' + _esc(stop.scientist) + '</span>' +
+        '</div>' +
       '</div>' +
     '</' + tag + '>';
   }
