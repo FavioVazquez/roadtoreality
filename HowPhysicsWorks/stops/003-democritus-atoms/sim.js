@@ -9,8 +9,8 @@
     { label: 'Grain of sand', scale: '1 mm', desc: 'A grain of sand — visible to the naked eye.', color: 'oklch(0.72 0.12 60)', particleR: 60, count: 1 },
     { label: 'Molecules',     scale: '1 nm',  desc: 'Zoom in 1 million times: you see molecules — clusters of atoms bonded together.', color: 'oklch(0.72 0.15 145)', particleR: 22, count: 7 },
     { label: 'Atoms',         scale: '0.1 nm', desc: 'Each molecule is made of atoms. Carbon, oxygen, silicon — all different sizes.', color: 'oklch(0.65 0.18 240)', particleR: 14, count: 19 },
-    { label: 'Nucleus',       scale: '10 fm',  desc: 'Inside the atom: a tiny dense nucleus surrounded by an electron cloud. The nucleus is 100,000 times smaller than the atom.', color: 'oklch(0.68 0.20 310)', particleR: 6, count: 9 },
-    { label: 'Quarks',        scale: '<1 fm',  desc: 'Protons and neutrons are made of quarks — the smallest known constituents of matter. Democritus was right: there IS a limit.', color: 'oklch(0.68 0.22 20)', particleR: 3, count: 3 }
+    { label: 'Nucleus',       scale: '10 fm',  desc: 'Inside the atom: a tiny dense nucleus surrounded by an electron cloud. The nucleus is 10,000 to 100,000 times smaller than the atom (a few femtometres against a tenth of a nanometre).', color: 'oklch(0.68 0.20 310)', particleR: 6, count: 9 },
+    { label: 'Quarks',        scale: '<1 fm',  desc: 'Protons and neutrons are made of quarks. Quarks and electrons are the smallest constituents we know; whether anything is truly indivisible is still an open question. the atom of Democritus turned out to be very divisible.', color: 'oklch(0.68 0.22 20)', particleR: 3, count: 3 }
   ];
 
   var canvas, ctx, W, H;
@@ -21,6 +21,7 @@
   var rafId = null;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var autoZoomT = 0;
+  var tAnim = 0; /* gentle thermal wobble, so a running sim visibly moves */
 
   /* Seeded arrangement so particles don't jump on resize */
   function getPositions(count, seed, r) {
@@ -52,13 +53,14 @@
   }
 
   function draw() {
+    if (!ctx || !isFinite(W) || !isFinite(H) || W <= 0 || H <= 0) return;
     ctx.clearRect(0, 0, W, H);
 
     var level = LEVELS[currentLevel];
     var alpha = animProgress;
 
     /* Dark background vignette */
-    var grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.6);
+    var grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(0, Math.max(W, H) * 0.6));
     grad.addColorStop(0, 'oklch(0.12 0.03 285)');
     grad.addColorStop(1, 'oklch(0.07 0.02 285)');
     ctx.fillStyle = grad;
@@ -70,7 +72,7 @@
     /* Glow ring */
     ctx.save();
     ctx.globalAlpha = 0.15 * alpha;
-    var ringGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, level.particleR * 4);
+    var ringGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(0, level.particleR * 4));
     ringGrad.addColorStop(0, level.color);
     ringGrad.addColorStop(1, 'transparent');
     ctx.fillStyle = ringGrad;
@@ -84,20 +86,15 @@
     ctx.save();
     ctx.globalAlpha = alpha;
     for (var i = 0; i < positions.length; i++) {
-      var px = cx + positions[i].x;
-      var py = cy + positions[i].y;
+      var wob = level.particleR * 0.12;
+      var px = cx + positions[i].x + Math.sin(tAnim * 1.3 + i * 1.7) * wob;
+      var py = cy + positions[i].y + Math.cos(tAnim * 1.1 + i * 2.3) * wob;
       var r  = level.particleR;
 
       /* Particle body */
-      var pGrad = ctx.createRadialGradient(px - r*0.3, py - r*0.3, r*0.1, px, py, r);
-      pGrad.addColorStop(0, 'oklch(from ' + level.color + ' calc(l + 0.2) c h)');
-      pGrad.addColorStop(0.6, level.color);
-      pGrad.addColorStop(1, 'oklch(from ' + level.color + ' calc(l - 0.15) c h / 0.5)');
-
       ctx.beginPath();
       ctx.arc(Math.round(px), Math.round(py), r, 0, Math.PI * 2);
 
-      /* Fallback for browsers without relative color syntax */
       ctx.fillStyle = level.color;
       ctx.fill();
 
@@ -126,6 +123,17 @@
         ctx.beginPath();
         ctx.ellipse(cx, cy, orbitR, orbitR * 0.4, o * 0.8, 0, Math.PI * 2);
         ctx.stroke();
+        /* electron travelling along the orbit */
+        var ea = tAnim * (1.6 - o * 0.5) + o * 2;
+        var ex = orbitR * Math.cos(ea), ey = orbitR * 0.4 * Math.sin(ea);
+        var cr = Math.cos(o * 0.8), sr = Math.sin(o * 0.8);
+        ctx.save();
+        ctx.setLineDash([]);
+        ctx.fillStyle = level.color;
+        ctx.beginPath();
+        ctx.arc(cx + ex * cr - ey * sr, cy + ex * sr + ey * cr, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
       ctx.setLineDash([]);
       ctx.restore();
@@ -191,6 +199,10 @@
     if (running) return;
     running = true;
     autoZoomT = 0;
+    var btn = document.getElementById('sim-play-btn');
+    if (btn) { btn.textContent = '\u23f8 Pause'; btn.dataset.state = 'playing'; }
+    var dot = document.querySelector('.sim-caption__dot');
+    if (dot) dot.classList.add('is-running');
     if (!reducedMotion) rafId = requestAnimationFrame(loop);
     else draw();
   }
@@ -229,6 +241,7 @@
 
     /* Auto-advance level every ~3 seconds */
     autoZoomT++;
+    tAnim += 0.04;
     if (autoZoomT % 180 === 0) {
       var next = (currentLevel + 1) % LEVELS.length;
       currentLevel = next;

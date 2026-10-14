@@ -11,25 +11,33 @@
   var rafId   = null;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var animT   = 0;
-  var distanceKm = 800;
   var showResult = false;
 
-  /* The shadow angle is fixed by physics: 7.2° for Syene/Alexandria.
-     We derive circumference from user's distance input. */
-  var SHADOW_ANGLE_DEG = 7.2;
+  /* Syene is fixed (24.1 N, Sun overhead at the solstice). The slider moves the
+     northern city; the shadow angle there is the latitude difference, and the
+     distance is read off the true Earth (meridian circumference 40,008 km). */
+  var SYENE_LAT = 24.1;
+  var northLat  = 31.3; /* Alexandria is at about 31.2 N: 7.2 degrees north of Syene */
+  var MERIDIAN_KM = 40008;
 
+  function thetaDeg() { return northLat - SYENE_LAT; }
+  function distanceKm() { return MERIDIAN_KM * thetaDeg() / 360; }
   function circumference() {
-    return Math.round((360 / SHADOW_ANGLE_DEG) * distanceKm);
+    var th = thetaDeg();
+    return th < 0.3 ? 0 : Math.round((360 / th) * distanceKm());
   }
 
   function draw() {
+    if (!(W > 0 && H > 0)) return; /* not laid out yet */
     ctx.clearRect(0, 0, W, H);
+    var THETA = thetaDeg() * Math.PI / 180;
     ctx.fillStyle = 'oklch(0.08 0.02 240)';
     ctx.fillRect(0, 0, W, H);
 
-    var cx = W / 2;
-    var cy = H * 0.62;
-    var earthR = Math.min(W, H) * 0.28;
+    var narrow = W < 600;
+    var cx = narrow ? W * 0.68 : W * 0.4;
+    var cy = H * 0.64;
+    var earthR = Math.max(10, Math.min(W, H) * 0.28);
 
     /* ── Stars ── */
     ctx.save();
@@ -40,19 +48,6 @@
       ctx.arc(W * starPositions[s][0], H * starPositions[s][1], 1.5, 0, Math.PI * 2);
       ctx.fill();
     }
-    ctx.restore();
-
-    /* ── Sun (top-left) ── */
-    var sunX = W * 0.12;
-    var sunY = H * 0.10;
-    ctx.save();
-    ctx.shadowColor = 'oklch(0.90 0.20 82)';
-    ctx.shadowBlur  = 30;
-    ctx.fillStyle   = 'oklch(0.90 0.20 82)';
-    ctx.beginPath();
-    ctx.arc(sunX, sunY, 22, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
     ctx.restore();
 
     /* ── Earth ── */
@@ -75,8 +70,8 @@
        Syene: ~23.5° N  → on a circle, place at top-ish
        Alexandria: ~31° N → slightly further north
        We'll place them both on the sunlit side */
-    var syeneAngle = -Math.PI / 2 + 0.05;        /* near top */
-    var alexAngle  = syeneAngle - (SHADOW_ANGLE_DEG * Math.PI / 180);
+    var syeneAngle = -Math.PI / 2;               /* top: the Sun is overhead */
+    var alexAngle  = syeneAngle - THETA;         /* north = to the left */
 
     var syeneX = cx + Math.cos(syeneAngle) * earthR;
     var syeneY = cy + Math.sin(syeneAngle) * earthR;
@@ -91,22 +86,44 @@
     var rayLen = 90;
     var rayDir = { x: syeneNX, y: syeneNY }; /* Syene: ray goes straight down */
 
+    /* ── Sun: placed on the ray direction above Syene (rays drawn parallel) ── */
+    var sunDist = Math.max(60, Math.min(260, syeneY - 34));
+    var sunX = syeneX + rayDir.x * sunDist;
+    var sunY = syeneY + rayDir.y * sunDist;
+    ctx.save();
+    ctx.shadowColor = 'oklch(0.90 0.20 82)';
+    ctx.shadowBlur  = 30;
+    ctx.fillStyle   = 'oklch(0.90 0.20 82)';
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, 18, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    ctx.save();
+    ctx.strokeStyle = 'oklch(0.88 0.18 82 / 0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(sunX, sunY + 20);
+    ctx.lineTo(syeneX, syeneY);
+    ctx.stroke();
+    ctx.restore();
+
     ctx.save();
     ctx.strokeStyle = 'oklch(0.88 0.18 82 / 0.4)';
     ctx.lineWidth = 1.5;
     ctx.setLineDash([6, 8]);
+    ctx.lineDashOffset = -animT * 0.8; /* rays stream toward the Earth while running */
 
     /* Ray to Syene — goes straight to the surface */
-    var syeneRayStartX = syeneX - rayDir.x * rayLen;
-    var syeneRayStartY = syeneY - rayDir.y * rayLen;
+    var syeneRayStartX = syeneX + rayDir.x * rayLen;
+    var syeneRayStartY = syeneY + rayDir.y * rayLen;
     ctx.beginPath();
     ctx.moveTo(syeneRayStartX, syeneRayStartY);
     ctx.lineTo(syeneX, syeneY);
     ctx.stroke();
 
     /* Ray to Alexandria — same direction */
-    var alexRayStartX = alexX - rayDir.x * rayLen;
-    var alexRayStartY = alexY - rayDir.y * rayLen;
+    var alexRayStartX = alexX + rayDir.x * rayLen;
+    var alexRayStartY = alexY + rayDir.y * rayLen;
     ctx.beginPath();
     ctx.moveTo(alexRayStartX, alexRayStartY);
     ctx.lineTo(alexX, alexY);
@@ -115,7 +132,7 @@
     ctx.restore();
 
     /* ── Sticks ── */
-    var stickLen = 24;
+    var stickLen = 40; /* drawn far larger than life so the shadow is visible */
 
     /* Syene stick: aligned with normal → no shadow */
     ctx.save();
@@ -132,7 +149,8 @@
     ctx.fillStyle = 'oklch(0.70 0.10 60)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Syene: 0° shadow', syeneX + syeneNX * 40, syeneY + syeneNY * 40);
+    ctx.textAlign = 'left';
+    ctx.fillText('Syene: no shadow', syeneX + 10, syeneY - stickLen * 0.5);
     ctx.restore();
 
     /* Alexandria stick: perpendicular to surface normal */
@@ -146,8 +164,8 @@
     ctx.stroke();
 
     /* Shadow line for Alexandria stick */
-    var alexShadowAngle = alexAngle + Math.PI / 2; /* tangent direction */
-    var shadowLen = stickLen * Math.tan(SHADOW_ANGLE_DEG * Math.PI / 180);
+    var alexShadowAngle = alexAngle - Math.PI / 2; /* tangent, away from Syene: the noon shadow points north */
+    var shadowLen = stickLen * Math.tan(THETA);
     ctx.strokeStyle = 'oklch(0.55 0.10 145 / 0.7)';
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -159,14 +177,24 @@
     ctx.strokeStyle = 'oklch(0.72 0.15 145)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.arc(alexX, alexY, 14, alexAngle + Math.PI / 2, alexAngle + Math.PI / 2 + SHADOW_ANGLE_DEG * Math.PI / 180, false);
+    /* angle between the stick and the Sun's rays (the rays run along the Syene vertical) */
+    ctx.arc(alexX, alexY, 26, alexAngle, syeneAngle, false);
     ctx.stroke();
+    /* ray through the top of the Alexandria stick, parallel to Syene's */
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath();
+    ctx.moveTo(alexX, alexY);
+    ctx.lineTo(alexX + Math.cos(syeneAngle) * (stickLen + 30), alexY + Math.sin(syeneAngle) * (stickLen + 30));
+    ctx.stroke();
+    ctx.setLineDash([]);
 
     ctx.font = '10px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'oklch(0.72 0.15 145)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Alexandria: 7.2°', alexX + alexNX * 50, alexY + alexNY * 50);
+    ctx.textAlign = 'right';
+    ctx.fillText('Northern city: θ = ' + thetaDeg().toFixed(1) + '°', alexX - 12, alexY - stickLen * 0.7);
+    ctx.fillText('tan θ = shadow ÷ stick = ' + Math.tan(THETA).toFixed(3), alexX - 12, alexY - stickLen * 0.7 + 14);
     ctx.restore();
 
     /* ── Arc between cities ── */
@@ -182,7 +210,7 @@
     ctx.font = 'bold 11px "DM Sans", system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(distanceKm + ' km', cx + Math.cos(midAngle) * (earthR + 28), cy + Math.sin(midAngle) * (earthR + 28));
+    ctx.fillText(Math.round(distanceKm()).toLocaleString() + ' km', cx + Math.cos(midAngle) * (earthR - 24), cy + Math.sin(midAngle) * (earthR - 24));
     ctx.restore();
 
     /* ── Angle at center ── */
@@ -196,16 +224,16 @@
     ctx.font = '10px "DM Sans", system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('7.2°', cx + Math.cos((alexAngle+syeneAngle)/2) * 42, cy + Math.sin((alexAngle+syeneAngle)/2) * 42);
+    ctx.fillText(thetaDeg().toFixed(1) + '°', cx + Math.cos((alexAngle+syeneAngle)/2) * 42, cy + Math.sin((alexAngle+syeneAngle)/2) * 42);
     ctx.restore();
 
     /* ── Result panel ── */
     if (showResult) {
       var circ = circumference();
-      var pctError = Math.abs(circ - 40075) / 40075 * 100;
 
       ctx.save();
-      var panX = W * 0.55, panY = H * 0.05, panW = W * 0.40, panH = 100;
+      var panW = narrow ? 195 : 215, panH = 124;
+      var panX = narrow ? 8 : W - panW - 16, panY = narrow ? 8 : H * 0.08;
       ctx.fillStyle = 'oklch(0.12 0.03 285 / 0.92)';
       ctx.beginPath();
       ctx.roundRect(panX, panY, panW, panH, 10);
@@ -222,12 +250,22 @@
 
       ctx.fillStyle = 'oklch(0.90 0.01 90)';
       ctx.font = '12px "DM Sans", system-ui, sans-serif';
-      ctx.fillText('360° ÷ 7.2° = 50', panX + 12, panY + 30);
-      ctx.fillText('50 × ' + distanceKm + ' km = ' + circ.toLocaleString() + ' km', panX + 12, panY + 50);
-
-      ctx.fillStyle = pctError < 5 ? 'oklch(0.72 0.15 145)' : 'oklch(0.80 0.17 82)';
-      ctx.font = '700 12px "DM Sans", system-ui, sans-serif';
-      ctx.fillText('Error: ' + pctError.toFixed(1) + '%  (actual: 40,075 km)', panX + 12, panY + 72);
+      var th = thetaDeg();
+      if (circ === 0) {
+        ctx.fillText('Same latitude: no angle,', panX + 12, panY + 30);
+        ctx.fillText('nothing to divide.', panX + 12, panY + 48);
+      } else {
+        ctx.fillText('360° ÷ ' + th.toFixed(1) + '° = ' + (360 / th).toFixed(1), panX + 12, panY + 30);
+        ctx.fillText((360 / th).toFixed(1) + ' × ' + Math.round(distanceKm()).toLocaleString() + ' km', panX + 12, panY + 48);
+        ctx.fillText('= ' + circ.toLocaleString() + ' km', panX + 12, panY + 66);
+      }
+      ctx.fillStyle = 'oklch(0.80 0.17 82)';
+      ctx.font = '11px "DM Sans", system-ui, sans-serif';
+      ctx.fillText('Ancient inputs: 1/50 circle,', panX + 12, panY + 84);
+      ctx.fillText('5,000 stadia = 250,000 stadia', panX + 12, panY + 98);
+      ctx.fillStyle = 'oklch(0.72 0.15 145)';
+      ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
+      ctx.fillText('(actual, pole to pole: 40,008 km)', panX + 12, panY + 112);
       ctx.restore();
     }
 
@@ -318,9 +356,9 @@
     var valEl  = document.getElementById('distance-val');
     if (slider) {
       slider.addEventListener('input', function () {
-        distanceKm = parseInt(this.value, 10);
-        if (valEl) valEl.textContent = distanceKm + ' km';
-        draw(); /* always redraw so arc label updates */
+        northLat = parseFloat(this.value);
+        if (valEl) valEl.textContent = northLat.toFixed(1) + '° N';
+        draw(); /* always redraw so the shadow, arc and distance update */
       });
     }
     draw();

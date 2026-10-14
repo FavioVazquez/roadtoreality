@@ -12,7 +12,9 @@
   var t = 0;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var audioCtx = null;
-  var currentN = 1;
+  var currentNum = 1;
+  var currentDen = 1;
+  var BASE_HZ = 220;
   var currentIntervalName = 'Unison';
 
   var COLOR_STRING = '#c8953a';
@@ -20,13 +22,13 @@
   var COLOR_LABEL  = '#f0e6d3';
   var COLOR_BG     = 'rgba(200,149,58,0.07)';
 
-  /* Ratio data: [numerator, denominator, harmonic_n, interval_name] */
+  /* Ratio data: [numerator, denominator, unused, interval_name] */
   var RATIOS = [
     [1, 1, 1, 'Unison'],
     [2, 1, 2, 'Octave'],
     [3, 2, 3, 'Perfect Fifth'],
     [4, 3, 4, 'Perfect Fourth'],
-    [5, 4, 5, 'Major Third'],
+    [5, 4, 5, 'Major Third (just, later)'],
     [9, 8, 9, 'Whole Tone']
   ];
 
@@ -48,101 +50,73 @@
     osc.frequency.value = freqHz;
     var now = audioCtx.currentTime;
     gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(0.5, now + 0.01);
+    gain.gain.linearRampToValueAtTime(0.28, now + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.81);
     osc.start(now);
     osc.stop(now + 0.85);
   }
 
   /* ── Drawing ─────────────────────────────────────────────── */
-  function draw() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, W, H);
+  /* Two strings, each in its fundamental. Reference string: length L, 220 Hz.
+     Second string: length L * den/num, so f = 220 * L / L2 = 220 * num/den (f ∝ 1/L). */
+  function freqRef() { return BASE_HZ; }
+  function freqSecond() { return BASE_HZ * currentNum / currentDen; }
 
-    /* Background tint */
-    ctx.fillStyle = COLOR_BG;
-    ctx.fillRect(0, 0, W, H);
-
-    var x0 = W * 0.1;
-    var x1 = W * 0.9;
-    var L = x1 - x0;
-    var midY = H * 0.5;
-
-    /* Reduce amplitude for high harmonics so wave stays visible */
-    var amplitude = H * 0.18 / Math.max(1, currentN * 0.35);
-
-    /* ── Rest line (dashed) ── */
+  function drawString(x0, len, midY, amplitude, phase, label, sub) {
     ctx.save();
     ctx.strokeStyle = 'rgba(200,149,58,0.25)';
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 6]);
     ctx.beginPath();
     ctx.moveTo(x0, midY);
-    ctx.lineTo(x1, midY);
+    ctx.lineTo(x0 + len, midY);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.restore();
-
-    /* ── Standing wave ── */
-    var cosT = Math.cos(omega * t);
-    ctx.save();
     ctx.strokeStyle = COLOR_STRING;
     ctx.lineWidth = 2.5;
     ctx.lineJoin = 'round';
     ctx.beginPath();
     ctx.moveTo(x0, midY);
     var x;
-    for (x = x0; x <= x1; x += 1) {
-      var yOff = amplitude * Math.sin(currentN * Math.PI * (x - x0) / L) * cosT;
-      ctx.lineTo(x, midY + yOff);
+    for (x = 0; x <= len; x += 1) {
+      ctx.lineTo(x0 + x, midY + amplitude * Math.sin(Math.PI * x / len) * phase);
     }
     ctx.stroke();
-    ctx.restore();
-
-    /* ── Fixed endpoints ── */
-    ctx.save();
     ctx.fillStyle = COLOR_NODE;
-    ctx.beginPath();
-    ctx.arc(x0, midY, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(x1, midY, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    /* ── Node dots at zero-crossing positions ── */
-    ctx.save();
-    ctx.fillStyle = 'rgba(232,184,109,0.6)';
-    var i;
-    for (i = 0; i <= currentN; i++) {
-      var nx = x0 + i * L / currentN;
-      ctx.beginPath();
-      ctx.arc(nx, midY, 3, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.restore();
-
-    /* ── Labels ── */
-    ctx.save();
-    ctx.fillStyle = COLOR_LABEL;
-    ctx.font = 'bold 14px "DM Sans", system-ui, sans-serif';
-    ctx.textAlign = 'center';
+    ctx.beginPath(); ctx.arc(x0, midY, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x0 + len, midY, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.textAlign = 'left';
     ctx.textBaseline = 'bottom';
-    ctx.fillText('n = ' + currentN + '  —  ' + currentIntervalName, W * 0.5, midY - amplitude - 14);
-
-    ctx.fillStyle = 'rgba(240,230,211,0.55)';
+    ctx.fillStyle = COLOR_LABEL;
+    ctx.font = 'bold 13px "DM Sans", system-ui, sans-serif';
+    ctx.fillText(label, x0, midY - amplitude - 22);
+    ctx.fillStyle = 'rgba(240,230,211,0.65)';
     ctx.font = '12px "DM Sans", system-ui, sans-serif';
-    ctx.fillText('f = 220 Hz \u00d7 ' + RATIOS[harmonicIndexFromN(currentN)][0] + '/' + RATIOS[harmonicIndexFromN(currentN)][1], W * 0.5, midY - amplitude - 0);
+    ctx.fillText(sub, x0, midY - amplitude - 6);
     ctx.restore();
   }
 
-  /* Return index in RATIOS array for a given harmonic n value */
-  function harmonicIndexFromN(n) {
-    var i;
-    for (i = 0; i < RATIOS.length; i++) {
-      if (RATIOS[i][2] === n) return i;
-    }
-    return 0;
+  function fmtHz(f) { return (Math.round(f * 10) / 10) + ' Hz'; }
+
+  function draw() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.fillStyle = COLOR_BG;
+    ctx.fillRect(0, 0, W, H);
+
+    var x0 = W * 0.1;
+    var L = W * 0.8;
+    var L2 = L * currentDen / currentNum;
+    var amplitude = H * 0.07;
+    var ratio = currentNum / currentDen;
+
+    /* Animation speed is aesthetic, but the relative speed of the two strings is true: f2/f1 = num/den */
+    drawString(x0, L, H * 0.30, amplitude, Math.cos(omega * t),
+      'Reference string, length L', 'f = ' + fmtHz(freqRef()));
+    drawString(x0, L2, H * 0.68, amplitude, Math.cos(omega * ratio * t),
+      currentIntervalName + ': length L \u00d7 ' + currentDen + '/' + currentNum,
+      'f = 220 Hz \u00d7 ' + currentNum + '/' + currentDen + ' = ' + fmtHz(freqSecond()));
   }
 
   /* ── Animation loop ─────────────────────────────────────── */
@@ -175,7 +149,8 @@
     reset: function () {
       window.SimAPI.pause();
       t = 0;
-      currentN = 1;
+      currentNum = 1;
+      currentDen = 1;
       currentIntervalName = 'Unison';
       var btns = document.querySelectorAll('[data-ratio]');
       var i;
@@ -241,14 +216,16 @@
           var j;
           for (j = 0; j < RATIOS.length; j++) {
             if (RATIOS[j][0] === num && RATIOS[j][1] === den) {
-              currentN = RATIOS[j][2];
+              currentNum = num;
+              currentDen = den;
               currentIntervalName = RATIOS[j][3];
               break;
             }
           }
 
           /* Play tone (lazy AudioContext creation here — user gesture) */
-          playTone(220 * num / den);
+          playTone(freqRef());
+          playTone(freqSecond());
 
           /* Mark active button */
           var all = document.querySelectorAll('[data-ratio]');

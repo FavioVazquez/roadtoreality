@@ -40,8 +40,8 @@
     var def = OBJECTS[idx];
     var volume = 0.003; /* m³ — fixed for visual consistency */
     var mass   = def.density * volume;
-    /* Visual radius */
-    var r = Math.max(18, Math.min(40, 24));
+    /* Half-side of the crate; a box makes depth fraction equal volume fraction */
+    var r = 24;
     return {
       def:      def,
       volume:   volume,
@@ -82,6 +82,7 @@
     var Fnet = Fg - Fb;
     var acc  = Fnet / obj.mass;
 
+    /* Cartoon motion: the damping and frame-rate step are not physical; the forces and readouts are. */
     /* Strong damping in water — decay oscillations quickly */
     var damping = obj.submergedFraction > 0 ? 0.72 : 1.0;
     obj.vy = (obj.vy + acc * dt) * damping;
@@ -122,9 +123,9 @@
     }
 
     /* Water level rise: visual pixels proportional to submerged fraction */
-    /* Tank cross-section in px²; object cross-section ~ pi*r² px² */
+    /* Tank cross-section in px²; crate cross-section (2r)² px² */
     var tankAreaPx   = tankWidth * (tankBottom - waterBaseY);
-    var subAreaPx    = Math.PI * obj.r * obj.r * obj.submergedFraction;
+    var subAreaPx    = 4 * obj.r * obj.r * obj.submergedFraction;
     var risePx       = subAreaPx / tankWidth * 2.5; /* visible amplification */
     waterLevel = waterBaseY - risePx;
   }
@@ -174,16 +175,14 @@
       ctx.save();
       ctx.shadowColor = def.color;
       ctx.shadowBlur  = 20;
-      ctx.beginPath();
-      ctx.arc(Math.round(obj.x), Math.round(obj.y), obj.r, 0, Math.PI * 2);
       ctx.fillStyle = def.color;
-      ctx.fill();
+      ctx.fillRect(Math.round(obj.x - obj.r), Math.round(obj.y - obj.r), obj.r * 2, obj.r * 2);
       ctx.restore();
 
-      /* Body */
+      /* Body (a crate: its submerged depth fraction is its volume fraction) */
       ctx.save();
       ctx.beginPath();
-      ctx.arc(Math.round(obj.x), Math.round(obj.y), obj.r, 0, Math.PI * 2);
+      ctx.rect(Math.round(obj.x - obj.r), Math.round(obj.y - obj.r), obj.r * 2, obj.r * 2);
       ctx.fillStyle = def.color;
       ctx.fill();
       ctx.strokeStyle = 'oklch(0.90 0.01 90 / 0.3)';
@@ -203,15 +202,17 @@
       if (obj.submergedFraction > 0.05) {
         var Fb = WATER_DENSITY * G * obj.volume * obj.submergedFraction;
         var Fg = obj.mass * G;
-        var arrowScale = 3;
+        /* One scale for both arrows: the larger of the weight and the full-immersion buoyancy gets 80 px */
+        var Fmax = Math.max(Fg, WATER_DENSITY * G * obj.volume);
+        var arrowScale = 80 / Fmax;
 
         /* Weight arrow (down) */
-        drawArrow(obj.x - 30, obj.y, obj.x - 30, obj.y + Math.min(Fg * arrowScale, 80),
-          'oklch(0.68 0.22 20)', '↓ Weight');
+        drawArrow(obj.x - 30, obj.y, obj.x - 30, obj.y + Fg * arrowScale,
+          'oklch(0.68 0.22 20)', '↓ Weight ' + Fg.toFixed(0) + ' N');
 
         /* Buoyancy arrow (up) */
-        drawArrow(obj.x + 30, obj.y, obj.x + 30, obj.y - Math.min(Fb * arrowScale, 80),
-          'oklch(0.72 0.15 145)', '↑ Buoyancy');
+        drawArrow(obj.x + 30, obj.y, obj.x + 30, obj.y - Fb * arrowScale,
+          'oklch(0.72 0.15 145)', '↑ Buoyancy ' + Fb.toFixed(0) + ' N');
       }
 
       /* Info readout */
@@ -227,6 +228,11 @@
       ctx.textBaseline = 'top';
       ctx.fillText(def.name + '  ' + def.density + ' kg/m³  —  ' + status, W / 2, 12);
       ctx.restore();
+
+      var litres = (obj.volume * obj.submergedFraction * 1000).toFixed(1);
+      var st = document.getElementById('sim-status');
+      if (st) st.textContent = def.name + ': displaced water ' + litres + ' L of the object\u2019s ' +
+        (obj.volume * 1000).toFixed(0) + ' L; its weight is ' + (obj.mass * G).toFixed(0) + ' N.';
     }
   }
 
@@ -264,6 +270,7 @@
   /* ── SimAPI ─────────────────────────────────────────────── */
   function start() {
     if (running) return;
+    if (obj && obj.state === 'resting') obj = makeObject(objIdx); /* replay a finished drop */
     running = true;
     lastTs = null;
     var btn = document.getElementById('sim-play-btn');
