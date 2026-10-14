@@ -1,0 +1,890 @@
+{
+ "protocol": {
+  "train": "jd_tt < 2304000.5",
+  "frame": "mean ecliptic and equinox of JD 2302000.0 (fixed, inertial); angles below are in that frame; time origin T0 = JD 2302000.0 (TT); rates in rad/day",
+  "sigma_floor_arcmin": 0.5,
+  "outlier_rule": "|z| > 5 x 1.4826 MAD or d > 60 arcmin",
+  "decision": "lowest held-out median; within 1.25x tied; lowest training BIC among tied; held-out median > 3x in-sample median disqualifies"
+ },
+ "winner_preregistered": "H_kepler",
+ "winner_including_posthoc": "H_kepler_3rd_law",
+ "winner": {
+  "name": "H_kepler_3rd_law",
+  "raw_parameters": {
+   "n_E": {
+    "value": 0.017202215700410726,
+    "sigma": 9.042099758594796e-08
+   },
+   "L_E": {
+    "value": -1.0153897095721136,
+    "sigma": 0.00010246704971376595
+   },
+   "k_E": {
+    "value": -0.0016683331394900676,
+    "sigma": 0.0001299509100512065
+   },
+   "h_E": {
+    "value": 0.016932429477426375,
+    "sigma": 0.0001296621758520668
+   },
+   "n_P": {
+    "value": 0.00914615721439342,
+    "sigma": 5.908346295751657e-08
+   },
+   "L_P": {
+    "value": 1.8013561642694762,
+    "sigma": 5.940210075017266e-05
+   },
+   "k_P": {
+    "value": 0.07932865826549436,
+    "sigma": 8.066003245117684e-05
+   },
+   "h_P": {
+    "value": -0.04852271596758454,
+    "sigma": 8.164972665675892e-05
+   },
+   "i": {
+    "value": -0.0323961392867912,
+    "sigma": 2.0736319073883667e-05
+   },
+   "Omega": {
+    "value": 3.9505290881591053,
+    "sigma": 0.0005896650171703609
+   }
+  },
+  "reduced_chi2_with_floor": 1.5448222111618857,
+  "derived": {
+   "P_E_days": {
+    "value": 365.2544193495706,
+    "sigma": 0.0019197962488773828
+   },
+   "P_P_days": {
+    "value": 686.9754324025461,
+    "sigma": 0.0044373226087313705
+   },
+   "e_E": {
+    "value": 0.017014420456552097,
+    "sigma": 0.00012792982872437424
+   },
+   "e_P": {
+    "value": 0.09299188129656519,
+    "sigma": 7.461177979989852e-05
+   },
+   "perihelion_lon_E_deg": {
+    "value": 95.62712603782714,
+    "sigma": 0.4433541519076942
+   },
+   "perihelion_lon_P_deg": {
+    "value": 328.54725378328635,
+    "sigma": 0.053734158693838796
+   },
+   "mean_lon_E_at_T0_deg": {
+    "value": 301.82245508050346,
+    "sigma": 0.005870929488724544
+   },
+   "mean_lon_P_at_T0_deg": {
+    "value": 103.2101056125156,
+    "sigma": 0.0034034896679470917
+   },
+   "a_P_over_a_E": {
+    "value": 1.5236918731857605,
+    "sigma": 1.944752336980613e-06
+   },
+   "inclination_deg": {
+    "value": 1.8561620536510925,
+    "sigma": 0.0011881035655700715
+   },
+   "ascending_node_deg": {
+    "value": 46.34864359518224,
+    "sigma": 0.03378531681862083
+   },
+   "period_ratio_PP_over_PE": {
+    "value": 1.8808134714040763,
+    "sigma": 3.600634014729906e-06
+   },
+   "synodic_period_days": {
+    "value": 779.9329309841966,
+    "sigma": 0.0035305571603527664
+   },
+   "third_law_a3_over_P2_ratio": {
+    "value": 1.0000000000000004,
+    "sigma": 7.236080748911357e-17
+   },
+   "exponent_q_in_a_eq_Pratio_pow_q": {
+    "value": 0.6666666666666669,
+    "sigma": 3.2936459029572343e-17
+   }
+  }
+ },
+ "other_physical_models": {
+  "H_kepler": {
+   "raw_parameters": {
+    "n_E": {
+     "value": 0.017202215700717637,
+     "sigma": 9.049445930139694e-08
+    },
+    "L_E": {
+     "value": -1.0153904394267759,
+     "sigma": 0.00010255757518485084
+    },
+    "k_E": {
+     "value": -0.001659317423086119,
+     "sigma": 0.00013071363831613158
+    },
+    "h_E": {
+     "value": 0.016907197981638682,
+     "sigma": 0.0001347062064167721
+    },
+    "n_P": {
+     "value": 0.009146154704623275,
+     "sigma": 5.923869601634402e-08
+    },
+    "L_P": {
+     "value": 1.8013559462475415,
+     "sigma": 5.945378679934361e-05
+    },
+    "k_P": {
+     "value": 0.07933532587572281,
+     "sigma": 8.130443866130308e-05
+    },
+    "h_P": {
+     "value": -0.04854075764421419,
+     "sigma": 8.570778682029999e-05
+    },
+    "a_P": {
+     "value": 1.5236487931788198,
+     "sigma": 6.188676734919068e-05
+    },
+    "i": {
+     "value": -0.03239441165621511,
+     "sigma": 2.0900819798560613e-05
+    },
+    "Omega": {
+     "value": 3.9505404165959837,
+     "sigma": 0.0005904047132596575
+    }
+   },
+   "reduced_chi2_with_floor": 1.5475142104941095,
+   "derived": {
+    "P_E_days": {
+     "value": 365.25441934305394,
+     "sigma": 0.0019213559697771033
+    },
+    "P_P_days": {
+     "value": 686.975620913509,
+     "sigma": 0.004448983459011701
+    },
+    "e_E": {
+     "value": 0.016988427764242465,
+     "sigma": 0.00013334754727967885
+    },
+    "e_P": {
+     "value": 0.09300698406292654,
+     "sigma": 7.77709510575637e-05
+    },
+    "perihelion_lon_E_deg": {
+     "value": 95.6052099090683,
+     "sigma": 0.4455253531257491
+    },
+    "perihelion_lon_P_deg": {
+     "value": 328.5399157303813,
+     "sigma": 0.05478207789074911
+    },
+    "mean_lon_E_at_T0_deg": {
+     "value": 301.8224132629117,
+     "sigma": 0.005876116212351307
+    },
+    "mean_lon_P_at_T0_deg": {
+     "value": 103.21009312077891,
+     "sigma": 0.0034064510599689677
+    },
+    "a_P_over_a_E": {
+     "value": 1.5236487931788198,
+     "sigma": 6.188676734735407e-05
+    },
+    "inclination_deg": {
+     "value": 1.8560630677105248,
+     "sigma": 0.0011975287628209032
+    },
+    "ascending_node_deg": {
+     "value": 46.349292666803876,
+     "sigma": 0.033827698269173666
+    },
+    "period_ratio_PP_over_PE": {
+     "value": 1.8808139875462764,
+     "sigma": 3.678586530519033e-06
+    },
+    "synodic_period_days": {
+     "value": 779.9326879756399,
+     "sigma": 0.0035507915084129075
+    },
+    "third_law_a3_over_P2_ratio": {
+     "value": 0.9999146332824671,
+     "sigma": 0.00012256594448198268
+    },
+    "exponent_q_in_a_eq_Pratio_pow_q": {
+     "value": 0.6666216190531598,
+     "sigma": 6.468013197914297e-05
+    }
+   }
+  },
+  "H_kepler_apsidal_posthoc": {
+   "raw_parameters": {
+    "n_E": {
+     "value": 0.017202056677930025,
+     "sigma": 9.877876659509789e-08
+    },
+    "L_E": {
+     "value": -1.0152805566001788,
+     "sigma": 0.00010636033912491239
+    },
+    "k_E": {
+     "value": -0.0018238170385038706,
+     "sigma": 0.00013592364310769007
+    },
+    "h_E": {
+     "value": 0.01674361546493018,
+     "sigma": 0.0001469856002740135
+    },
+    "n_P": {
+     "value": 0.009146471331919398,
+     "sigma": 9.853152899058713e-08
+    },
+    "L_P": {
+     "value": 1.8013583730429483,
+     "sigma": 6.690069723229748e-05
+    },
+    "k_P": {
+     "value": 0.07931566292211081,
+     "sigma": 8.028046094309004e-05
+    },
+    "h_P": {
+     "value": -0.04839923600362078,
+     "sigma": 9.451495650016863e-05
+    },
+    "a_P": {
+     "value": 1.5237782460533327,
+     "sigma": 6.893516120879114e-05
+    },
+    "i": {
+     "value": -0.03241537423580024,
+     "sigma": 2.1128257336287318e-05
+    },
+    "Omega": {
+     "value": 3.9508112552364736,
+     "sigma": 0.0005818363574642044
+    },
+    "wdot_E": {
+     "value": -1.7737280685663368e-05,
+     "sigma": 4.585908538572903e-06
+    },
+    "wdot_P": {
+     "value": 3.8623841828926056e-07,
+     "sigma": 2.622377404616223e-07
+    }
+   },
+   "reduced_chi2_with_floor": 1.4813466910018713,
+   "derived": {
+    "apse_rate_E_deg_per_century": {
+     "value": -37.119310084534085,
+     "sigma": 9.597060794115336
+    },
+    "apse_rate_P_deg_per_century": {
+     "value": 0.8082920865444291,
+     "sigma": 0.5487923530426118
+    }
+   }
+  },
+  "H_equant_circles": {
+   "raw_parameters": {
+    "n_E": {
+     "value": 0.017203666647459735,
+     "sigma": 2.9400209929955596e-07
+    },
+    "L_E": {
+     "value": -1.0084814536662148,
+     "sigma": 0.0004399587862858522
+    },
+    "k_E": {
+     "value": 0.001065940926713062,
+     "sigma": 4.538902854580913e-05
+    },
+    "h_E": {
+     "value": -0.0017646346625529742,
+     "sigma": 3.15016176244209e-05
+    },
+    "f_E": {
+     "value": 13.132632265024238,
+     "sigma": 6.505894762580516e-06
+    },
+    "n_P": {
+     "value": 0.009147338059184513,
+     "sigma": 1.926187015354629e-07
+    },
+    "L_P": {
+     "value": 1.805644399971795,
+     "sigma": 0.00024834221207943087
+    },
+    "k_P": {
+     "value": -0.08391674579216064,
+     "sigma": 0.00017633984805000272
+    },
+    "h_P": {
+     "value": 0.057071397089958335,
+     "sigma": 0.00023634935735259704
+    },
+    "f_P": {
+     "value": 1.8160412809261928,
+     "sigma": 0.0068687917670822475
+    },
+    "a_P": {
+     "value": 1.5242542310020604,
+     "sigma": 0.0002471871803291992
+    },
+    "i": {
+     "value": -0.032387999052439234,
+     "sigma": 7.164988425551868e-05
+    },
+    "Omega": {
+     "value": 3.955935574155608,
+     "sigma": 0.002049623218270714
+    }
+   },
+   "reduced_chi2_with_floor": 16.921437402765996,
+   "derived": {
+    "P_E_days": {
+     "value": 365.2236140083167,
+     "sigma": 0.006241126982136272
+    },
+    "P_P_days": {
+     "value": 686.8867496233909,
+     "sigma": 0.014462433827698563
+    },
+    "centre_offset_E": {
+     "value": 0.0020615929645604997,
+     "sigma": 3.871437824953757e-05
+    },
+    "equant_fraction_f_E": {
+     "value": 13.132632265024238,
+     "sigma": 6.505894762673256e-06
+    },
+    "equant_offset_E": {
+     "value": 0.027074142283734188,
+     "sigma": 0.0005084122404139065
+    },
+    "centre_offset_P": {
+     "value": 0.10148479979852064,
+     "sigma": 0.00025140418439521003
+    },
+    "equant_fraction_f_P": {
+     "value": 1.8160412809261928,
+     "sigma": 0.006868791767024601
+    },
+    "equant_offset_P": {
+     "value": 0.18430058582064365,
+     "sigma": 0.00033901474792554436
+    },
+    "a_P_over_a_E": {
+     "value": 1.5242542310020604,
+     "sigma": 0.0002471871803378852
+    },
+    "apsis_lon_E_deg": {
+     "value": 301.1343929613665,
+     "sigma": 1.0953950313750505
+    },
+    "apsis_lon_P_deg": {
+     "value": 145.7805583255287,
+     "sigma": 0.08701161429318065
+    }
+   }
+  },
+  "G_ptolemy_equant": {
+   "raw_parameters": {
+    "n_def": {
+     "value": 0.009143481366933008,
+     "sigma": 2.34301093525832e-07
+    },
+    "L_def": {
+     "value": 1.8037031286327845,
+     "sigma": 0.0002153307148489195
+    },
+    "k_def": {
+     "value": -0.08320104347345575,
+     "sigma": 0.00019173001886498624
+    },
+    "h_def": {
+     "value": 0.057964845510812435,
+     "sigma": 0.0001466963952126486
+    },
+    "f_equant": {
+     "value": 1.950822906361672,
+     "sigma": 0.004345181641311506
+    },
+    "i": {
+     "value": -0.03203359454634487,
+     "sigma": 9.105251475387869e-05
+    },
+    "Omega": {
+     "value": 3.9558654810034968,
+     "sigma": 0.002877899655848708
+    },
+    "r_epi": {
+     "value": 0.658685495103646,
+     "sigma": 0.0001202767774884847
+    },
+    "n_epi": {
+     "value": 0.017194321926430858,
+     "sigma": 3.37024664726649e-07
+    },
+    "L_epi": {
+     "value": 2.1311578373795093,
+     "sigma": 0.00035879219777995824
+    }
+   },
+   "reduced_chi2_with_floor": 18.181707040301994,
+   "derived": {
+    "P_deferent_days": {
+     "value": 687.1764763367315,
+     "sigma": 0.017606925247078725
+    },
+    "P_epicycle_days": {
+     "value": 365.4221046961536,
+     "sigma": 0.007162195790585921
+    },
+    "deferent_centre_offset": {
+     "value": 0.1014018587115849,
+     "sigma": 0.00022058797724674675
+    },
+    "equant_fraction": {
+     "value": 1.950822906361672,
+     "sigma": 0.004345181641234226
+    },
+    "epicycle_radius_over_deferent": {
+     "value": 0.658685495103646,
+     "sigma": 0.00012027677749194334
+    }
+   }
+  },
+  "H_circles": {
+   "raw_parameters": {
+    "n_E": {
+     "value": 0.017196226285493606,
+     "sigma": 3.5499786641226732e-06
+    },
+    "L_E": {
+     "value": -0.8751616444692158,
+     "sigma": 0.001159742852565335
+    },
+    "n_P": {
+     "value": 0.00924595776485435,
+     "sigma": 3.13545201523924e-06
+    },
+    "L_P": {
+     "value": 1.9114210436879677,
+     "sigma": 0.0012389606209486795
+    },
+    "a_P": {
+     "value": 1.4215986731715167,
+     "sigma": 0.007720831982290307
+    },
+    "i": {
+     "value": 0.025399270785447497,
+     "sigma": 0.0005851223312810669
+    },
+    "Omega": {
+     "value": 0.829473353603292,
+     "sigma": 0.014160483921949232
+    }
+   },
+   "reduced_chi2_with_floor": 85.59381368633017,
+   "derived": {
+    "P_E_days": {
+     "value": 365.38163681179026,
+     "sigma": 0.0754247803343197
+    },
+    "P_P_days": {
+     "value": 679.5602431868305,
+     "sigma": 0.23042481518321953
+    },
+    "a_P_over_a_E": {
+     "value": 1.4215986731715167,
+     "sigma": 0.007720831982572941
+    }
+   }
+  }
+ },
+ "scores": {
+  "H_circles": {
+   "family": "heliocentric uniform concentric circles (Copernican, no eccentrics)",
+   "k_params": 7,
+   "train_rows_rejected": 131,
+   "robust_scale_s": 6.304,
+   "BIC_common_train": 23.1,
+   "chi2_common_train": 22.2,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 3853.5,
+   "chi2_kepler_inliers_posthoc": 79058760.3,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 546.414,
+    "rms_arcmin": 1336.71,
+    "n_outliers": 130,
+    "median_arcmin_inliers": 9.575,
+    "rms_arcmin_inliers": 16.0
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 1536.206,
+    "rms_arcmin": 1871.034,
+    "n_outliers": 28,
+    "median_arcmin_inliers": NaN,
+    "rms_arcmin_inliers": NaN
+   },
+   "fails_later_years": false
+  },
+  "H_kepler": {
+   "family": "heliocentric Kepler ellipses for both orbits",
+   "k_params": 11,
+   "train_rows_rejected": 6,
+   "robust_scale_s": 1.023,
+   "BIC_common_train": 28.5,
+   "chi2_common_train": 16.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 185.4,
+   "chi2_kepler_inliers_posthoc": 456.5,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.376,
+    "rms_arcmin": 5.07,
+    "n_outliers": 6,
+    "median_arcmin_inliers": 1.365,
+    "rms_arcmin_inliers": 2.006
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 2.465,
+    "rms_arcmin": 192.098,
+    "n_outliers": 1,
+    "median_arcmin_inliers": 2.211,
+    "rms_arcmin_inliers": 3.23
+   },
+   "fails_later_years": false
+  },
+  "H_equant_circles": {
+   "family": "heliocentric eccentric circles with equants, both orbits, equant fraction free",
+   "k_params": 13,
+   "train_rows_rejected": 14,
+   "robust_scale_s": 2.384,
+   "BIC_common_train": 32.7,
+   "chi2_common_train": 14.6,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 1097.8,
+   "chi2_kepler_inliers_posthoc": 8673.2,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 4.918,
+    "rms_arcmin": 9.422,
+    "n_outliers": 14,
+    "median_arcmin_inliers": 4.606,
+    "rms_arcmin_inliers": 5.745
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 16.332,
+    "rms_arcmin": 193.576,
+    "n_outliers": 19,
+    "median_arcmin_inliers": 9.022,
+    "rms_arcmin_inliers": 9.536
+   },
+   "fails_later_years": true
+  },
+  "G_ptolemy_equant": {
+   "family": "geocentric eccentric deferent with equant + circular epicycle (Earth at rest)",
+   "k_params": 10,
+   "train_rows_rejected": 60,
+   "robust_scale_s": 2.838,
+   "BIC_common_train": 25.2,
+   "chi2_common_train": 15.8,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 1733.3,
+   "chi2_kepler_inliers_posthoc": 73208.1,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 7.177,
+    "rms_arcmin": 26.423,
+    "n_outliers": 61,
+    "median_arcmin_inliers": 3.895,
+    "rms_arcmin_inliers": 6.595
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 22.753,
+    "rms_arcmin": 198.063,
+    "n_outliers": 23,
+    "median_arcmin_inliers": 9.998,
+    "rms_arcmin_inliers": 10.975
+   },
+   "fails_later_years": true
+  },
+  "A_spline_time": {
+   "family": "no physics: smoothing spline in time",
+   "k_params": 203,
+   "train_rows_rejected": 3,
+   "robust_scale_s": 1.038,
+   "BIC_common_train": 54.1,
+   "chi2_common_train": 15.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 1214.7,
+   "chi2_kepler_inliers_posthoc": 356.9,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.232,
+    "rms_arcmin": 29.736,
+    "n_outliers": 3,
+    "median_arcmin_inliers": 1.199,
+    "rms_arcmin_inliers": 1.821
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 9713.041,
+    "rms_arcmin": 8740.255,
+    "n_outliers": 28,
+    "median_arcmin_inliers": NaN,
+    "rms_arcmin_inliers": NaN
+   },
+   "fails_later_years": true
+  },
+  "B_harmonic_K1": {
+   "family": "no physics: two-frequency harmonic series",
+   "k_params": 17,
+   "train_rows_rejected": 95,
+   "robust_scale_s": 18.323,
+   "BIC_common_train": 44.6,
+   "chi2_common_train": 14.6,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 3054.6,
+   "chi2_kepler_inliers_posthoc": 4818188.4,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 89.705,
+    "rms_arcmin": 177.997,
+    "n_outliers": 95,
+    "median_arcmin_inliers": 23.946,
+    "rms_arcmin_inliers": 28.264
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 159.52,
+    "rms_arcmin": 304.801,
+    "n_outliers": 21,
+    "median_arcmin_inliers": 30.394,
+    "rms_arcmin_inliers": 36.271
+   },
+   "fails_later_years": false
+  },
+  "B_harmonic_K2": {
+   "family": "no physics: two-frequency harmonic series",
+   "k_params": 41,
+   "train_rows_rejected": 63,
+   "robust_scale_s": 4.87,
+   "BIC_common_train": -316.0,
+   "chi2_common_train": 0.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 283.2,
+   "chi2_kepler_inliers_posthoc": 358.6,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 13.449,
+    "rms_arcmin": 1972.822,
+    "n_outliers": 62,
+    "median_arcmin_inliers": 6.327,
+    "rms_arcmin_inliers": 10.9
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 628.24,
+    "rms_arcmin": 2668.329,
+    "n_outliers": 28,
+    "median_arcmin_inliers": NaN,
+    "rms_arcmin_inliers": NaN
+   },
+   "fails_later_years": true
+  },
+  "B_harmonic_K3": {
+   "family": "no physics: two-frequency harmonic series",
+   "k_params": 77,
+   "train_rows_rejected": 6,
+   "robust_scale_s": 0.787,
+   "BIC_common_train": -298.4,
+   "chi2_common_train": 0.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 479.1,
+   "chi2_kepler_inliers_posthoc": 346.9,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.03,
+    "rms_arcmin": 4.687,
+    "n_outliers": 6,
+    "median_arcmin_inliers": 1.026,
+    "rms_arcmin_inliers": 1.706
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 21.334,
+    "rms_arcmin": 6048.583,
+    "n_outliers": 24,
+    "median_arcmin_inliers": 4.018,
+    "rms_arcmin_inliers": 4.104
+   },
+   "fails_later_years": true
+  },
+  "B_harmonic_K4": {
+   "family": "no physics: two-frequency harmonic series",
+   "k_params": 125,
+   "train_rows_rejected": 6,
+   "robust_scale_s": 0.73,
+   "BIC_common_train": -218.0,
+   "chi2_common_train": 0.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 622.0,
+   "chi2_kepler_inliers_posthoc": 225.5,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.004,
+    "rms_arcmin": 8.013,
+    "n_outliers": 6,
+    "median_arcmin_inliers": 0.976,
+    "rms_arcmin_inliers": 1.64
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 1157.238,
+    "rms_arcmin": 2682.298,
+    "n_outliers": 28,
+    "median_arcmin_inliers": NaN,
+    "rms_arcmin_inliers": NaN
+   },
+   "fails_later_years": true
+  },
+  "H_kepler_3rd_law": {
+   "family": "heliocentric Kepler ellipses with a_P = (P_P/P_E)^(2/3) imposed (post hoc)",
+   "k_params": 10,
+   "train_rows_rejected": 6,
+   "robust_scale_s": 1.004,
+   "BIC_common_train": 25.5,
+   "chi2_common_train": 16.0,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 180.2,
+   "chi2_kepler_inliers_posthoc": 457.3,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.367,
+    "rms_arcmin": 5.064,
+    "n_outliers": 6,
+    "median_arcmin_inliers": 1.335,
+    "rms_arcmin_inliers": 2.003
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 2.383,
+    "rms_arcmin": 192.098,
+    "n_outliers": 1,
+    "median_arcmin_inliers": 2.077,
+    "rms_arcmin_inliers": 3.191
+   },
+   "fails_later_years": false
+  },
+  "H_kepler_apsidal_posthoc": {
+   "family": "Kepler ellipses + uniformly rotating apse lines (post hoc)",
+   "k_params": 13,
+   "train_rows_rejected": 6,
+   "robust_scale_s": 1.005,
+   "BIC_common_train": 35.2,
+   "chi2_common_train": 16.6,
+   "n_resid_common": 20,
+   "BIC_kepler_inliers_posthoc": 181.4,
+   "chi2_kepler_inliers_posthoc": 434.0,
+   "n_resid_kepler_inliers": 306,
+   "in_sample": {
+    "n_rows": 159,
+    "median_arcmin": 1.298,
+    "rms_arcmin": 5.054,
+    "n_outliers": 6,
+    "median_arcmin_inliers": 1.235,
+    "rms_arcmin_inliers": 1.942
+   },
+   "held_out": {
+    "n_rows": 28,
+    "median_arcmin": 2.984,
+    "rms_arcmin": 192.156,
+    "n_outliers": 4,
+    "median_arcmin_inliers": 2.547,
+    "rms_arcmin_inliers": 3.142
+   },
+   "fails_later_years": false
+  }
+ },
+ "search_log": {
+  "grid_coarse_periods_d": [
+   367.8273663560579,
+   689.3382352941193
+  ],
+  "grid_fine_valley_periods_d": [
+   [
+    367.42192284139725,
+    688.8633754305413
+   ],
+   [
+    368.0981595092035,
+    689.8137502874241
+   ],
+   [
+    366.74816625916975,
+    687.9156156844778
+   ],
+   [
+    368.7768899815622,
+    690.7667510937157
+   ]
+  ],
+  "periodogram_strongest_period_d": 687.537241600572,
+  "harmonic_K1_scan_periods_d": [
+   691.339816564487,
+   370.55335968379546
+  ],
+  "q_fitted": 0.6666216190531598,
+  "q_used": 0.6666666666666666,
+  "kepler_aP_free": 1.5236487931788198,
+  "kepler_aP_from_periods^(2/3)": 1.5236921519451558,
+  "decision_posthoc_BIC_on_kepler_inliers": {
+   "winner": "H_kepler_3rd_law",
+   "tied": [
+    "H_kepler",
+    "H_kepler_3rd_law"
+   ]
+  },
+  "decision_preregistered": {
+   "winner": "H_kepler",
+   "tied": [
+    "H_kepler"
+   ]
+  },
+  "decision_including_posthoc": {
+   "winner": "H_kepler_3rd_law",
+   "tied": [
+    "H_kepler",
+    "H_kepler_3rd_law"
+   ]
+  }
+ }
+}

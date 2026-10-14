@@ -1,0 +1,37 @@
+/Users/faviovazquez/opt/anaconda3/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3464: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/faviovazquez/opt/anaconda3/lib/python3.9/site-packages/numpy/core/_methods.py:192: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+/Users/faviovazquez/opt/anaconda3/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3464: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/faviovazquez/opt/anaconda3/lib/python3.9/site-packages/numpy/core/_methods.py:192: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+rows: train 159, held out 28
+grid: coarse periods (367.8273663560579, 689.3382352941193) valley [(367.42192284139725, 688.8633754305413), (368.0981595092035, 689.8137502874241), (366.74816625916975, 687.9156156844778), (368.7768899815622, 690.7667510937157)]
+periodogram 687.537241600572 K1 scan [691.339816564487, 370.55335968379546]
+H_circles          k=  7 rejected(train)=131  in: med 546.41 rms 1336.71 | held-out: med 1536.21 rms 1871.03 (inl med nan rms nan)
+H_kepler           k= 11 rejected(train)= 6  in: med 1.38 rms 5.07 | held-out: med 2.46 rms 192.10 (inl med 2.21 rms 3.23)
+H_equant_circles   k= 13 rejected(train)=14  in: med 4.92 rms 9.42 | held-out: med 16.33 rms 193.58 (inl med 9.02 rms 9.54)
+G_ptolemy_equant   k= 10 rejected(train)=60  in: med 7.18 rms 26.42 | held-out: med 22.75 rms 198.06 (inl med 10.00 rms 10.97)
+A_spline_time      k=203 rejected(train)= 3  in: med 1.23 rms 29.74 | held-out: med 9713.04 rms 8740.25 (inl med nan rms nan)
+B_harmonic_K1      k= 17 rejected(train)=95  in: med 89.70 rms 178.00 | held-out: med 159.52 rms 304.80 (inl med 30.39 rms 36.27)
+B_harmonic_K2      k= 41 rejected(train)=63  in: med 13.45 rms 1972.82 | held-out: med 628.24 rms 2668.33 (inl med nan rms nan)
+B_harmonic_K3      k= 77 rejected(train)= 6  in: med 1.03 rms 4.69 | held-out: med 21.33 rms 6048.58 (inl med 4.02 rms 4.10)
+B_harmonic_K4      k=125 rejected(train)= 6  in: med 1.00 rms 8.01 | held-out: med 1157.24 rms 2682.30 (inl med nan rms nan)
+size ~ period^q with q = 0.66662 -> 2/3
+H_circles          k=  7 BIC=     23.1  in med 546.41 rms 1336.71  held med 1536.21 rms 1871.03  inl nan/nan  out(tr/te)=131/28
+H_kepler           k= 11 BIC=     28.5  in med 1.38 rms 5.07  held med 2.46 rms 192.10  inl 2.21/3.23  out(tr/te)=6/1
+H_equant_circles   k= 13 BIC=     32.7  in med 4.92 rms 9.42  held med 16.33 rms 193.58  inl 9.02/9.54  out(tr/te)=14/19
+G_ptolemy_equant   k= 10 BIC=     25.2  in med 7.18 rms 26.42  held med 22.75 rms 198.06  inl 10.00/10.97  out(tr/te)=60/23
+A_spline_time      k=203 BIC=     54.1  in med 1.23 rms 29.74  held med 9713.04 rms 8740.25  inl nan/nan  out(tr/te)=3/28
+B_harmonic_K1      k= 17 BIC=     44.6  in med 89.70 rms 178.00  held med 159.52 rms 304.80  inl 30.39/36.27  out(tr/te)=95/21
+B_harmonic_K2      k= 41 BIC=   -316.0  in med 13.45 rms 1972.82  held med 628.24 rms 2668.33  inl nan/nan  out(tr/te)=63/28
+B_harmonic_K3      k= 77 BIC=   -298.4  in med 1.03 rms 4.69  held med 21.33 rms 6048.58  inl 4.02/4.10  out(tr/te)=6/24
+B_harmonic_K4      k=125 BIC=   -218.0  in med 1.00 rms 8.01  held med 1157.24 rms 2682.30  inl nan/nan  out(tr/te)=6/28
+H_kepler_3rd_law   k= 10 BIC=     25.5  in med 1.37 rms 5.06  held med 2.38 rms 192.10  inl 2.08/3.19  out(tr/te)=6/1
+winner (pre-registered set): H_kepler ['H_kepler']
+winner (incl. post hoc): H_kepler_3rd_law ['H_kepler', 'H_kepler_3rd_law']
+
+real	14m7.731s
+user	14m27.496s
+sys	5m37.265s
