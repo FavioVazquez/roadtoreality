@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="In 1998, astronomers found that distant supernovae were dimmer than expected — the universe isn't just expanding, it is expanding faster and faster. Something is pushing it apart.">
+  <meta name="description" content="Integrate the Friedmann equation for any mix of matter and dark energy, watch a(t), and test it against 40 bins of supernova distances. Distant supernovae are fainter than a decelerating universe allows.">
   <meta property="og:title" content="Dark Energy — How Physics Works">
-  <meta property="og:description" content="In 1998, astronomers found that distant supernovae were dimmer than expected — the universe isn't just expanding, it is expanding faster and faster. Something is pushing it apart.">
+  <meta property="og:description" content="Integrate the Friedmann equation for any mix of matter and dark energy, watch a(t), and test it against 40 bins of supernova distances. Distant supernovae are fainter than a decelerating universe allows.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/047-dark-energy/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,19 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    .view-tabs { display:flex; flex-wrap:wrap; gap:0.5rem; width:100%; }
+    .view-tabs .sim-btn[aria-pressed="true"] { border-color: var(--era-stop-color); color: var(--color-text); background: oklch(0.68 0.22 20 / 0.14); }
+    .sim-control[hidden] { display:none; }
+    .data-table { width:100%; border-collapse:collapse; font-size:var(--text-xs); font-family:var(--font-mono); color:var(--color-text-secondary); }
+    .data-table th, .data-table td { padding:0.2rem 0.4rem; text-align:right; border-bottom:1px solid oklch(1 0 0 / 0.06); }
+    .data-table th:first-child, .data-table td:first-child { text-align:left; }
+    .table-scroll { overflow-x:auto; margin-block:var(--space-4); }
+    .readout-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.5rem 1rem; width:100%; margin:0; font-family:var(--font-mono); font-size:var(--text-xs); }
+    .readout-grid dt { color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+    .readout-grid dd { margin:0; color:var(--color-text); }
+    .sim-control input[type="range"]:disabled { opacity:0.45; cursor:not-allowed; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,44 +73,112 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>In 1998, astronomers found that distant supernovae were dimmer than expected — the universe isn't just expanding, it is expanding faster and faster. Something is pushing it apart.</p>
+    <p>
+      Gravity pulls matter together, so in the 1990s astronomers expected the expansion of the universe to be slowing down. Two teams set out to measure how fast, using type Ia supernovae as standard light bulbs. In 1998 the High-Z Supernova Search Team reported that distant supernovae are on average 10 to 15 % farther away than expected in a low-density universe without a cosmological constant, and that the expansion is accelerating<sup><a href="#src-1">[1]</a></sup>. In 1999 the Supernova Cosmology Project, with 42 distant supernovae, found the same: a cosmological constant greater than zero with 99 % confidence<sup><a href="#src-2">[2]</a></sup>.
+    </p>
+    <p>
+      Whatever causes the acceleration is called dark energy. The simulation below computes the expansion history of a universe for any mix of matter and dark energy you choose, and compares the distances it predicts with 40 averaged supernova distances.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Dark Energy — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:640px;" aria-label="Interactive: expansion history and supernova distances for a universe of your choice">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="view-tabs" role="group" aria-label="Preset universes">
+        <button class="sim-btn" id="preset-planck" type="button">Planck 2018</button>
+        <button class="sim-btn" id="preset-1999" type="button">Flat, Ωm = 0.28 (1999)</button>
+        <button class="sim-btn" id="preset-matter" type="button">Matter only</button>
+        <button class="sim-btn" id="preset-empty" type="button">Empty</button>
+        <button class="sim-btn" id="preset-closed" type="button">Recollapse</button>
+        <button class="sim-btn" id="flat-btn" type="button" aria-pressed="true">Flat: on (ΩΛ follows Ωm)</button>
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="om-slider">Matter Ωm <span class="sim-control__value" id="om-val">0.315</span></label>
+        <input type="range" id="om-slider" min="0" max="3" step="0.005" value="0.315" aria-label="Matter density parameter, Omega m" aria-valuetext="Omega matter 0.315">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="ol-slider">Dark energy ΩΛ <span class="sim-control__value" id="ol-val">0.685</span></label>
+        <input type="range" id="ol-slider" min="-0.5" max="1.5" step="0.005" value="0.685" disabled aria-label="Dark energy density parameter, Omega lambda" aria-valuetext="Omega lambda 0.685">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="h0-slider">H₀ <span class="sim-control__value" id="h0-val">67.4 km/s/Mpc</span></label>
+        <input type="range" id="h0-slider" min="50" max="80" step="0.1" value="67.4" aria-label="Hubble constant in kilometres per second per megaparsec; it sets the time scale only" aria-valuetext="67.4 kilometres per second per megaparsec">
+      </div>
+      <dl class="readout-grid" aria-live="polite">
+        <div><dt>Age</dt><dd id="age-out">—</dd></div>
+        <div><dt>Deceleration q₀</dt><dd id="q0-out">—</dd></div>
+        <div><dt>Curvature Ωk</dt><dd id="ok-out">—</dd></div>
+        <div><dt>Acceleration began</dt><dd id="zacc-out">—</dd></div>
+        <div><dt>Supernova χ²</dt><dd id="chi-out">—</dd></div>
+        <div><dt>Fate</dt><dd id="fate-out">—</dd></div>
+      </dl>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play the expansion history">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the animation to today">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Accelerating today.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Compare universe expansion timelines with and without the cosmological constant Λ</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how Type Ia supernovae reveal that distant galaxies recede faster than expected</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore what dark energy implies for the ultimate fate of the universe</li>
+    <h3>The Friedmann Equation</h3>
+    <p>In a universe that is the same everywhere, all distances scale together with one number, the scale factor $a(t)$, set to 1 today. Einstein's equations then reduce to one equation for its rate of change, found by Alexander Friedmann in 1922<sup><a href="#src-7">[7]</a></sup>. Written with today's expansion rate $H_0$ it reads</p>
+    <p style="overflow-x:auto;">$$H^2 = \left(\frac{\dot a}{a}\right)^2 = H_0^2\left[\Omega_r\,a^{-4} + \Omega_m\,a^{-3} + \Omega_k\,a^{-2} + \Omega_\Lambda\right]$$</p>
+    <p>Each $\Omega$ is a present-day density divided by the critical density $3H_0^2/8\pi G$. Radiation ($\Omega_r$) thins out as $a^{-4}$ because its wavelengths stretch as well; matter ($\Omega_m$, ordinary and dark) thins as $a^{-3}$; a cosmological constant ($\Omega_\Lambda$) does not thin at all. The curvature term $\Omega_k = 1 - \Omega_r - \Omega_m - \Omega_\Lambda$ is whatever is left: zero for a flat universe, positive for an open one, negative for a closed one.</p>
+    <p>Whether the expansion speeds up or slows down follows from the same equations:</p>
+    <p style="overflow-x:auto;">$$\frac{\ddot a}{a} = -H_0^2\left[\Omega_r\,a^{-4} + \tfrac12\,\Omega_m\,a^{-3} - \Omega_\Lambda\right]$$</p>
+    <p>Matter and radiation brake the expansion; a positive $\Omega_\Lambda$ accelerates it. Today ($a = 1$) the sign is given by the deceleration parameter $q_0 = \Omega_r + \Omega_m/2 - \Omega_\Lambda$. For the Planck 2018 values, $\Omega_m = 0.315 \pm 0.007$ and $H_0 = 67.4 \pm 0.5$ km/s/Mpc<sup><a href="#src-3">[3]</a></sup>, in a flat universe, $q_0 = -0.53$: the expansion is accelerating. Because matter thins out and $\Omega_\Lambda$ does not, the braking won in the past and the acceleration began only at redshift $z \approx 0.63$, 6.1 billion years ago (both computed here).</p>
+    <p>The simulation computes $a(t)$ from these equations. The past comes from the integral $t = \int da/(aH)$; the future, and the past of universes that never had a Big Bang, come from integrating $\ddot a$ step by step, which follows the expansion through a turnaround. For the Planck parameters it gives an age of 13.79 billion years; Planck's own value is $13.797 \pm 0.023$ billion years<sup><a href="#src-3">[3]</a></sup>. The small difference is the neutrino masses, which the simulation leaves out. A standard Python implementation of the same integral (astropy's flat ΛCDM with $T_\text{CMB} = 2.7255$ K and three massless neutrinos) gives 13.7907 billion years, matching the simulation's value.</p>
+
+    <h3>What the Supernovae Show</h3>
+    <p>Astronomers express distance through the distance modulus $\mu = 5\log_{10}(d_L/10\,\text{pc})$, the difference between how bright a supernova looks and how bright it really is, in magnitudes. The luminosity distance $d_L$ at a given redshift depends on the whole expansion history between the supernova and us:</p>
+    <p style="overflow-x:auto;">$$d_L = (1+z)\,\frac{c}{H_0}\int_0^z \frac{dz'}{\sqrt{\Omega_r(1+z')^4 + \Omega_m(1+z')^3 + \Omega_k(1+z')^2 + \Omega_\Lambda}}$$</p>
+    <p>(with a sine or hyperbolic sine wrapped around the integral when the universe is curved). The lower panel shows each model as its difference from an empty universe, which coasts at a constant rate. If the expansion was faster in the past than today (a decelerating universe), light from a given redshift has had less distance to cover, and supernovae look brighter than in the empty universe: below the zero line. In an accelerating universe they look fainter: above it.</p>
+    <p>The points are the 40 redshift bins of the Pantheon compilation of 1,048 supernovae<sup><a href="#src-4">[4]</a></sup>. Their true brightness and $H_0$ enter only as one combined offset, so for each model the simulation fits that offset and reports the $\chi^2$. With the statistical error bars alone (computed here): the Planck model gives $\chi^2 = 55$ for 40 bins, an empty universe 169, a flat matter-only universe 1,469. At $z = 0.5$ the Planck model's supernovae are 0.11 magnitudes fainter than in the empty universe, 0.20 fainter than in an open universe with $\Omega_m = 0.3$ and no dark energy, and 0.39 fainter than in a flat matter-only universe (computed here). That last difference is a factor of 1.4 in brightness, far larger than the error bars.</p>
+
+    <h3>How It Ends</h3>
+    <p>The Friedmann equation also says what happens next. Move $\Omega_m$ above 1 with no dark energy and the expansion eventually stops and reverses into a collapse; the Recollapse preset ($\Omega_m = 3$) turns around at $a = 1.5$ within the plotted 30 billion years. With a cosmological constant, matter keeps thinning and $\Omega_\Lambda$ eventually dominates: the expansion speeds up for ever, with the distance between unbound galaxies growing exponentially. Push $\Omega_\Lambda$ high enough with little matter and the equation has no Big Bang at all: run backwards, such a universe stops shrinking and bounces. The supernovae at high redshift rule this out.</p>
+
+    <h3>Is Dark Energy Constant?</h3>
+    <p>The simulation treats dark energy as a cosmological constant, whose pressure equals minus its energy density ($w = -1$). Since 2024 the Dark Energy Spectroscopic Instrument (DESI) has measured baryon acoustic oscillations, a standard ruler imprinted in the distribution of galaxies. Combined with the microwave background and supernovae, its data prefer a dark energy that weakens with time ($w_0 > -1$, $w_a < 0$ in the common parametrization $w = w_0 + w_a(1-a)$). With the first year of data the preference was 2.5σ, 3.5σ or 3.9σ, depending on which supernova sample was used<sup><a href="#src-5">[5]</a></sup>. With three years of data it is 3.1σ for DESI and the microwave background alone, and 2.8σ, 3.8σ or 4.2σ when the Pantheon+, Union3 or DES 5-year supernovae are added<sup><a href="#src-6">[6]</a></sup>.</p>
+    <p>None of these reaches the 5σ that physicists usually ask before claiming a discovery, the significance depends on which supernova sample is used, and the DESI team itself notes that combining supernovae from many surveys is a delicate calibration problem<sup><a href="#src-6">[6]</a></sup>. The hint is taken seriously and is not settled. Stop 50 keeps a gauge on it.</p>
+
+    <h3>What the Simulation Leaves Out</h3>
+    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+      <li>Dark energy is a cosmological constant ($w = -1$). Evolving dark energy is described above but not simulated.</li>
+      <li>Radiation is photons at 2.7255 K plus three massless neutrino species, $\Omega_r h^2 = 4.18 \times 10^{-5}$ (computed). Neutrino masses are left out, which is why the Planck age differs by 0.006 billion years.</li>
+      <li>The supernova points are the binned Pantheon (2018) compilation with only their statistical errors. The published analysis also uses a covariance matrix of systematic errors, so the $\chi^2$ values here are illustrative, not a cosmological fit. The 2018 Pantheon release is used because it includes a published binned version.</li>
+      <li>$H_0$ changes only the time axis and the age. The supernova panel does not depend on it, because it is absorbed in the fitted offset.</li>
+      <li>Nothing on this page is a new measurement: the data are transcribed from the sources, and the ages, $\chi^2$ values and magnitude differences marked "computed here" are calculated from those data and the equations above.</li>
     </ul>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>In 1998, distant supernovae were dimmer than expected — the expansion of the universe is accelerating. Dark energy (Λ) constitutes about 68% of the total energy content of the universe.</li>
+      <li>Distant supernovae are fainter than any decelerating universe allows: the expansion has been accelerating for the last 6 billion years or so.</li>
+      <li>In the Friedmann equation a cosmological constant does not thin out as space expands, so it eventually dominates; today it is about 69 % of the cosmic energy budget (Planck 2018: $\Omega_\Lambda = 0.6847 \pm 0.0073$).</li>
+      <li>Whether dark energy is truly constant is open: DESI's 2024–25 data hint at evolution at 2.8 to 4.2σ, depending on the supernova sample.</li>
     </ul>
+    <p style="overflow-x:auto;">$$q_0 = \Omega_r + \tfrac12\Omega_m - \Omega_\Lambda < 0 \;\Rightarrow\; \text{acceleration}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. G. Riess et al., "Observational Evidence from Supernovae for an Accelerating Universe and a Cosmological Constant", <em>The Astronomical Journal</em> 116, 1009 (1998). Cited (abstract): 16 high-redshift and 34 nearby supernovae; distances on average 10 % to 15 % farther than expected for $\Omega_M = 0.2$ without a cosmological constant; $\Omega_\Lambda > 0$ at 3.0σ and 4.0σ and $q_0 < 0$ at 2.8σ and 3.9σ for two fitting methods.</li>
+      <li id="src-2">S. Perlmutter et al., "Measurements of Ω and Λ from 42 High-Redshift Supernovae", <em>The Astrophysical Journal</em> 517, 565 (1999). Cited (abstract): flat-universe fit $\Omega_M = 0.28^{+0.09}_{-0.08}$ (statistical) $^{+0.05}_{-0.04}$ (systematic); $P(\Lambda > 0) = 99\,\%$.</li>
+      <li id="src-3">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited: $H_0 = 67.4 \pm 0.5$ km/s/Mpc and $\Omega_m = 0.315 \pm 0.007$ (abstract); age $13.797 \pm 0.023$ Gyr and $\Omega_\Lambda = 0.6847 \pm 0.0073$ (Table 2, TT,TE,EE+lowE+lensing).</li>
+      <li id="src-4">D. M. Scolnic et al., "The Complete Light-curve Sample of Spectroscopically Confirmed SNe Ia from Pan-STARRS1 and Cosmological Constraints from the Combined Pantheon Sample", <em>The Astrophysical Journal</em> 859, 101 (2018). Data: the binned distances of the public release, file <code>Binned_data/lcparam_DS17f.txt</code>, columns <code>zcmb</code>, <code>mb</code>, <code>dmb</code> (40 bins, $0.014 \le z \le 1.61$).</li>
+      <li id="src-5">DESI Collaboration, "DESI 2024 VI: Cosmological Constraints from the Measurements of Baryon Acoustic Oscillations", <em>Journal of Cosmology and Astroparticle Physics</em> 02 (2025) 021. Cited (abstract): preference for $w_0 > -1$, $w_a < 0$ at 2.6σ (DESI+CMB) and 2.5σ, 3.5σ, 3.9σ with Pantheon+, Union3, DES-SN5YR.</li>
+      <li id="src-6">DESI Collaboration, "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints", <em>Physical Review D</em> 112, 083515 (2025). Cited: 3.1σ (DESI+CMB) and 2.8σ, 3.8σ, 4.2σ with Pantheon+, Union3, DESY5 (abstract and Table VI); the calibration caveat for combined supernova samples (p. 28 of the arXiv version, 2503.14738).</li>
+          <li id="src-7">A. Friedman, "Über die Krümmung des Raumes", <em>Zeitschrift für Physik</em> 10, 377–386 (1922).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>The universe accelerates. Gravitational waves are ripples in spacetime — the final major prediction of general relativity to be confirmed, opening a new observational window.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Everything on this page was learned from light. In 2015 a different messenger arrived: ripples in spacetime itself.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +204,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
