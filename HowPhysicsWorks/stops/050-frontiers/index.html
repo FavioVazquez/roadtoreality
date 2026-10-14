@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="What is dark matter made of? Why is there more matter than antimatter? How do gravity and quantum mechanics fit together? The greatest questions in physics remain open.">
+  <meta name="description" content="Six open questions in physics, each with a live gauge drawn from published numbers: the Hubble tension, dark matter, dark energy, quantum gravity, matter and antimatter, neutrino masses. And what would settle each.">
   <meta property="og:title" content="The Open Questions — How Physics Works">
-  <meta property="og:description" content="What is dark matter made of? Why is there more matter than antimatter? How do gravity and quantum mechanics fit together? The greatest questions in physics remain open.">
+  <meta property="og:description" content="Six open questions in physics, each with a live gauge drawn from published numbers: the Hubble tension, dark matter, dark energy, quantum gravity, matter and antimatter, neutrino masses. And what would settle each.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/050-frontiers/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,21 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    .view-tabs { display:flex; flex-wrap:wrap; gap:0.5rem; width:100%; }
+    .view-tabs .sim-btn[aria-pressed="true"] { border-color: var(--era-stop-color); color: var(--color-text); background: oklch(0.68 0.22 20 / 0.14); }
+    .sim-control[hidden] { display:none; }
+    .data-table { width:100%; border-collapse:collapse; font-size:var(--text-xs); font-family:var(--font-mono); color:var(--color-text-secondary); }
+    .data-table th, .data-table td { padding:0.2rem 0.4rem; text-align:right; border-bottom:1px solid oklch(1 0 0 / 0.06); }
+    .data-table th:first-child, .data-table td:first-child { text-align:left; }
+    .table-scroll { overflow-x:auto; margin-block:var(--space-4); }
+    .q-board { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.5rem; width:100%; }
+    .q-board .sim-btn { justify-content:center; text-align:center; }
+    .q-board .sim-btn[aria-pressed="true"] { border-color: var(--era-stop-color); color: var(--color-text); background: oklch(0.68 0.22 20 / 0.14); }
+    .gauge-settle { width:100%; margin:0; font-size:var(--text-sm); line-height:1.6; color:var(--color-text-secondary); }
+    .gauge-ctl { display:flex; flex-direction:column; gap:0.75rem; width:100%; }
+    .gauge-ctl[hidden] { display:none; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -52,7 +67,7 @@
   <header class="stop-header">
     <div class="stop-header__era">Contemporary Physics · Today</div>
     <h1 class="stop-header__title">The Open Questions</h1>
-    <p class="stop-header__subtitle">What physics still doesn't know</p>
+    <p class="stop-header__subtitle">What physics still doesn't know, and what would settle it</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">Today</span>
       <span>·</span>
@@ -60,44 +75,139 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>What is dark matter made of? Why is there more matter than antimatter? How do gravity and quantum mechanics fit together? The greatest questions in physics remain open.</p>
+    <p>
+      This road began with Thales asking a new kind of question: what natural process causes this? Forty-nine stops later the question has not changed. What has changed is the answer's form. An answer in physics is now a number with an error bar, and a question is open when two numbers that should agree do not, or when there is no number at all.
+    </p>
+    <p>
+      The board below has one gauge for each of six open questions. Every gauge is drawn from published values, cited below, and each says which measurement would settle it. Press play to tour the board, or pick a question.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Open Questions — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:400px;" aria-label="Interactive: a board of six open questions in physics, each with a gauge drawn from published numbers">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="q-board" role="group" aria-label="Choose a question">
+        <button class="sim-btn" id="q-h0" type="button" aria-pressed="true">Hubble tension</button>
+        <button class="sim-btn" id="q-dm" type="button" aria-pressed="false">Dark matter</button>
+        <button class="sim-btn" id="q-de" type="button" aria-pressed="false">Dark energy</button>
+        <button class="sim-btn" id="q-qg" type="button" aria-pressed="false">Quantum gravity</button>
+        <button class="sim-btn" id="q-ba" type="button" aria-pressed="false">Matter vs antimatter</button>
+        <button class="sim-btn" id="q-nu" type="button" aria-pressed="false">Neutrino masses</button>
+      </div>
+      <p id="gauge-settle" class="gauge-settle" aria-live="polite"></p>
+      <div class="gauge-ctl" id="ctl-h0">
+        <div class="view-tabs" role="group" aria-label="Local measurement to compare with Planck">
+          <button class="sim-btn" id="loc-shoes" type="button" aria-pressed="true">SH0ES 2022</button>
+          <button class="sim-btn" id="loc-cchp" type="button" aria-pressed="false">CCHP 2025</button>
+        </div>
+        <div class="sim-control" style="width:100%;">
+          <label class="sim-control__label" for="hypo-slider">Local value <span class="sim-control__value" id="hypo-val">73.0 (published)</span></label>
+          <input type="range" id="hypo-slider" min="62" max="80" step="0.1" value="73.04" aria-label="Local Hubble constant value; moving it makes it hypothetical" aria-valuetext="73.0 kilometres per second per megaparsec, published value">
+        </div>
+      </div>
+      <div class="gauge-ctl" id="ctl-dm" hidden></div>
+      <div class="gauge-ctl" id="ctl-de" hidden>
+        <div class="view-tabs" role="group" aria-label="DESI data combination">
+          <button class="sim-btn" id="de-cmb" type="button" aria-pressed="false">DESI + CMB</button>
+          <button class="sim-btn" id="de-pplus" type="button" aria-pressed="true">+ Pantheon+</button>
+          <button class="sim-btn" id="de-union" type="button" aria-pressed="false">+ Union3</button>
+          <button class="sim-btn" id="de-desy5" type="button" aria-pressed="false">+ DES-SN5YR</button>
+        </div>
+      </div>
+      <div class="gauge-ctl" id="ctl-qg" hidden>
+        <div class="sim-control" style="width:100%;">
+          <label class="sim-control__label" for="energy-slider">Collision energy <span class="sim-control__value" id="energy-val">1.36 × 10⁴ GeV</span></label>
+          <input type="range" id="energy-slider" min="0" max="19.087" step="0.001" value="4.13" aria-label="Collision energy, logarithmic, from 1 GeV to the Planck energy" aria-valuetext="13,600 gigaelectronvolts">
+        </div>
+      </div>
+      <div class="gauge-ctl" id="ctl-ba" hidden>
+        <div class="sim-control" style="width:100%;">
+          <label class="sim-control__label" for="count-slider">Photons counted <span class="sim-control__value" id="count-val">10⁹</span></label>
+          <input type="range" id="count-slider" min="3" max="12" step="0.1" value="9" aria-label="Number of microwave-background photons counted, logarithmic" aria-valuetext="10 to the power 9 photons">
+        </div>
+      </div>
+      <div class="gauge-ctl" id="ctl-nu" hidden>
+        <div class="view-tabs" role="group" aria-label="Mass ordering">
+          <button class="sim-btn" id="nu-no" type="button" aria-pressed="true">Normal ordering</button>
+          <button class="sim-btn" id="nu-io" type="button" aria-pressed="false">Inverted ordering</button>
+        </div>
+        <div class="view-tabs" role="group" aria-label="Cosmological model for the bound">
+          <button class="sim-btn" id="nu-lcdm" type="button" aria-pressed="true">Bound in ΛCDM</button>
+          <button class="sim-btn" id="nu-w0wa" type="button" aria-pressed="false">Bound with evolving dark energy</button>
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play: tour the six questions">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the board">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">How fast is the universe expanding?</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore the six greatest open questions in physics and their current experimental approaches</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See which questions may be answered in the next decade — and which may never be</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Find out how to follow the research at the frontier today</li>
+    <h3>How Fast Is the Universe Expanding?</h3>
+    <p>Two routes to the Hubble constant disagree. The Planck satellite measures the microwave background and, assuming the standard ΛCDM model, infers $H_0 = 67.4 \pm 0.5$ km/s/Mpc<sup><a href="#src-1">[1]</a></sup>. The SH0ES team builds a distance ladder from parallaxes to Cepheids to supernovae and measures $73.04 \pm 1.04$<sup><a href="#src-2">[2]</a></sup>. Divided by their combined uncertainty the difference is 4.9σ (computed here; the SH0ES paper quotes 5σ). The Chicago–Carnegie program, calibrating the same supernovae with red-giant stars instead of Cepheids, finds $70.39 \pm 1.22\,(\text{stat}) \pm 1.33\,(\text{sys}) \pm 0.70\,(\sigma_\text{SN})$<sup><a href="#src-3">[3]</a></sup>; with those terms added in quadrature it sits 1.5σ from Planck (computed here). Either some step in a distance ladder is off, or the standard model of the early universe is missing something. Letting dark energy evolve, as in the DESI fits below, does not help: it lowers the inferred $H_0$ further<sup><a href="#src-7">[7]</a></sup>.</p>
+    <p>The gauge draws both measurements as Gaussians and computes the separation live. Move the local value to see how far it would have to shift for the tension to fade. A different route would settle it: gravitational-wave "standard sirens" (stop 48) give distances with no ladder at all, and more ladders with different stars test the steps one by one.</p>
+
+    <h3>What Is Dark Matter?</h3>
+    <p>Galaxy rotation, gravitational lensing and the microwave background all need more gravity than the visible matter provides (stop 46). Planck measures the densities of dark and ordinary matter as $\Omega_c h^2 = 0.1200 \pm 0.0012$ and $\Omega_b h^2 = 0.02237 \pm 0.00015$<sup><a href="#src-1">[1]</a></sup>, so 84 % of the matter is dark (computed here). What it is made of is unknown. The candidates range from weakly interacting massive particles to axions and primordial black holes<sup><a href="#src-4">[4]</a></sup>. The most sensitive direct search so far, the LZ xenon detector, saw no excess over background and excludes a spin-independent WIMP–nucleon cross-section above $2.2 \times 10^{-48}$ cm² for a 40 GeV particle (90 % confidence)<sup><a href="#src-5">[5]</a></sup>. A signal in such a detector, at a collider or in an axion search, matching the abundance cosmology requires, would settle it.</p>
+
+    <h3>Is Dark Energy Constant?</h3>
+    <p>Dark energy makes up about 68 % of the energy budget (Planck: $\Omega_\Lambda = 0.6847 \pm 0.0073$<sup><a href="#src-1">[1]</a></sup>), and in the standard model it is a cosmological constant with $w = -1$ (stop 47). DESI's three-year data, combined with the microwave background, prefer a dark energy that changes with time at 3.1σ (with the first year of data the preferences were 2.5σ to 3.9σ<sup><a href="#src-6">[6]</a></sup>); adding supernovae gives 2.8σ, 3.8σ or 4.2σ depending on the sample<sup><a href="#src-7">[7]</a></sup>. The best fits have $w_0 > -1$ and $w_a < 0$, for example $w_0 = -0.838 \pm 0.055$, $w_a = -0.62^{+0.22}_{-0.19}$ with Pantheon+<sup><a href="#src-7">[7]</a></sup>. The gauge draws these best-fit curves, $w(z) = w_0 + w_a\,z/(1+z)$, against the constant. No combination reaches 5σ, and the spread between supernova samples is itself part of the question. More data with one uniform calibration, from DESI's full survey and the next generation of surveys, will decide.</p>
+
+    <h3>How Does Gravity Work at the Smallest Scales?</h3>
+    <p>General relativity (stop 34) and quantum mechanics are each confirmed wherever they have been tested, but they have not been combined into one tested theory. The scale where both must matter is the Planck length, $\sqrt{\hbar G/c^3} = 1.616 \times 10^{-35}$ m, which corresponds to the Planck energy, $1.22 \times 10^{19}$ GeV<sup><a href="#src-8">[8]</a></sup>. The Large Hadron Collider collides protons at 13.6 TeV<sup><a href="#src-9">[9]</a></sup>, which resolves distances of order $\hbar c/E \approx 1.5 \times 10^{-20}$ m. The Planck energy is $9 \times 10^{14}$ times higher (both computed here). This is the one gauge with no measured number on it: candidate theories exist, string theory and loop quantum gravity among them, but none has a confirmed prediction yet. What would settle it is an effect of quantum gravity large enough to see, most plausibly imprinted in the early universe or in the physics of black holes.</p>
+
+    <h3>Why Is There More Matter Than Antimatter?</h3>
+    <p>The laws of physics treat matter and antimatter almost symmetrically, yet the universe is made of matter. The excess is small and precisely known: one proton or neutron for every 1.6 billion photons of the microwave background, $\eta = (6.12 \pm 0.04) \times 10^{-10}$ from Planck<sup><a href="#src-10">[10]</a></sup>. The abundances of the light elements made in the first minutes (stop 42) give the same number independently, $\eta = (6.040 \pm 0.118) \times 10^{-10}$<sup><a href="#src-10">[10]</a></sup>. In 1967 Andrei Sakharov listed what any explanation needs: processes that change the number of baryons, a violation of the symmetry between matter and antimatter (C and CP), and a departure from thermal equilibrium<sup><a href="#src-11">[11]</a></sup>. There is as yet no "standard model" of how the excess formed<sup><a href="#src-10">[10]</a></sup>. New sources of CP violation, for example in neutrino oscillations, would be the first clue.</p>
+
+    <h3>How Heavy Are Neutrinos?</h3>
+    <p>Neutrinos change flavour as they travel, which is only possible if they have mass. Oscillations measure the differences of the squared masses, $\Delta m^2_{21} = 7.41 \times 10^{-5}$ eV² and $|\Delta m^2_{32}| = 2.437 \times 10^{-3}$ eV² (normal ordering) or $2.498 \times 10^{-3}$ eV² (inverted)<sup><a href="#src-12">[12]</a></sup>, but not the masses themselves. Setting the lightest mass to zero gives a floor for the sum of the three: 0.0587 eV for the normal ordering and 0.0992 eV for the inverted one (computed here). The KATRIN experiment, weighing the electron antineutrino in tritium decay, finds $m_\nu < 0.45$ eV (90 %)<sup><a href="#src-13">[13]</a></sup>. Cosmology is far more sensitive but model-dependent: DESI with the microwave background gives $\sum m_\nu < 0.064$ eV in ΛCDM and $< 0.163$ eV with evolving dark energy (95 %)<sup><a href="#src-7">[7]</a></sup>. In ΛCDM that leaves a narrow window above the normal-ordering floor and none for the inverted ordering. Either the masses sit right at the floor, or the cosmological model needs revising. A direct measurement of the mass, the ordering from long-baseline oscillation experiments, and the search for neutrinoless double-beta decay will settle it.</p>
+
+    <h3>The End of the Road, for Now</h3>
+    <p>Each of these questions is open in the same way the orbit of Mercury was open in 1900 (stop 34) or the expanding universe in 1920 (stop 42): a small, stubborn disagreement between careful measurements and the best theory available. Some will turn out to be errors in the measurements. Some may be the first sign of something new. The way to tell is the method this road began with: ask what natural process causes it, predict a number, and measure it.</p>
+
+    <h3>What the Gauges Leave Out</h3>
+    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+      <li>The Hubble-tension gauge treats each measurement as a Gaussian with the quoted uncertainty. For the Chicago–Carnegie value the three quoted uncertainties are added in quadrature here.</li>
+      <li>The dark-energy gauge shows best-fit curves only. The uncertainties on $w_0$ and $w_a$ are strongly correlated, so drawing separate error bands would mislead.</li>
+      <li>The neutrino gauge places KATRIN on the sum axis at three times its bound, which is right only for nearly equal masses; KATRIN measures a weighted mass, not the sum.</li>
+      <li>$\hbar c/E$ is a rough estimate of the distance a collision resolves.</li>
+      <li>Nothing on this page is a new measurement: every value is cited, and the separations, shares and floors marked "computed here" are calculated from those values.</li>
     </ul>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>What is dark matter? Why is there more matter than antimatter? How do quantum mechanics and gravity fit together? These questions define the frontier of physics — and answering any one of them would reshape science.</li>
+      <li>Open questions in physics are disagreements between numbers: 67.4 versus 73.0 for the expansion rate, a constant versus an evolving dark energy, a neutrino-mass floor against a cosmological ceiling.</li>
+      <li>Some questions have numbers on only one side: dark matter's abundance is measured precisely, its nature not at all; quantum gravity has no measurement yet.</li>
+      <li>Each question names the measurement that would settle it. That is the method the road started with.</li>
     </ul>
   </div>
-  <div class="stop-bridge content-column">
-    <span class="stop-bridge__arrow">→</span>
-    <span>The journey through 50 stops traces 2,600 years of discovery. Every answer revealed a deeper question. The greatest discoveries are still ahead.</span>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited: $H_0 = 67.4 \pm 0.5$ km/s/Mpc (abstract); $\Omega_c h^2 = 0.1200 \pm 0.0012$, $\Omega_b h^2 = 0.02237 \pm 0.00015$, $\Omega_\Lambda = 0.6847 \pm 0.0073$, $H_0 = 67.36$ (Table 2, TT,TE,EE+lowE+lensing).</li>
+      <li id="src-2">A. G. Riess et al., "A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km/s/Mpc Uncertainty from the Hubble Space Telescope and the SH0ES Team", <em>The Astrophysical Journal Letters</em> 934, L7 (2022). Cited (abstract): $H_0 = 73.04 \pm 1.04$ km/s/Mpc; a 5σ difference with Planck + ΛCDM.</li>
+      <li id="src-3">W. L. Freedman et al., "Status Report on the Chicago-Carnegie Hubble Program (CCHP): Measurement of the Hubble Constant Using the Hubble and James Webb Space Telescopes", <em>The Astrophysical Journal</em> 985, 203 (2025); erratum 993, 252 (2025), which does not change $H_0$. Cited (abstract): $H_0 = 70.39 \pm 1.22$ (stat) $\pm 1.33$ (sys) $\pm 0.70$ ($\sigma_\text{SN}$), TRGB.</li>
+      <li id="src-4">L. Baudis and S. Profumo, "Dark Matter", in Particle Data Group, Review of Particle Physics (2024), Section 27. Cited: candidate classes (WIMPs, axions, primordial black holes) and the direct-detection landscape.</li>
+      <li id="src-5">LZ Collaboration, "Dark Matter Search Results from 4.2 Tonne-Years of Exposure of the LUX-ZEPLIN (LZ) Experiment", <em>Physical Review Letters</em> 135, 011802 (2025). Cited (abstract): no excess over background; spin-independent cross-section below $2.2 \times 10^{-48}$ cm² at 40 GeV/$c^2$, 90 % confidence.</li>
+      <li id="src-6">DESI Collaboration, "DESI 2024 VI: Cosmological Constraints from the Measurements of Baryon Acoustic Oscillations", <em>Journal of Cosmology and Astroparticle Physics</em> 02 (2025) 021. Cited (abstract): the first-year preference for evolving dark energy (2.5σ to 3.9σ).</li>
+      <li id="src-7">DESI Collaboration, "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints", <em>Physical Review D</em> 112, 083515 (2025). Cited: 3.1σ (DESI+CMB), 2.8σ, 3.8σ, 4.2σ with Pantheon+, Union3, DESY5 (abstract, Table VI); best fits $w_0 = -0.42 \pm 0.21$, $w_a = -1.75 \pm 0.58$ (DESI+CMB), $w_0 = -0.838 \pm 0.055$, $w_a = -0.62^{+0.22}_{-0.19}$ (+Pantheon+), $w_0 = -0.667 \pm 0.088$, $w_a = -1.09^{+0.31}_{-0.27}$ (+Union3), $w_0 = -0.752 \pm 0.057$, $w_a = -0.86^{+0.23}_{-0.20}$ (+DESY5) (Eqs. 25–28); evolving dark energy lowers $H_0$ (p. 25 of the arXiv version, 2503.14738); $\sum m_\nu < 0.064$ eV (ΛCDM) and $< 0.163$ eV ($w_0w_a$), 95 % (abstract).</li>
+      <li id="src-8">CODATA 2022 recommended values (NIST): Planck length $1.616255 \times 10^{-35}$ m; Planck mass energy equivalent $1.220890 \times 10^{19}$ GeV; $\hbar c = 197.3269804$ MeV fm; proton charge radius $0.84075$ fm.</li>
+      <li id="src-9">CERN, "Third run of the Large Hadron Collider has successfully started" (5 July 2022). Cited: collisions at 13.6 TeV.</li>
+      <li id="src-10">B. D. Fields, P. Molaro and S. Sarkar, "Big Bang Nucleosynthesis", in Particle Data Group, Review of Particle Physics (2024). Cited: $\eta_{10} = 6.12 \pm 0.04$ from Planck $\Omega_b h^2$; $\eta_{10} = 6.040 \pm 0.118$ from D/H and helium (Eq. 24.5); no "standard model" yet for baryogenesis.</li>
+      <li id="src-11">A. D. Sakharov, "Violation of CP invariance, C asymmetry, and baryon asymmetry of the universe", <em>JETP Letters</em> 5, 24 (1967). Not opened for this page; the three conditions are standard textbook material.</li>
+      <li id="src-12">M. C. Gonzalez-Garcia and M. Yokoyama, "Neutrino Masses, Mixing, and Oscillations", in Particle Data Group, Review of Particle Physics (2024), Table 14.7, NuFIT 5.2 column: $\Delta m^2_{21} = 7.41 \times 10^{-5}$ eV², $\Delta m^2_{32} = 2.437 \times 10^{-3}$ eV² (NO) and $-2.498 \times 10^{-3}$ eV² (IO).</li>
+      <li id="src-13">KATRIN Collaboration, "Direct neutrino-mass measurement based on 259 days of KATRIN data", <em>Science</em> 388, 180–185 (2025). Cited (abstract): $m_\nu < 0.45$ eV at 90 % confidence.</li>
+    </ol>
   </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+  <div class="stop-bridge content-column">
+    <span class="stop-bridge__arrow">↺</span>
+    <span>The road loops back to where it started: <a href="../001-thales-natural-causes/index.html" style="color:inherit;text-decoration:underline;display:inline-block;min-height:44px;line-height:44px;">Thales and the search for natural causes</a>.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +233,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
