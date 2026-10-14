@@ -8,12 +8,18 @@
   <meta property="og:title" content="Bernoulli's Principle — How Physics Works">
   <meta property="og:description" content="As a fluid speeds up along a streamline, its pressure drops. The equation behind venturi meters, carburettors and half of the story of a wing.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/015-bernoulli-fluids/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 015, Bernoulli's Principle: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/015-bernoulli-fluids/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 015, Bernoulli's Principle: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Bernoulli's Principle — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -63,6 +69,10 @@
       <span class="stop-header__scientist">Daniel Bernoulli</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">When a pipe narrows, how much faster must the water flow, and how far does its pressure drop at the throat?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1738, Daniel Bernoulli published <em>Hydrodynamica</em> and made a startling observation: when a fluid is forced through a narrow section of pipe, it speeds up — and as it speeds up, its pressure drops. The two effects are inseparable. Energy is conserved, but it trades between kinetic and pressure form.</p>
     <p>The venturi tube below makes this visible. Watch the manometer columns fall at the throat and recover downstream. Adjust the throat width to squeeze the flow harder. The pressure graph on the right traces the full profile from inlet to outlet.</p>
@@ -93,6 +103,15 @@
       <span>Left: a two-dimensional channel with particle flow and pressure taps. Right: pressure vs. position graph.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Set <strong>Throat width</strong> to 50% with <strong>Flow speed</strong> at 1.0 m/s: the readout under the tube shows v₂ = 2.00 m/s and ΔP = 1.5 kPa. Halve the throat to 25%: v₂ doubles to 4.00 m/s and ΔP rises to 7.5 kPa.</li>
+      <li>Back at 50%, raise <strong>Flow speed</strong> to 2.0 m/s: v₂ reads 4.00 m/s and ΔP 6.0 kPa, four times the drop for twice the speed.</li>
+      <li>Compare the P1 and P3 columns at any setting: the outlet column returns to the inlet height, because the outlet is as wide as the inlet and nothing is lost to friction.</li>
+      <li>As you change the sliders, watch the number at the bottom of the pressure axis: the axis rescales so the dip looks the same, and the ΔP readout carries the real size of the drop.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The continuity equation</h3>
     <p>Before Bernoulli, fluids already obeyed one simple rule: what flows in must flow out. For an incompressible fluid, the product of cross-sectional area and velocity is constant:</p>
@@ -104,6 +123,10 @@
     <p>At constant height this simplifies to \(P + \tfrac{1}{2}\rho v^2 = \text{const}\). If \(v\) rises at the throat (continuity demands it), \(P\) must fall by exactly \(\tfrac{1}{2}\rho(v_2^2 - v_1^2)\). That pressure difference is what a venturi meter reads, and it is half of the story of a wing: the wing turns the air downward, the flow over the top is faster, and Bernoulli links that speed to the lower pressure that holds the aircraft up.</p>
     <h3>Real applications</h3>
     <p>Carburetors, atomizers, venturi flowmeters, the pressure side of a wing's lift — all follow the same exchange. Faster fluid, lower pressure. The principle is deceptively simple and extraordinarily useful.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The fluid is water (ρ = 1000 kg/m³) with no viscosity, entering at 100 kPa, so the pressure recovers fully at the outlet; a real venturi loses some of it. The channel is two-dimensional: speed scales with the channel's height, not with a circular area, and it is the same across the channel, with no slower layer at the walls. The pressure axis and the manometer columns rescale with every setting so the throat dip fills the same share of the scale until ΔP passes 40 kPa; read the depth from the ΔP readout. The speed of the dots on screen is illustrative.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>
@@ -111,9 +134,9 @@
       <li><span>\(P + \tfrac{1}{2}\rho v^2 = \text{const}\) — along a streamline at constant height. Where fluid speeds up, pressure drops by \(\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)\). Along a streamline, for steady flow of an incompressible fluid with no friction.</span></li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">D. Bernoulli, <em>Hydrodynamica, sive de viribus et motibus fluidorum commentarii</em> (Strasbourg, 1738).</li>
       <li id="src-2">L. Euler, "Principes généraux du mouvement des fluides", <em>Mémoires de l'Académie des Sciences de Berlin</em> 11 (1757; presented 1755).</li>
       <li id="src-3">D. Anderson and S. Eberhardt, <em>Understanding Flight</em>, 2nd ed. (McGraw-Hill, 2009). On lift, circulation and why Bernoulli alone does not explain a wing.</li>
@@ -125,7 +148,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

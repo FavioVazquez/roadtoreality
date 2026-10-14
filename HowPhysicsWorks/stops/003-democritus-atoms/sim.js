@@ -7,8 +7,8 @@
 
   var LEVELS = [
     { label: 'Grain of sand', scale: '1 mm', desc: 'A grain of sand — visible to the naked eye.', color: 'oklch(0.72 0.12 60)', particleR: 60, count: 1 },
-    { label: 'Molecules',     scale: '1 nm',  desc: 'Zoom in 1 million times: you see molecules — clusters of atoms bonded together.', color: 'oklch(0.72 0.15 145)', particleR: 22, count: 7 },
-    { label: 'Atoms',         scale: '0.1 nm', desc: 'Each molecule is made of atoms. Carbon, oxygen, silicon — all different sizes.', color: 'oklch(0.65 0.18 240)', particleR: 14, count: 19 },
+    { label: 'Molecules',     scale: '1 nm',  desc: 'Zoom in 1 million times: you see molecules, each drawn here as a single circle.', color: 'oklch(0.72 0.15 145)', particleR: 22, count: 7 },
+    { label: 'Atoms',         scale: '0.1 nm', desc: 'Each molecule is made of atoms. Carbon, oxygen, silicon: different elements, drawn here as identical circles.', color: 'oklch(0.65 0.18 240)', particleR: 14, count: 19 },
     { label: 'Nucleus',       scale: '10 fm',  desc: 'Inside the atom: a tiny dense nucleus surrounded by an electron cloud. The nucleus is 10,000 to 100,000 times smaller than the atom (a few femtometres against a tenth of a nanometre).', color: 'oklch(0.68 0.20 310)', particleR: 6, count: 9 },
     { label: 'Quarks',        scale: '<1 fm',  desc: 'Protons and neutrons are made of quarks. Quarks and electrons are the smallest constituents we know; whether anything is truly indivisible is still an open question. Democritus\' atom turned out to be very divisible.', color: 'oklch(0.68 0.22 20)', particleR: 3, count: 3 }
   ];

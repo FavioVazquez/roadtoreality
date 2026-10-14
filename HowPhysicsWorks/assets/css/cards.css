@@ -1,0 +1,90 @@
+/* ============================================================
+   cards.css — landing stop cards with a still from each sim
+   Loaded after components.css; overrides the card box only.
+   ============================================================ */
+
+/* Even heights: every row as tall as the tallest card in its era */
+.stop-grid {
+  grid-auto-rows: 1fr;
+}
+
+.stop-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* ── Thumbnail ── */
+.stop-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-void);
+  border-bottom: 1px solid oklch(1 0 0 / 0.07);
+}
+
+.stop-card__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.86);
+  transition: filter var(--transition-base), transform var(--transition-slow);
+}
+
+/* thin era-coloured edge where the frame meets the text */
+.stop-card__thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--era-card-color, var(--color-gold));
+  opacity: 0.55;
+}
+
+.stop-card__body {
+  position: relative; /* paint above the card's hover tint (::before) */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-5);
+}
+
+.stop-card__meta {
+  margin-top: auto;
+  flex-wrap: wrap;
+  row-gap: var(--space-1);
+}
+
+/* Badges now sit on the image: give them a solid backing */
+.stop-card__visited-badge,
+.stop-card--stub::after {
+  z-index: 1;
+  background: oklch(0.11 0 0 / 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── Hover and keyboard focus ── */
+.stop-card:hover .stop-card__thumb img,
+.stop-card:focus-visible .stop-card__thumb img {
+  filter: brightness(1.08);
+  transform: scale(1.03);
+}
+
+.stop-card:focus-visible {
+  outline: 2px solid var(--era-card-color, var(--color-gold));
+  outline-offset: 3px;
+}
+
+/* Reduced motion: no lift, no zoom; the frame only brightens */
+@media (prefers-reduced-motion: reduce) {
+  .stop-card:hover,
+  .stop-card:focus-visible {
+    transform: none;
+  }
+  .stop-card:hover .stop-card__thumb img,
+  .stop-card:focus-visible .stop-card__thumb img {
+    transform: none;
+  }
+}

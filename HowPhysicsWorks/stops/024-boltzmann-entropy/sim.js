@@ -533,6 +533,8 @@
     reset: function () {
       window.SimAPI.pause();
       temperature = 1.0;
+      if (tempSlider) tempSlider.value = 500;   /* T = 1.0 on the 100-1500 slider */
+      if (tempVal) tempVal.textContent = 'T = 1.0 (relative)';
       initLeft();
       initRight();
       entropyVal = 0;

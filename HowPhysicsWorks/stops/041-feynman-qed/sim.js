@@ -158,7 +158,7 @@
     if (!lastTs) lastTs = ts;
     var dt = Math.min((ts - lastTs) / 1000, 0.05); lastTs = ts;
     t += dt;
-    if (mode === 'mirror') shown = Math.min(NSTRIP, Math.floor((t % 9) / 0.15) + 1);
+    if (mode === 'mirror') shown = Math.min(NSTRIP, Math.floor((t % 14.7) / 0.15) + 1)   /* 81 strips take 12.15 s; the full sum holds ~2.5 s */;
     if (mode === 'glass' && autoD) { dNm = 500 + 450 * Math.sin(t * 0.25 - Math.PI / 2); syncD(); }
     draw(); rafId = requestAnimationFrame(loop);
   }

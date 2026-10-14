@@ -8,12 +8,18 @@
   <meta property="og:title" content="Galileo's Inclined Plane — How Physics Works">
   <meta property="og:description" content="Galileo slowed gravity down with an inclined plane to prove that distance grows as the square of time — regardless of the object's mass.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/009-galileo-inclined-plane/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 009, Galileo's Inclined Plane: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/009-galileo-inclined-plane/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 009, Galileo's Inclined Plane: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Galileo's Inclined Plane — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Galileo Galilei</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">As a ball rolls down a ramp, how does the distance grow with time, and does a heavier ball reach the bottom sooner?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       The problem with studying free fall is that objects fall too fast to measure precisely with Renaissance instruments. Galileo's solution was elegant: tilt the plane. By rolling balls down an inclined surface instead of dropping them, he slowed gravity enough to time carefully.
@@ -102,11 +112,23 @@
       <span id="sim-status">Adjust angle and mass, then release the ball. Does mass matter?</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>▶ Release!</strong> at the default 20° and 1 kg: the caption reports the time to the bottom, about 1.6 s. Set <strong>Mass</strong> to 10 kg and press <strong>▶ Again</strong>: the time is the same.</li>
+      <li>Set <strong>Angle</strong> to 30°: the panel reads a = (5/7)·g·sin(30°) = 3.50 m/s². Click <strong>Rolling ball (5/7 g sin θ)</strong> to switch to <strong>Sliding block (g sin θ)</strong>: a becomes 4.90 m/s² and the trip takes about 1.1 s instead of about 1.3 s.</li>
+      <li>After pressing <strong>▶ Release!</strong>, watch the <em>Distance vs Time²</em> graph draw a straight line, and the green line d = ½at² keep pace with the d readout.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Discovery</h3>
     <p>Galileo's inclined plane experiments led him to the law of uniform acceleration: distance = ½at². In the <em>Discorsi</em> (1638) he describes timing the ball with a water clock: weigh the water that ran out during the roll. His working notes (Galileo MS 72, folio 107v) show distances at equal beats; Stillman Drake reconstructed the method as a plank with movable gut frets the ball clicked over, adjusted until the clicks fell on a steady rhythm. The notes give 33, 130, 298, 526, 824, 1192, 1600, 2104 units for beats 1 to 8: divide each by the square of the beat and you get 33 every time.</p>
     <p>For a block sliding without friction the acceleration along the incline is g·sin θ: 4.9 m/s² at 30°, the full 9.8 m/s² at 90°. Galileo's balls rolled, and a rolling ball must also spin up, so it accelerates at only 5/7 of that, 3.5 m/s² at 30°. He could not have known: the distance still grows as t², and the ratio between two angles is unchanged. At every angle the result is the same for all masses; the 1 kg ball and the 10 kg ball reach the bottom together.</p>
     <p>Medieval scholars had the mathematics of uniform acceleration (the Oxford Calculators' mean-speed theorem, Oresme's proof of it in the 1350s; Domingo de Soto said in 1551 that falling bodies accelerate uniformly). What they lacked was the measurement. Galileo supplied it, and after him physics argued with numbers.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The ball has a constant acceleration, (5/7)·g·sin θ for a solid ball rolling without slipping or g·sin θ for the sliding block, with g = 9.8 m/s², stepped forward once per animation frame. There is no friction loss, rolling resistance or air drag, and the plane is always 3 m long. The mass only labels the ball, which is drawn the same size at every mass. The <em>Distance vs Time²</em> graph rescales both axes to the latest point, so its slope does not show the size of a.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -117,9 +139,9 @@
     </ul>
     <p>$$d = \frac{1}{2} a t^2$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>Galileo Galilei, <em>Discorsi e dimostrazioni matematiche intorno a due nuove scienze</em> (1638), Third Day.</li>
       <li>Galileo to Paolo Sarpi, 16 October 1604 (the times-squared law, this stop's date).</li>
       <li>S. Drake, "Galileo's Discovery of the Law of Free Fall", <em>Scientific American</em> 228 (May 1973).</li>
@@ -133,7 +155,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

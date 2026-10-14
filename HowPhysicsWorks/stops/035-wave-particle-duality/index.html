@@ -8,12 +8,18 @@
   <meta property="og:title" content="Wave-Particle Duality — How Physics Works">
   <meta property="og:description" content="Send electrons through two slits one at a time. Each lands as a single dot, yet the dots build up the interference pattern of a wave with de Broglie&#x27;s wavelength h/p.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/035-wave-particle-duality/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 035, Wave-Particle Duality: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/035-wave-particle-duality/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 035, Wave-Particle Duality: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Wave-Particle Duality — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Louis de Broglie</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">If an electron is a particle, how can electrons sent one at a time build up the interference fringes of a wave?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Light behaves as a wave when it passes two slits and as a stream of particles when it knocks electrons out of a metal. In 1924 Louis de Broglie proposed that matter has a wavelength too, $\lambda = h/p$, where $h$ is Planck's constant and $p$ the momentum<sup><a href="#src-1">[1]</a></sup>. Electrons were seen to diffract in 1927<sup><a href="#src-3">[3]</a></sup><sup><a href="#src-4">[4]</a></sup>.
@@ -101,6 +111,15 @@
       <span id="sim-status">Press play to send electrons through the slits one at a time.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Play</strong> and watch the first few dots: each lands at one random spot, and the fringes appear only after hundreds of dots.</li>
+      <li>Move <strong>Electron energy</strong> from 50 keV down to 5 keV: λ grows from 5.36 to 17.3 pm and the fringe spacing λD/d in the readout widens in the same proportion.</li>
+      <li>Double <strong>Slit separation</strong> from 1.0 to 2.0 µm: the fringes move twice as close together.</li>
+      <li>Press <strong>Block one slit</strong>, then <strong>Detect which slit</strong>: in both cases the pattern restarts and builds up with no fringes.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Two Pictures of Light</h3>
     <p>In 1803 Thomas Young split a narrow sunbeam around a thin card and saw bright and dark bands where the two parts overlapped, the signature of interfering waves<sup><a href="#src-5">[5]</a></sup>; he later described the same effect with two pinholes. In 1905 Einstein argued that light also carries energy in separate quanta of size $hf$, which explained how light ejects electrons from metals<sup><a href="#src-2">[2]</a></sup>. Neither picture alone covers everything light does.</p>
@@ -120,8 +139,10 @@
     <p>Block one slit and the fringes vanish: the dots spread over the wide, smooth pattern of a single slit. In 2013 Roger Bach and colleagues did this with a movable mask in front of an electron double slit and recorded the pattern as one slit, then both, were opened<sup><a href="#src-12">[12]</a></sup>. The "Block one slit" button shows this case. </p>
     <p>If the apparatus records which slit each electron went through, the fringes disappear and the dots spread over the smooth pattern of two single slits added together<sup><a href="#src-9">[9]</a></sup>. The "Detect which slit" button switches to that case. The quantum description does not say the electron is "really" a wave or "really" a particle. It gives probabilities, and those probabilities add like waves when the two paths cannot be told apart.</p>
     <p>The same interference has since been seen with neutrons, atoms and molecules; in 1999 it was reported for C<sub>60</sub> molecules of 60 carbon atoms<sup><a href="#src-10">[10]</a></sup>.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The geometry is illustrative and does not reproduce any particular experiment: slits 0.2 µm wide, a screen 1 m away, and a screen window 80 µm across, and the far-field formula is used throughout even at the widest slit separation, where it is only approximate. Real electron experiments use electron optics to magnify a much finer pattern. The landing points are random draws from $P(y)$, computed from the formula, not data. The arrival rate starts slow so single dots are visible, then speeds up so the pattern builds in seconds; this rate is a display choice.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -132,9 +153,9 @@
     </ul>
     <p style="overflow-x:auto;">$$\lambda = \frac{h}{p} \qquad \Delta y_{\text{fringe}} = \frac{\lambda D}{d}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">L. de Broglie, <em>Recherches sur la théorie des quanta</em>, thesis, Paris (1924); <em>Annales de Physique</em> 10e série, 3, 22–128 (1925). Cited: $\lambda = h/p$.</li>
       <li id="src-2">A. Einstein, "Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt", <em>Annalen der Physik</em> 17, 132–148 (1905).</li>
       <li id="src-3">C. Davisson and L. H. Germer, "Diffraction of Electrons by a Crystal of Nickel", <em>Physical Review</em> 30, 705–740 (1927). Cited: 54 eV electrons, scattering maxima consistent with $h/p$.</li>
@@ -155,7 +176,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

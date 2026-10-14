@@ -232,11 +232,11 @@
 
 .search-trigger__icon {
   font-size: 0.9rem;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .search-trigger__kbd {
-  opacity: 0.55;
+  opacity: 1;
   font-size: 0.65rem;
 }
 

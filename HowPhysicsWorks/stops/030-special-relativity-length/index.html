@@ -8,12 +8,18 @@
   <meta property="og:title" content="Special Relativity: Length Contraction — How Physics Works">
   <meta property="og:description" content="Objects moving at high speed are measured as shorter along their direction of motion. The effect is mutual: the passenger measures our rulers as the short ones.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/030-special-relativity-length/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 030, Special Relativity: Length Contraction: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/030-special-relativity-length/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 030, Special Relativity: Length Contraction: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Special Relativity: Length Contraction — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +68,10 @@
       <span class="stop-header__scientist">Albert Einstein</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How long does a 100 m train car measure from the platform as its speed nears light speed, and which of its dimensions shrink?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Objects moving at high speed are measured as shorter along their direction of motion. The effect is mutual: the passenger measures our rulers as the short ones.</p>
   </div>
@@ -86,6 +96,14 @@
       <span>Interactive &mdash; drag velocity to watch the ruler contract.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>↺ Reset</strong>, then <strong>▶ Play</strong>, and leave the slider alone: v sweeps from 0 to 0.990c and back about every 5 s. The car barely shortens up to 0.5c (L = 86.6 m there), then shrinks fast.</li>
+      <li>Drag <strong>Velocity</strong> to 0.600c, which stops the sweep: the readout shows L = 80.0 m and the panel L/L₀ = 0.800, while the car's height does not change.</li>
+      <li>Take <strong>Velocity</strong> to 0.990c: L = 14.1 m and L/L₀ = 0.141, about a seventh of the dashed rest-frame outline above it.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Moving Objects Measure Shorter</h3>
     <p>A meter stick moving past you at relativistic speed is measured as shorter along its direction of motion. At 99% the speed of light, it measures only about 14 cm &mdash; not because anything happened to the stick, but because of how lengths are compared between frames.</p>
@@ -93,20 +111,24 @@
     <p>Length contraction is strictly along the direction of travel. The height and width perpendicular to motion are unchanged. A sphere moving at 0.99c is measured as an ellipsoid flattened to a seventh of its width along the motion. A photograph would show something else: light from its far side takes longer to arrive, and for a sphere that effect exactly cancels the flattening, so the outline stays circular and the sphere appears rotated instead (the Terrell–Penrose effect, 1959).<sup><a href="#src-2">[2]</a><a href="#src-3">[3]</a></sup> The simulation shows the measured shape, not a photograph.</p>
     <h3>The Same Root Cause as Time Dilation</h3>
     <p>Time dilation and length contraction are two sides of the same spacetime geometry. They are both required to keep the speed of light constant for all inertial observers. You cannot have one without the other. The third piece, and the one that resolves every apparent paradox, is that observers in relative motion disagree about which events are simultaneous. Measuring a length means marking both ends at the same instant, and &lsquo;the same instant&rsquo; is frame-dependent. That is where the contraction comes from.</p>
-  </div>
-  <div class="stop-body content-column" id="sources">
-    <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
-      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
-      <li id="src-2">J. Terrell, "Invisibility of the Lorentz Contraction", <em>Physical Review</em> 116, 1041 (1959).</li>
-      <li id="src-3">R. Penrose, "The apparent shape of a relativistically moving sphere", <em>Proceedings of the Cambridge Philosophical Society</em> 55, 137 (1959).</li>
-      <li>D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): the muon's view of the atmosphere.</li>
-    </ol>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Only the platform's measurement is drawn; the passenger's matching view, in which the platform's rulers are the short ones, is not. The wheels stay round and keep their size as the car shortens, a drawing shortcut: measured from the platform they too would be flattened along the motion. The car's drift across the screen is a slow loop whose speed is not to scale, and L₀ = 100 m is an example length.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <div class="takeaway-box__formula">$$L = \frac{L_0}{\gamma} = L_0 \sqrt{1 - \frac{v^2}{c^2}}$$</div>
     <p style="margin-top:0.5rem;font-size:var(--text-sm);color:var(--color-text-secondary);">At $v = 0.99c$, a 100-meter ruler is measured as only $\approx 14.1$ meters long.</p>
+  </div>
+  <div class="stop-body stop-sources content-column" id="sources">
+    <h3>Sources</h3>
+    <ol class="stop-sources__list">
+      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
+      <li id="src-2">J. Terrell, "Invisibility of the Lorentz Contraction", <em>Physical Review</em> 116, 1041 (1959).</li>
+      <li id="src-3">R. Penrose, "The apparent shape of a relativistically moving sphere", <em>Proceedings of the Cambridge Philosophical Society</em> 55, 137 (1959).</li>
+      <li>D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): the muon's view of the atmosphere.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
@@ -114,7 +136,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

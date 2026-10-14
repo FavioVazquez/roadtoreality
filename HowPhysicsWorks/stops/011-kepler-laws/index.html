@@ -8,12 +8,18 @@
   <meta property="og:title" content="Kepler's Laws of Planetary Motion — How Physics Works">
   <meta property="og:description" content="Kepler discovered that planets trace ellipses, sweep equal areas in equal times, and that orbital periods follow a precise mathematical law.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/011-kepler-laws/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 011, Kepler's Laws of Planetary Motion: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/011-kepler-laws/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 011, Kepler's Laws of Planetary Motion: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Kepler's Laws of Planetary Motion — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Johannes Kepler</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How does a planet's speed change around an elliptical orbit, and what stays the same while it speeds up and slows down?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Kepler spent years fitting Mars to Tycho Brahe's observations with circles and an off-centre Sun. His best model missed by eight minutes of arc, a fifth of the Moon's width. Older data would have hidden it; Tycho's were good to two. "These eight minutes", he wrote, "point the way to the reform of all astronomy." He tried an egg-shaped oval for two years before he saw, in 1605, that the orbit was an ellipse with the Sun at a focus.
@@ -99,12 +109,25 @@
       <span>The shaded triangles all have equal area — even though the planet moves faster near perihelion.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>▶ Play</strong> with <strong>Highlight</strong> on 2nd Law (equal areas): each shaded wedge is swept in the same time and covers the same area, short and wide near the Sun, long and thin far from it.</li>
+      <li>At the default <strong>Eccentricity</strong> of 0.2, the panel reads 0.800 AU and 7.695 AU/yr at perihelion and close to 1.200 AU and 5.130 AU/yr at aphelion. At 0.6 it starts at 0.400 AU and 12.566 AU/yr and slows to about 3.142 AU/yr at 1.600 AU: four times the distance, a quarter of the speed.</li>
+      <li>Set <strong>Eccentricity</strong> to 0.0 (circle): the distance stays at 1.000 AU, the speed at 6.283 AU/yr, and the Sun sits at the centre.</li>
+      <li>Set <strong>Highlight</strong> to 3rd Law (T² ∝ a³): the eight planets from Mercury to Neptune all fall on the dashed line T² = a³.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Three Laws</h3>
     <p><strong>First Law (1609):</strong> Planets orbit the Sun in ellipses, with the Sun at one focus — not the center.</p>
     <p><strong>Second Law (1609):</strong> A line from the Sun to a planet sweeps out equal areas in equal times. This means planets move faster when closer to the Sun (perihelion) and slower when farther away (aphelion).</p>
     <p><strong>Third Law (1619):</strong> The square of a planet's orbital period is proportional to the cube of its semi-major axis (half the long diameter, which is the average of its nearest and farthest distances): T² ∝ a³. This single equation links all planets in one mathematical relationship.</p>
     <p>Kepler had no idea <em>why</em> these laws held. They were purely empirical — extracted from data through years of painstaking calculation. It took Newton, 70 years later, to show they all follow from a single law of gravitation.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The planet moves around a fixed Sun under inverse-square gravity alone, with no other planets to disturb it. Its orbit always has a semi-major axis of 1 AU and a period of one year, whatever the eccentricity, and one second on screen is 0.4 years. Each shaded wedge spans 0.08 of a period, rounded to whole animation frames, so the areas match closely but not exactly. The 3rd Law panel uses linear axes, so Mercury, Venus, Earth and Mars crowd together near the origin.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -115,9 +138,9 @@
     </ul>
     <p>$$T^2 = \frac{4\pi^2}{GM} a^3$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>J. Kepler, <em>Astronomia Nova</em> (1609), ch. 19 (the eight minutes of arc) and ch. 58 (the ellipse).</li>
       <li>J. Kepler, <em>Harmonices Mundi</em> (1619), Book V (the third law).</li>
     </ol>
@@ -128,7 +151,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

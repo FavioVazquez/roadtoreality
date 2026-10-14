@@ -8,12 +8,18 @@
   <meta property="og:title" content="Newton's Laws of Motion — How Physics Works">
   <meta property="og:description" content="Apply forces to objects. Watch inertia, acceleration, and reaction play out exactly as Newton's three laws predict.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/012-newton-laws/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 012, Newton's Laws of Motion: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/012-newton-laws/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 012, Newton's Laws of Motion: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Newton's Laws of Motion — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Isaac Newton</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">If nothing pushes a moving block, does it stop? And how much does the same push speed up a heavier block?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1687, Newton published the <em>Philosophiæ Naturalis Principia Mathematica</em>, the <em>Principia</em> — arguably the most important scientific book ever written. In it, he laid out three laws that describe how every object in the universe responds to forces.
@@ -103,12 +113,25 @@
       <span id="sim-status">Set force and mass, then apply. Watch F = ma in action.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Set <strong>Surface friction</strong> to None, press <strong>Apply Force</strong>, then <strong>Release Force</strong>: the v(t) trace goes flat and the block coasts at constant speed until it reaches the wall.</li>
+      <li>With friction at None and 10 N applied, change <strong>Mass</strong> from 5 kg to 10 kg while the force is on: the a readout drops from 2.00 to 1.00 m/s², half the acceleration for twice the mass.</li>
+      <li>Set friction to High, mass to 20 kg and <strong>Applied force</strong> to 30 N: F_net reads 0 and the block stays put, because friction can supply up to 0.18 × 20 kg × 9.8 m/s² ≈ 35 N. At 40 N it starts to slide.</li>
+      <li>While the force is on, watch the two arrows at the hand: the push on the block and the push back on the hand are always equal and opposite.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Three Laws</h3>
     <p><strong>First Law (Inertia):</strong> An object at rest stays at rest; an object in motion stays in motion, unless acted on by an external force. Aristotle's physics needed a mover to keep anything moving. Galileo saw that motion on a level surface would persist without one; Descartes stated the law in full in 1644; Newton made it the first of his three and credited Galileo.</p>
     <p><strong>Second Law (in modern form F = ma; Newton wrote it as the change of motion being proportional to the impressed force):</strong> The acceleration of an object is proportional to the net force applied and inversely proportional to its mass. Double the force, double the acceleration. Double the mass, halve the acceleration.</p>
     <p><strong>Third Law (Action-Reaction):</strong> Every force has an equal and opposite reaction. When you push a wall, the wall pushes back with the same force. When a rocket expels gas backward, the gas pushes the rocket forward.</p>
     <p>These three laws — combined with his law of gravitation — gave physics a unified mathematical framework that explained everything from falling apples to planetary orbits.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Friction uses one coefficient for starting and for sliding (0, 0.03, 0.08 and 0.18 for None to High) with g = 9.8 m/s², and there is no air drag. When the block hits the wall it rebounds at half its speed; that is a choice made for the display, not something Newton's laws fix. The block and the wall are drawn at a fixed size, not to scale.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -119,9 +142,9 @@
     </ul>
     <p>$$F = ma$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">I. Newton, <em>Philosophiæ Naturalis Principia Mathematica</em> (1687), Axioms, or Laws of Motion, and the Scholium to the Laws. Cited: the three laws, and Newton's credit to Galileo.</li>
       <li id="src-2">R. Descartes, <em>Principia Philosophiae</em> (1644), Part II. Cited: the first full statement of the law of inertia.</li>
     </ol>
@@ -132,7 +155,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

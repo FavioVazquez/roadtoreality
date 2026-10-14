@@ -95,7 +95,7 @@
   /* ── Compute physics from slider state ── */
   function computePhysics() {
     /* Mass: slider 0–600 → 10^(val/100 - 6) kg
-       slider=0 → 10^(-6) kg = 1 µg
+       slider=0 → 10^(-6) kg = 1 mg
        slider=300 → 10^(-3) kg = 1 g
        slider=600 → 10^0 kg = 1 kg */
     massKg       = Math.pow(10, massSliderVal / 100 - 6);

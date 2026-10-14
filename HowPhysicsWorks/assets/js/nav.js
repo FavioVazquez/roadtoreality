@@ -63,12 +63,18 @@
 
     return '<' + tag + ' ' + attrs + '>' +
       '<div class="stop-card__visited-badge" aria-label="Visited"></div>' +
-      '<div class="stop-card__number">' + String(stop.order).padStart(3, '0') + '</div>' +
-      '<div class="stop-card__title">' + _esc(stop.title) + '</div>' +
-      '<div class="stop-card__subtitle">' + _esc(stop.subtitle) + '</div>' +
-      '<div class="stop-card__meta">' +
-        '<span class="stop-card__year">' + _esc(stop.yearLabel) + '</span>' +
-        '<span class="stop-card__scientist">' + _esc(stop.scientist) + '</span>' +
+      /* still frame from the stop's own simulation (decorative: the title says what it is) */
+      '<div class="stop-card__thumb">' +
+        '<img src="assets/img/thumbs/' + stop.id + '.webp" width="640" height="400" alt="" loading="lazy" decoding="async">' +
+      '</div>' +
+      '<div class="stop-card__body">' +
+        '<div class="stop-card__number">' + String(stop.order).padStart(3, '0') + '</div>' +
+        '<div class="stop-card__title">' + _esc(stop.title) + '</div>' +
+        '<div class="stop-card__subtitle">' + _esc(stop.subtitle) + '</div>' +
+        '<div class="stop-card__meta">' +
+          '<span class="stop-card__year">' + _esc(stop.yearLabel) + '</span>' +
+          '<span class="stop-card__scientist">' + _esc(stop.scientist) + '</span>' +
+        '</div>' +
       '</div>' +
     '</' + tag + '>';
   }
@@ -86,40 +92,27 @@
     '</section>';
   }
 
-  function _timelineHtml() {
-    return '<nav class="era-timeline" aria-label="Physics eras">' +
-      ERA_ORDER.map(function (era) {
-        var meta = ERA_META[era] || {};
-        return '<a class="era-timeline__item" data-era="' + era + '" href="#era-' + era + '">' +
-          '<span class="era-timeline__label">' + _esc(meta.label) + '</span>' +
-          '<span class="era-timeline__dates">' + _esc(meta.dates) + '</span>' +
-        '</a>';
-      }).join('') +
-    '</nav>';
+  /* Keep the sticky era bar flush under the header and tell scroll-margin how much is covered. */
+  function _syncStickyOffset() {
+    var h = document.querySelector('.site-header');
+    var t = document.querySelector('.era-tabs-sticky');
+    if (!h) return;
+    var hh = h.getBoundingClientRect().height;
+    var th = t ? t.getBoundingClientRect().height : 0;
+    var root = document.documentElement.style;
+    root.setProperty('--header-h', hh + 'px');
+    root.setProperty('--sticky-offset', (hh + th) + 'px');
   }
 
-  function _renderProgressBar(totalVisited, totalStops) {
-    var el = document.getElementById('progress-bar');
-    if (!el) return;
-    var pct = totalStops > 0 ? Math.round(totalVisited / totalStops * 100) : 0;
-    el.innerHTML =
-      '<div class="progress-bar">' +
-        '<span>' + totalVisited + ' of ' + totalStops + ' stops visited</span>' +
-        '<div class="progress-bar__track">' +
-          '<div class="progress-bar__fill" style="width:' + pct + '%"></div>' +
-        '</div>' +
-        '<span>' + pct + '%</span>' +
-      '</div>';
+  function _jumpToHash() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var el = id && document.getElementById(id);
+    if (el) el.scrollIntoView();
   }
 
   function _render(data) {
     var stops = data.stops || [];
     var groups = _groupByEra(stops);
-
-    var timelineEl = document.getElementById('era-timeline');
-    if (timelineEl) {
-      timelineEl.innerHTML = _timelineHtml();
-    }
 
     var sectionsEl = document.getElementById('era-sections');
     if (sectionsEl) {
@@ -128,8 +121,8 @@
       }).join('');
     }
 
-    var visited = window.PhysicsProgress ? window.PhysicsProgress.getVisitedCount() : 0;
-    _renderProgressBar(visited, stops.length);
+    _syncStickyOffset();
+    _jumpToHash();
   }
 
   function _esc(str) {
@@ -153,6 +146,12 @@
         }
       });
   }
+
+  window.addEventListener('resize', _syncStickyOffset);
+  /* the header can change height without a resize (the visit counter is written later and may wrap it) */
+  var _header = document.querySelector('.site-header');
+  if (_header && window.ResizeObserver) new ResizeObserver(_syncStickyOffset).observe(_header);
+  _syncStickyOffset();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

@@ -8,12 +8,18 @@
   <meta property="og:title" content="Dirac and Antimatter — How Physics Works">
   <meta property="og:description" content="Dirac&#x27;s 1928 electron equation led him in 1931 to predict the anti-electron, and Anderson found its track in 1932. Annihilate a pair, make one from a photon, and read a cloud-chamber track.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/039-dirac-antimatter/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 039, Dirac and Antimatter: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/039-dirac-antimatter/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 039, Dirac and Antimatter: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Dirac and Antimatter — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Paul Dirac</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How do energy and momentum decide when an electron and positron turn into light and back, and how did a curved track reveal the positron?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1928 Paul Dirac wrote an equation for the electron that obeys special relativity<sup><a href="#src-1">[1]</a></sup>. It had solutions with negative energy that would not go away. In 1931 he proposed that they point to a new particle, an "anti-electron" with the electron's mass and the opposite charge<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-8">[8]</a></sup>. In 1932 Carl Anderson reported such particles in cosmic rays<sup><a href="#src-3">[3]</a></sup>.
@@ -111,6 +121,15 @@
       <span id="sim-status">Press play: an electron and a positron meet.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>In <strong>Annihilation</strong> press <strong>Play</strong>: two photons leave back to back, each labelled 510.999 keV, and the energy bars before and after are equal.</li>
+      <li>Press <strong>Pair production</strong> and set <strong>Photon energy</strong> to 1.00 MeV: it is below the 1.022 MeV threshold and no pair forms. At 1.05 MeV a pair forms and the nucleus takes up at least 0.809 MeV/c of momentum; at 2.00 MeV, at least 0.281 MeV/c.</li>
+      <li>At 2.00 MeV press <strong>Nucleus nearby: yes</strong> so it reads “no”: the text says the photon alone cannot conserve energy and momentum, and no pair is made.</li>
+      <li>Press <strong>Cloud chamber</strong>, then <strong>Play</strong>: at 120 MeV/c the track has radius 26.7 cm below the lead plate and 10.7 cm above it, so it moved up. Press <strong>Charge: positive</strong> to make it negative and the bend reverses.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>A Relativistic Equation for the Electron</h3>
     <p>Schrödinger's equation treats time and space differently, so it cannot be right for fast particles. Dirac looked for an equation that is first order in both, and found one that works only if the wavefunction has four components<sup><a href="#src-1">[1]</a></sup>. The electron's spin, which Pauli had added by hand, appears on its own<sup><a href="#src-7">[7]</a></sup>.</p>
@@ -124,8 +143,10 @@
     <p>Anderson was studying cosmic rays with a cloud chamber inside a magnet<sup><a href="#src-5">[5]</a></sup>. A charged particle leaves a trail of droplets, and the field bends the trail into a circle of radius</p>
     <p style="overflow-x:auto;">$$r = \frac{p}{|q|\,B}$$</p>
     <p>A track bending one way could be a positive particle going up or a negative one coming down. To tell which, the chamber had a lead plate across the middle, 6 mm thick<sup><a href="#src-5">[5]</a></sup>. A particle loses momentum crossing the plate, so its track curls more tightly on the far side. That fixes the direction of travel, and then the sense of the bend fixes the sign of the charge. How tightly it curled, together with how densely it ionised the gas, showed the mass was far below a proton's. In his 1933 paper Anderson reported 15 tracks of positive particles among 1300 cosmic-ray photographs and concluded that their mass was less than twenty times the electron's<sup><a href="#src-4">[4]</a></sup>.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The photon and particle energies come from $E = mc^2$ and momentum conservation, with the CODATA electron mass. In the pair view the kinetic energy is drawn split equally between the two particles, which is a display choice; real pairs share it unequally. In the cloud chamber the field (1.5 T), the 30 cm chamber and the 40 % of the momentum kept after the plate are illustrative, not Anderson's values. The radii follow from $r = p/(|q|B)$.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -136,9 +157,9 @@
     </ul>
     <p style="overflow-x:auto;">$$e^- + e^+ \to \gamma + \gamma, \qquad E_\gamma \ge 2m_ec^2 = 1.022\ \text{MeV}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">P. A. M. Dirac, "The Quantum Theory of the Electron", <em>Proceedings of the Royal Society A</em> 117, 610–624 (1928).</li>
       <li id="src-2">P. A. M. Dirac, "Quantised Singularities in the Electromagnetic Field", <em>Proceedings of the Royal Society A</em> 133, 60–72 (1931).</li>
       <li id="src-3">C. D. Anderson, "The Apparent Existence of Easily Deflectable Positives", <em>Science</em> 76, 238 (1932).</li>
@@ -155,7 +176,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

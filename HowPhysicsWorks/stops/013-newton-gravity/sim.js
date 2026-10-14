@@ -35,7 +35,7 @@
   var TRAIL_DT = 15;   /* s between trail points */
   var fired   = false;
   var done    = false;
-  var outcome = '';   /* 'orbit' | 'escape' | 'landed' */
+  var outcome = '';   /* 'orbit' | 'escape' | 'far' | 'landed' */
 
   /* Cannon is at upper-right, mountain 300 km high */
   var CANNON_ANGLE = -Math.PI * 0.28;
@@ -126,6 +126,7 @@
   function trailColor() {
     if (outcome === 'orbit')  return 'oklch(0.72 0.15 145)';
     if (outcome === 'escape') return 'oklch(0.80 0.17 82)';
+    if (outcome === 'far')    return 'oklch(0.72 0.15 145)';
     if (outcome === 'landed') return 'oklch(0.68 0.22 20)';
     /* In-flight: color by speed vs orbital */
     return launchSpeedKms >= V_ESCAPE  ? 'oklch(0.80 0.17 82)'
@@ -220,10 +221,11 @@
 
     /* Outcome banner */
     if (outcome) {
-      var bannerColors = { orbit: 'oklch(0.72 0.15 145)', escape: 'oklch(0.80 0.17 82)', landed: 'oklch(0.68 0.22 20)' };
+      var bannerColors = { orbit: 'oklch(0.72 0.15 145)', escape: 'oklch(0.80 0.17 82)', far: 'oklch(0.72 0.15 145)', landed: 'oklch(0.68 0.22 20)' };
       var bannerMsgs   = {
         orbit:  '↻ Orbiting Earth!  circular speed here is ' + V_ORBITAL.toFixed(1) + ' km/s',
         escape: '↗ Escaped Earth gravity!  v > ' + V_ESCAPE.toFixed(1) + ' km/s',
+        far:    '↻ Very long orbit (beyond the view).  Bound, below ' + V_ESCAPE.toFixed(1) + ' km/s',
         landed: '↓ Landed back on Earth.  Above ' + V_CLEAR.toFixed(1) + ' km/s it clears the surface.'
       };
       ctx.save();
@@ -343,7 +345,9 @@
         break;
       }
       if (rr > R * 20) {
-        done = true; outcome = 'escape'; running = false;
+        /* Classify by specific energy, not distance: a bound orbit can pass this radius too */
+        var unbound = (vx*vx + vy*vy) / 2 - GM / rr >= 0;
+        done = true; outcome = unbound ? 'escape' : 'far'; running = false;
         var dot = document.querySelector('.sim-caption__dot');
         if (dot) dot.classList.remove('is-running');
         break;

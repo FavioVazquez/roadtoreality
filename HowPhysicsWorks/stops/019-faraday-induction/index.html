@@ -8,12 +8,18 @@
   <meta property="og:title" content="Faraday's Electromagnetic Induction — How Physics Works">
   <meta property="og:description" content="Faraday — a bookbinder's apprentice with almost no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/019-faraday-induction/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 019, Faraday's Electromagnetic Induction: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/019-faraday-induction/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 019, Faraday's Electromagnetic Induction: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Faraday's Electromagnetic Induction — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +68,10 @@
       <span class="stop-header__scientist">Michael Faraday</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does the galvanometer needle move only while the magnet moves, and why does it flip as the magnet passes through the coil?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Faraday — a bookbinder's apprentice with almost no formal education — discovered that a changing magnetic field creates an electric current. Move the magnet through the coil below and watch the galvanometer needle respond to the <em>rate of change</em> of flux, not to flux itself. Pull the magnet back out and the needle flips direction — Lenz's law in action.</p>
   </div>
@@ -92,9 +102,22 @@
       <span>Drag the slider to move the magnet. Auto Oscillate runs it continuously. Notice the needle reverses when the magnet changes direction.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the simulation running, drag <strong>Magnet position</strong> to about 10% (this stops the swing), then toward the coil, and stop: while the magnet moves the readout says [flux rising] and the needle swings; the moment it stops, the needle returns to the centre.</li>
+      <li>Keep dragging the same way past about 53%, where the magnet's centre crosses the coil's centre: the needle flips, the readout changes to [flux falling], and the yellow N and S marks on the coil swap.</li>
+      <li>Drag the same distance slowly, then quickly: the faster move gives the larger ℰ number and the wider needle swing.</li>
+      <li>Press <strong>Auto Oscillate</strong> (it reads Stop Oscillation while the magnet swings): the needle reverses four times per cycle, at each end of the swing and each time the magnet's centre crosses the coil.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What's happening</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The galvanometer needle is driven by the <em>time-derivative</em> of magnetic flux through the coil — dΦ/dt — not by the flux itself. When the magnet sits still, no current flows. Only movement creates induction. And when the magnet reverses direction, the induced current reverses too (Lenz's law). The needle also reverses once during every pass, at the moment the magnet's centre crosses the coil, because the flux stops rising and starts falling. The yellow dots drift along the leads in the direction of the induced current; the N and S marks show which face of the coil has become which pole, always the one that opposes the magnet's motion (an approaching N pole meets a coil face that has become N). The coil in the picture has five turns.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The flux is a smooth bell-shaped function of the distance between the magnet's centre and the coil, not a field computed from a real bar magnet, and the ℰ readout is in arbitrary units. The rate of change is taken between successive frames, assumed 0.016 s apart, so the needle only reads correctly while the simulation is running. The induced current does not push back on the magnet, the coil has no resistance or self-inductance, and the needle stops at 60°. The moving dots and the induced N and S marks are drawn only when ℰ is large enough to matter.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
@@ -107,9 +130,9 @@
       <li>Every generator, transformer, and induction motor in the world runs on this principle.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">M. Faraday, "Experimental Researches in Electricity", <em>Philosophical Transactions of the Royal Society</em> 122, 125&ndash;162 (1832) (First Series, read 24 November 1831).</li>
       <li id="src-2">H. F. E. Lenz, "Ueber die Bestimmung der Richtung der durch elektrodynamische Vertheilung erregten galvanischen Str&ouml;me", <em>Annalen der Physik und Chemie</em> 107 (31), 483&ndash;494 (1834).</li>
       <li id="src-3">J. C. Maxwell, "On Faraday's Lines of Force", <em>Transactions of the Cambridge Philosophical Society</em> 10, 27&ndash;83 (1856, read 1855).</li>
@@ -121,7 +144,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

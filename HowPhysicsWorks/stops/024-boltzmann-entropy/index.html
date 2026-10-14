@@ -8,12 +8,18 @@
   <meta property="og:title" content="Boltzmann and Entropy — How Physics Works">
   <meta property="og:description" content="Boltzmann defined entropy as the number of ways a system can be arranged. His equation S = k log W links microscopic disorder to macroscopic thermodynamics.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/024-boltzmann-entropy/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 024, Boltzmann and Entropy: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/024-boltzmann-entropy/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 024, Boltzmann and Entropy: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Boltzmann and Entropy — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -64,6 +70,10 @@
       <span class="stop-header__scientist">Ludwig Boltzmann</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does a gas spread out once the wall is removed and never gather back, and how does temperature shift its speeds?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1877, Ludwig Boltzmann gave entropy a precise definition: it counts the number of microscopic arrangements (microstates) \(\Omega\) that produce the same macroscopic appearance. Because high-entropy states have astronomically more microstates than low-entropy ones, a system evolving randomly will almost certainly move toward disorder — not because nature "wants" disorder, but because there are so many more ways to be disordered. (Boltzmann wrote the relation as a proportionality; the equation with the constant k, S = k log W, is Planck's 1900 form, and that is what is carved on Boltzmann's gravestone in Vienna.)</p>
   </div>
@@ -89,6 +99,14 @@
       <span>Left: adjust temperature — watch the Maxwell-Boltzmann speed distribution shift. Right: press "Remove Wall" to open the partition and watch entropy climb toward maximum.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Remove Wall</strong>: the S / S_max meter climbs from 0% as particles cross, then hovers in the 90s and stays there. It reads 100% only when exactly 25 of the 50 are on each side, about 1.3 × 10¹⁴ arrangements against one for all on the left.</li>
+      <li>Drag <strong>Temperature</strong> from T = 1.0 (relative) to T = 3.0: the particles speed up, and the bars and the yellow MB curve move to higher speeds and spread out.</li>
+      <li>Drag <strong>Temperature</strong> down to T = 0.2: the particles slow and the distribution bunches up at the low-speed end of the axis.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Maxwell-Boltzmann speed distribution</h3>
     <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
@@ -110,6 +128,10 @@
     <p style="color:var(--color-text-secondary);line-height:1.8;">
       When the right-panel partition is removed, the gas expands into twice the volume. The number of accessible microstates doubles for each particle, so \(\Omega \to 2^N \Omega_0\) and entropy increases by \(\Delta S = N k_B \ln 2\). The entropy meter shows \(S/S_\text{max}\) for the coarse macrostate "n of the N particles are on the right", S = k ln [N!/(n!(N&minus;n)!)]: zero with all on one side, maximum at an even split. With 50 particles the even split has 1.3 × 10<sup>14</sup> arrangements and the starting state one.
     </p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <ul class="sim-limits__list"><li>Both gases are two-dimensional hard disks of equal mass (60 on the left, 50 on the right) with perfectly elastic collisions; speeds are in pixels per frame and T is a relative setting with no k<sub>B</sub>.</li><li>The left gas starts with speeds spread evenly between 0.5 and 2 times the base speed and reaches the Maxwell–Boltzmann shape through collisions; the yellow curve uses the spread measured from the particles’ current speeds, and the bars are averaged over about a second, so they lag a slider change.</li><li>The right gas does not respond to the Temperature slider.</li><li>The meter counts only how many particles are on the right, the coarse macrostate on the page; positions within each half and speeds are not counted.</li></ul>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -118,9 +140,9 @@
       <li>The Maxwell-Boltzmann distribution \(f(v) \propto v \exp(-mv^2/2k_BT)\) describes how particle speeds are distributed in thermal equilibrium at temperature \(T\).</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>L. Boltzmann, "Über die Beziehung zwischen dem zweiten Hauptsatze der mechanischen Wärmetheorie und der Wahrscheinlichkeitsrechnung respektive den Sätzen über das Wärmegleichgewicht", <em>Sitzungsberichte der Kaiserlichen Akademie der Wissenschaften, Wien</em> 76, 373–435 (1877).</li>
       <li>M. Planck, "Ueber das Gesetz der Energieverteilung im Normalspectrum", <em>Annalen der Physik</em> 4, 553–563 (1901). The form S = k log W with the constant k.</li>
       <li>J. C. Maxwell, "Illustrations of the Dynamical Theory of Gases", <em>Philosophical Magazine</em> 19, 19–32 (1860). The speed distribution.</li>
@@ -132,7 +154,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

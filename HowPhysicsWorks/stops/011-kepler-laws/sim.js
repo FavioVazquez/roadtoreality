@@ -482,7 +482,7 @@
 
     var eccSlider = document.getElementById('ecc-slider');
     var eccVal    = document.getElementById('ecc-val');
-    var eccLabels = { 0.0:'0.0 (circle)', 0.05:'0.05 (Jupiter)', 0.1:'0.1 (Mars)', 0.2:'0.2 (Mercury)', 0.25:'0.25 (Pluto)', 0.4:'0.4 (some asteroids)', 0.6:'0.6 (comet-like)', 0.9:'0.9 (Halley)' };
+    var eccLabels = { 0.0:'0.0 (circle)', 0.05:'0.05 (Jupiter)', 0.1:'0.1 (Mars)', 0.2:'0.2 (Mercury 0.21)', 0.25:'0.25 (Pluto)', 0.4:'0.4 (some asteroids)', 0.6:'0.6 (comet-like)', 0.9:'0.9 (comet-like)' };
     if (eccSlider) {
       eccSlider.addEventListener('input', function () {
         ecc = parseFloat(this.value);

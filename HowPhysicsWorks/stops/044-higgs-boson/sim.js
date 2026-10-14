@@ -26,6 +26,7 @@
   var bins = [], nEv = 0, carry = 0, fs = 0, fbw = 0, fsw = 0;
   var seed = 12345;
 
+  function mf(x) { return x.toFixed(2).replace('-', '\u2212'); }
   function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return (seed + 0.5) / 4294967296; }
   function gauss() { var u = rnd(), v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
   function cdfExp(m) { return (Math.exp(-(m - M0) / TAU)); }
@@ -77,8 +78,8 @@
     var sx = cx + px * s, sy = cy - V(br) * k + py * s * flat - 8;
     ctx.fillStyle = COL.ball; ctx.beginPath(); ctx.arc(sx, sy, 8, 0, 2 * Math.PI); ctx.fill();
     var ty = narrow ? cy + 90 : cy + 100;
-    var line1 = m2 < 0 ? 'μ² = ' + m2.toFixed(2) + ' < 0: the centre is a hilltop; minima form a ring at |φ| = ' + rmin().toFixed(2) : 'μ² = ' + m2.toFixed(2) + ' ≥ 0: the centre is the only minimum; the symmetry is unbroken';
-    if (narrow) { txt(m2 < 0 ? 'μ² = ' + m2.toFixed(2) + ' < 0: ring of minima' : 'μ² = ' + m2.toFixed(2) + ' ≥ 0: symmetric minimum', W / 2, ty, COL.text, 12, 'center'); txt('Ball at |φ| = ' + br.toFixed(2) + (m2 < 0 ? ', ring at ' + rmin().toFixed(2) : ''), W / 2, ty + 18, COL.muted, 11, 'center'); }
+    var line1 = m2 < 0 ? 'μ² = ' + mf(m2) + ' < 0: the centre is a hilltop; minima form a ring at |φ| = ' + rmin().toFixed(2) : 'μ² = ' + mf(m2) + ' ≥ 0: the centre is the only minimum; the symmetry is unbroken';
+    if (narrow) { txt(m2 < 0 ? 'μ² = ' + mf(m2) + ' < 0: ring of minima' : 'μ² = ' + mf(m2) + ' ≥ 0: symmetric minimum', W / 2, ty, COL.text, 12, 'center'); txt('Ball at |φ| = ' + br.toFixed(2) + (m2 < 0 ? ', ring at ' + rmin().toFixed(2) : ''), W / 2, ty + 18, COL.muted, 11, 'center'); }
     else { txt(line1, 16, ty, COL.text, 12); txt('Ball at |φ| = ' + br.toFixed(2) + '. In nature the minimum sits at v = 246.22 GeV.', 16, ty + 18, COL.muted, 11); }
     /* couplings */
     var gx = narrow ? 18 : W * 0.70, gy = narrow ? ty + 46 : 60, gw = narrow ? W - 36 : W * 0.27, rowH = narrow ? 20 : 26;
@@ -201,7 +202,7 @@
     canvas.style.display = 'block'; mountEl.appendChild(canvas); ctx = canvas.getContext('2d');
     var sl = document.getElementById('mu2-slider'), sv = document.getElementById('mu2-val');
     if (sl) sl.addEventListener('input', function () {
-      m2 = parseFloat(sl.value); var t = (m2 >= 0 ? '+' : '') + m2.toFixed(2);
+      m2 = parseFloat(sl.value); var t = (m2 >= 0 ? '+' : '') + mf(m2);
       if (sv) sv.textContent = t; sl.setAttribute('aria-valuetext', t + (m2 < 0 ? ', broken symmetry' : ', symmetric'));
       setStatus(); draw();
     });

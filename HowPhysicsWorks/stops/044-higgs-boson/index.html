@@ -8,12 +8,18 @@
   <meta property="og:title" content="The Higgs Boson — How Physics Works">
   <meta property="og:description" content="Flip the sign of the Higgs potential&#x27;s quadratic term and watch a ball roll off the symmetric top; then fill a diphoton mass histogram event by event until a 125 GeV bump stands 5σ above the background. Plus why the Higgs is not where most of a proton&#x27;s mass comes from.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/044-higgs-boson/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 044, The Higgs Boson: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/044-higgs-boson/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 044, The Higgs Boson: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>The Higgs Boson — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Higgs, Brout &amp; Englert</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How does a hat-shaped potential make the Higgs field settle away from zero, and how does a small bump at 125 GeV reach 5σ?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1964 three papers showed how a force-carrying particle can have mass without a mass term being put into the equations by hand, which would spoil their symmetry: one by François Englert and Robert Brout, one by Peter Higgs, and one by Gerald Guralnik, Carl Hagen and Tom Kibble<sup><a href="#src-1">[1]</a>–<a href="#src-3">[3]</a></sup>. In 1967 Steven Weinberg used the idea to build the electroweak theory<sup><a href="#src-4">[4]</a></sup>. It predicts one new particle, the Higgs boson. In 2012 the ATLAS and CMS experiments at CERN's Large Hadron Collider both reported it<sup><a href="#src-6">[6]</a>,<a href="#src-7">[7]</a></sup>. The 2024 Review of Particle Physics gives its mass as 125.20 ± 0.11 GeV<sup><a href="#src-8">[8]</a></sup>.
@@ -82,7 +92,7 @@
             Quadratic term μ²
             <span class="sim-control__value" style="text-transform:none" id="mu2-val">−0.80</span>
           </label>
-          <input type="range" id="mu2-slider" min="-1" max="1" step="0.05" value="-0.8" aria-label="Coefficient mu squared of the quadratic term in the Higgs potential, in model units" aria-valuetext="-0.80, broken symmetry">
+          <input type="range" id="mu2-slider" min="-1" max="1" step="0.05" value="-0.8" aria-label="Coefficient mu squared of the quadratic term in the Higgs potential, in model units" aria-valuetext="−0.80, broken symmetry">
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
           <button class="sim-btn" id="ball-top" type="button">Put the ball back on top</button>
@@ -110,6 +120,15 @@
       <span id="sim-status">Press play: the ball rolls off the symmetric top.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With <strong>Quadratic term μ²</strong> at −0.80, press <strong>Play</strong>: the ball rolls off the top and settles on the dashed ring of minima at |φ| = 0.63.</li>
+      <li>While it plays, drag <strong>Quadratic term μ²</strong> to 0 or above: the ring disappears and the ball rolls back to the centre. After <strong>Put the ball back on top</strong> it stays at φ = 0, the only minimum.</li>
+      <li>Press <strong>Diphoton histogram</strong>, then <strong>Play</strong>, and watch the Excess (N − B)/√B readout: on average it grows as the square root of the events recorded, about 2.5σ a quarter of the way through and 5σ at the end, and each run scatters by about 1σ around that.</li>
+      <li>Press <strong>Background only</strong> and play again: single bins still poke above the dashed background curve, but the excess wanders around 0σ instead of climbing.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>A Potential Shaped Like a Hat</h3>
     <p>The Higgs field $\phi$ has a potential energy that depends on its size. In the electroweak theory it is<sup><a href="#src-5">[5]</a></sup>
@@ -128,8 +147,10 @@
     <p>A claim of discovery needs $Z \geq 5$: a chance of about 3 in 10 million that background alone would fluctuate that high or higher. Try "Background only": the histogram still has bumps, but they come and go. The simulation's numbers are chosen so that the expected excess reaches 5σ at the end of the run; each run is random, and the final value scatters by about one σ around 5: roughly half of all runs end below the 5σ line, and one run in ten ends below 3.7σ. That is why real analyses quote an expected significance as well as the observed one.</p>
     <h3>What ATLAS and CMS Saw</h3>
     <p>ATLAS used about 4.8 fb<sup>−1</sup> of collisions at 7 TeV recorded in 2011 and 5.8 fb<sup>−1</sup> at 8 TeV recorded in 2012, and combined searches including the two-photon, four-lepton and WW channels. It found a neutral boson with a mass of 126.0 ± 0.4 (stat) ± 0.4 (sys) GeV and a significance of 5.9σ, a background fluctuation probability of 1.7 × 10<sup>−9</sup><sup><a href="#src-6">[6]</a></sup>. CMS used up to 5.1 fb<sup>−1</sup> at 7 TeV and 5.3 fb<sup>−1</sup> at 8 TeV in five decay modes and saw an excess near 125 GeV with a local significance of 5.0σ, where 5.8σ was expected for a Standard Model Higgs boson<sup><a href="#src-7">[7]</a></sup>. Both needed the data of both years.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The potential is in model units with $\lambda = 1$, and the ball's friction is a display choice. The histogram is not the 2012 data: the background is a falling exponential, the peak is a Gaussian centred at 125.20 GeV with a standard deviation of 1.6 GeV (<code>SIG</code> in sim.js), the number of events is arbitrary, and the expected background is taken as known. Real analyses fit the background and combine many categories. The significance shown is local: it is for one window chosen in advance.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -141,9 +162,9 @@
     </ul>
     <p style="overflow-x:auto;">$$V = \mu^2|\phi|^2 + \lambda|\phi|^4,\quad \mu^2 < 0 \qquad Z \approx \frac{N-B}{\sqrt{B}}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">F. Englert and R. Brout, "Broken Symmetry and the Mass of Gauge Vector Mesons", <em>Physical Review Letters</em> 13, 321 (1964).</li>
       <li id="src-2">P. W. Higgs, "Broken Symmetries and the Masses of Gauge Bosons", <em>Physical Review Letters</em> 13, 508 (1964).</li>
       <li id="src-3">G. S. Guralnik, C. R. Hagen and T. W. B. Kibble, "Global Conservation Laws and Massless Particles", <em>Physical Review Letters</em> 13, 585 (1964).</li>
@@ -162,7 +183,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

@@ -8,12 +8,18 @@
   <meta property="og:title" content="Archimedes and Buoyancy — How Physics Works">
   <meta property="og:description" content="Drop crates of different densities into water. The weight of the displaced water equals the buoyant force, as Archimedes proved in On Floating Bodies.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/005-archimedes-buoyancy/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 005, Archimedes and Buoyancy: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/005-archimedes-buoyancy/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 005, Archimedes and Buoyancy: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Archimedes and Buoyancy — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Archimedes of Syracuse</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does a 3-litre crate of wood float while a crate of stone the same size sinks, and how much water does each push aside?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       The story everyone knows: King Hiero II of Syracuse suspected his goldsmith of mixing silver into a gold wreath, and Archimedes, stepping into a bath, saw how to check it without melting it. The story is told by Vitruvius two centuries later (<em>De architectura</em> IX, preface); Archimedes himself never mentions it, and Galileo (<em>La Bilancetta</em>, 1586) pointed out that the water-overflow method as told is too crude to catch the fraud; a hydrostatic balance would do it.
@@ -92,11 +102,24 @@
       <span id="sim-status">Select an object and press Drop to place it in the water.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With <strong>Choose object</strong> on Wood, press <strong>Drop it!</strong>: the crate floats with 1.8 L of its 3 L under water, and the Weight and Buoyancy arrows both read 18 N.</li>
+      <li>Move <strong>Choose object</strong> to Ice and drop it: at 917 kg/m³ it floats with 2.8 L of its 3 L below the surface, and both arrows read 27 N.</li>
+      <li>Choose Stone: the crate sinks to the bottom, the readout shows 3.0 L displaced, and Buoyancy stops at 29 N against a Weight of 76 N.</li>
+      <li>Choose Iron: the Weight rises to 231 N, but the Buoyancy is the same 29 N as for stone. The push depends only on the water displaced, not on what the crate is made of.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Principle</h3>
     <p>Archimedes' principle states: an object submerged in fluid experiences an upward buoyant force equal to the weight of the fluid it displaces. If that force is greater than the object's weight, the object floats. If less, it sinks.</p>
     <p>This is why a massive steel ship floats — its hollow interior displaces far more water than its hull weighs. And why a solid steel ball sinks — it displaces less water than its weight requires.</p>
     <p>In Vitruvius' telling he ran home naked shouting "Eureka!" (I have found it!), then showed that the wreath displaced more water than an equal weight of gold, so it was less dense. Whatever happened in the bath, the physics is in his own book: <em>On Floating Bodies</em> proves the buoyancy law as a theorem.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Every object is a solid crate of the same 3 litres with one uniform density; the Hollow ship is such a crate given an average density of 150 kg/m³, not a hull. The water is fresh water at 1000 kg/m³, with g = 9.8 m/s². When a crate rests on the bottom, only its weight and the buoyancy are drawn; the upward push of the floor, which makes up the difference, is not.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -107,9 +130,9 @@
     </ul>
     <p>$$F_b = \rho_{\text{fluid}} \cdot V_{\text{displaced}} \cdot g$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Archimedes, <em>On Floating Bodies</em>, Book I, Postulate 1 and Propositions 5–7; English translation in T. L. Heath, <em>The Works of Archimedes</em> (Cambridge University Press, 1897).</li>
       <li id="src-2">Vitruvius, <em>De architectura</em>, Book IX, preface, section 9–12 (the crown and the bath, written about two centuries after Archimedes).</li>
       <li id="src-3">Galileo Galilei, <em>La Bilancetta</em> (1586), on the hydrostatic balance and why the overflow method is too coarse to detect the fraud.</li>
@@ -121,7 +144,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

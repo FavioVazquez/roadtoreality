@@ -8,12 +8,18 @@
   <meta property="og:title" content="Bohr's Model of the Atom — How Physics Works">
   <meta property="og:description" content="Bohr proposed that electrons can only occupy specific energy levels — and emit light when they jump between them. Each element has a unique spectral fingerprint.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/033-bohr-atom/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 033, Bohr's Model of the Atom: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/033-bohr-atom/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 033, Bohr's Model of the Atom: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Bohr's Model of the Atom — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Niels Bohr</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why should a classical atom collapse, and which electron jumps in Bohr's hydrogen atom give its visible spectral lines?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Bohr proposed that electrons can only occupy specific energy levels — and emit light when they jump between them. Each element has a unique spectral fingerprint.</p>
   </div>
@@ -82,6 +92,15 @@
       <span>Interactive — watch the classical collapse, then toggle to Bohr's quantized orbits.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Let the classical model run: the electron spirals into the nucleus in about 3.5 s, and then <strong>Switch to Bohr Model</strong> becomes active.</li>
+      <li>In the Bohr model the electron starts on n = 3 (Eₙ = -1.51 eV). Click the n=2 ring: a red photon flies out and a red line appears near 656 nm on the Emission spectrum (Balmer series) bar.</li>
+      <li>Click n=4 then n=2, n=5 then n=2, and n=6 then n=2: the bar collects lines at 486, 434 and 410 nm, the Balmer lines of the Key Equations. The upward clicks absorb a photon and add no line.</li>
+      <li>Click the n=1 ring from any higher ring: the photon is tagged UV and no line appears. A jump from n=4 to n=3 is tagged IR.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Classical Prediction: Catastrophe</h3>
     <p>An electron orbiting a nucleus is an accelerating charge. Accelerating charges radiate energy (Stop 025 — Hertz). As the electron radiates, it loses energy and spirals inward, eventually crashing into the nucleus in about ten picoseconds. Classical physics predicts every atom should instantly collapse. Watch the simulation — it does.</p>
@@ -90,6 +109,10 @@
     <p>What made physicists take the decree seriously was arithmetic: from one new rule, that the electron's angular momentum comes in multiples of h/2π, Bohr derived the energy levels below and with them Rydberg's constant, which until then was a number fitted to the spectrum, from e, the electron's mass and h alone. With the constants as known in 1913 it came out about 6 % low, within their uncertainty (Bohr quoted 3.1 × 10¹⁵ against the observed 3.29 × 10¹⁵ s⁻¹), and within 1 % as the constants improved; the model then predicted lines not yet seen in hydrogen and in ionised helium.</p>
     <h3>The Emission Spectrum as Proof</h3>
     <p>When an electron jumps from a higher orbit to a lower one, it emits a photon with exactly the energy difference. The photon's frequency — and therefore its color — is determined by which two levels are involved. Every element has its own set of levels and so its own spectral fingerprint; Bohr's formula gives them exactly only for hydrogen and one-electron ions, and the rest had to wait for the full quantum theory three stops on. Hydrogen's Balmer series (jumps ending on n = 2) falls in the visible range.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The classical collapse is slowed from about ten picoseconds, as the text gives, to 3.5 seconds, and its radius shrinks along a simple exponential spiral chosen for display, not the exact classical decay. Only levels n = 1 to 6 are drawn, with radii and orbital speeds compressed for clicking; the hint under the button gives the real n² and 1/n³ scalings. Photon wavelengths come from λ = 1240 nm·eV / ΔE with Eₙ = −13.6 eV/n², and the spectrum bar covers only 380 to 700 nm, so ultraviolet and infrared photons get a tag instead of a line.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equations</div>
@@ -97,9 +120,9 @@
     <p>$$\Delta E = h\nu = 13.6\left(\frac{1}{n_{\text{low}}^2} - \frac{1}{n_{\text{high}}^2}\right) \text{ eV}$$</p>
     <p>The Balmer series ($n \to 2$): H$\alpha$ = 656 nm (red), H$\beta$ = 486 nm (cyan), H$\gamma$ = 434 nm (violet), H$\delta$ = 410 nm (deep violet).</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">N. Bohr, "On the Constitution of Atoms and Molecules", <em>Philosophical Magazine</em> 26, 1 (1913). Cited: quantised angular momentum, the energy levels, and the derivation of Rydberg's constant.</li>
       <li id="src-2">J. J. Balmer, "Notiz &uuml;ber die Spectrallinien des Wasserstoffs", <em>Annalen der Physik</em> 25, 80 (1885). Cited: the visible hydrogen series.</li>
       <li id="src-3">J. Rydberg, <em>Kongliga Svenska Vetenskaps-Akademiens Handlingar</em> 23, 11 (1889). Cited: the empirical constant fitted to spectra.</li>
@@ -113,7 +136,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

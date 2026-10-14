@@ -8,12 +8,18 @@
   <meta property="og:title" content="Newton's Universal Gravitation — How Physics Works">
   <meta property="og:description" content="Newton realized that falling apples and orbiting moons obey the same inverse-square law. Fire a cannon fast enough — it orbits instead of landing.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/013-newton-gravity/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 013, Newton's Universal Gravitation: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/013-newton-gravity/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 013, Newton's Universal Gravitation: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Newton's Universal Gravitation — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Isaac Newton</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How fast must a cannonball be fired sideways from a high mountain to fall all the way around the Earth instead of landing?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Newton's great insight was that the force pulling an apple to the ground and the force keeping the Moon in orbit are the same force — gravity — just acting at different distances. This seems obvious now. In 1687 it was revolutionary: the heavens and the Earth obeyed identical laws.
@@ -99,11 +109,24 @@
       <span id="sim-status">From this 300 km mountain the circular-orbit speed is 7.7 km/s (7.9 at sea level); anything above 7.6 km/s clears the surface. Try values above and below.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>▶ Fire!</strong> at the default <strong>Launch speed</strong> of 5.0 km/s: the red path curves down and the banner reads “Landed back on Earth. Above 7.6 km/s it clears the surface.”</li>
+      <li>Set <strong>Launch speed</strong> to 7.6 km/s, then 7.7 km/s: at 7.6 the ball still comes down, much farther round; at 7.7 it goes all the way round on a green path and the banner reads “Orbiting Earth!” Raise <strong>Sim speed</strong> to 5× to see the laps sooner.</li>
+      <li>Set <strong>Launch speed</strong> to 8.5 km/s: the orbit becomes a stretched ellipse whose far point, opposite the cannon, is about 1.6 Earth radii from the centre.</li>
+      <li>Set <strong>Launch speed</strong> to 11.0 km/s, above the 10.9 km/s escape speed in the panel, and <strong>Sim speed</strong> to 5×: the yellow path heads away, and about half a minute later, once the ball is 20 Earth radii out, the banner reads “Escaped Earth gravity!”</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Inverse Square Law</h3>
     <p>In modern notation Newton's law is F = GMm/r²; Newton himself worked with proportions and never wrote G, which was first measured in 1798 by Cavendish. Double the distance, the force drops to a quarter. This precise mathematical relationship explained all of Kepler's empirical laws from a single principle.</p>
     <p>The "universal" in universal gravitation was the radical claim: the same formula applies everywhere in the universe, at all scales, between all masses. The Moon, Jupiter, distant stars — all governed by the same equation. This was a profound unification of earthly and celestial physics.</p>
     <p>Escape velocity — the speed needed to permanently leave Earth's gravity — is about 11.2 km/s. Low-orbit speed is lower, about 7.9 km/s at the surface and 7.7 km/s from the mountain, because you don't need to escape, just balance falling with horizontal speed. Try both in the simulation.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The ball feels only the inverse-square pull of a smooth Earth that does not rotate (GM = 398,600 km³/s², radius 6,371 km), with no air drag, no Moon and no Sun. It is always fired horizontally from 300 km up. A ball counts as landed when it comes within 5 km of the surface and as escaped once it passes 20 Earth radii, about 127,000 km. Time runs at 200 simulated seconds per real second at 1×, and an orbit stops after three laps.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -114,9 +137,9 @@
     </ul>
     <p>$$F = G\frac{m_1 m_2}{r^2}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">I. Newton, <em>Philosophiæ Naturalis Principia Mathematica</em> (1687), Book III, Proposition IV (the Moon test) and the Scholium.</li>
       <li id="src-2">I. Newton, <em>A Treatise of the System of the World</em> (1728), sections 2–3. Cited: the cannon thought experiment.</li>
       <li id="src-3">Earth's gravitational parameter GM = 398,600.4 km³/s² (IERS / JPL); the simulation uses 398,600 and a mean radius of 6,371 km.</li>
@@ -128,7 +151,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

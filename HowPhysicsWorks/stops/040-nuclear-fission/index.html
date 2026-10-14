@@ -8,12 +8,18 @@
   <meta property="og:title" content="Nuclear Fission — How Physics Works">
   <meta property="og:description" content="In December 1938 uranium hit by neutrons was found to yield barium: the nucleus had split. Run a chain reaction, see why delayed neutrons make it controllable, and compute the 200 MeV per fission from nuclear masses.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/040-nuclear-fission/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 040, Nuclear Fission: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/040-nuclear-fission/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 040, Nuclear Fission: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Nuclear Fission — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +65,10 @@
       <span class="stop-header__scientist">Hahn, Strassmann &amp; Meitner</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Where does the energy of fission come from, and why can a chain reaction slightly above critical still be controlled?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In December 1938 Otto Hahn and Fritz Strassmann bombarded uranium with slow neutrons and found barium among the products, an element about half as heavy<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-5">[5]</a></sup>. Lise Meitner and Otto Frisch explained it: the uranium nucleus had split in two. Meitner estimated that each split releases about 200 MeV, and Frisch named the process fission<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>.
@@ -98,6 +108,15 @@
       <span id="sim-status">Press play to run the chain reaction.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>At the default 41.1 % (k = 1.001), press <strong>Compare: no delayed neutrons</strong>: the e-folding time reads 72.5 s with delayed neutrons and 101.1 ms without, and the second power curve shoots off the top of the chart.</li>
+      <li>Lower <strong>Neutrons that cause a fission</strong> to 38.0 % (k = 0.925) and press <strong>Play</strong>: the neutron counts fall generation by generation until the plot reads “The chain died out.”</li>
+      <li>Raise it to 41.3 % and then one more step, until k reads 1.007 (the label still says 41.3 %): ρ = 0.703 % is now above β = 0.65 %, the plot warns “Prompt critical (ρ ≥ β)” and the e-folding time drops to 188.9 ms.</li>
+      <li>Press <strong>Where the energy comes from</strong>: U-235 + n → Ba-141 + Kr-92 + 3n gives 173.3 MeV, and 199.2 MeV once the fragments decay to Pr-141 + Zr-92. Ni-62 sits at the top of the curve.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Barium from Uranium</h3>
     <p>Through the 1930s several laboratories fired neutrons at uranium, expecting to make slightly heavier elements. Hahn and Strassmann, chemists at the Kaiser Wilhelm Institute for Chemistry in Berlin, showed that one product behaved chemically as barium. They submitted the result to <em>Die Naturwissenschaften</em> on 22 December 1938<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-5">[5]</a></sup>. Meitner and Frisch worked out that a uranium nucleus, pictured as a charged liquid drop, could stretch and split into two smaller nuclei, and published their account in <em>Nature</em><sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>. Later in 1939 Niels Bohr and John Wheeler gave the full liquid-drop theory of fission<sup><a href="#src-3">[3]</a></sup>.</p>
@@ -112,8 +131,10 @@
     <p>Most neutrons appear within a tiny fraction of a second, and a neutron generation in a thermal reactor lasts of order $10^{-4}$ s<sup><a href="#src-6">[6]</a></sup>. If they were all there was, a reactor 0.1 % above critical would multiply its power by $e$ about every tenth of a second. But a fraction $\beta = 0.0065$ of the neutrons from uranium-235 are emitted from a fraction of a second to about a minute later, by decaying fission fragments<sup><a href="#src-6">[6]</a></sup>. As long as the excess reactivity $\rho = (k-1)/k$ stays below $\beta$, the power follows the slow delayed neutrons:</p>
     <p style="overflow-x:auto;">$$\frac{P(t)}{P_0} \approx \frac{\beta}{\beta-\rho}\,\exp\!\left(\frac{\lambda\rho\,t}{\beta-\rho}\right)$$</p>
     <p>with an effective one-group decay constant $\lambda \approx 0.077$ per second, the value that follows from the published delayed-neutron group data<sup><a href="#src-6">[6]</a></sup>. At $\rho = 0.1$ % that gives a doubling every 50 seconds or so instead of every 0.07 s, slow enough for control systems to follow. If $\rho$ reaches $\beta$, the reactor is "prompt critical" and the delayed neutrons no longer help.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The chain view counts neutrons generation by generation, drawing 2 or 3 neutrons per fission with the right average; it ignores neutron energies, geometry and the fuel's changing state. The power curve is the one-group prompt-jump formula above, with no temperature feedback; it is a formula, not reactor data. The binding-energy curve plots, at each mass number, the most tightly bound nuclide in the mass table, and the Q values are calculated from tabulated atomic masses.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -124,9 +145,9 @@
     </ul>
     <p style="overflow-x:auto;">$$Q = \left[m(^{235}\mathrm{U}) + m_n - \textstyle\sum m_{\text{products}}\right]c^2 \approx 200\ \text{MeV}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">O. Hahn and F. Strassmann, "Über den Nachweis und das Verhalten der bei der Bestrahlung des Urans mittels Neutronen entstehenden Erdalkalimetalle", <em>Die Naturwissenschaften</em> 27, 11–15 (1939).</li>
       <li id="src-2">L. Meitner and O. R. Frisch, <em>Nature</em> 143, 239 (1939).</li>
       <li id="src-3">N. Bohr and J. A. Wheeler, "The Mechanism of Nuclear Fission", <em>Physical Review</em> 56, 426 (1939).</li>
@@ -143,7 +164,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/cards.css">
   <link rel="stylesheet" href="assets/css/search.css">
+  <link rel="stylesheet" href="assets/css/journey.css">
 
   <style>
     /* ── Landing-page-specific overrides ── */
@@ -63,10 +65,15 @@
       letter-spacing: 0.08em;
     }
 
+    /* On a phone the counter would wrap the header to two rows; the journey map's title already shows the count. */
+    @media (max-width: 480px) {
+      .visit-counter { display: none; }
+    }
+
     /* Sticky era tabs on scroll */
     .era-tabs-sticky {
       position: sticky;
-      top: 64px;
+      top: var(--header-h, 45px);
       z-index: 50;
       background: oklch(0.07 0 0 / 0.9);
       backdrop-filter: blur(12px);
@@ -129,9 +136,6 @@
       </a>
       <span class="site-header__tagline">An Interactive History</span>
       <span class="visit-counter" id="header-visit-counter" aria-live="polite"></span>
-      <a href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener"
-         style="font-size: 0.72rem; letter-spacing: 0.05em; color: var(--color-text-secondary); border: 1px solid oklch(1 0 0 / 0.18); border-radius: 4px; padding: 0.25rem 0.6rem; white-space: nowrap; text-decoration: none; flex-shrink: 0;"
-         title="This project was built using the Learnship agentic workflow">Built with Learnship</a>
       <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
         <span class="search-trigger__icon">⌕</span>
         <span>Search</span>
@@ -148,7 +152,6 @@
 
   <!-- Hero -->
   <section class="hero container" aria-labelledby="hero-title">
-    <p class="hero__eyebrow">~2,600 years · 50 stops · 5 eras</p>
     <h1 class="hero__title" id="hero-title">
       The Story of How<br>
       We Learned to Understand<br>
@@ -175,8 +178,10 @@
       </div>
     </div>
 
-    <div style="margin-top: 2.5rem;" id="progress-bar" aria-label="Your progress"></div>
   </section>
+
+  <!-- Journey map (rendered by journey.js from stops.json) -->
+  <section id="journey-map" class="journey" aria-label="Journey map"></section>
 
   <!-- Era Quick-Nav Tabs (sticky) -->
   <nav class="era-tabs-sticky" aria-label="Jump to era">
@@ -188,11 +193,6 @@
       <a class="era-tab" data-era="contemporary"  href="#era-contemporary"  role="listitem">Contemporary</a>
     </div>
   </nav>
-
-  <!-- Era Timeline Visual -->
-  <div class="container" style="margin-top: 2rem;">
-    <div id="era-timeline" role="navigation" aria-label="Physics era timeline"></div>
-  </div>
 
   <!-- Era Sections (rendered by nav.js) -->
   <main class="container" id="era-sections" aria-label="Physics stops by era">
@@ -216,6 +216,7 @@
           Inspired by How AI Works
         </a>
       </p>
+      <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p>
     </div>
   </footer>
 
@@ -240,6 +241,7 @@
 <div class="search-overlay" aria-hidden="true"></div>
 
 <script src="assets/js/progress.js"></script>
+<script src="assets/js/journey.js"></script>
 <script src="assets/js/nav.js"></script>
 <script>window.STOPS_DATA_PATH = 'assets/data/stops.json';</script>
 <script src="assets/js/vendor/fuse.min.js"></script>

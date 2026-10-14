@@ -8,12 +8,18 @@
   <meta property="og:title" content="Special Relativity: Time Dilation — How Physics Works">
   <meta property="og:description" content="Einstein showed that a moving clock, seen from the frame it moves through, runs slow — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/029-special-relativity-time/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 029, Special Relativity: Time Dilation: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/029-special-relativity-time/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 029, Special Relativity: Time Dilation: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Special Relativity: Time Dilation — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +68,10 @@
       <span class="stop-header__scientist">Albert Einstein</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Judged from Earth, how much more slowly does a twin on a fast rocket age, and how does that depend on the speed?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Einstein showed that a moving clock, seen from the frame it moves through, runs slow — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.</p>
   </div>
@@ -86,6 +96,14 @@
       <span>Interactive &mdash; drag velocity to watch the twins&rsquo; ages diverge.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>↺ Reset</strong>, set <strong>Velocity</strong> to 0.600c (γ = 1.250) and press <strong>▶ Play</strong>: the Traveling Twin's age gains 0.8 yr for every 1 yr the Earth Twin gains, and the Age gap grows steadily.</li>
+      <li>Drag <strong>Velocity</strong> to its top, 0.990c: γ reads 7.089, so the traveller ages about one seventh as fast as the Earth twin, and the yellow dot sits high on the steep end of the small γ curve.</li>
+      <li>Try <strong>Velocity</strong> at 0.100c: γ = 1.005, and the age gap grows by only about half a percent of the Earth twin's ageing. At 0.000c the panel reads Age gap: essentially zero at this speed.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Twin Paradox</h3>
     <p>Imagine twins. One stays on Earth; the other boards a rocket. When the traveling twin returns, they are younger &mdash; not metaphorically, but physically. Their heart has beaten fewer times. Their cells have divided fewer times. This is time dilation: moving clocks run slow. The simulation shows the outbound leg as seen from Earth. Seen from the rocket, it is Earth's clock that runs slow; the asymmetry that makes the traveller younger at the reunion comes from turning around, which changes the rocket's frame and not Earth's.</p>
@@ -93,16 +111,10 @@
     <p>The ratio of the twins&rsquo; aging rates is the Lorentz factor &gamma;. At everyday speeds &gamma; is indistinguishable from 1. At 99% the speed of light, &gamma;&nbsp;&asymp;&nbsp;7 &mdash; the traveling twin ages at one seventh the rate of the Earth twin, as judged from Earth.</p>
     <h3>It Is Not an Illusion</h3>
     <p>Time dilation has been measured directly. In 1972 Hafele and Keating flew atomic clocks around the world. Flown eastward, with Earth's rotation, the clocks came back 59 nanoseconds behind the ground clocks; flown westward they came back 273 nanoseconds ahead, exactly as relativity, counting both speed and altitude, predicted.<sup><a href="#src-2">[2]</a></sup> Fast muons last longer too: in the CERN storage ring, muons at &gamma;&nbsp;=&nbsp;29.3 lived as dilation predicts, to 0.1&nbsp;%.<sup><a href="#src-4">[4]</a></sup> GPS satellites, travelling at about 3.9 km/s, carry clocks that would run slow by about 7 microseconds a day from their speed alone. They also sit in weaker gravity than we do, which (general relativity, stop 034) makes them run fast by about 45 microseconds a day. The net effect, about 38 microseconds a day fast, is built into the system; left uncorrected it would grow into a position error of about 10 km per day.<sup><a href="#src-5">[5]</a></sup></p>
-  </div>
-  <div class="stop-body content-column" id="sources">
-    <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
-      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
-      <li id="src-2">J. C. Hafele and R. E. Keating, <em>Science</em> 177, 166 and 168 (1972).</li>
-      <li id="src-3">D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): muons on Mount Washington.</li>
-      <li id="src-4">J. Bailey et al., <em>Nature</em> 268, 301 (1977): muon lifetime at &gamma;&nbsp;=&nbsp;29.3 in the CERN storage ring.</li>
-      <li id="src-5">N. Ashby, "Relativity in the Global Positioning System", <em>Living Reviews in Relativity</em> 6, 1 (2003).</li>
-    </ol>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The sim shows one outbound leg at constant speed, judged from Earth: there is no acceleration, turnaround or reunion. Both twins start at 30 years and time runs fast for display: the Earth twin ages 0.01 yr per animation frame, about 0.6 yr per second at 60 frames per second. The age gap is accumulated, so it keeps whatever built up at earlier speeds when you move the slider. The rocket loops across the screen at a speed that does not depend on v.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -110,13 +122,24 @@
     <div class="takeaway-box__formula">$$\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}$$</div>
     <p style="margin-top:0.5rem;font-size:var(--text-sm);color:var(--color-text-secondary);">At $v = 0.99c$, $\gamma \approx 7.09$ &mdash; the moving twin ages at one seventh the rate, as judged from Earth.</p>
   </div>
+  <div class="stop-body stop-sources content-column" id="sources">
+    <h3>Sources</h3>
+    <ol class="stop-sources__list">
+      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
+      <li id="src-2">J. C. Hafele and R. E. Keating, <em>Science</em> 177, 166 and 168 (1972).</li>
+      <li id="src-3">D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): muons on Mount Washington.</li>
+      <li id="src-4">J. Bailey et al., <em>Nature</em> 268, 301 (1977): muon lifetime at &gamma;&nbsp;=&nbsp;29.3 in the CERN storage ring.</li>
+      <li id="src-5">N. Ashby, "Relativity in the Global Positioning System", <em>Living Reviews in Relativity</em> 6, 1 (2003).</li>
+    </ol>
+  </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
     <span>Time is relative. So is length. Length contraction and time dilation are two sides of the same coin, both consequences of the constancy of the speed of light.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">

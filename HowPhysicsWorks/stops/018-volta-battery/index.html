@@ -8,12 +8,18 @@
   <meta property="og:title" content="Volta and the Electric Battery — How Physics Works">
   <meta property="og:description" content="Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the voltaic pile, the ancestor of every battery.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/018-volta-battery/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stop 018, Volta and the Electric Battery: a frame from its simulation">
+  <meta name="twitter:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/018-volta-battery/og-image.png">
+  <meta name="twitter:image:alt" content="Stop 018, Volta and the Electric Battery: a frame from its simulation">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <title>Volta and the Electric Battery — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +68,10 @@
       <span class="stop-header__scientist">Alessandro Volta</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How do stacking cells in series or in parallel change the voltage and the current a voltaic pile drives through a load?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1800, Alessandro Volta wrote to the Royal Society of London describing a remarkable device: alternating discs of zinc and copper, separated by cloth soaked in brine, stacked into a pile. When he connected a wire from the top to the bottom, charge flowed continuously, for as long as the discs stayed wet. Volta had a source of steady current where everything before it, Leyden jars and friction machines, gave a single spark. A chemical reaction was driving the current, though Volta himself attributed it to the mere contact of the two metals and never accepted the chemical account.</p>
     <p>Use the controls below to build your own voltaic pile. Stack more cells to increase voltage. Switch between series and parallel configurations to see how they affect voltage and current. Watch the glowing bulb respond to the circuit power.</p>
@@ -113,6 +123,15 @@
       <span>Interactive — build a voltaic pile and measure voltage</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Move <strong>Cell count</strong> from 1 to 6 in <strong>Series</strong>: the label under the pile climbs from 0.80 to 4.80 V total, and the Current readout from 0.320 to 0.960 A.</li>
+      <li>At the defaults, press <strong>Series</strong> so it reads Parallel: V total drops from 2.40 to 0.80 V and the Current readout from 0.686 to 0.369 A, because the 2.0 Ω load is larger than a cell's 0.5 Ω internal resistance.</li>
+      <li>Set <strong>Load resistance</strong> to 0.5 Ω, equal to <strong>Internal resistance</strong>: Current reads 1.200 A in both Series and Parallel. At 0.1 Ω it reads 1.500 A in Series and 3.000 A in Parallel; parallel wins only into a load smaller than r.</li>
+      <li>Set <strong>Internal resistance</strong> to 0.0 Ω: Terminal V now equals the V total under the pile, because no voltage is lost inside the cells.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>How Volta made the discovery</h3>
     <p>Volta's insight grew from a dispute. His colleague Luigi Galvani had shown that frogs' legs twitch when touched by two different metals — and concluded the animal itself was the source of "animal electricity." Volta disagreed. He argued the frog was merely a detector and that the electricity came from the contact between the two metals in the presence of a moist conductor. To prove it, he built his pile without any biology at all — just metal and brine.</p>
@@ -131,6 +150,10 @@
 
     <h3>Why this was revolutionary</h3>
     <p>Before Volta, you could generate static electricity with a Leyden jar or a friction machine, but these discharged in an instant. Volta's pile sustained current for minutes or hours. Within weeks of Volta's letter, Nicholson and Carlisle in London used a pile to split water into hydrogen and oxygen (May 1800); within a decade Davy had isolated potassium and sodium with it (1807) and shown the carbon arc.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Each cell is an ideal EMF with a fixed internal resistance: the pile never runs down, the brine never dries and the electrodes do not polarise. In Parallel all cells are taken as identical. The <strong>EMF per cell</strong> slider runs up to 2.0 V, above what a zinc–copper brine cell gives; the 0.8 V default stays under a volt. The load is a fixed resistor, the bulb's glow follows P/(0.5 W + P) only as a rough guide, and the speed of the moving dots is capped, not proportional to the current.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -139,9 +162,9 @@
       <li><span>Series connection: \(V = n\varepsilon\), \(I = V/(R + nr)\). Parallel connection: voltage stays \(\varepsilon\), internal resistance drops to \(r/n\), boosting current capacity without raising voltage.</span></li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">A. Volta, "On the Electricity excited by the mere Contact of conducting Substances of different kinds", <em>Philosophical Transactions of the Royal Society</em> 90, 403–431 (1800). Letter to Sir Joseph Banks dated 20 March 1800.</li>
       <li id="src-2">W. Nicholson, "Account of the new electrical or galvanic apparatus of Sig. Alex. Volta, and experiments performed with the same", <em>Journal of Natural Philosophy, Chemistry and the Arts</em> 4 (1800).</li>
       <li id="src-3">J. F. Daniell, <em>Philosophical Transactions of the Royal Society</em> 126, 107–124 (1836). The 1.1 V cell.</li>
@@ -153,7 +176,8 @@
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
-<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a></div></footer>
+<footer class="site-footer"><div class="container"><a href="../../index.html">← Back to all stops</a>
+    <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p></div></footer>
 <!-- Search modal -->
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Search stops" class="search-modal">
   <div class="search-modal__input-row">
