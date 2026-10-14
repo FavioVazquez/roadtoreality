@@ -1,7 +1,7 @@
 /* ============================================================
    sim.js — Stop 004: Aristotle's Theory of Motion
    Two balls dropped simultaneously. Sliders: mass, air resistance.
-   Physics: constant gravity g=9.8, optional drag F=-b*v
+   Physics: constant gravity g=9.8, optional quadratic drag F = -b*v^2 (opposing the motion)
    Integration: Euler (fast enough for this simple case)
    ============================================================ */
 (function () {

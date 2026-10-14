@@ -288,7 +288,7 @@
     ctx.fillText('r (m)', gx1, gy1 + 3);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('F (N, log scale)', gx0 + 3, gy0);
+    ctx.fillText('log(1 + F), F in N', gx0 + 3, gy0);
     ctx.restore();
 
     /* 1/r² theory curve */

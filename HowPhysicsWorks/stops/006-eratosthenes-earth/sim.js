@@ -24,7 +24,7 @@
   function distanceKm() { return MERIDIAN_KM * thetaDeg() / 360; }
   function circumference() {
     var th = thetaDeg();
-    return th < 0.3 ? 0 : Math.round((360 / th) * distanceKm());
+    return th < 0.05 ? 0 : Math.round((360 / th) * distanceKm());
   }
 
   function draw() {

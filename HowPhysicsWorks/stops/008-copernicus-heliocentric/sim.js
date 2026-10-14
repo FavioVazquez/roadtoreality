@@ -17,7 +17,7 @@
   /* True orbital data (simplified circular, relative radii & speeds) */
   var PLANETS = [
     { name: 'Mercury', color: 'oklch(0.75 0.08 60)',   r: 0.18, period: 88,   trail: [] },
-    { name: 'Venus',   color: 'oklch(0.82 0.12 75)',   r: 0.28, period: 225,  trail: [] },
+    { name: 'Venus',   color: 'oklch(0.82 0.12 75)',   r: 0.288, period: 225,  trail: [] },
     { name: 'Earth',   color: 'oklch(0.55 0.18 220)',  r: 0.40, period: 365,  trail: [] },
     { name: 'Mars',    color: 'oklch(0.68 0.22 20)',   r: 0.55, period: 687,  trail: [] },
     { name: 'Jupiter', color: 'oklch(0.72 0.15 50)',   r: 0.75, period: 4333, trail: [] }

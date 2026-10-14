@@ -478,6 +478,7 @@
       chargeSlider.value = Z;
       chargeSlider.addEventListener('input', function () {
         Z = parseInt(chargeSlider.value, 10);
+        if (typeof updateAim === 'function') updateAim();
         if (chargeReadout) {
           chargeReadout.textContent = 'Z = ' + Z + (ELEMENT_NAMES[Z] ? ' (' + ELEMENT_NAMES[Z] + ')' : '');
         }
@@ -512,20 +513,26 @@
     /* Aim slider */
     var aimSlider = document.getElementById('aim-slider');
     var aimReadout = document.getElementById('aim-readout');
+    /* aimB follows the slider; the readout is in units of D, which depends on Z */
+    function updateAim() {
+      if (!aimSlider) return;
+      var val = parseInt(aimSlider.value, 10);
+      aimB = Math.pow(val / 100, 2) * H * 0.45;
+      var theta = rutherfordTheta(aimB);
+      var deg = Math.round(theta * 180 / Math.PI);
+      if (aimReadout) {
+        aimReadout.textContent = 'b = ' + (aimB / chargeD()).toFixed(1) + ' D  (\u03b8 = ' + deg + '\u00b0)';
+      }
+    }
     if (aimSlider) {
       aimSlider.addEventListener('input', function () {
-        var val = parseInt(aimSlider.value, 10);
-        aimB = Math.pow(val / 100, 2) * H * 0.45;
-        var theta = rutherfordTheta(aimB);
-        var deg = Math.round(theta * 180 / Math.PI);
-        if (aimReadout) {
-          aimReadout.textContent = 'b = ' + (aimB / chargeD()).toFixed(1) + ' D  (\u03b8 = ' + deg + '\u00b0)';
-        }
+        updateAim();
         if (mode === 'aim') {
           resetAimParticle();
           if (!running) drawAimMode();
         }
       });
+      updateAim();
     }
 
     /* Element preset buttons */
