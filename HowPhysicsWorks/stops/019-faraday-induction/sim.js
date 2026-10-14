@@ -41,13 +41,14 @@
   var magnetDir = 1;
 
   /* Flux model constants */
-  var K_FLUX = 50000;
-  var MIN_DIST = 20;
+  var K_FLUX = 500000;
+  var FLUX_A2 = 1600;                     /* a = 40 px: smooth bell, peak at coil centre */
+  var dotPhase = 0;                       /* drift of the current dots along the leads */
 
   /* Galvanometer needle display */
   var MAX_NEEDLE_ANGLE = Math.PI / 3;     /* 60 degrees */
   var CURRENT_SCALE = 0.00025;            /* tuning: maps inducedCurrent → needle radians */
-  var CURRENT_THRESHOLD = 2000;          /* below this abs value → no Lenz arrow */
+  var CURRENT_THRESHOLD = 150;           /* below this abs value → no current dots / pole labels */
 
   /* ── Controls ─────────────────────────────────────────────── */
   var sliderEl = document.getElementById('magnet-position-slider');
@@ -73,9 +74,8 @@
 
   /* ── Flux calculation ─────────────────────────────────────── */
   function calcFlux(mx) {
-    var dist = Math.abs(mx - coilX);
-    dist = Math.max(dist, MIN_DIST);
-    return magnetDir * K_FLUX / (dist * dist);
+    var dist = mx - coilX;
+    return magnetDir * K_FLUX / (dist * dist + FLUX_A2);
   }
 
   /* ── Clamp helper ─────────────────────────────────────────── */
@@ -124,6 +124,23 @@
     ctx.textAlign = 'left';
   }
 
+  /* Lead polylines. A runs from the coil's right-top to the galvanometer's
+     + terminal; B runs from the galvanometer's - terminal to the coil's
+     left-bottom. Positive EMF drives charge along A toward the meter and
+     along B away from it. */
+  function leadPaths() {
+    var rx = 28, ry = H * 0.14;
+    var r = Math.round(H * 0.14);
+    var topY = coilY - ry - 30;
+    var botY = coilY + ry + 14;
+    return {
+      a: [[coilX + 28, coilY - ry], [coilX + 28, topY], [galX + r + 16, topY],
+          [galX + r + 16, galY], [galX + r, galY]],
+      b: [[galX - r, galY], [galX - r - 16, galY], [galX - r - 16, botY],
+          [coilX - 28, botY], [coilX - 28, coilY + ry]]
+    };
+  }
+
   function drawCoil() {
     var turns = 5;
     var rx = 28, ry = H * 0.14;
@@ -135,48 +152,69 @@
       ctx.strokeStyle = 'rgba(82,133,200,0.75)';
       ctx.stroke();
     }
-    /* Coil leads */
-    ctx.beginPath();
-    ctx.moveTo(coilX - rx, coilY);
-    ctx.lineTo(coilX - rx, coilY + ry + 10);
-    ctx.moveTo(coilX + rx, coilY);
-    ctx.lineTo(galX, galY);
-    ctx.strokeStyle = 'rgba(82,133,200,0.4)';
+    /* Coil leads to the galvanometer */
+    var lp = leadPaths();
+    var lists = [lp.a, lp.b];
+    ctx.strokeStyle = 'rgba(82,133,200,0.45)';
     ctx.lineWidth = 1.5;
-    ctx.stroke();
+    for (var k = 0; k < 2; k++) {
+      var p = lists[k];
+      ctx.beginPath();
+      ctx.moveTo(p[0][0], p[0][1]);
+      for (var m = 1; m < p.length; m++) ctx.lineTo(p[m][0], p[m][1]);
+      ctx.stroke();
+    }
   }
 
-  function drawLenzArrow(dir) {
-    /* dir: +1 = counterclockwise, -1 = clockwise */
-    var r = H * 0.09;
-    var startAngle = -Math.PI * 0.1;
-    var endAngle   =  Math.PI * 1.9;
-    if (dir < 0) {
-      startAngle = Math.PI * 0.1;
-      endAngle   = -Math.PI * 1.9;
+  /* Dots drifting along a polyline; sign gives direction of travel. */
+  function dotsAlong(pts, offset) {
+    var spacing = 20;
+    var total = 0, seg = [];
+    for (var i = 1; i < pts.length; i++) {
+      var l = Math.sqrt(Math.pow(pts[i][0] - pts[i - 1][0], 2) + Math.pow(pts[i][1] - pts[i - 1][1], 2));
+      seg.push(l);
+      total += l;
     }
+    ctx.fillStyle = 'rgba(255,200,50,0.95)';
+    for (var d = ((offset % spacing) + spacing) % spacing; d < total; d += spacing) {
+      var acc = 0;
+      for (var s2 = 0; s2 < seg.length; s2++) {
+        if (d <= acc + seg[s2]) {
+          var f = seg[s2] > 0 ? (d - acc) / seg[s2] : 0;
+          var x = pts[s2][0] + (pts[s2 + 1][0] - pts[s2][0]) * f;
+          var y = pts[s2][1] + (pts[s2 + 1][1] - pts[s2][1]) * f;
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+        }
+        acc += seg[s2];
+      }
+    }
+  }
 
-    ctx.beginPath();
-    ctx.arc(coilX, coilY, r, startAngle, endAngle, dir < 0);
-    ctx.strokeStyle = 'rgba(255,200,50,0.85)';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
+  /* Induced current as moving dots on the leads, plus the coil's induced
+     poles (Lenz): rising flux along +x -> induced field along -x -> the
+     coil's left face is N and its right face is S; falling flux reverses. */
+  function drawInduced() {
+    var emf = -inducedCurrent;
+    var dirSign = emf > 0 ? 1 : -1;
+    var lp = leadPaths();
+    dotPhase += dirSign * Math.min(Math.abs(emf) * 0.004 + 0.8, 3.5);
+    dotsAlong(lp.a, dotPhase);
+    dotsAlong(lp.b, dotPhase);
 
-    /* Arrowhead */
-    var headAngle = dir > 0 ? endAngle : endAngle;
-    var ax = coilX + r * Math.cos(headAngle);
-    var ay = coilY + r * Math.sin(headAngle);
-    var tangentDir = dir > 0 ? 1 : -1;
-    var tx = -Math.sin(headAngle) * tangentDir;
-    var ty =  Math.cos(headAngle) * tangentDir;
-    var arrSize = 10;
-    ctx.beginPath();
-    ctx.moveTo(ax, ay);
-    ctx.lineTo(ax - tx * arrSize - ty * arrSize * 0.5, ay - ty * arrSize + tx * arrSize * 0.5);
-    ctx.lineTo(ax - tx * arrSize + ty * arrSize * 0.5, ay - ty * arrSize - tx * arrSize * 0.5);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(255,200,50,0.85)';
-    ctx.fill();
+    var ry = H * 0.14;
+    var leftPole  = inducedCurrent > 0 ? 'N' : 'S';
+    var rightPole = inducedCurrent > 0 ? 'S' : 'N';
+    ctx.fillStyle = 'rgba(255,200,50,0.95)';
+    ctx.font = 'bold ' + Math.round(H * 0.042) + 'px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(leftPole,  coilX - 66, coilY - ry - 6);
+    ctx.fillText(rightPole, coilX + 66, coilY - ry - 6);
+    ctx.font = Math.round(H * 0.028) + 'px sans-serif';
+    ctx.fillText('induced poles', coilX, coilY + ry + 40);
+    ctx.textAlign = 'left';
   }
 
   function drawGalvanometer() {
@@ -219,7 +257,7 @@
 
     /* Needle */
     var needleAngle;
-    var needleRad = clamp(inducedCurrent * CURRENT_SCALE, -MAX_NEEDLE_ANGLE, MAX_NEEDLE_ANGLE);
+    var needleRad = clamp(-inducedCurrent * CURRENT_SCALE, -MAX_NEEDLE_ANGLE, MAX_NEEDLE_ANGLE);
     needleAngle = Math.PI + Math.PI / 2 + needleRad; /* starts pointing up */
 
     ctx.save();
@@ -251,13 +289,13 @@
     var absI = Math.abs(inducedCurrent);
     var dirLabel = '';
     if (absI > CURRENT_THRESHOLD) {
-      dirLabel = inducedCurrent > 0 ? '  [induced: \u2192]' : '  [induced: \u2190]';
+      dirLabel = inducedCurrent > 0 ? '  [flux rising]' : '  [flux falling]';
     }
-    var emfStr = (inducedCurrent * 0.001).toFixed(2);
+    var emfStr = (-inducedCurrent * 0.001).toFixed(2);
     ctx.fillStyle = 'rgba(82,133,200,0.70)';
     ctx.font = Math.round(H * 0.033) + 'px monospace';
     ctx.textAlign = 'left';
-    ctx.fillText('d\u03A6/dt \u2248 ' + emfStr + dirLabel, W * 0.03, H * 0.10);
+    ctx.fillText('\u2130 \u221D \u2212d\u03A6/dt = ' + emfStr + ' (arbitrary units)' + dirLabel, W * 0.03, H * 0.10);
   }
 
   /* ── Main frame ───────────────────────────────────────────── */
@@ -299,9 +337,9 @@
     /* Draw magnet */
     drawMagnet(magnetX, coilY);
 
-    /* Draw Lenz arrow if current strong enough */
+    /* Induced current (moving dots) and induced poles, if strong enough */
     if (Math.abs(inducedCurrent) > CURRENT_THRESHOLD) {
-      drawLenzArrow(inducedCurrent > 0 ? 1 : -1);
+      drawInduced();
     }
 
     /* Draw galvanometer */
@@ -322,15 +360,33 @@
 
   function drawStatic() {
     /* One frame to set up a useful preview */
-    prevFlux = calcFlux(magnetX * 0.9);
+    prevFlux = calcFlux(magnetX);
     drawFrame();
+  }
+
+  /* ── Oscillation / play-state helpers ─────────────────────── */
+  function setOscillate(on) {
+    autoOscillate = on;
+    if (on) {
+      /* continue from where the magnet is, no jump */
+      var amp = coilX * 0.75;
+      oscillateT = Math.asin(clamp((magnetX - coilX) / amp, -1, 1)) / (2 * Math.PI * 0.5);
+    }
+    if (oscillateBtnEl) oscillateBtnEl.textContent = on ? 'Stop Oscillation' : 'Auto Oscillate';
+  }
+
+  /* Keep the shell's Play/Pause button in step when the sim starts itself */
+  function syncPlayBtn() {
+    var btn = document.getElementById('sim-play-btn');
+    if (!btn) return;
+    btn.dataset.state = running ? 'playing' : 'paused';
+    btn.textContent = running ? '\u23F8 Pause' : '\u25B6 Play';
   }
 
   /* ── Control wiring ───────────────────────────────────────── */
   if (sliderEl) {
     sliderEl.addEventListener('input', function () {
-      autoOscillate = false;
-      if (oscillateBtnEl) oscillateBtnEl.textContent = 'Auto Oscillate';
+      setOscillate(false);
       var val = parseFloat(sliderEl.value);
       magnetX = W * 0.05 + val * (W * 0.90 - W * 0.05);
       if (!running) drawFrame();
@@ -339,12 +395,12 @@
 
   if (oscillateBtnEl) {
     oscillateBtnEl.addEventListener('click', function () {
-      autoOscillate = !autoOscillate;
-      oscillateBtnEl.textContent = autoOscillate ? 'Stop Oscillation' : 'Auto Oscillate';
+      setOscillate(!autoOscillate);
       if (autoOscillate && !running) {
         /* Start animation if paused */
         running = true;
-        raf = requestAnimationFrame(drawFrame);
+        if (reduced) { drawStatic(); } else { raf = requestAnimationFrame(drawFrame); }
+        syncPlayBtn();
       }
     });
   }
@@ -354,12 +410,17 @@
     start: function () {
       if (running) return;
       running = true;
+      /* Playing means the magnet moves: start the idle swing
+         (pausing keeps the position; the slider takes over by hand). */
+      if (!autoOscillate) setOscillate(true);
+      syncPlayBtn();
       if (reduced) { drawStatic(); return; }
       raf = requestAnimationFrame(drawFrame);
     },
     pause: function () {
       running = false;
       if (raf) { cancelAnimationFrame(raf); raf = null; }
+      syncPlayBtn();
     },
     reset: function () {
       window.SimAPI.pause();
@@ -367,12 +428,10 @@
       prevFlux = 0;
       currentFlux = 0;
       inducedCurrent = 0;
-      autoOscillate = false;
+      setOscillate(false);
       oscillateT = 0;
       t = 0;
-      if (oscillateBtnEl) oscillateBtnEl.textContent = 'Auto Oscillate';
       if (sliderEl) sliderEl.value = 0.2;
-      if (posLabelEl) posLabelEl.textContent = 'far left';
       drawStatic();
     },
     destroy: function () {

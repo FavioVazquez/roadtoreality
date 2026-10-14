@@ -224,6 +224,10 @@ code, pre {
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  min-height: 44px;
 }
 
 .site-header__logo span {

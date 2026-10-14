@@ -19,9 +19,9 @@
 
   /* Circuit parameters */
   var cellCount  = 3;      /* 1–6 cells */
-  var emfPerCell = 1.5;    /* volts per cell */
+  var emfPerCell = 0.8;    /* volts per cell (zinc | brine | copper pile element) */
   var rInternal  = 0.5;    /* ohms per cell (internal resistance) */
-  var rLoad      = 10.0;   /* ohms — fixed resistive load */
+  var rLoad      = 2.0;    /* ohms — resistive load (slider) */
   var isSeries   = true;   /* series vs parallel */
 
   /* Current dots for animation */
@@ -109,18 +109,18 @@
     ctx.fillText('Voltaic pile  (' + cellCount + ' cell' + (cellCount !== 1 ? 's' : '') + ')', panelCx, 8);
     ctx.restore();
 
-    /* Draw cells from bottom to top — bottom is negative terminal */
+    /* Draw cells from bottom to top — copper on top of each cell, so the top is the positive terminal and the zinc end (bottom) is negative */
     for (var i = 0; i < cellCount; i++) {
       var cellTop = pileTop + (cellCount - 1 - i) * cellH;
       var cellBot = cellTop + cellH;
       var cx0 = panelCx - cellW * 0.5;
       var cx1 = panelCx + cellW * 0.5;
 
-      /* Zinc disc (dark gray) — top half of cell */
+      /* Copper disc (warm orange) — top of cell, the positive electrode */
       var zincH = cellH * 0.38;
       ctx.save();
-      ctx.fillStyle = 'rgba(110,115,120,0.85)';
-      ctx.strokeStyle = 'rgba(160,165,170,0.5)';
+      ctx.fillStyle = 'rgba(185,100,40,0.85)';
+      ctx.strokeStyle = 'rgba(220,140,60,0.5)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.rect(cx0, cellTop, cellW, zincH);
@@ -140,11 +140,11 @@
       ctx.stroke();
       ctx.restore();
 
-      /* Copper disc (warm orange) — bottom half */
+      /* Zinc disc (dark gray) — bottom of cell, the negative electrode */
       var copperH = cellH - zincH - clothH;
       ctx.save();
-      ctx.fillStyle = 'rgba(185,100,40,0.85)';
-      ctx.strokeStyle = 'rgba(220,140,60,0.5)';
+      ctx.fillStyle = 'rgba(110,115,120,0.85)';
+      ctx.strokeStyle = 'rgba(160,165,170,0.5)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.rect(cx0, cellTop + zincH + clothH, cellW, copperH);
@@ -309,7 +309,7 @@
     ctx.restore();
 
     /* Bulb glow */
-    var glow = circ.P / (rLoad * 0.05 + circ.P); /* normalized glow 0–1 */
+    var glow = circ.P / (0.5 + circ.P); /* normalized glow 0–1 */
     var glowAlpha = 0.15 + glow * 0.5;
     ctx.save();
     ctx.beginPath();
@@ -335,7 +335,7 @@
     ctx.fillStyle = 'rgba(200,200,200,0.5)';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.fillText(rLoad + ' Ω', bulbX + bulbR + 5, bulbCY);
+    ctx.fillText(rLoad.toFixed(1) + ' Ω', bulbX + bulbR + 5, bulbCY);
     ctx.restore();
 
     /* Animated current dots */
@@ -380,7 +380,7 @@
     ctx.fillStyle = 'rgba(180,180,180,0.55)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillText('Voltage', col1, rowY1);
+    ctx.fillText('Terminal V', col1, rowY1);
     ctx.fillText('Current', col2, rowY1);
     ctx.fillText('Power', col3, rowY1);
     ctx.restore();
@@ -454,7 +454,8 @@
       window.SimAPI.pause();
       t = 0;
       cellCount  = 3;
-      emfPerCell = 1.5;
+      emfPerCell = 0.8;
+      rLoad      = 2.0;
       rInternal  = 0.5;
       isSeries   = true;
       for (var i = 0; i < dots.length; i++) { dots[i].progress = i / dots.length; }
@@ -483,6 +484,11 @@
     if (rSlider) { rSlider.value = rInternal; }
     var rVal = document.getElementById('rint-value');
     if (rVal) { rVal.textContent = rInternal.toFixed(1) + ' Ω'; }
+
+    var lSlider = document.getElementById('rload-slider');
+    if (lSlider) { lSlider.value = rLoad; }
+    var lVal = document.getElementById('rload-value');
+    if (lVal) { lVal.textContent = rLoad.toFixed(1) + ' Ω'; }
 
     var modeBtn = document.getElementById('series-parallel-btn');
     if (modeBtn) { modeBtn.textContent = isSeries ? 'Series' : 'Parallel'; }
@@ -544,6 +550,17 @@
         rInternal = parseFloat(rSlider.value);
         var v = document.getElementById('rint-value');
         if (v) { v.textContent = rInternal.toFixed(1) + ' Ω'; }
+        if (!running) { draw(); }
+      });
+    }
+
+    /* Load resistance slider */
+    var lSlider = document.getElementById('rload-slider');
+    if (lSlider) {
+      lSlider.addEventListener('input', function () {
+        rLoad = parseFloat(lSlider.value);
+        var v = document.getElementById('rload-value');
+        if (v) { v.textContent = rLoad.toFixed(1) + ' Ω'; }
         if (!running) { draw(); }
       });
     }

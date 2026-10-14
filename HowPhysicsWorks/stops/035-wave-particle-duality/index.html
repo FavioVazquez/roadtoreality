@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="De Broglie proposed that matter, like light, has wave properties. The double-slit experiment confirms it with eerie precision.">
+  <meta name="description" content="Send electrons through two slits one at a time. Each lands as a single dot, yet the dots build up the interference pattern of a wave with de Broglie&#x27;s wavelength h/p.">
   <meta property="og:title" content="Wave-Particle Duality — How Physics Works">
-  <meta property="og:description" content="De Broglie proposed that matter, like light, has wave properties. The double-slit experiment confirms it with eerie precision.">
+  <meta property="og:description" content="Send electrons through two slits one at a time. Each lands as a single dot, yet the dots build up the interference pattern of a wave with de Broglie&#x27;s wavelength h/p.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/035-wave-particle-duality/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -48,11 +48,11 @@
   }());
 </script>
 <main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Modern Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · 1924</div>
+    <div class="stop-header__era">Modern Physics · 1924</div>
     <h1 class="stop-header__title">Wave-Particle Duality</h1>
-    <p class="stop-header__subtitle">Light is a wave. Light is a particle. Both are true.</p>
+    <p class="stop-header__subtitle">Electrons are waves too</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1924</span>
       <span>·</span>
@@ -60,44 +60,98 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>De Broglie proposed that matter, like light, has wave properties. The double-slit experiment confirms it with eerie precision.</p>
+    <p>
+      Light behaves as a wave when it passes two slits and as a stream of particles when it knocks electrons out of a metal. In 1924 Louis de Broglie proposed that matter has a wavelength too, $\lambda = h/p$, where $h$ is Planck's constant and $p$ the momentum<sup><a href="#src-1">[1]</a></sup>. Electrons were seen to diffract in 1927<sup><a href="#src-3">[3]</a></sup><sup><a href="#src-4">[4]</a></sup>.
+    </p>
+    <p>
+      The simulation sends electrons through two slits one at a time. Each one is detected as a single dot. Where the dots pile up is set by the wave.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Wave-Particle Duality — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: electrons pass a double slit one at a time and build up an interference pattern">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="energy-slider">
+          Electron energy
+          <span class="sim-control__value" style="text-transform:none" id="energy-val">50 keV</span>
+        </label>
+        <input type="range" id="energy-slider" min="5" max="100" step="5" value="50" aria-label="Electron kinetic energy in kiloelectronvolts" aria-valuetext="50 kiloelectronvolts">
+      </div>
+      <div class="sim-control" style="flex:1">
+        <label class="sim-control__label" for="sep-slider">
+          Slit separation
+          <span class="sim-control__value" style="text-transform:none" id="sep-val">1.0 µm</span>
+        </label>
+        <input type="range" id="sep-slider" min="0.5" max="2" step="0.1" value="1" aria-label="Distance between the two slits in micrometres" aria-valuetext="1.0 micrometres">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="block-toggle" type="button" aria-pressed="false">Block one slit</button>
+        <button class="sim-btn" id="which-toggle" type="button" aria-pressed="false">Detect which slit</button>
+        <button class="sim-btn" id="curve-toggle" type="button" aria-pressed="true">Hide wave prediction</button>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span id="sim-status">Press play to send electrons through the slits one at a time.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Send electrons through a double slit one at a time — watch interference build up</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Block one slit and see the interference pattern disappear</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore de Broglie wavelength: λ = h/p</li>
-    </ul>
+    <h3>Two Pictures of Light</h3>
+    <p>In 1803 Thomas Young split a narrow sunbeam around a thin card and saw bright and dark bands where the two parts overlapped, the signature of interfering waves<sup><a href="#src-5">[5]</a></sup>; he later described the same effect with two pinholes. In 1905 Einstein argued that light also carries energy in separate quanta of size $hf$, which explained how light ejects electrons from metals<sup><a href="#src-2">[2]</a></sup>. Neither picture alone covers everything light does.</p>
+    <h3>De Broglie's Proposal</h3>
+    <p>In 1923–24, in short notes and then his thesis, de Broglie suggested the same double nature for matter, assigning a particle of momentum $p$ the wavelength<sup><a href="#src-11">[11]</a></sup><sup><a href="#src-1">[1]</a></sup></p>
+    <p style="overflow-x:auto;">$$\lambda = \frac{h}{p}$$</p>
+    <p>Everyday objects have wavelengths far too small to notice. Electrons are light enough for the wavelength to matter. For an electron accelerated through a voltage the momentum follows from its kinetic energy $E$ and rest energy $mc^2$:</p>
+    <p style="overflow-x:auto;">$$p\,c = \sqrt{E^2 + 2E\,mc^2}$$</p>
+    <p>At 50 keV this gives a wavelength of about 5.4 picometres, using the CODATA values of $h$, $m_e$ and $c$<sup><a href="#src-8">[8]</a></sup>. That is about a hundred thousand times shorter than visible light.</p>
+    <p>In 1927 Clinton Davisson and Lester Germer found that 54 eV electrons scattered from a nickel crystal came off strongly at angles that matched de Broglie's wavelength<sup><a href="#src-3">[3]</a></sup>. The same year George Paget Thomson and Alexander Reid saw diffraction rings from electrons passed through thin films<sup><a href="#src-4">[4]</a></sup>. These diffraction experiments, not the double slit, were what confirmed de Broglie's idea; the electron double slit came decades later.</p>
+    <h3>One Electron at a Time</h3>
+    <p>Claus Jönsson made an electron version of Young's experiment in 1961, with slits cut into a metal foil<sup><a href="#src-6">[6]</a></sup>. In 1989 Akira Tonomura and colleagues sent electrons through an electron biprism, which plays the part of two slits, at a rate so low that there was usually only one electron in the apparatus at a time<sup><a href="#src-7">[7]</a></sup>. Each electron arrived as a single spot on the detector. As thousands of spots accumulated they formed interference fringes.</p>
+    <p>That is what the simulation shows. Each dot lands at a random place. The chance of landing at position $y$ on the screen is set by the wave passing both slits. For slits of width $a$, separation $d$ and a screen at distance $D$, the textbook far-field pattern is<sup><a href="#src-9">[9]</a></sup></p>
+    <p style="overflow-x:auto;">$$P(y) \propto \cos^2\!\left(\frac{\pi d y}{\lambda D}\right)\,\mathrm{sinc}^2\!\left(\frac{\pi a y}{\lambda D}\right)$$</p>
+    <p>with bright fringes $\lambda D/d$ apart. A single dot says almost nothing about the pattern; the fringes only appear in the statistics.</p>
+    <h3>Blocking a Slit, or Asking Which Slit</h3>
+    <p>Block one slit and the fringes vanish: the dots spread over the wide, smooth pattern of a single slit. In 2013 Roger Bach and colleagues did this with a movable mask in front of an electron double slit and recorded the pattern as one slit, then both, were opened<sup><a href="#src-12">[12]</a></sup>. The "Block one slit" button shows this case. </p>
+    <p>If the apparatus records which slit each electron went through, the fringes disappear and the dots spread over the smooth pattern of two single slits added together<sup><a href="#src-9">[9]</a></sup>. The "Detect which slit" button switches to that case. The quantum description does not say the electron is "really" a wave or "really" a particle. It gives probabilities, and those probabilities add like waves when the two paths cannot be told apart.</p>
+    <p>The same interference has since been seen with neutrons, atoms and molecules; in 1999 it was reported for C<sub>60</sub> molecules of 60 carbon atoms<sup><a href="#src-10">[10]</a></sup>.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The geometry is illustrative and does not reproduce any particular experiment: slits 0.2 µm wide, a screen 1 m away, and a screen window 80 µm across, and the far-field formula is used throughout even at the widest slit separation, where it is only approximate. Real electron experiments use electron optics to magnify a much finer pattern. The landing points are random draws from $P(y)$, computed from the formula, not data. The arrival rate starts slow so single dots are visible, then speeds up so the pattern builds in seconds; this rate is a display choice.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>Every quantum object is both wave and particle. Which aspect you observe depends on your measurement. The wavefunction describes probabilities; observation collapses them into definite outcomes.</li>
+      <li>De Broglie (1924) gave matter a wavelength $\lambda = h/p$; about 5.4 pm for a 50 keV electron. Electron diffraction confirmed it in 1927 (Davisson and Germer; Thomson and Reid).</li>
+      <li>Electrons sent one at a time each land as a single dot, but the dots build up an interference pattern (Tonomura et al. 1989, cited).</li>
+      <li>Blocking one slit, or recording which slit each electron used, removes the fringes.</li>
     </ul>
+    <p style="overflow-x:auto;">$$\lambda = \frac{h}{p} \qquad \Delta y_{\text{fringe}} = \frac{\lambda D}{d}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">L. de Broglie, <em>Recherches sur la théorie des quanta</em>, thesis, Paris (1924); <em>Annales de Physique</em> 10e série, 3, 22–128 (1925). Cited: $\lambda = h/p$.</li>
+      <li id="src-2">A. Einstein, "Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt", <em>Annalen der Physik</em> 17, 132–148 (1905).</li>
+      <li id="src-3">C. Davisson and L. H. Germer, "Diffraction of Electrons by a Crystal of Nickel", <em>Physical Review</em> 30, 705–740 (1927). Cited: 54 eV electrons, scattering maxima consistent with $h/p$.</li>
+      <li id="src-4">G. P. Thomson and A. Reid, "Diffraction of Cathode Rays by a Thin Film", <em>Nature</em> 119, 890 (1927).</li>
+      <li id="src-5">T. Young, "The Bakerian Lecture: Experiments and Calculations Relative to Physical Optics", <em>Philosophical Transactions of the Royal Society</em> 94, 1–16 (1804).</li>
+      <li id="src-6">C. Jönsson, "Elektroneninterferenzen an mehreren künstlich hergestellten Feinspalten", <em>Zeitschrift für Physik</em> 161, 454–474 (1961).</li>
+      <li id="src-7">A. Tonomura, J. Endo, T. Matsuda, T. Kawasaki and H. Ezawa, "Demonstration of single-electron buildup of an interference pattern", <em>American Journal of Physics</em> 57, 117–120 (1989).</li>
+      <li id="src-8">E. Tiesinga, P. J. Mohr, D. B. Newell and B. N. Taylor, "CODATA recommended values of the fundamental physical constants: 2018", <em>Reviews of Modern Physics</em> 93, 025010 (2021). Cited: $h$, $m_e c^2$, $c$.</li>
+      <li id="src-9">R. P. Feynman, R. B. Leighton and M. Sands, <em>The Feynman Lectures on Physics</em>, Vol. III, ch. 1 (1965); E. Hecht, <em>Optics</em>, 5th ed., ch. 9–10 (2017). Double-slit pattern and the which-path case.</li>
+      <li id="src-10">M. Arndt et al., "Wave–particle duality of C<sub>60</sub> molecules", <em>Nature</em> 401, 680–682 (1999).</li>
+      <li id="src-11">L. de Broglie, "Waves and Quanta", <em>Nature</em> 112, 540 (1923); "A tentative theory of light quanta", <em>Philosophical Magazine</em> 47, 446–458 (1924).</li>
+      <li id="src-12">R. Bach, D. Pope, S.-H. Liou and H. Batelaan, "Controlled double-slit electron diffraction", <em>New Journal of Physics</em> 15, 033018 (2013).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Matter is a wave. Schrödinger wrote down the equation that describes how these probability waves evolve — the foundation of all quantum chemistry and condensed matter physics.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>If electrons are described by waves, what equation do those waves obey? In 1926 Schrödinger wrote it down.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +177,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>

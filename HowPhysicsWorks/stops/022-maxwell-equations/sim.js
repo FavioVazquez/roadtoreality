@@ -12,6 +12,7 @@
   var ctx = canvas.getContext('2d');
 
   var W, H, splitX;
+  var dpr = window.devicePixelRatio || 1;
   var raf = null;
   var t = 0;
   var running = false;
@@ -36,8 +37,10 @@
   function resize() {
     W = mount.clientWidth  || 680;
     H = mount.clientHeight || 360;
-    canvas.width  = W;
-    canvas.height = H;
+    dpr = window.devicePixelRatio || 1;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     splitX = Math.floor(W * 0.48);
     // Default charge positions
     if (!charges[0].placed) {
@@ -165,7 +168,7 @@
     ctx.fillText('Electric Field Lines', 8, 18);
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
     ctx.font = '10px sans-serif';
-    ctx.fillText('drag charges to reshape field', 8, 32);
+    ctx.fillText('static field (as in stop 017): drag the charges', 8, 32);
 
     // Charge labels
     ctx.font = '10px sans-serif';
@@ -231,7 +234,8 @@
     }
 
     // B field: horizontal (into/out of screen shown as dots & crosses)
-    // Use a second sinusoidal curve offset 90° in z — drawn as perspective squish
+    // In a vacuum plane wave B is in phase with E (B = E/c): same phase
+    // argument, drawn as a squished perspective curve out of the screen plane
     var bColor = 'rgba(220,140,80,0.85)';
     var bAmp   = amp * 0.65;
     ctx.strokeStyle = bColor;
@@ -240,8 +244,8 @@
     for (var xi2 = 0; xi2 <= rw; xi2 += 2) {
       var xp2   = rx + xi2;
       var ph2   = (xi2 / lambda) * Math.PI * 2 - t * omega;
-      // B is 90° shifted in z — show as squished horizontal oscillation
-      var bOff  = bAmp * Math.cos(ph2);
+      // B along z: show as squished horizontal oscillation
+      var bOff  = bAmp * Math.sin(ph2);
       var bY    = cy + bOff * 0.35;
       var bX    = xp2 + bOff * 0.20;
       if (xi2 === 0) ctx.moveTo(bX, bY);
@@ -253,7 +257,7 @@
     for (var bi = 0; bi <= nArrows; bi++) {
       var bxi   = (bi / nArrows) * rw;
       var bph   = (bxi / lambda) * Math.PI * 2 - t * omega;
-      var bval  = Math.cos(bph);
+      var bval  = Math.sin(bph);
       var bxPos = rx + bxi + bval * bAmp * 0.20;
       var byPos = cy + bval * bAmp * 0.35;
       if (Math.abs(bval) < 0.15) continue;
@@ -281,7 +285,7 @@
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.font = '10px monospace';
     ctx.textAlign = 'right';
-    ctx.fillText('freq: ' + waveFreq.toFixed(1) + '×', W - 6, H - 8);
+    ctx.fillText('freq: ' + waveFreq.toFixed(1) + '× (wave speed stays c)', W - 6, H - 8);
   }
 
   function drawArrow(x1, y1, x2, y2, color, lw) {
@@ -357,8 +361,8 @@
   // ── Mouse/touch drag for charges ──────────────────────────────
   function getPos(e) {
     var rect   = canvas.getBoundingClientRect();
-    var scaleX = canvas.width  / rect.width;
-    var scaleY = canvas.height / rect.height;
+    var scaleX = W / rect.width;
+    var scaleY = H / rect.height;
     var src    = e.touches ? e.touches[0] : e;
     return {
       x: (src.clientX - rect.left) * scaleX,

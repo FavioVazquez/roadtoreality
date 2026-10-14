@@ -57,6 +57,16 @@
     el.innerHTML = prevHtml + nextHtml;
   }
 
+  /* Keep the Play button in step with what the observer did to the sim.
+     Sims that set their own label/state in start()/pause() are left alone. */
+  function _syncPlayButton(state) {
+    var btn = document.getElementById('sim-play-btn');
+    if (!btn || btn.dataset.state === state) return;
+    if (!btn.dataset.idleLabel) btn.dataset.idleLabel = btn.textContent;
+    btn.dataset.state = state;
+    btn.textContent = state === 'playing' ? '\u23F8 Pause' : btn.dataset.idleLabel;
+  }
+
   function _initSimObserver() {
     var mount = document.getElementById('sim-mount');
 
@@ -90,11 +100,15 @@
         var autoplay = wrapper ? wrapper.dataset.autoplay !== 'false' : true;
 
         if (entry.isIntersecting) {
-          if (autoplay && typeof api.start === 'function') api.start();
+          if (autoplay && typeof api.start === 'function') {
+            api.start();
+            _syncPlayButton('playing');
+          }
           var dot = document.querySelector('.sim-caption__dot');
           if (dot && autoplay) dot.classList.add('is-running');
         } else {
           if (typeof api.pause === 'function') api.pause();
+          _syncPlayButton('paused');
           var dot = document.querySelector('.sim-caption__dot');
           if (dot) dot.classList.remove('is-running');
         }
@@ -132,6 +146,8 @@
     var btn = document.getElementById('sim-play-btn');
     if (!btn) return;
 
+    btn.dataset.idleLabel = btn.textContent;
+
     btn.addEventListener('click', function () {
       var api = window.SimAPI;
       if (!api) return;
@@ -139,7 +155,7 @@
       if (btn.dataset.state === 'playing') {
         if (typeof api.pause === 'function') api.pause();
         btn.dataset.state = 'paused';
-        btn.textContent = '▶ Play';
+        btn.textContent = btn.dataset.idleLabel || '▶ Play';
         var dot = document.querySelector('.sim-caption__dot');
         if (dot) dot.classList.remove('is-running');
       } else {
@@ -161,7 +177,7 @@
       var playBtn = document.getElementById('sim-play-btn');
       if (playBtn) {
         playBtn.dataset.state = 'paused';
-        playBtn.textContent = '▶ Play';
+        playBtn.textContent = playBtn.dataset.idleLabel || '▶ Play';
       }
       var dot = document.querySelector('.sim-caption__dot');
       if (dot) dot.classList.remove('is-running');
