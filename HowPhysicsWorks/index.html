@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/cards.css">
   <link rel="stylesheet" href="assets/css/search.css">
+  <link rel="stylesheet" href="assets/css/journey.css">
 
   <style>
     /* ── Landing-page-specific overrides ── */
@@ -176,6 +177,9 @@
     <div style="margin-top: 2.5rem;" id="progress-bar" aria-label="Your progress"></div>
   </section>
 
+  <!-- Journey map (rendered by journey.js from stops.json) -->
+  <section id="journey-map" class="journey" aria-label="Journey map"></section>
+
   <!-- Era Quick-Nav Tabs (sticky) -->
   <nav class="era-tabs-sticky" aria-label="Jump to era">
     <div class="era-tabs" role="list">
@@ -239,6 +243,7 @@
 <div class="search-overlay" aria-hidden="true"></div>
 
 <script src="assets/js/progress.js"></script>
+<script src="assets/js/journey.js"></script>
 <script src="assets/js/nav.js"></script>
 <script>window.STOPS_DATA_PATH = 'assets/data/stops.json';</script>
 <script src="assets/js/vendor/fuse.min.js"></script>
