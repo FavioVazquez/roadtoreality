@@ -1,0 +1,34 @@
+Mars oppositions 1580-1601 from Horizons (elongation maximum > 170 deg):
+  JD 2298474.5  1580-11-18 (Julian)  elongation 178.1
+  JD 2299245.5  1582-12-29 (Julian)  elongation 175.9
+  JD 2300009.5  1585-01-31 (Julian)  elongation 175.4
+  JD 2300774.5  1587-03-07 (Julian)  elongation 176.4
+  JD 2301544.5  1589-04-15 (Julian)  elongation 178.9
+  JD 2302329.5  1591-06-09 (Julian)  elongation 176.0
+  JD 2303138.5  1593-08-26 (Julian)  elongation 173.9
+  JD 2303934.5  1595-10-31 (Julian)  elongation 179.4
+  JD 2304709.5  1597-12-14 (Julian)  elongation 176.5
+  JD 2305475.5  1600-01-19 (Julian)  elongation 175.5
+  | Target body name: Mars Barycenter (4)             {source: DE441}
+  | Center body name: Earth (399)                     {source: DE441}
+
+Mars sessions found in the OCR: 413 distinct dates (vol 10 mixed sections: 103, of which 72 with >=2 sign hits)
+
+Mars sessions per year (OCR headings):
+  1580: 7, 1581: 4, 1582: 14, 1583: 25, 1584: 9, 1585: 44, 1586: 14, 1587: 30, 1588: 11, 1589: 22, 1590: 11, 1591: 31, 1592: 7, 1593: 35, 1594: 5, 1595: 35, 1596: 15, 1597: 10, 1598: 12, 1599: 47, 1600: 23, 1601: 2
+
+Opposition windows (+-20 days of the elongation maximum), sessions found:
+  1580-11-18 (Julian): 1 sessions  e.g. 1580-11-17 v10
+  1582-12-29 (Julian): 7 sessions  e.g. 1582-12-17 v10, 1582-12-26 v10, 1582-12-27 v10, 1582-12-29 v10, 1582-12-30 v10, 1583-01-16 v10
+  1585-01-31 (Julian): 15 sessions  e.g. 1585-01-14 v10, 1585-01-15 v10, 1585-01-16 v10, 1585-01-17 v10, 1585-01-21 v10, 1585-01-22 v10
+  1587-03-07 (Julian): 15 sessions  e.g. 1587-02-21 v11, 1587-02-23 v11, 1587-02-26 v11, 1587-02-27 v11, 1587-03-03 v11, 1587-03-04 v11
+  1589-04-15 (Julian): 10 sessions  e.g. 1589-04-04 v11, 1589-04-05 v11, 1589-04-08 v11, 1589-04-13 v11, 1589-04-15 v11, 1589-04-20 v11
+  1591-06-09 (Julian): 9 sessions  e.g. 1591-05-21 v12, 1591-05-24 v12, 1591-05-29 v12, 1591-06-06 v12, 1591-06-12 v12, 1591-06-20 v12
+  1593-08-26 (Julian): 8 sessions  e.g. 1593-08-11 v12, 1593-08-18 v12, 1593-08-21 v12, 1593-08-22 v12, 1593-08-23 v12, 1593-08-24 v12
+  1595-10-31 (Julian): 11 sessions  e.g. 1595-10-12 v12, 1595-10-16 v12, 1595-10-25 v12, 1595-10-26 v12, 1595-10-27 v12, 1595-10-28 v12
+  1597-12-14 (Julian): 6 sessions  e.g. 1597-11-29 v13, 1597-11-30 v13, 1597-12-05 v13, 1597-12-06 v13, 1597-12-10 v13, 1597-12-28 v13
+  1600-01-19 (Julian): 3 sessions  e.g. 1599-12-31 v13, 1600-01-20 v13, 1600-02-04 v13
+
+Oppositions with at least one session within +-20 days: 10 of 10
+Off-opposition sessions (elongation < 135 deg): 276; intermediate (135 deg to the window): 52
+  of which elongation < 110 deg (quadrature side): 198

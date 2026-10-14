@@ -1,0 +1,171 @@
+{
+  "tycho_arithmetic_jul22": {
+    "ra": 32.78697683581844,
+    "lon": 34.19422244648523,
+    "lat": -2.5100853756629125,
+    "printed_lon": 34.18611111111111,
+    "printed_lat": -2.5
+  },
+  "oct25": {
+    "night": "1595-10-25_vesperi",
+    "label": "near opposition",
+    "source": {
+      "volume": 12,
+      "printed_page": 447,
+      "column": "right",
+      "leaf": 497,
+      "image_n": 460,
+      "image_url": "https://archive.org/download/operaomniaedidit12brahuoft/page/n460.jpg",
+      "heading": "DIE 25 OCTOBRIS, VESPERI. [Mars] a Lucida [Aries]"
+    },
+    "jd_ut": 2303929.2926542894,
+    "ut": "1595-11-04 19:01 UT (Gregorian)",
+    "lon": 49.64781666478002,
+    "lat": -0.20666518882841234,
+    "horizons_lon": 49.6529373,
+    "horizons_lat": -0.1930277,
+    "dlon_arcmin": -0.3072363696316798,
+    "dlat_arcmin": -0.8182493297047405,
+    "total_arcmin": 0.8740286908258282,
+    "formal_err_arcmin": [
+      0.10856633466540513,
+      0.1462155958149146
+    ],
+    "dist_residuals_arcmin": [
+      -0.32541109153875425,
+      0.19067941315775272,
+      -0.29129774927575625,
+      -0.046853535310944494,
+      -0.028536288703762125,
+      0.15238402968840603,
+      -0.24367334823207187,
+      0.15775052577133408,
+      -0.32145136713928935
+    ],
+    "dec_zero_arcmin": -0.26444124789994916,
+    "delta_au": 0.48985328245145,
+    "elongation": "172.2255",
+    "sensitivity": {
+      "P-1kPa": [
+        -0.3012318670360629,
+        -0.8068530758038883
+      ],
+      "P+1kPa": [
+        -0.3132408671983879,
+        -0.8296461442858349
+      ],
+      "T-10C": [
+        -0.32945081742164417,
+        -0.8604162968257717
+      ],
+      "T+10C": [
+        -0.28653819289379895,
+        -0.7789676740605223
+      ],
+      "no refraction": [
+        0.29923680552108,
+        0.3298872933749908
+      ],
+      "distance-only (no armillary)": [
+        -0.3072363696316798,
+        -0.8182493297047405
+      ],
+      "no parallax correction": [
+        -0.2177372680510572,
+        -1.0662826338604048
+      ]
+    },
+    "tycho_catalog": {
+      "lon": 49.63246537880005,
+      "lat": -0.25333198373867805,
+      "dlon_arcmin": -1.2283083013436977,
+      "dlat_arcmin": -3.618257024320683
+    },
+    "horizons_meta": [
+      "Target body name: Mars Barycenter (4)             {source: DE441}",
+      "Center body name: Earth (399)                     {source: DE441}",
+      "Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}"
+    ]
+  },
+  "jul22": {
+    "night": "1595-07-22_mane",
+    "label": "far from opposition (Tycho: 'in [quadrature with the] Sun')",
+    "source": {
+      "volume": 12,
+      "printed_page": 441,
+      "column": "right",
+      "leaf": 491,
+      "image_n": 454,
+      "image_url": "https://archive.org/download/operaomniaedidit12brahuoft/page/n454.jpg",
+      "heading": "DIE 22 JULIJ, MANE."
+    },
+    "jd_ut": 2303833.581165866,
+    "ut": "1595-08-01 01:56 UT (Gregorian)",
+    "lon": 34.19481211781362,
+    "lat": -2.494017320265771,
+    "horizons_lon": 34.1837434,
+    "horizons_lat": -2.5021605,
+    "dlon_arcmin": 0.6634898779972856,
+    "dlat_arcmin": 0.4885907840537307,
+    "total_arcmin": 0.8239780169804849,
+    "formal_err_arcmin": [
+      0.5395089577911873,
+      0.6675434504713449
+    ],
+    "dist_residuals_arcmin": [
+      1.0018926691078889,
+      1.511014648285851,
+      0.34721124819398597,
+      1.4482006729836172,
+      1.4562340413583996
+    ],
+    "dec_zero_arcmin": -1.2660358052114162,
+    "delta_au": 0.88162685241755,
+    "elongation": "93.8720",
+    "sensitivity": {
+      "P-1kPa": [
+        0.6655065542807003,
+        0.503795733873611
+      ],
+      "P+1kPa": [
+        0.6614730941147623,
+        0.47338533930039617
+      ],
+      "T-10C": [
+        0.6560290084499368,
+        0.4323342099154015
+      ],
+      "T+10C": [
+        0.6704419203601972,
+        0.5410021378568253
+      ],
+      "no refraction": [
+        0.8674415544644658,
+        2.022243320195809
+      ],
+      "distance-only (no armillary)": [
+        2.859199013009277,
+        6.701467773802374
+      ],
+      "no parallax correction": [
+        0.681210963279682,
+        0.352860579732317
+      ]
+    },
+    "tycho_catalog": {
+      "lon": 34.194399537055425,
+      "lat": -2.4958597822777024,
+      "dlon_arcmin": 0.6387586343674866,
+      "dlat_arcmin": 0.378043063337854
+    },
+    "horizons_meta": [
+      "Target body name: Mars Barycenter (4)             {source: DE441}",
+      "Center body name: Earth (399)                     {source: DE441}",
+      "Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}"
+    ]
+  },
+  "tycho_printed_vs_horizons_jul22": {
+    "dlon_arcmin": 0.1419272207216219,
+    "dlat_arcmin": 0.12963000000000058
+  }
+}

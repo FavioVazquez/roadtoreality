@@ -1,0 +1,117 @@
+====================================================================================================
+TYCHO'S OWN ARITHMETIC, recomputed from the numbers printed on p. 441 (1595 Jul 22 mane)
+  prima alae Peg. (Markab)     Ang. diff. ascens. 51d35'04.1"  -> RA Mars 32d44'19.1"
+  Aldebaran                    Ang. diff. ascens. 30d22'22.8"  -> RA Mars 32d50'07.2"
+  mean ('limitata') RA 32d47'13.1" [printed 32d47'14"]; with Tycho's obliquity 23d31'30": lon 34d11'39.2" [printed 34d11'10" = 4 11 1/6 Taurus], lat -2d30'36.3" [printed -2d30']
+====================================================================================================
+NIGHT 1595-10-25_vesperi  (near opposition)  Julian 1595-10-25 = Gregorian 1595-11-04  vesperi (evening, hours from noon)
+  source: vol 12, p. 447 (right column), leaf 497, https://archive.org/download/operaomniaedidit12brahuoft/page/n460.jpg
+  Delta T used: 122 s (Espenak-Meeus polynomial; Mars moves <1'/h so this is irrelevant to the residual)
+  clock star Vultur (occid.) = alpha Aql (Altair): apparent RA 292.7576, Dec 7.8665
+    clock 7h54.50m  HA west 45.1167 -> LST 337.8743 deg (22.5250 h)
+    clock 7h57.50m  HA west 45.7333 -> LST 338.4910 deg (22.5661 h)
+    clock 8h01.00m  HA west 46.7333 -> LST 339.4910 deg (22.6327 h)
+    clock 8h04.40m  HA west 48.5833 -> LST 341.3410 deg (22.7561 h)
+    clock 8h10.00m  HA west 50.0000 -> LST 342.7576 deg (22.8505 h)
+    clock 8h15.67m  HA west 51.4167 -> LST 344.1743 deg (22.9450 h)
+    clock 8h23.67m  HA west 52.4000 -> LST 345.1576 deg (23.0105 h)
+    clock 8h26.33m  HA west 53.0667 -> LST 345.8243 deg (23.0550 h)
+    clock 8h46.00m  HA west 57.9500 -> LST 350.7076 deg (23.3805 h)
+    clock-to-LST offset: median of 9 readings; deviations of single readings (min of time): +0.1, -0.5, +0.0, +4.0, +4.0, +4.0, -0.1, -0.1, -0.3; MAD 0.3 min
+    local apparent solar time at clock [8, 46]: 20h45.3m (sun apparent RA 219.457)
+  star Lucida Arietis                                alpha Ari (Hamal)        apparent RA   26.1494  Dec  21.5117
+  star Lucidum Latus Persei                          alpha Per (Mirfak)       apparent RA   43.9906  Dec  48.3460
+  star Oculus Tauri / Aldebaran                      alpha Tau (Aldebaran)    apparent RA   63.2105  Dec  15.6209
+  star Vultur (occid.)                               alpha Aql (Altair)       apparent RA  292.7576  Dec   7.8665
+  star Os Pegasi (or.)                               epsilon Peg (Enif)       apparent RA  321.0808  Dec   8.0641
+  rows used: 9 distances, 13 declination readings; mean clock time 20h08.95m -> UT JD 2303929.29265 (1595-11-04 19:01 UT (Gregorian))
+  armillary zero point from Oculus Tauri / Aldebaran: measured - (modern refracted apparent) = -1.75, -2.42, +0.70, +0.87, +0.46, +0.55 arcmin; mean -0.26'
+  solution (true topocentric, equator of date): RA 47.2485  Dec 17.4839   formal err 0.11' (RA*cosDec), 0.15' (Dec)
+    dist row  2 Lucida Arietis               meas  20.2667  residual -0.33'
+    dist row  3 Lucida Arietis               meas  20.2583  residual +0.19'
+    dist row  4 Lucida Arietis               meas  20.2667  residual -0.29'
+    dist row  5 Lucidum Latus Persei         meas  30.9583  residual -0.05'
+    dist row  6 Lucidum Latus Persei         meas  30.9583  residual -0.03'
+    dist row  7 Lucidum Latus Persei         meas  30.9556  residual +0.15'
+    dist row  8 Oculus Tauri / Aldebaran     meas  15.3972  residual -0.24'
+    dist row 10 Oculus Tauri / Aldebaran     meas  15.3917  residual +0.16'
+    dist row 11 Oculus Tauri / Aldebaran     meas  15.4000  residual -0.32'
+  distance-only solution: RA 47.2485 Dec 17.4839  formal err 0.11', 0.15'
+    armillary declination minus distance-only prediction: +0.05, +0.55, +1.08, +0.11, -0.36, -0.19, -0.33, -0.26, +0.07, -0.04, +0.05, +0.15, +0.31 arcmin
+    sextant check row 12: Aldebaran-Hamal measured 35.5333, modern refracted 35.5158 -> measured - model +1.05'
+    sextant check row 12: Aldebaran-Hamal measured 35.5361, modern refracted 35.5158 -> measured - model +1.22'
+    altitude check row 0: printed 14.283, model (refracted) 11.497 -> diff +167.2'
+    altitude check row 3: printed 26.667, model (refracted) 26.366 -> diff +18.0'
+    altitude check row 4: printed 27.250, model (refracted) 26.852 -> diff +23.9'
+    altitude check row 5: printed 27.700, model (refracted) 27.324 -> diff +22.6'
+    altitude check row 6: printed 28.300, model (refracted) 27.753 -> diff +32.8'
+    altitude check row 7: printed 28.750, model (refracted) 28.098 -> diff +39.1'
+  parallax: Earth-Mars distance 0.4899 au (Horizons, cited); shift 15.8"
+  true obliquity of date 23.49416
+  RESULT geocentric apparent ecliptic of date: lon 49.6478 (49d38'52.1")  lat -0.2067 (-0d12'24.0")
+  HORIZONS (geocentric, body 4, apparent ecliptic of date): lon 49.6529  lat -0.1930
+    | Target body name: Mars Barycenter (4)             {source: DE441}
+    | Center body name: Earth (399)                     {source: DE441}
+    | Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}
+  RESIDUAL Tycho - Horizons: dlon*cos(lat) -0.31'  dlat -0.82'  total 0.87'
+  Horizons topocentric (Hven) airless apparent RA/Dec 47.2498 17.4984; ours 47.2485 17.4839: dRA*cos -0.08' dDec -0.87'
+  Sun-Observer-Target elongation (Horizons): 172.2255 deg /L
+    sensitivity P-1kPa                        : dlon -0.30'  dlat -0.81'
+    sensitivity P+1kPa                        : dlon -0.31'  dlat -0.83'
+    sensitivity T-10C                         : dlon -0.33'  dlat -0.86'
+    sensitivity T+10C                         : dlon -0.29'  dlat -0.78'
+    sensitivity no refraction                 : dlon +0.30'  dlat +0.33'
+    sensitivity distance-only (no armillary)  : dlon -0.31'  dlat -0.82'
+    sensitivity no parallax correction        : dlon -0.22'  dlat -1.07'
+  [Tycho-catalogue frame] stars (lon, lat at date): Lucida Arietis 32.027,9.950; Lucidum Latus Persei 56.211,30.083; Oculus Tauri / Aldebar 64.136,-5.517; Vultur 296.077,29.358; Os Pegasi 326.294,22.125
+  [Tycho-catalogue frame] armillary zero -0.58'; Mars lon 49.6325 lat -0.2533 -> vs Horizons dlon -1.23' dlat -3.62' (diurnal parallax not removed; <0.4')
+    distance residuals: -0.46, +0.06, -0.42, -0.02, -0.00, +0.18, -0.37, +0.03, -0.45 arcmin
+====================================================================================================
+NIGHT 1595-07-22_mane  (far from opposition (Tycho: 'in [quadrature with the] Sun'))  Julian 1595-07-22 = Gregorian 1595-08-01  mane (morning, hours from midnight)
+  source: vol 12, p. 441 (right column), leaf 491, https://archive.org/download/operaomniaedidit12brahuoft/page/n454.jpg
+  Delta T used: 122 s (Espenak-Meeus polynomial; Mars moves <1'/h so this is irrelevant to the residual)
+  clock star Vultur (occid.) = alpha Aql (Altair): apparent RA 292.7622, Dec 7.8653
+    clock 2h47.33m  HA west 60.5000 -> LST 353.2622 deg (23.5508 h)
+    clock-to-LST offset: median of 1 readings; deviations of single readings (min of time): +0.0; MAD 0.0 min
+    local apparent solar time at clock [2, 47.3333]: 2h51.1m (sun apparent RA 130.495); Tycho's note: Resp. H.2 M.50
+  star Markab (header: 'ab ore Peg.', reduction: 'prima alae Peg.') alpha Peg (Markab)       apparent RA  341.1696  Dec  13.0473
+  star Oculus Tauri / Aldebaran                      alpha Tau (Aldebaran)    apparent RA   63.1991  Dec  15.6190
+  star Vultur (occid.)                               alpha Aql (Altair)       apparent RA  292.7622  Dec   7.8653
+  star Lucida Arietis                                alpha Ari (Hamal)        apparent RA   26.1416  Dec  21.5076
+  rows used: 5 distances, 3 declination readings; mean clock time 2h38.35m -> UT JD 2303833.58117 (1595-08-01 01:56 UT (Gregorian))
+  armillary zero point from Lucida Arietis: measured - (modern refracted apparent) = -1.27, -1.27 arcmin; mean -1.27'
+  solution (true topocentric, equator of date): RA 32.7880  Dec 10.5965   formal err 0.54' (RA*cosDec), 0.67' (Dec)
+    dist row  0 Markab (header: 'ab ore Peg. meas  50.4667  residual +1.00'
+    dist row  1 Markab (header: 'ab ore Peg. meas  50.4583  residual +1.51'
+    dist row  2 Markab (header: 'ab ore Peg. meas  50.4778  residual +0.35'
+    dist row  3 Oculus Tauri / Aldebaran     meas  29.9750  residual +1.45'
+    dist row  4 Oculus Tauri / Aldebaran     meas  29.9750  residual +1.46'
+    declination residuals: +0.37, -0.13, +0.81 arcmin
+  distance-only solution: RA 32.7877 Dec 10.7064  formal err 0.22', 1.20'
+    armillary declination minus distance-only prediction: -6.96, -6.46, -7.40 arcmin
+    altitude check row 0: printed 33.533, model (refracted) 33.642 -> diff -6.5'
+    altitude check row 3: printed 34.533, model (refracted) 34.667 -> diff -8.0'
+    altitude check row 6: printed 35.167, model (refracted) 35.283 -> diff -7.0'
+  parallax: Earth-Mars distance 0.8816 au (Horizons, cited); shift 8.2"
+  true obliquity of date 23.49406
+  RESULT geocentric apparent ecliptic of date: lon 34.1948 (34d11'41.3")  lat -2.4940 (-2d29'38.5")
+  HORIZONS (geocentric, body 4, apparent ecliptic of date): lon 34.1837  lat -2.5022
+    | Target body name: Mars Barycenter (4)             {source: DE441}
+    | Center body name: Earth (399)                     {source: DE441}
+    | Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}
+  RESIDUAL Tycho - Horizons: dlon*cos(lat) +0.66'  dlat +0.49'  total 0.82'
+  Horizons topocentric (Hven) airless apparent RA/Dec 32.7802 10.5851; ours 32.7880 10.5965: dRA*cos +0.46' dDec +0.68'
+  Sun-Observer-Target elongation (Horizons): 93.8720 deg /L
+    sensitivity P-1kPa                        : dlon +0.67'  dlat +0.50'
+    sensitivity P+1kPa                        : dlon +0.66'  dlat +0.47'
+    sensitivity T-10C                         : dlon +0.66'  dlat +0.43'
+    sensitivity T+10C                         : dlon +0.67'  dlat +0.54'
+    sensitivity no refraction                 : dlon +0.87'  dlat +2.02'
+    sensitivity distance-only (no armillary)  : dlon +2.86'  dlat +6.70'
+    sensitivity no parallax correction        : dlon +0.68'  dlat +0.35'
+  [Tycho-catalogue frame] stars (lon, lat at date): Markab 347.866,19.433; Oculus Tauri / Aldebar 64.132,-5.517; Vultur 296.074,29.358; Lucida Arietis 32.024,9.950
+  [Tycho-catalogue frame] armillary zero -2.29'; Mars lon 34.1944 lat -2.4959 -> vs Horizons dlon +0.64' dlat +0.38' (diurnal parallax not removed; <0.4')
+    distance residuals: +0.98, +1.48, +0.32, +1.41, +1.42 arcmin
+Tycho's own printed result for Jul 22 (his stars, his obliquity, no refraction) vs Horizons: dlon +0.14' dlat +0.13'
+====================================================================================================
+KILL-TEST POSITIONAL CRITERION (both nights within 5'): MET (worst 0.87')

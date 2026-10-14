@@ -1,0 +1,66 @@
+{
+  "_about": "Hand transcription from the page images of Dreyer (ed.), Tychonis Brahe Dani Opera Omnia, vol. XII (1913 scan, archive.org operaomniaedidit12brahuoft), read by the agent on the images (not the OCR). Angles are degrees and minutes; Tycho's fractions of a minute are kept as written (1/6 = 10 arcsec, 1/3 = 20, 1/2 = 30, 2/3 = 40, 5/6 = 50). Times are Tycho's clock hours (H, M with fractions of a minute) counted from noon (vesperi) or midnight (mane), local apparent time as corrected by the observers. Dates are Julian (Denmark kept the Julian calendar until 1700). Confidence: H = the printed digits are unambiguous at full resolution; M = readable but a small fraction glyph; L = the observer or Dreyer flagged it, or the identification is inferred.",
+  "nights": {
+    "1595-10-25_vesperi": {
+      "label": "near opposition",
+      "date_julian": "1595-10-25", "date_gregorian": "1595-11-04", "session": "vesperi (evening, hours from noon)",
+      "source": {"volume": 12, "printed_page": 447, "column": "right", "leaf": 497, "image_n": 460,
+                 "image_url": "https://archive.org/download/operaomniaedidit12brahuoft/page/n460.jpg",
+                 "heading": "DIE 25 OCTOBRIS, VESPERI. [Mars] a Lucida [Aries]"},
+      "stars": {
+        "Lucida Arietis": {"modern": "alpha Ari (Hamal)", "hip": 9884, "id_confidence": "H",
+                            "why": "Tycho's own RA/Dec for 'Lucida [Aries]' on p.446 (Oct 16): 26 9 / 21 31 B; Hamal precessed to 1595 matches"},
+        "Lucidum Latus Persei": {"modern": "alpha Per (Mirfak)", "hip": 15863, "id_confidence": "H",
+                                 "why": "Tycho gives its latitude 30 5 30 B and longitude 26 12 5/6 Taurus on p.447 (Oct 25 mane triangle); Mirfak"},
+        "Oculus Tauri / Aldebaran": {"modern": "alpha Tau (Aldebaran)", "hip": 21421, "id_confidence": "H",
+                                     "why": "named 'Aldebaran' in the same page's footnote; RA 63 12 8, Dec 15 37 3/4 in Tycho's reduction"},
+        "Vultur (occid.)": {"modern": "alpha Aql (Altair)", "hip": 97649, "id_confidence": "H",
+                            "why": "clock star; the column is its hour angle west of the meridian read on the armillary (it advances 15 deg/hour; Altair never rises above 43 deg at Hven, so it cannot be an altitude)"},
+        "Os Pegasi (or.)": {"modern": "epsilon Peg (Enif)", "hip": 107315, "id_confidence": "M",
+                            "why": "clock star in the 6 10 1/2 row, hour angle east"}
+      },
+      "rows": [
+        {"t": [6, 10.5], "star": "Lucida Arietis", "dist": [20, 17.1667], "dec_mars": [[17, 32.3333], [17, 34.5]], "alt_mars": [14, 17], "clock_star": "Os Pegasi (or.)", "clock_ha_east": [9, 15], "conf": "M", "note": "Mars at 14 deg altitude, early in the night; the two declination readings differ by 2'; low weight, not used in the fit"},
+        {"t": null, "what": "Declinatio Aldeborae", "dec_aldebaran": [[15, 41], [15, 40.3333]], "alt_aldebaran": [15, 30], "conf": "H", "note": "time not printed; between 6 10 and 7 54"},
+        {"t": [7, 54.5], "star": "Lucida Arietis", "dist": [20, 16], "dec_mars": [[17, 30.5], [17, 31]], "clock_star": "Vultur (occid.)", "clock_ha_west": [45, 7], "conf": "H"},
+        {"t": [7, 57.5], "star": "Lucida Arietis", "dist": [20, 15.5], "dec_mars": [[17, 31.5], [17, 31.5]], "alt_mars": [26, 40], "clock_star": "Vultur (occid.)", "clock_ha_west": [45, 44], "conf": "H", "note": "declination 'vtroque' (both sights)"},
+        {"t": [8, 1], "star": "Lucida Arietis", "dist": [20, 16], "dec_mars": [[17, 30.5], [17, 30.5]], "alt_mars": [27, 15], "clock_star": "Vultur (occid.)", "clock_ha_west": [46, 44], "conf": "H"},
+        {"t": [8, 4.4], "star": "Lucidum Latus Persei", "dist": [30, 57.5], "dec_mars": [[17, 30.1667], [17, 30]], "alt_mars": [27, 42], "clock_star": "Vultur (occid.)", "clock_ha_west": [48, 35], "conf": "H", "note": "time printed 8 4 2/5"},
+        {"t": [8, 7.5], "star": "Lucidum Latus Persei", "dist": [30, 57.5], "dec_mars": [[17, 30], [17, 30]], "alt_mars": [28, 18], "conf": "H"},
+        {"t": [8, 10], "star": "Lucidum Latus Persei", "dist": [30, 57.3333], "alt_mars": [28, 45], "clock_star": "Vultur (occid.)", "clock_ha_west": [50, 0], "conf": "H"},
+        {"t": [8, 15.6667], "star": "Oculus Tauri / Aldebaran", "dist": [15, 23.8333], "dec_mars": [[17, 30], [17, 30.3333]], "alt_aldebaran": [19, 5], "clock_star": "Vultur (occid.)", "clock_ha_west": [51, 25], "conf": "H", "note": "distance printed 15 23 5/6"},
+        {"t": [8, 18], "what": "Decl. Aldeb.", "dec_aldebaran": [[15, 40.3333], [15, 40.5]], "conf": "H"},
+        {"t": [8, 23.6667], "star": "Oculus Tauri / Aldebaran", "dist": [15, 23.5], "dec_mars": [[17, 30.1667], [17, 30.25]], "alt_aldebaran": [19, 55], "clock_star": "Vultur (occid.)", "clock_ha_west": [52, 24], "conf": "H"},
+        {"t": [8, 26.3333], "star": "Oculus Tauri / Aldebaran", "dist": [15, 24], "dec_mars": [[17, 30.3333], [17, 30.5]], "alt_aldebaran": [20, 25], "clock_star": "Vultur (occid.)", "clock_ha_west": [53, 4], "conf": "H"},
+        {"t": [8, 46], "what": "Pro Sextante examinando Aldebora a Lucida Arietis", "dist_aldebaran_hamal": [[35, 32], [35, 32.1667]], "dec_aldebaran": [[15, 39.6667], [15, 39.75]], "alt_aldebaran": [22, 37], "clock_star": "Vultur (occid.)", "clock_ha_west": [57, 57], "conf": "H"}
+      ],
+      "tycho_reduction_on_page": "none for this evening (Tycho's printed triangle reduction on the same page is for the morning of Oct 25: 19 53 0 Taurus, lat 0 13 50 M.)"
+    },
+    "1595-07-22_mane": {
+      "label": "far from opposition (Tycho: 'in [quadrature with the] Sun')",
+      "date_julian": "1595-07-22", "date_gregorian": "1595-08-01", "session": "mane (morning, hours from midnight)",
+      "source": {"volume": 12, "printed_page": 441, "column": "right", "leaf": 491, "image_n": 454,
+                 "image_url": "https://archive.org/download/operaomniaedidit12brahuoft/page/n454.jpg",
+                 "heading": "DIE 22 JULIJ, MANE."},
+      "stars": {
+        "Markab (header: 'ab ore Peg.', reduction: 'prima alae Peg.')": {"modern": "alpha Peg (Markab)", "hip": 113963, "id_confidence": "M",
+            "why": "The table header names Os Pegasi (Enif), but Enif lies about 71 deg from Mars that morning, not 50; Tycho's own reduction below the table uses 'Primae alae Peg.' with RA 341 9 1/4, Dec 13 3 37 B, which is alpha Peg precessed to 1595 (J2000 346.19, +15.21). Distance 50 28 fits Markab only. Header/reduction discrepancy noted."},
+        "Oculus Tauri / Aldebaran": {"modern": "alpha Tau (Aldebaran)", "hip": 21421, "id_confidence": "H", "why": "Tycho's reduction: Aldeborae RA 63 12 1/2, Dec 15 37"},
+        "Vultur (occid.)": {"modern": "alpha Aql (Altair)", "hip": 97649, "id_confidence": "H", "why": "clock star, hour angle west; Tycho writes 'Resp. H.2 M.50' beside it"},
+        "Lucida Arietis": {"modern": "alpha Ari (Hamal)", "hip": 9884, "id_confidence": "H", "why": "declination check of the armillary"}
+      },
+      "rows": [
+        {"t": [2, 32.5], "star": "Markab (header: 'ab ore Peg.', reduction: 'prima alae Peg.')", "dist": [50, 28], "dec_mars": [[10, 35.5], [10, 36]], "alt_mars": [33, 32], "conf": "H"},
+        {"t": [2, 36.3333], "star": "Markab (header: 'ab ore Peg.', reduction: 'prima alae Peg.')", "dist": [50, 27.5], "conf": "H"},
+        {"t": [2, 37.6], "star": "Markab (header: 'ab ore Peg.', reduction: 'prima alae Peg.')", "dist": [50, 28.6667], "conf": "M", "note": "time printed 2 37 3/5"},
+        {"t": [2, 41.6667], "star": "Oculus Tauri / Aldebaran", "dist": [29, 58.5], "alt_mars": [34, 32], "conf": "H"},
+        {"t": [2, 43.6667], "star": "Oculus Tauri / Aldebaran", "dist": [29, 58.5], "conf": "H"},
+        {"t": [2, 46], "what": "Dist. Mars a Jove", "dist_jupiter": [30, 16.75], "conf": "H", "note": "Jupiter is not a reference star; not used"},
+        {"t": [2, 47.3333], "what": "Dist. Mars a Jove", "dist_jupiter": [30, 17.5], "dec_mars": [[10, 35], [10, 35]], "alt_mars": [35, 10], "clock_star": "Vultur (occid.)", "clock_ha_west": [60, 30], "clock_note": "Resp. H.2 M.50", "conf": "H"},
+        {"t": null, "what": "Pro corrigendis Armillis: Declin. Lucidae Arietis 21 30 vtroque", "dec_hamal": [[21, 30], [21, 30]], "conf": "H", "note": "time not printed; taken as 2 50 (clock) with +-15 min"}
+      ],
+      "tycho_reduction_on_page": {"text": "H.2 M.40 Distabat Mars a prima alae Peg. 50 28, ab Aldebora 29 58 1/2. Declinatio Mars 10 36 correcta. Aldeborae RA 63 12 1/2, Dec 15 37; Primae alae Peg. RA 341 9 1/4, Dec 13 3 37 B. Ang. diff. ascens. 51 35 5 (Peg.), 30 22 23 (Aldeb.). Hinc Asc. R. Mars limitata 32 47 14. Resp. Longitudo 4 11 1/6 Taurus, Latitudo 2 30 M.",
+        "lon_deg": 34.18611, "lat_deg": -2.5, "ra_deg": 32.78722, "dec_deg": 10.6, "time": [2, 40]}
+    }
+  }
+}
