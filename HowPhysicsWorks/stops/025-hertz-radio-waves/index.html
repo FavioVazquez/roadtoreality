@@ -71,14 +71,14 @@
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
           <label for="dipole-frequency-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Dipole frequency:</label>
           <input id="dipole-frequency-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.2" style="flex:1;" aria-label="Dipole oscillation frequency 0.5 to 3.0 Hz">
           <span id="dipole-frequency-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.2</span>
         </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <label for="wave-speed-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Animation speed (px/s; the real speed is c):</label>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <label for="wave-speed-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;" title="The real speed is c">Animation speed (px/s):</label>
           <input id="wave-speed-slider" type="range" min="50" max="200" step="10" value="100" style="flex:1;" aria-label="Animation speed, 50 to 200 pixels per second (the real wave speed is c)">
           <span id="wave-speed-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">100</span>
         </div>

@@ -87,6 +87,13 @@
   var PARTICLE_COUNT = 36;
   var particles = [];
 
+  /* Pressure axis floor: the throat dip fills 40 % of the scale at every setting. */
+  function pFloorNow() {
+    var pThroat = pressureAt((tubeGeo.t1 + tubeGeo.t2) / 2);
+    return Math.max(0, P0 - 2.5 * (P0 - pThroat));
+  }
+  function pFrac(P) { var f = pFloorNow(); return (P - f) / (P0 - f); }
+
   function initParticles() {
     var g = tubeGeo;
     particles = [];
@@ -181,7 +188,7 @@
 
     for (var i = 0; i < sampleX.length; i++) {
       var sx  = sampleX[i];
-      var p   = pressureAt(sx) / P0;   /* fraction of inlet pressure, never clamped */
+      var p   = pFrac(pressureAt(sx));   /* fraction of inlet pressure, never clamped */
       var colH = maxColH * p;
       var colY = baseY - colH;
 
@@ -332,7 +339,7 @@
       var fr = j / 80;
       var xs = g.x0 + fr * (g.x3 - g.x0);
       /* P/P0: 1 maps to gy0, 0 maps to gy1; stays in range for every slider value */
-      var pClamped2 = pressureAt(xs) / P0;
+      var pClamped2 = pFrac(pressureAt(xs));
       var gxp = gx0 + fr * gW;
       var gyp = gy0 + (1 - pClamped2) * gH;
       if (j === 0) ctx.moveTo(gxp, gyp); else ctx.lineTo(gxp, gyp);
@@ -346,7 +353,7 @@
     for (var k = 0; k <= 80; k++) {
       var fk = k / 80;
       var xk = g.x0 + fk * (g.x3 - g.x0);
-      var pk = pressureAt(xk) / P0;
+      var pk = pFrac(pressureAt(xk));
       var gxk = gx0 + fk * gW;
       var gyk = gy0 + (1 - pk) * gH;
       if (k === 0) ctx.moveTo(gxk, gy1); else ctx.lineTo(gxk, gyk);
@@ -381,7 +388,7 @@
     ctx.fillStyle = 'rgba(200,200,200,0.55)';
     ctx.textAlign = 'right';
     ctx.fillText((P0 / 1000).toFixed(0), gx0 - 3, gy0 + 4);
-    ctx.fillText('0', gx0 - 3, gy1 - 12);
+    ctx.fillText((pFloorNow() / 1000).toFixed(0), gx0 - 3, gy1 - 12);
     ctx.restore();
   }
 

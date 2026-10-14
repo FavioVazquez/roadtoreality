@@ -282,7 +282,7 @@
       "yearLabel": "1750\u20131765",
       "scientist": "Leonhard Euler",
       "isStub": false,
-      "description": "Euler formalized the mathematics of rotating rigid bodies \u2014 the physics that keeps gyroscopes upright and explains precession.",
+      "description": "Euler formalized the mathematics of rotating rigid bodies \u2014 and why the shape of a body, not just its mass, sets how it turns.",
       "path": "stops/016-euler-rotation/",
       "prev": "015-bernoulli-fluids",
       "prevTitle": "Bernoulli's Principle",

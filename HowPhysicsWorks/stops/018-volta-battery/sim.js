@@ -21,7 +21,7 @@
   var cellCount  = 3;      /* 1–6 cells */
   var emfPerCell = 0.8;    /* volts per cell (zinc | brine | copper pile element) */
   var rInternal  = 0.5;    /* ohms per cell (internal resistance) */
-  var rLoad      = 0.3;    /* ohms — resistive load (slider) */
+  var rLoad      = 2.0;    /* ohms — resistive load (slider) */
   var isSeries   = true;   /* series vs parallel */
 
   /* Current dots for animation */
@@ -455,7 +455,7 @@
       t = 0;
       cellCount  = 3;
       emfPerCell = 0.8;
-      rLoad      = 0.3;
+      rLoad      = 2.0;
       rInternal  = 0.5;
       isSeries   = true;
       for (var i = 0; i < dots.length; i++) { dots[i].progress = i / dots.length; }

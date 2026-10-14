@@ -206,7 +206,7 @@
     } else if (hF * WIEN_B / T < LAM_MIN) {
       ctx.fillStyle = 'rgba(220,200,255,0.8)';
       ctx.font = '10px monospace';
-      ctx.fillText('peak is left of the window (λ_max < 40 nm)', ox + 8, oy - gH + 30);
+      ctx.fillText('peak is left of the window (λ_max < 40 nm)', ox + 8, oy - gH + 46);
     }
 
     /* ── Legend ── */
