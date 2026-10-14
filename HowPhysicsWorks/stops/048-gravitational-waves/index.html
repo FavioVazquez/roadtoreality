@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +60,10 @@
       <span class="stop-header__scientist">LIGO Collaboration</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does the wave from two merging black holes rise in pitch and strength, and how do the masses change the chirp?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1916 Einstein worked out that moving masses should send out ripples in spacetime that travel at the speed of light<sup><a href="#src-2">[2]</a></sup>. The ripples are very weak. For almost a century nobody could detect one directly. On 14 September 2015 the two LIGO detectors in the United States recorded a signal that lasted about a fifth of a second and rose in pitch from 35 to 250 Hz<sup><a href="#src-1">[1]</a></sup>. It came from two black holes, about 36 and 29 times the mass of the Sun, spiralling into each other more than a billion light-years away<sup><a href="#src-1">[1]</a></sup>.
@@ -101,6 +106,15 @@
       <span id="sim-status">Press play to start the inspiral. Use the sliders to change the two masses.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Play</strong> at the default 36 and 29 M☉: Wave frequency climbs from 21 Hz to more than 150 Hz in the last orbits, then reads 278 Hz in the ringdown.</li>
+      <li>Double both masses with <strong>Mass 1</strong> at 72 and <strong>Mass 2</strong> at 58: Chirp mass goes from 28.1 to 56.2 M☉, Time to merger at the start doubles from 0.721 to 1.442 s, the ringdown halves to about 139 Hz, and the strain trace shows the same number of cycles.</li>
+      <li>Compare <strong>Mass 1</strong> 60 with <strong>Mass 2</strong> 10 against 35 and 35: the unequal pair makes about twice as many wave cycles before merging, about 48 against 24.</li>
+      <li>Press <strong>♪ Play chirp (scaled audio)</strong> to hear the sweep, with every frequency multiplied by 4 and the signal stretched to 4 s.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What a Gravitational Wave Does</h3>
     <p>A gravitational wave passing through you stretches distances in one direction and squeezes them in the perpendicular direction, then swaps, over and over. The size of the effect is the strain $h$: the fractional change in length, $\Delta L / L$. For the 2015 signal the peak strain at Earth was $1.0 \times 10^{-21}$<sup><a href="#src-1">[1]</a></sup>. LIGO's arms are 4 km long<sup><a href="#src-1">[1]</a></sup>, so the difference between the two arm lengths changed by about $4 \times 10^{-18}$ m. A proton is about $1.7 \times 10^{-15}$ m across<sup><a href="#src-6">[6]</a></sup>, so that is roughly a four-hundredth of a proton's width.</p>
@@ -114,9 +128,11 @@
     <p>This follows from the quadrupole energy loss computed by Peters and Mathews<sup><a href="#src-3">[3]</a></sup>. Heavier binaries chirp at lower frequencies. From the same starting separation in units of GM/c², which is how the simulation starts every run, they take longer in seconds, because every time in the problem scales with the total mass, and they make the same number of orbits. Seen from a detector with a fixed frequency band the order reverses: a heavier binary sweeps through the band faster. Unequal masses take more orbits to merge. Try 60 and 10 against 35 and 35 and count the wiggles.</p>
     <p>This orbital decay was seen before any wave was detected. The binary pulsar PSR B1913+16, found by Hulse and Taylor in 1974, loses orbital energy at the rate general relativity predicts: the measured decay of its orbital period agrees with the prediction to within a fraction of a percent<sup><a href="#src-4">[4]</a></sup>.</p>
 
-    <h3>What the Simulation Leaves Out</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
     <p>The orbit follows the leading-order (quadrupole) formulas, which are accurate while the black holes are far apart. Near the end the real motion needs numerical relativity, so the simulation stops the inspiral when the separation reaches 2.8 times $GM/c^2$ and switches to a ringdown. The point-mass formulas are pushed well past the innermost stable orbit at 6 GM/c², where they already stop being accurate; the 2.8 GM/c² cut is chosen so the amplitude hands over to the ringdown, and the frequency still jumps there. The last few cycles are a sketch of the merger, not a calculation of it. In the ringdown the merged black hole vibrates at one frequency and the vibration dies away quickly. That frequency and decay time come from a published fit for a spinning black hole<sup><a href="#src-5">[5]</a></sup>, assuming a final spin of 0.69, close to what near-equal-mass mergers produce, and a remnant mass of 0.95 times the total (the GW150914 value, used for every mass ratio); a real remnant is a few per cent lighter and, for unequal masses, spins more slowly, so the ringdown frequency here is indicative only. The masses are source-frame values; the frequencies LIGO recorded are lower by the redshift factor of about 1.09, so compare 250 Hz with this readout only after allowing for it. The strain readout assumes the binary is face-on and 410 Mpc away, the distance cited for the 2015 event<sup><a href="#src-1">[1]</a></sup>. Face-on is the strongest case, and a real detector picks up only part of the wave depending on where the source sits in its sky, so the value LIGO recorded is smaller than this readout.</p>
     <p>The animation runs many times slower than real time; the readout shows by how much. The audio is scaled too: every frequency is multiplied by 4 and the whole signal is stretched to 4 seconds. Real binary black-hole signals do lie partly in the range of human hearing, but they last only a fraction of a second.</p>
+    </section>
   </div>
   <section class="takeaway-box content-column" id="remeasured-ligo-public-data" data-remeasured="pending" aria-labelledby="remeasured-ligo-title" style="border-left-style:dashed;">
     <div class="takeaway-box__title" id="remeasured-ligo-title">Re-measured from LIGO's public data: coming soon</div>
@@ -131,9 +147,9 @@
     </ul>
     <p style="overflow-x:auto;">$$h \approx \frac{4\,G\mathcal{M}}{c^2 D}\left(\frac{\pi G \mathcal{M} f}{c^3}\right)^{2/3}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration), "Observation of Gravitational Waves from a Binary Black Hole Merger", <em>Physical Review Letters</em> 116, 061102 (2016). Cited: 14 September 2015, 35 to 250 Hz, peak strain $1.0 \times 10^{-21}$, masses $36^{+5}_{-4}$ and $29^{+4}_{-4}\,M_\odot$, distance $410^{+160}_{-180}$ Mpc, 4 km arms.</li>
       <li id="src-2">A. Einstein, "Näherungsweise Integration der Feldgleichungen der Gravitation", <em>Sitzungsberichte der Preussischen Akademie der Wissenschaften</em>, 688–696 (1916).</li>
       <li id="src-3">P. C. Peters and J. Mathews, "Gravitational Radiation from Point Masses in a Keplerian Orbit", <em>Physical Review</em> 131, 435 (1963).</li>
