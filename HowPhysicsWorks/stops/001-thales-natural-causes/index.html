@@ -92,7 +92,7 @@
         </noscript>
       </div>
       <div class="sim-controls">
-        <div class="sim-control" style="flex:1 1 100%">
+        <div class="sim-control" style="flex:1 1 auto;min-width:min(14rem,100%)">
           <label class="sim-control__label" for="alt-slider">
             Sun's altitude
             <span class="sim-control__value" id="alt-val">45°</span>
@@ -100,29 +100,29 @@
           <input type="range" id="alt-slider" min="20" max="60" step="1" value="45"
                  aria-label="Sun's altitude above the horizon, in degrees" aria-valuetext="45 degrees">
         </div>
-        <div class="sim-control" style="flex:1 1 12rem">
+        <div class="sim-actions">
+          <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play: raise the Sun to the chosen altitude">▶ Play</button>
+          <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the Sun, the rulers and the reveal">↺ Reset</button>
+        </div>
+        <div class="sim-control" style="flex:1 1 auto;min-width:min(12rem,100%)">
           <label class="sim-control__label" for="stick-ruler">Stick’s shadow, your reading (m)</label>
           <input type="number" id="stick-ruler" min="0" max="6" step="0.01" value="1.00" inputmode="decimal"
                  aria-label="Your reading of the stick's shadow, in metres. Also set by dragging the lower ruler."
                  style="min-height:44px;padding:0.5rem 0.75rem;border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);border:1px solid oklch(1 0 0 / 0.16);font-family:var(--font-mono);font-size:var(--text-sm);width:100%;">
         </div>
-        <div class="sim-control" style="flex:1 1 12rem">
+        <div class="sim-control" style="flex:1 1 auto;min-width:min(12rem,100%)">
           <label class="sim-control__label" for="pyr-ruler">Pyramid’s shadow from the centre (m)</label>
           <input type="number" id="pyr-ruler" min="0" max="420" step="0.1" value="100.0" inputmode="decimal"
                  aria-label="Your reading of the pyramid's shadow measured from the centre of its base, in metres. Also set by dragging the upper ruler."
                  style="min-height:44px;padding:0.5rem 0.75rem;border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);border:1px solid oklch(1 0 0 / 0.16);font-family:var(--font-mono);font-size:var(--text-sm);width:100%;">
         </div>
-        <div class="sim-control" style="flex:1 1 100%">
+        <div class="sim-control" style="flex:1 1 auto;width:100%">
           <span class="sim-control__label">Your estimate of the height</span>
           <output id="height-estimate" for="stick-ruler pyr-ruler" aria-live="polite" style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-primary);overflow-wrap:anywhere;"></output>
         </div>
-        <div class="sim-control" style="flex:1 1 100%">
+        <div class="sim-control" style="flex:1 1 auto;width:100%">
           <button class="sim-btn" type="button" id="reveal-btn" aria-pressed="false" aria-describedby="reveal-result">Reveal the true height</button>
           <span id="reveal-result" aria-live="polite" style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.5;"></span>
-        </div>
-        <div class="sim-actions">
-          <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play: raise the Sun to the chosen altitude">▶ Play</button>
-          <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the Sun, the rulers and the reveal">↺ Reset</button>
         </div>
       </div>
       <div class="sim-caption" aria-live="polite">

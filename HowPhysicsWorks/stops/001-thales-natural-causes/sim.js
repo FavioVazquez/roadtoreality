@@ -56,6 +56,8 @@
   var rulerStick = RULER_STICK0, rulerPyr = RULER_PYR0;
   var revealed = false;
   var drag = null;              /* 'stick' | 'pyr' | null */
+  var autoPlayed = false;       /* the shell's scroll-in autostart animates only once */
+  var userPlay = false;         /* set when the reader presses Play */
 
   function rad(d) { return d * Math.PI / 180; }
   function stickShadow(a) { return H_STICK / Math.tan(rad(a)); }
@@ -357,8 +359,12 @@
   function start() {
     if (running) return;
     setPlayBtn(true);
-    if (reducedMotion) {
-      /* no animation: show the chosen altitude and return to the paused state */
+    var replay = userPlay || !autoPlayed;
+    userPlay = false;
+    autoPlayed = true;
+    if (reducedMotion || !replay) {
+      /* no animation (reduced motion, or the sim scrolled back into view):
+         show the chosen altitude and return to the paused state */
       setTimeout(finish, 0);
       return;
     }
@@ -710,6 +716,12 @@
     }
     bindNumber('stick-ruler', 'stick', 2);
     bindNumber('pyr-ruler', 'pyr', 1);
+
+    var pb = document.getElementById('sim-play-btn');
+    if (pb) {
+      pb.addEventListener('pointerdown', function () { userPlay = true; });
+      pb.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') userPlay = true; });
+    }
 
     var rb = document.getElementById('reveal-btn');
     if (rb) {
