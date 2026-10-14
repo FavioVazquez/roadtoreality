@@ -80,6 +80,9 @@
   function drawPair() {
     var cy = H * 0.36, nx = W * 0.5, T = 4, ph = t % T, thr = 2 * MEC2, ok = eGamma >= thr && nucleus;
     txt('A photon of ' + eGamma.toFixed(2) + ' MeV ' + (nucleus ? 'passes a nucleus' : 'in empty space'), 16, 22, COL.text, 14);
+    /* not to scale: the momentum exchanged is between the minimum recoil and about m_e c, so the pair forms at
+       hbar/q, a few hundred fm from the nucleus (386 fm = hbar/(m_e c)), tens of nuclear radii away (lead: about 7 fm) */
+    if (nucleus) wrapTxt('Not to scale: the pair forms hundreds of femtometres from the nucleus, tens of times its radius. The photon only passes through the nucleus\'s field; it never hits it.', 16, 42, W - 32, COL.muted, W < 560 ? 10 : 11, W < 560 ? 13 : 15);
     var f = ph / T, ny0 = cy + 50, recoil = eGamma >= thr ? eGamma - Math.sqrt(eGamma * eGamma - thr * thr) : 0, made = ok && f >= 0.45, gm = made ? Math.min(1, (f - 0.45) / 0.15) : 0;
     if (nucleus) {
       /* the nucleus's Coulomb field: faint rings, with the vertex inside it */
@@ -102,7 +105,10 @@
       var xe = ok ? x0 + (nx - x0) * (f / 0.45) : x0 + (W - 32) * f;
       wave(x0, cy, xe, cy, COL.ph, t * 10);
     } else {
-      var g = (f - 0.45) / 0.55, L = (W - nx - 30) * g, ang = 0.35 + 0.25 / (1 + eGamma);
+      var ang = 0.35 + 0.25 / (1 + eGamma), sA = Math.sin(ang), topY = W < 560 ? 92 : 78, botY = H - 175;
+      /* keep both particles between the caption and the energy bar */
+      var Lmax = Math.min(W - nx - 30, (cy - topY) / sA, (botY - cy) / sA);
+      var g = (f - 0.45) / 0.55, L = Lmax * g;
       var ex = nx + L * Math.cos(ang), ey = L * Math.sin(ang), sa = Math.sin(ang), ca = Math.cos(ang);
       dot(ex, cy - ey, 6, COL.em); dot(ex, cy + ey, 6, COL.ep);
       /* labels sit off the tracks, perpendicular to them and away from each other */
