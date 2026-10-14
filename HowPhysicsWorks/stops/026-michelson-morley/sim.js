@@ -189,8 +189,8 @@
     ctx.fillStyle = COL.beam;
     ctx.beginPath(); ctx.arc(mx, mid - fringeNow() * sy, 4.5, 0, 2 * Math.PI); ctx.fill();
     txt('Fringe position vs angle, 0–360°', r.x, r.y + 2, COL.muted, 11);
-    var lbl = 'curve: model (formula), amplitude ' + A.toFixed(2) + ' · band: ±0.01, the 1887 bound of 0.02 on the swing (cited)';
-    if (L_.narrow) txt('curve: model, amplitude ' + A.toFixed(2) + ' · band: ±0.01 (bound 0.02 on the swing)', r.x, r.y + 17, COL.muted, 11); else txt(lbl, r.x + r.w, r.y + 2, COL.muted, 11, 'right');
+    var lbl = 'model, amplitude ' + A.toFixed(2) + ' · band ±0.01 (1887 bound 0.02 on swing, cited)';
+    if (L_.narrow) txt('model, amp. ' + A.toFixed(2) + ' · band ±0.01 (swing bound 0.02)', r.x, r.y + 17, COL.muted, 11); else txt(lbl, r.x + r.w, r.y + 2, COL.muted, 11, 'right');
     if (L_.narrow) {
       txt('Model swing, 90° turn: ' + swing90().toFixed(2) + ' fringe · reported < 0.02', r.x, r.y + r.h + 4, COL.text, 12);
     }
