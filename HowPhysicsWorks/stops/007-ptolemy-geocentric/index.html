@@ -67,42 +67,56 @@
       This was wrong. But it worked. Ptolemy's <em>Almagest</em> could predict where Mars would be years in advance, accurately enough for calendars, horoscopes and eclipse tables. A wrong model with good predictions is more useful than a correct model with no predictions at all.
     </p>
     <p>
-      Watch the geocentric model run. Notice the looping "retrograde" paths the planets trace. Then compare with the next stop, where the Sun is at the center and the yearly rhythm of every loop gets a reason.
+      The simulation below builds the model the way the <em>Almagest</em> does, minus two refinements described further down. Pick a planet and watch the loops it traces around the Earth. The strip underneath plots what an observer on Earth would record: the planet's longitude along the ecliptic, day by day. Where the line dips, the planet is moving backwards against the stars. Keep an eye on the Sun: every loop is timed by it, which is the clue the next stop follows up.
     </p>
   </div>
   <div class="sim-wrapper content-column">
-    <div class="sim-container" id="sim-mount" style="min-height:420px;" aria-label="Interactive: Ptolemy's geocentric model with epicycles">
+    <div class="sim-container" id="sim-mount" style="min-height:520px;" aria-label="Interactive: Ptolemy's deferent-and-epicycle model with the planet's longitude seen from Earth plotted against time">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-control">
+      <div class="sim-control" style="flex:1 1 auto;width:100%">
+        <span class="sim-control__label" id="planet-label">Planet</span>
+        <div role="group" aria-labelledby="planet-label" style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <button class="sim-btn" type="button" data-planet="Mercury" aria-pressed="false">Mercury</button>
+          <button class="sim-btn" type="button" data-planet="Venus" aria-pressed="false">Venus</button>
+          <button class="sim-btn sim-btn-play" type="button" data-planet="Mars" aria-pressed="true">Mars</button>
+          <button class="sim-btn" type="button" data-planet="Jupiter" aria-pressed="false">Jupiter</button>
+          <button class="sim-btn" type="button" data-planet="Saturn" aria-pressed="false">Saturn</button>
+        </div>
+      </div>
+      <div class="sim-control" style="flex:1 1 auto;min-width:min(14rem,100%)">
         <label class="sim-control__label" for="speed-slider">
           Speed
-          <span class="sim-control__value" id="speed-val">2×</span>
+          <span class="sim-control__value" id="speed-val">20 d/s</span>
         </label>
-        <input type="range" id="speed-slider" min="1" max="5" step="1" value="2" aria-label="Simulation speed">
+        <input type="range" id="speed-slider" min="0" max="4" step="1" value="2" aria-label="Simulation speed, in days of model time per second" aria-valuetext="20 days of model time per second">
       </div>
-      <div class="sim-control">
-        <label class="sim-control__label" for="trail-toggle">
-          Show orbital trails
-          <span class="sim-control__value" id="trail-val">On</span>
-        </label>
-        <input type="range" id="trail-toggle" min="0" max="1" step="1" value="1" aria-label="Toggle orbital trails">
+      <div class="sim-control" style="flex:0 0 auto">
+        <span class="sim-control__label">Path</span>
+        <button class="sim-btn" type="button" id="trail-btn" aria-pressed="true" aria-label="Show the planet's path over the last one and a half synodic periods">Trail: on</button>
       </div>
       <div class="sim-actions">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play the model">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset time, speed and trail">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption" aria-live="polite">
+    <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>The looping paths are epicycles — Ptolemy's explanation for retrograde motion.</span>
+      <span id="model-readout" aria-live="polite">Deferent and epicycle for Mars.</span>
     </div>
   </div>
   <div class="stop-body content-column">
     <h3>Why Ptolemy Was Taken Seriously</h3>
     <p>The geocentric model wasn't just religious dogma — it was genuinely good science by the standards of the time. Ptolemy's <em>Almagest</em> (compiled ~150 CE; the planets are in Books IX–XIII) was the most sophisticated astronomical work of antiquity, synthesizing centuries of Babylonian and Greek observations into a predictive mathematical system.</p>
     <p>Ptolemy's model already fit the planets to within the accuracy of naked-eye observation, and no later astronomer piled epicycles on epicycles to fix it; that picture is a modern invention (Owen Gingerich showed in 1975 that no such tables ever existed). The lesson is subtler: a model built from the wrong parts can fit the data for fourteen centuries. Fit alone does not make a model true.</p>
+    <h3>How the Simulation Is Built</h3>
+    <p>For an outer planet (Mars, Jupiter, Saturn) the deferent carries the epicycle's centre round the Earth once per sidereal period: 687 days for Mars, 4,333 for Jupiter, 10,759 for Saturn<sup><a href="#src-5">[5]</a></sup>. The planet rides the epicycle, whose arm turns once a year and always points the same way as the line from the Earth to the Sun. That is not a choice made for the simulation: it is how the <em>Almagest</em>'s outer-planet models behave once their numbers are fitted to the sky<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-6">[6]</a></sup>. For an inner planet (Mercury, Venus) it is the other way round. The epicycle's centre stays on the line to the mean Sun all year, and the planet goes round the epicycle once per synodic period, 116 days for Mercury and 584 for Venus<sup><a href="#src-5">[5]</a></sup>.</p>
+    <p>The model fixes only the ratio of each epicycle to its deferent, not distances. The simulation uses 0.656, 0.192 and 0.105 for Mars, Jupiter and Saturn, and 0.387 and 0.723 for Mercury and Venus: these are modern ratios of mean orbital distances, the values that make the uniform circles match the sky best. Ptolemy's own values, fitted to his observations, are close: 39;30 parts in 60 for Mars (0.658), 11;30 for Jupiter (0.192), 6;30 for Saturn (0.108), 43;10 for Venus (0.719) and 22;30 for Mercury (0.375)<sup><a href="#src-6">[6]</a></sup>. The Sun is drawn at an arbitrary distance, in Ptolemy's order: beyond Mercury and Venus, inside Mars.</p>
+    <p>Run Mars and the model, with these periods and ratios and nothing else, produces a retrograde loop every 780 days (2.14 years). Each loop lasts about 73 days and carries Mars back about 16° along the ecliptic, and each one is centred on an opposition, when Mars stands opposite the Sun. Those are outputs of the simulation, not observations. For Jupiter and Saturn the loops come every 399 and 378 days, just over a year, and are smaller.</p>
+    <h3>What This Simple Version Leaves Out</h3>
+    <p>Ptolemy's deferents are not centred on the Earth. Each is an <strong>eccentric</strong> circle, its centre set off to one side, and the epicycle's centre moves uniformly not as seen from the Earth or from that centre but as seen from a third point, the <strong>equant</strong>, which lies on the far side of the deferent's centre from the Earth, at the same distance from it<sup><a href="#src-6">[6]</a></sup>. Together they make each planet move faster on one side of the zodiac than on the other, so the loops come at uneven intervals and differ in size around the sky. In modern terms they reproduce, to first order, the effects of an elliptical orbit and Kepler's law of areas. Without them, every Mars loop here is identical and exactly 780 days apart. The real sky is not like that: the dates on which Mars stood most nearly opposite the Sun were 27 July 2018, 14 October 2020, 8 December 2022, 16 January 2025 and 20 February 2027, intervals of 810, 785, 770 and 765 days<sup><a href="#src-7">[7]</a></sup>. For that reason the simulation counts days of model time and puts no calendar dates on its oppositions.</p>
+    <p>Two more simplifications. Everything here lies in one plane, while Ptolemy also modelled the planets' small tilts north and south of the ecliptic; that is why real retrograde paths look like loops or zigzags on the sky rather than a back-and-forth along a line. And Mercury's model in the <em>Almagest</em> has an extra moving centre that this version omits.</p>
     <p>Copernicus' model used about as many circles as Ptolemy's; what it removed was the coincidence. In Ptolemy's system every planet's loop turns once a year in step with the Sun, for no stated reason. Put the Sun at the centre and that yearly rhythm is simply the Earth's own orbit. One explanation for six coincidences was the clue.</p>
   </div>
   <div class="takeaway-box content-column">
@@ -112,8 +126,8 @@
       <li>Epicycles were mathematical patches to make circles work; they hid the real geometry.</li>
       <li>The retrograde loops that required epicycles in geocentric astronomy are simply explained by relative orbital speeds in heliocentric astronomy.</li>
     </ul>
-    <p>$$\lambda(t) = \lambda_0 + \omega_1 t + r \sin(\omega_2 t + \phi)$$</p>
-    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Longitude of a planet, to first order in the epicycle size: the deferent carries it round at rate \(\omega_1\), and the epicycle adds a small oscillation of amplitude \(r\) (relative to the deferent radius) at rate \(\omega_2\).</p>
+    <p style="overflow-x:auto;">$$\tan(\lambda - \lambda_d) = \frac{r \sin\alpha}{R + r\cos\alpha}$$</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Longitude \(\lambda\) of a planet seen from the Earth, exactly, for a deferent of radius \(R\) and an epicycle of radius \(r\): \(\lambda_d\) is the direction of the epicycle's centre, and \(\alpha\), the angle of the epicycle's arm measured from the deferent's radius, turns once per synodic period. The planet goes backwards when the arm's motion outruns the deferent's, near \(\alpha = 180°\).</p>
   </div>
   <div class="stop-body content-column" id="sources">
     <h3>Sources</h3>
@@ -122,6 +136,9 @@
       <li id="src-2">O. Gingerich, "Crisis versus Aesthetic in the Copernican Revolution", <em>Vistas in Astronomy</em> 17 (1975), 85–95.</li>
       <li id="src-3">O. Gingerich, <em>The Book Nobody Read: Chasing the Revolutions of Nicolaus Copernicus</em> (Walker, 2004).</li>
       <li id="src-4">N. M. Swerdlow and O. Neugebauer, <em>Mathematical Astronomy in Copernicus's De Revolutionibus</em> (Springer, 1984).</li>
+      <li id="src-5">D. R. Williams, NASA Planetary Fact Sheet (NASA Goddard Space Flight Center, nssdc.gsfc.nasa.gov/planetary/factsheet): sidereal periods 686.98 d (Mars), 4,332.59 d (Jupiter), 10,759.22 d (Saturn); synodic periods 115.88 d (Mercury), 583.92 d (Venus); mean distances used for the epicycle ratios.</li>
+      <li id="src-6">J. Evans, <em>The History and Practice of Ancient Astronomy</em> (Oxford University Press, 1998): the <em>Almagest</em> planetary models, eccentric and equant, and Ptolemy's epicycle radii; also O. Pedersen, <em>A Survey of the Almagest</em>, 2nd ed. with annotation by A. Jones (Springer, 2011).</li>
+      <li id="src-7">JPL Horizons ephemeris system (NASA Jet Propulsion Laboratory, ssd.jpl.nasa.gov/horizons), geocentric daily ephemeris of Mars, 2018–2027, Sun–observer–target angle: the days on which it came closest to 180°.</li>
     </ol>
   </div>
   <div class="stop-bridge content-column">
