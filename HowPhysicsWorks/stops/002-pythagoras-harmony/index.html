@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +60,10 @@
       <span class="stop-header__scientist">Pythagoras</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Which ratios of string length give the octave, the fifth and the fourth, and how does shortening a string change its pitch?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>The Pythagoreans are credited with finding that the consonant intervals correspond to simple ratios of string lengths: 2:1 the octave, 3:2 the fifth, 4:3 the fourth. The story that Pythagoras heard it in a blacksmith's hammers (told by Nicomachus six centuries later) cannot be true as told: a hammer's pitch does not follow its weight that way. The monochord experiment is real; who first did it is not known. It is the earliest Greek case we know of in which a sensation (consonance) was tied to a number; Babylonian astronomers had been fitting the sky with arithmetic for centuries.</p>
   </div>
@@ -90,6 +95,15 @@
       <span>Click a ratio button to hear both strings together and see the second string's length</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>2:1 Octave</strong>: you hear both tones together, the second string is drawn half as long, and its label reads f = 220 Hz × 2/1 = 440 Hz.</li>
+      <li>Press <strong>Play</strong>, then <strong>3:2 Fifth</strong>: the second string, length L × 2/3, swings three times for every two swings of the reference string.</li>
+      <li>Press <strong>4:3 Fourth</strong>: the second string is L × 3/4 and sounds 293.3 Hz. Shorter string, higher pitch, in exact inverse proportion.</li>
+      <li>Press <strong>9:8 Whole Tone</strong>: the string is L × 8/9 at 247.5 Hz. The ratio needs larger numbers, and it is not one of the three consonances, 2:1, 3:2 and 4:3.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>How to explore</h3>
     <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
@@ -97,6 +111,10 @@
       <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch the second string: a string 2/3 as long vibrates 3/2 as fast. Frequency is inversely proportional to length; that is the whole experiment.</li>
       <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ The fixed end points show where each string never moves; both strings sound their fundamental, one half-wave between the ends</li>
     </ul>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Each button plays two pure sine tones, 220 Hz and 220 Hz × the ratio, fading out in under a second; a real plucked string also sounds overtones above its fundamental. Frequency follows 1/length only for strings of the same material under the same tension, which the simulation takes for granted. The drawn strings swing far more slowly than the tones you hear: only the ratio of their two swing rates is true.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -105,9 +123,9 @@
       <li>$$\frac{f_2}{f_1} = \frac{L_1}{L_2}$$ (shorter string, higher pitch: frequency is inversely proportional to length)</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>Nicomachus of Gerasa, <em>Enchiridion</em>, ch. 6: the blacksmith story.</li>
       <li>W. Burkert, <em>Lore and Science in Ancient Pythagoreanism</em> (Harvard University Press, 1972).</li>
       <li>D. Creese, <em>The Monochord in Ancient Greek Harmonic Science</em> (Cambridge University Press, 2010).</li>

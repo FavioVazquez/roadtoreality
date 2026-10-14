@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -59,6 +60,10 @@
       <span class="stop-header__scientist">Eratosthenes of Cyrene</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How do the angle of one noon shadow and the distance between two cities give the circumference of the whole Earth?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Eratosthenes was the chief librarian of Alexandria. He knew that at Syene (modern Aswan), at noon on the summer solstice, a vertical gnomon cast no shadow (the famous well comes from later retellings). In Alexandria, 5,000 stadia to the north by the surveyors' reckoning, roughly 800 km, a vertical stick did cast a shadow that day. The only detailed ancient account is Cleomedes' <em>De motu circulari</em> I.7; Strabo and Pliny mention the result.
@@ -92,11 +97,23 @@
       <span id="sim-status">Press Measure to calculate. The slider moves the northern city: the stick, its shadow angle and the distance between the cities all change, and the division gives the Earth's circumference.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Measure!</strong> at the starting 31.3° N: θ reads 7.2°, the arc between the cities reads 800 km, and the panel works out 360° ÷ 7.2° = 50.0, then 50.0 × 800 km = 40,008 km.</li>
+      <li>Slide <strong>Latitude of the northern city</strong> to 40.0° N: θ grows to 15.9° and the arc to 1,767 km, yet the division still gives 40,008 km. Next to the stick, tan θ = shadow ÷ stick rises from 0.126 to 0.285.</li>
+      <li>Slide it back down to 24.1° N, the latitude of Syene: the northern stick's shadow shrinks to nothing, and the panel reads “Same latitude: no angle, nothing to divide.”</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Geometry</h3>
     <p>The key insight: if the Earth is spherical, parallel rays of sunlight hit different latitudes at different angles. In Syene (then on the Tropic of Cancer at the solstice), the sun is directly overhead — angle 0°. In Alexandria, the same sunlight hits at an angle of about 7.2°.</p>
     <p>That 7.2° is 1/50th of a full 360° circle. So if the distance between the cities (in round numbers, 800 km) equals 1/50th of the circumference, the full circumference must be 50 × 800 = 40,000 km. That's all the mathematics required.</p>
     <p>Eratosthenes lived before calculators, telescopes, or any precision instruments beyond a stick and a measuring cord. Later Greek estimates were smaller (Posidonius' 180,000 stadia, adopted by Ptolemy), and that smaller Earth was the one Columbus believed in. Eratosthenes' figure was the better one, but not the one that was taught.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The Earth is a perfect sphere and the Sun's rays are exactly parallel, so each shadow has a sharp edge. Syene is fixed at 24.1° N with the Sun straight overhead, and the northern city moves along the same meridian. The sticks are drawn far taller than life against the Earth so that the shadow can be seen, and the Sun is drawn just above the Earth; neither is to scale.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -107,9 +124,9 @@
     </ul>
     <p>$$C = \frac{360°}{\theta} \cdot d$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Cleomedes, <em>De motu circulari corporum caelestium</em> I.7 (the only detailed ancient account of the measurement: 250,000 stadia).</li>
       <li id="src-2">Strabo, <em>Geography</em> II.5.7, and Pliny the Elder, <em>Natural History</em> II.247 (252,000 stadia).</li>
       <li id="src-3">The length of the stadion is not known; values from about 157.5 m (Egyptian) to 185 m (Attic) are discussed in the literature, giving roughly 39,400–39,700 km and 46,250–46,620 km. Today's meridional circumference, 40,008 km, is the figure used for comparison.</li>

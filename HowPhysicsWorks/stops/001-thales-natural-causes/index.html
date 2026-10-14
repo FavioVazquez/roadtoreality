@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Thales of Miletus</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How can the shadows of a stick and of the pyramid give the pyramid's height, without knowing how high the Sun stands?</h2>
+  </div>
 
   <div class="stop-intro content-column">
     <p>
@@ -146,6 +151,15 @@
       </div>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>At the starting 45°, enter 2.00 in <strong>Stick’s shadow, your reading (m)</strong> and 146.6 in <strong>Pyramid’s shadow from the centre (m)</strong>, or drag the yellow ruler ends to the two shadow tips: <strong>Your estimate of the height</strong> reads 146.6 m.</li>
+      <li>Now measure only the visible shadow, 31.4 m, and press <strong>Reveal the true height</strong>: the estimate drops to 31.4 m, off by −115.2 m (−78.6 %). The missing part is the half base hidden under the pyramid.</li>
+      <li>Move <strong>Sun's altitude</strong> to 30°: both shadows lengthen, but readings of 3.46 m and 253.9 m still give 146.8 m, because the altitude cancels. From 52° up, no shadow reaches past the base: the Sun is higher than the faces' 51.8° slope.</li>
+      <li>Open the <strong>Eclipse cycle (saros)</strong> tab: in the table each eclipse comes 6,585 or 6,586 days after the one before in its series, and lies between 106° and 127° of longitude further west.</li>
+    </ol>
+  </aside>
 
   <div class="stop-body content-column">
     <h3>Why This Moment Matters</h3>
@@ -171,10 +185,12 @@
       The simulation draws the pyramid at its original height, 146.6 m<sup><a href="#src-5">[5]</a></sup>, and the stick at 2.00 m, an illustrative choice; the sources do not give the staff's length. The stick is drawn magnified in its own panel so you can read its shadow. Above 51.8°, the slope of the faces<sup><a href="#src-5">[5]</a></sup>, the whole shadow falls on the pyramid itself and nothing reaches past the base: try it with the slider.
     </p>
 
-    <h3>What the Simulation Leaves Out</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
     <p>
       The side view assumes the Sun is square to one face, as at noon, when the shadow points due north. At Giza's latitude (30° N) the noon Sun is low enough for a shadow to reach past the base only from about mid-October to the end of February (worked out here from the Sun's yearly path, not taken from a source); at other times of day the method still works, but the distance from the centre has to be measured along a slanting shadow. The simulation also draws a sharp shadow. The real Sun is a disc half a degree wide, so the tip of the pyramid's shadow is blurred over two to three metres at 45° (the Sun's half-degree width, spread over the 207 m from apex to tip and projected onto the ground), which limits how well anyone could have read it.
     </p>
+    </section>
   </div>
 
   <div class="takeaway-box content-column">
@@ -188,9 +204,9 @@
     <p style="overflow-x:auto;">$$H = h \times \frac{S_\text{pyramid}}{S_\text{stick}}, \qquad S_\text{pyramid} = \tfrac{1}{2}\,\text{base} + \text{visible shadow}$$</p>
   </div>
 
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Aristotle, <em>Metaphysics</em> A.3, 983b20: water as the first principle.</li>
       <li id="src-2">Aristotle, <em>De Caelo</em> II.13, 294a28, and Seneca, <em>Naturales Quaestiones</em> VI.6: the Earth resting on water, and earthquakes.</li>
       <li id="src-3">Herodotus, <em>Histories</em> I.74: the battle, the eclipse and the peace.</li>
