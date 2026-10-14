@@ -24,10 +24,12 @@ MSUN = 1.988409870698051e30  # IAU 2015 nominal G*Msun / G (CODATA 2018 G)
 RG_KM = G * MSUN / C**2 / 1e3  # G Msun / c^2 in km
 
 KEEP = ["mass_1_source", "mass_2_source", "a_1", "a_2", "area_1_km2", "area_2_km2", "area_initial_km2",
+        "area_1_det_km2", "area_2_det_km2", "area_initial_det_km2",
         "mass_1", "mass_2", "chirp_mass", "chirp_mass_source", "mass_ratio", "total_mass_source",
         "tilt_1", "tilt_2", "chi_eff", "chi_p", "luminosity_distance", "redshift",
         "theta_jn", "ra", "dec", "psi", "phase", "geocent_time", "log_likelihood"]
 QCOLS = ["mass_1_source", "mass_2_source", "a_1", "a_2", "area_1_km2", "area_2_km2", "area_initial_km2",
+         "area_1_det_km2", "area_2_det_km2", "area_initial_det_km2",
          "mass_1", "mass_2", "chirp_mass", "chirp_mass_source", "mass_ratio", "chi_eff",
          "luminosity_distance", "redshift"]
 
@@ -45,6 +47,10 @@ def summarise(result_file, event, max_samples, seed=0):
     post["area_1_km2"] = kerr_area_km2(post["mass_1_source"], post["a_1"])
     post["area_2_km2"] = kerr_area_km2(post["mass_2_source"], post["a_2"])
     post["area_initial_km2"] = post["area_1_km2"] + post["area_2_km2"]
+    # detector-frame (redshifted) masses give the area as measured at the detector, (1+z)^2 larger
+    post["area_1_det_km2"] = kerr_area_km2(post["mass_1"], post["a_1"])
+    post["area_2_det_km2"] = kerr_area_km2(post["mass_2"], post["a_2"])
+    post["area_initial_det_km2"] = post["area_1_det_km2"] + post["area_2_det_km2"]
     rows = []
     for c in QCOLS:
         q = np.quantile(post[c], [0.05, 0.5, 0.95])

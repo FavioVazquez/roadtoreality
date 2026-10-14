@@ -1,0 +1,95 @@
+08:15 INFO    : No prior given, using default BBH priors in /home/ubuntu/venvs/bilby/lib/python3.10/site-packages/bilby/gw/prior_files/precessing_spins_bbh.prior.
+08:15 INFO    : Waveform generator instantiated: WaveformGenerator(duration=8.0, sampling_frequency=1024.0, start_time=1420878135.1999512, frequency_domain_source_model=bilby.gw.source.lal_binary_black_hole, time_domain_source_model=None, parameter_conversion=bilby.gw.conversion.convert_to_lal_binary_black_hole_parameters, waveform_arguments={'waveform_approximant': 'IMRPhenomXPHM', 'reference_frequency': 20.0, 'minimum_frequency': 20.0, 'maximum_frequency': 131.0})
+08:15 INFO    : Loaded distance marginalisation lookup table from .distance_marginalization_lookup.npz.
+08:15 INFO    : Running for label 'GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000', output will be saved to '/home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000'
+08:15 INFO    : Using lal version 7.7.1
+08:15 INFO    : Using lal git version Branch: None;Tag: lalsuite-v7.26.16;Id: 548bc5710bea021239da56e9beff1feaae163956;;Builder: Unknown User <>;Repository status: UNCLEAN: Modified working tree
+08:15 INFO    : Using lalsimulation version 6.2.1
+08:15 INFO    : Using lalsimulation git version Branch: None;Tag: lalsuite-v7.26.16;Id: 548bc5710bea021239da56e9beff1feaae163956;;Builder: Unknown User <>;Repository status: UNCLEAN: Modified working tree
+08:15 INFO    : Analysis priors:
+08:15 INFO    : dec=Cosine(minimum=-1.5707963267948966, maximum=1.5707963267948966, name='dec', latex_label='$\\mathrm{DEC}$', unit=None, boundary=None)
+08:15 INFO    : ra=Uniform(minimum=0, maximum=6.283185307179586, name='ra', latex_label='$\\mathrm{RA}$', unit=None, boundary='periodic')
+08:15 INFO    : theta_jn=Sine(minimum=0, maximum=3.141592653589793, name='theta_jn', latex_label='$\\theta_{JN}$', unit=None, boundary=None)
+08:15 INFO    : psi=Uniform(minimum=0, maximum=3.141592653589793, name='psi', latex_label='$\\psi$', unit=None, boundary='periodic')
+08:15 INFO    : phase=Uniform(minimum=0, maximum=6.283185307179586, name='phase', latex_label='$\\phi$', unit=None, boundary='periodic')
+08:15 INFO    : a_1=Uniform(minimum=0, maximum=0.99, name='a_1', latex_label='$a_1$', unit=None, boundary=None)
+08:15 INFO    : a_2=Uniform(minimum=0, maximum=0.99, name='a_2', latex_label='$a_2$', unit=None, boundary=None)
+08:15 INFO    : tilt_1=Sine(minimum=0, maximum=3.141592653589793, name='tilt_1', latex_label='$\\theta_1$', unit=None, boundary=None)
+08:15 INFO    : tilt_2=Sine(minimum=0, maximum=3.141592653589793, name='tilt_2', latex_label='$\\theta_2$', unit=None, boundary=None)
+08:15 INFO    : phi_12=Uniform(minimum=0, maximum=6.283185307179586, name='phi_12', latex_label='$\\Delta\\phi$', unit=None, boundary='periodic')
+08:15 INFO    : phi_jl=Uniform(minimum=0, maximum=6.283185307179586, name='phi_jl', latex_label='$\\phi_{JL}$', unit=None, boundary='periodic')
+08:15 INFO    : chirp_mass=bilby.gw.prior.UniformInComponentsChirpMass(minimum=10, maximum=100, name='chirp_mass', latex_label='$\\mathcal{M}$', unit=None, boundary=None)
+08:15 INFO    : mass_ratio=bilby.gw.prior.UniformInComponentsMassRatio(minimum=0.125, maximum=1, name='mass_ratio', latex_label='$q$', unit=None, boundary=None, equal_mass=False)
+08:15 INFO    : geocent_time=Uniform(minimum=1420878141.1000001, maximum=1420878141.3, name='geocent_time', latex_label='$t_c$', unit=None, boundary=None)
+08:15 INFO    : mass_1=Constraint(minimum=1, maximum=1000, name='mass_1', latex_label='$m_1$', unit=None)
+08:15 INFO    : mass_2=Constraint(minimum=1, maximum=1000, name='mass_2', latex_label='$m_2$', unit=None)
+08:15 INFO    : luminosity_distance=2132.103469957127
+08:15 INFO    : Analysis likelihood class: <class 'bilby.gw.likelihood.base.GravitationalWaveTransient'>
+08:15 INFO    : Analysis likelihood noise evidence: -2270.222070924314
+08:15 INFO    : Single likelihood evaluation took 2.987e-03 s
+08:15 WARNING : Kwargs contain both 'rstate' and 'seed', ignoring 'seed'.
+08:15 INFO    : Using sampler Dynesty with kwargs {'nlive': 1000, 'bound': 'live', 'sample': 'acceptance-walk', 'periodic': None, 'reflective': None, 'update_interval': 600, 'first_update': None, 'rstate': Generator(PCG64) at 0x73ECC9023760, 'queue_size': 8, 'pool': None, 'use_pool': None, 'live_points': None, 'logl_args': None, 'logl_kwargs': None, 'ptform_args': None, 'ptform_kwargs': None, 'enlarge': None, 'bootstrap': None, 'walks': 100, 'facc': 0.2, 'slices': None, 'ncdim': None, 'blob': False, 'save_evaluation_history': False, 'history_filename': None, 'maxiter': None, 'maxcall': None, 'dlogz': 0.1, 'logl_max': inf, 'add_live': True, 'print_progress': True, 'print_func': <bound method Dynesty._print_func of <bilby.core.sampler.dynesty.Dynesty object at 0x73ecc906f100>>, 'save_bounds': False, 'checkpoint_file': None, 'checkpoint_every': 60, 'resume': False, 'seed': 150914}
+08:15 INFO    : Global meta data was removed from the result object for compatibility. Use the `BILBY_INCLUDE_GLOBAL_METADATA` environment variable to include it. This behaviour will be removed in a future release. For more details see: https://bilby-dev.github.io/bilby/faq.html#global-meta-data
+08:15 INFO    : Checkpoint every check_point_delta_t = 1800s
+08:15 INFO    : Using dynesty version 3.1.0
+08:15 INFO    : Setting up multiproccesing pool with 8 processes
+08:15 INFO    : Resume file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle does not exist.
+08:15 INFO    : Generating initial points from the prior
+08:15 INFO    : Using the bilby-implemented ensemble rwalk sampling method with an average of 60 accepted steps up to chain length 5000.
+08:45 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+08:45 WARNING : Axis limits cannot be NaN or Inf
+08:45 WARNING : Failed to create dynesty run plot at checkpoint
+09:15 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+09:15 WARNING : Axis limits cannot be NaN or Inf
+09:15 WARNING : Failed to create dynesty run plot at checkpoint
+09:45 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+09:46 WARNING : Axis limits cannot be NaN or Inf
+09:46 WARNING : Failed to create dynesty run plot at checkpoint
+10:16 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+10:16 WARNING : Axis limits cannot be NaN or Inf
+10:16 WARNING : Failed to create dynesty run plot at checkpoint
+10:47 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+10:47 WARNING : Axis limits cannot be NaN or Inf
+10:47 WARNING : Failed to create dynesty run plot at checkpoint
+11:17 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+11:17 WARNING : Axis limits cannot be NaN or Inf
+11:17 WARNING : Failed to create dynesty run plot at checkpoint
+11:48 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+11:48 WARNING : Axis limits cannot be NaN or Inf
+11:48 WARNING : Failed to create dynesty run plot at checkpoint
+12:18 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+12:18 WARNING : Axis limits cannot be NaN or Inf
+12:18 WARNING : Failed to create dynesty run plot at checkpoint
+12:49 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+12:49 WARNING : Axis limits cannot be NaN or Inf
+12:49 WARNING : Failed to create dynesty run plot at checkpoint
+13:20 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+13:20 WARNING : Axis limits cannot be NaN or Inf
+13:20 WARNING : Failed to create dynesty run plot at checkpoint
+13:50 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+13:50 WARNING : Axis limits cannot be NaN or Inf
+13:50 WARNING : Failed to create dynesty run plot at checkpoint
+14:21 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+14:21 WARNING : Axis limits cannot be NaN or Inf
+14:21 WARNING : Failed to create dynesty run plot at checkpoint
+14:45 INFO    : Written checkpoint file /home/ubuntu/repos/roadtoreality/remeasured/ep5-gw250114-area/premerger/out/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_resume.pickle
+14:45 WARNING : Axis limits cannot be NaN or Inf
+14:45 WARNING : Failed to create dynesty run plot at checkpoint
+14:45 INFO    : Starting to close worker pool.
+14:45 INFO    : Finished closing worker pool.
+14:45 INFO    : Rejection sampling nested samples to obtain 5046 posterior samples
+14:45 INFO    : Sampling time: 6:30:39.371831
+14:45 WARNING : Result.save_to_file called with extension=True. This will default to json, and ignore the extension from the filename. This behaviour is deprecated and will be removed. 
+14:45 INFO    : Computing per-detector log likelihoods.
+14:45 INFO    : Using a pool with size 8 for nsamples=5046
+14:45 INFO    : Reconstructing marginalised parameters.
+14:45 INFO    : Using a pool with size 8 for nsamples=5046
+14:46 INFO    : Computing SNRs for every sample.
+14:46 INFO    : Using a pool with size 8 for nsamples=5046
+14:46 WARNING : Result.save_to_file called with extension=True. This will default to json, and ignore the extension from the filename. This behaviour is deprecated and will be removed. 
+14:46 INFO    : Summary of results:
+nsamples: 5046
+ln_noise_evidence: -2270.222
+ln_evidence: -1392.301 +/-  0.187
+ln_bayes_factor: 877.921 +/-  0.187
+
