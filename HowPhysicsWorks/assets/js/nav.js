@@ -92,32 +92,6 @@
     '</section>';
   }
 
-  function _timelineHtml() {
-    return '<nav class="era-timeline" aria-label="Physics eras">' +
-      ERA_ORDER.map(function (era) {
-        var meta = ERA_META[era] || {};
-        return '<a class="era-timeline__item" data-era="' + era + '" href="#era-' + era + '">' +
-          '<span class="era-timeline__label">' + _esc(meta.label) + '</span>' +
-          '<span class="era-timeline__dates">' + _esc(meta.dates) + '</span>' +
-        '</a>';
-      }).join('') +
-    '</nav>';
-  }
-
-  function _renderProgressBar(totalVisited, totalStops) {
-    var el = document.getElementById('progress-bar');
-    if (!el) return;
-    var pct = totalStops > 0 ? Math.round(totalVisited / totalStops * 100) : 0;
-    el.innerHTML =
-      '<div class="progress-bar">' +
-        '<span>' + totalVisited + ' of ' + totalStops + ' stops visited</span>' +
-        '<div class="progress-bar__track">' +
-          '<div class="progress-bar__fill" style="width:' + pct + '%"></div>' +
-        '</div>' +
-        '<span>' + pct + '%</span>' +
-      '</div>';
-  }
-
   /* Keep the sticky era bar flush under the header and tell scroll-margin how much is covered. */
   function _syncStickyOffset() {
     var h = document.querySelector('.site-header');
@@ -140,20 +114,12 @@
     var stops = data.stops || [];
     var groups = _groupByEra(stops);
 
-    var timelineEl = document.getElementById('era-timeline');
-    if (timelineEl) {
-      timelineEl.innerHTML = _timelineHtml();
-    }
-
     var sectionsEl = document.getElementById('era-sections');
     if (sectionsEl) {
       sectionsEl.innerHTML = ERA_ORDER.map(function (era) {
         return _eraSectionHtml(era, groups[era] || []);
       }).join('');
     }
-
-    var visited = window.PhysicsProgress ? window.PhysicsProgress.getVisitedCount() : 0;
-    _renderProgressBar(visited, stops.length);
 
     _syncStickyOffset();
     _jumpToHash();
@@ -182,6 +148,9 @@
   }
 
   window.addEventListener('resize', _syncStickyOffset);
+  /* the header can change height without a resize (the visit counter is written later and may wrap it) */
+  var _header = document.querySelector('.site-header');
+  if (_header && window.ResizeObserver) new ResizeObserver(_syncStickyOffset).observe(_header);
   _syncStickyOffset();
 
   if (document.readyState === 'loading') {

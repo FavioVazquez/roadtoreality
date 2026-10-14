@@ -65,6 +65,11 @@
       letter-spacing: 0.08em;
     }
 
+    /* On a phone the counter would wrap the header to two rows; the journey map's title already shows the count. */
+    @media (max-width: 480px) {
+      .visit-counter { display: none; }
+    }
+
     /* Sticky era tabs on scroll */
     .era-tabs-sticky {
       position: sticky;
@@ -147,7 +152,6 @@
 
   <!-- Hero -->
   <section class="hero container" aria-labelledby="hero-title">
-    <p class="hero__eyebrow">~2,600 years · 50 stops · 5 eras</p>
     <h1 class="hero__title" id="hero-title">
       The Story of How<br>
       We Learned to Understand<br>

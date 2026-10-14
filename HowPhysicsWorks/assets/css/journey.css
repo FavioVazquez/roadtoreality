@@ -277,8 +277,8 @@
   opacity: 0;
 }
 .jm-node:focus-visible .jm-node__focus { opacity: 1; }
-.jm-node.is-active .jm-node__dot,
-.jm-node:hover .jm-node__dot { transform: scale(1.45); }
+/* hover is driven by the nearest-node logic (is-active), since hit circles may overlap */
+.jm-node.is-active .jm-node__dot { transform: scale(1.45); }
 
 /* ── Card ───────────────────────────────────────────────── */
 .journey__card {
@@ -406,6 +406,7 @@
   .journey__head { align-items: flex-start; }
   .journey__side { width: 100%; }
   .journey__cta { width: 100%; }
+  .journey__cta-title { white-space: normal; text-wrap: balance; line-height: 1.15; }
   .jm-era__label { font-size: 18px; }
   .jm-axis__label, .jm-gap__label { font-size: 12px; }
 }

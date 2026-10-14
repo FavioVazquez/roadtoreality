@@ -52,6 +52,7 @@
   var els = {};
   var pinned = null;       /* node pinned by a touch tap */
   var activeNode = null;
+  var roveId = null;       /* the node that holds the map's single tab stop */
   var lastWidth = 0;
 
   /* ── Helpers ─────────────────────────────────────────── */
@@ -235,7 +236,7 @@
     h('span', 'journey__hint', note, 'Swipe along the road. ');
     note.appendChild(document.createTextNode(
       'Years are to scale within each era, not across eras: each era gets room for its stops, ' +
-      'and the dashed stretch compresses about 1,300 years. Stems mark a stop’s exact year ' +
+      'and the dashed stretch compresses about 1,300 years. Stems mark the year a stop is placed at ' +
       'when several share it.'));
     var legend = h('ul', 'journey__legend', foot);
     legend.setAttribute('aria-hidden', 'true');
@@ -392,7 +393,7 @@
       }
       var a = el('a', {
         href: stopHref(s),
-        tabindex: '0',
+        tabindex: '-1',
         class: 'jm-node' + (isVisited ? ' is-visited' : '') + (isNext ? ' is-next' : ''),
         'data-id': s.id,
         'aria-label': 'Stop ' + s.order + ': ' + s.title + ', ' + s.yearLabel + ', ' + s.scientist +
@@ -402,7 +403,7 @@
       n.a = a;
       n.visited = isVisited;
       n.next = isNext;
-      el('circle', { class: 'jm-node__hit', cx: n.cx, cy: n.cy, r: Math.min(g.gap, g.laneGap) * 0.62 }, a);
+      el('circle', { class: 'jm-node__hit', cx: n.cx, cy: n.cy, r: hitR(g) }, a);
       if (isNext) {
         el('circle', { class: 'jm-node__pulse', cx: n.cx, cy: n.cy, r: g.r + 5 }, a);
         el('circle', { class: 'jm-node__ring', cx: n.cx, cy: n.cy, r: g.r + 4 }, a);
@@ -412,6 +413,11 @@
       el('circle', { class: 'jm-node__core', cx: n.cx, cy: n.cy, r: isVisited ? g.r * 0.36 : 0 }, a);
       el('circle', { class: 'jm-node__focus', cx: n.cx, cy: n.cy, r: g.r + 5 }, a);
     });
+
+    /* one tab stop for the map (roving tabindex): the last focused node, else the next stop, else the first */
+    var rove = null;
+    nodes.forEach(function (n) { if (n.s.id === roveId) rove = n; });
+    setRove(rove || nextNode || nodes[0]);
 
     updateHead(visited, nextNode);
     hideCard(true);
@@ -423,13 +429,19 @@
     }
   }
 
+  function setRove(n) {
+    if (!n) return;
+    nodes.forEach(function (m) { m.a.setAttribute('tabindex', m === n ? '0' : '-1'); });
+    roveId = n.s.id;
+  }
+
   function updateHead(visited, nextNode) {
     var count = Object.keys(visited).filter(function (id) {
       return stops.some(function (s) { return s.id === id; });
     }).length;
     els.count.innerHTML = '';
     if (count === 0) {
-      els.count.textContent = '50 stops, 2,600 years';
+      els.count.textContent = 'Where will you start?';
     } else {
       var strong = h('span', 'journey__count', els.count, String(count));
       els.count.appendChild(document.createTextNode(' of ' + stops.length + ' stops visited'));
@@ -511,11 +523,11 @@
     els.card.setAttribute('aria-hidden', 'true');
   }
 
+  /* Invisible hit circle: at least 44 px across. Neighbours' circles may overlap; the pointer
+     always resolves to the nearest node, so each node keeps the area closest to it. */
+  function hitR(g) { return Math.max(22, Math.min(g.gap, g.laneGap) * 0.62); }
+
   function nodeFromEvent(e) {
-    var t = e.target && e.target.closest ? e.target.closest('.jm-node') : null;
-    if (t) {
-      for (var i = 0; i < nodes.length; i++) if (nodes[i].a === t) return nodes[i];
-    }
     /* nearest node within reach of the pointer */
     var pt = els.svg.getBoundingClientRect();
     var sx = geo.width / pt.width;
@@ -525,7 +537,7 @@
       var d = (n.cx - px) * (n.cx - px) + (n.cy - py) * (n.cy - py);
       if (d < bd) { bd = d; best = n; }
     });
-    var reach = geo.compact ? 30 : 24;
+    var reach = hitR(geo) + 2;
     return bd <= reach * reach ? best : null;
   }
 
@@ -546,6 +558,7 @@
     svg.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType; });
 
     svg.addEventListener('click', function (e) {
+      if (e.detail === 0) return;   /* keyboard activation: the focused link opens itself */
       var n = nodeFromEvent(e);
       if (!n) { if (pinned) hideCard(true); return; }
       if (lastPointer === 'touch' || lastPointer === 'pen') {
@@ -558,7 +571,9 @@
           return;
         }
       }
-      if (!e.target.closest || !e.target.closest('.jm-node')) {
+      /* follow the nearest node, which may not be the topmost overlapping hit circle */
+      var t = e.target.closest ? e.target.closest('.jm-node') : null;
+      if (t !== n.a) {
         e.preventDefault();
         window.location.href = n.a.getAttribute('href');
       }
@@ -571,6 +586,7 @@
       for (var i = 0; i < nodes.length; i++) if (nodes[i].a === t) n = nodes[i];
       if (!n) return;
       pinned = null;
+      setRove(n);
       ensureVisible(n);
       showCard(n, false);
     });
@@ -592,7 +608,7 @@
       else if (e.key === 'End') to = nodes.length - 1;
       else if (e.key === 'Escape') { hideCard(true); return; }
       else if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); window.location.href = t.getAttribute('href'); return; }
-      if (to !== null) { e.preventDefault(); nodes[to].a.focus(); }
+      if (to !== null) { e.preventDefault(); setRove(nodes[to]); nodes[to].a.focus(); }
     });
 
     els.scroller.addEventListener('scroll', function () {

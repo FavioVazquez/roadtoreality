@@ -34,24 +34,33 @@ fs.mkdirSync(frameDir, { recursive: true });
 // clicks: selectors clicked in order, clickGap ms apart.
 // canvas: selector of the canvas to keep when the largest one is not it.
 // cx, cy: focus of the 16:10 thumbnail crop (0..1, default centre); z: zoom (>= 1).
+// fit: 'contain' keeps the whole frame in the thumbnail (for sims with readouts at the edges); the
+//   spare bands are filled with the frame's own edge colour.
 // PROBE=ms,ms,... (capture only) saves <nnn>@<ms>.png at those times instead.
-const DEFAULT = { wait: 4000, pre: 0, set: {}, clicks: [], clickGap: 600, cx: 0.5, cy: 0.5, z: 1 };
+const DEFAULT = { wait: 4000, pre: 0, set: {}, clicks: [], clickGap: 600, cx: 0.5, cy: 0.5, z: 1, fit: 'cover' };
 const CONFIG = {
   '001': { cy: 0.15 },
   '002': { clicks: ['[data-ratio="3/2"]', '#sim-play-btn'], wait: 1000 },
-  '004': { clicks: ['#sim-play-btn'], clickGap: 0, wait: 400 },
+  '004': { clicks: ['#sim-play-btn'], clickGap: 0, wait: 1000, z: 1.25, cy: 0.62 },
   '007': { cy: 0.3 },
-  '010': { z: 1.3, cy: 0.35 },
-  '012': { clicks: ['#sim-play-btn'], wait: 1500 },
+  '010': { fit: 'contain' },
+  '012': { clicks: ['#sim-play-btn'], wait: 1500, fit: 'contain' },
+  '013': { set: { '#speed-slider-cannon': 7.7, '#sim-speed-dial': 5 }, clicks: ['#sim-reset-btn', '#sim-play-btn'], wait: 6000 },
   '016': { cx: 0.4 },
   '018': { cx: 0.6 },
-  '023': { set: { '#source-frequency-slider': 3 }, wait: 3000 },
+  '021': { fit: 'contain' },
+  '023': { set: { '#source-frequency-slider': 3 }, wait: 3000, fit: 'contain' },
   '028': { set: { '#frequency-slider': 60 } },
-  '033': { pre: 4000, clicks: ['#bohr-toggle-btn'] },
+  '029': { set: { '#velocity-slider': 600 }, wait: 8000, fit: 'contain' },
+  '031': { fit: 'contain' },
+  '033': { pre: 4000, clicks: ['#bohr-toggle-btn'], fit: 'contain' },
+  '034': { fit: 'contain' },
+  '036': { fit: 'contain' },
   '039': { clicks: ['#mode-chamber'], wait: 3500 },
   '040': { clicks: ['#mode-energy'] },
   '043': { cy: 0.25 },
   '044': { cy: 0.4 },
+  '045': { fit: 'contain' },
   '047': { cy: 0.3 },
 };
 const cfgFor = id => ({ ...DEFAULT, ...(CONFIG[id.slice(0, 3)] || {}) });
@@ -183,21 +192,48 @@ async function build() {
     if (!fs.existsSync(framePath)) { console.log(stop.id, 'NO FRAME'); continue; }
     const frameUrl = 'data:image/png;base64,' + fs.readFileSync(framePath).toString('base64');
 
-    // Thumbnail: 16:10 crop around (cx, cy), 640x400 WebP, quality stepped down to fit ~40 KB.
+    // Thumbnail: 16:10 crop around (cx, cy), or the whole frame (fit: 'contain'), 640x400 WebP,
+    // quality stepped down to fit ~40 KB.
     await page.setContent('<!doctype html><body style="margin:0;background:#000"></body>');
     const webp = await page.evaluate(async ({ src, cfg }) => {
       const img = new Image();
       img.src = src;
       await img.decode();
       const W = img.naturalWidth, H = img.naturalHeight, A = 1.6;
-      const cw = Math.min(W, H * A) / cfg.z, ch = cw / A;
-      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-      const x0 = clamp(cfg.cx * W - cw / 2, 0, W - cw), y0 = clamp(cfg.cy * H - ch / 2, 0, H - ch);
       const c = document.createElement('canvas');
       c.width = 640; c.height = 400;
       const g = c.getContext('2d');
       g.imageSmoothingQuality = 'high';
-      g.drawImage(img, x0, y0, cw, ch, 0, 0, 640, 400);
+      if (cfg.fit === 'contain') {
+        // Whole frame, centred, less a 2 px rim (the page's 1 px borders can show at the canvas edge);
+        // each spare band takes the median colour of the frame just inside the edge it touches.
+        const src = document.createElement('canvas');
+        src.width = W; src.height = H;
+        const sg = src.getContext('2d');
+        sg.drawImage(img, 0, 0);
+        const edge = (x, y, w, h) => {
+          const d = sg.getImageData(x, y, w, h).data, ch = [[], [], []];
+          for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) ch[k].push(d[i + k]);
+          return 'rgb(' + ch.map(a => a.sort((p, q) => p - q)[a.length >> 1]).join(',') + ')';
+        };
+        const I = 2, sw = W - 2 * I, sh = H - 2 * I;
+        const s = Math.min(640 / sw, 400 / sh), dw = sw * s, dh = sh * s;
+        const dx = (640 - dw) / 2, dy = (400 - dh) / 2;
+        if (dy > 0.5) {
+          g.fillStyle = edge(I, I + 2, sw, 4); g.fillRect(0, 0, 640, dy + 1);
+          g.fillStyle = edge(I, H - I - 6, sw, 4); g.fillRect(0, dy + dh - 1, 640, 400);
+        }
+        if (dx > 0.5) {
+          g.fillStyle = edge(I + 2, I, 4, sh); g.fillRect(0, 0, dx + 1, 400);
+          g.fillStyle = edge(W - I - 6, I, 4, sh); g.fillRect(dx + dw - 1, 0, 640, 400);
+        }
+        g.drawImage(img, I, I, sw, sh, dx, dy, dw, dh);
+      } else {
+        const cw = Math.min(W, H * A) / cfg.z, ch = cw / A;
+        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+        const x0 = clamp(cfg.cx * W - cw / 2, 0, W - cw), y0 = clamp(cfg.cy * H - ch / 2, 0, H - ch);
+        g.drawImage(img, x0, y0, cw, ch, 0, 0, 640, 400);
+      }
       let q = 0.82, url;
       do { url = c.toDataURL('image/webp', q); q -= 0.06; } while (url.length * 0.75 > 40 * 1024 && q > 0.3);
       return url;
