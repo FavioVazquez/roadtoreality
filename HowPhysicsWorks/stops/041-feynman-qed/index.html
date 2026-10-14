@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QED describes how light and matter interact with breathtaking precision — its predictions match experiments to 10 decimal places.">
+  <meta name="description" content="Feynman&#x27;s arrows: add one amplitude arrow for every path light could take and see why mirrors reflect at equal angles and thin layers colour light. Then compare the electron&#x27;s magnetic moment, theory against experiment, digit by digit.">
   <meta property="og:title" content="Feynman and Quantum Electrodynamics — How Physics Works">
-  <meta property="og:description" content="QED describes how light and matter interact with breathtaking precision — its predictions match experiments to 10 decimal places.">
+  <meta property="og:description" content="Feynman&#x27;s arrows: add one amplitude arrow for every path light could take and see why mirrors reflect at equal angles and thin layers colour light. Then compare the electron&#x27;s magnetic moment, theory against experiment, digit by digit.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/041-feynman-qed/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -60,44 +60,97 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>QED describes how light and matter interact with breathtaking precision — its predictions match experiments to 10 decimal places.</p>
+    <p>
+      Quantum electrodynamics, QED, is the theory of light and electrons. In his 1985 book of lectures for a general audience, Richard Feynman explained it with little arrows: every way an event can happen contributes an arrow, and the arrows add<sup><a href="#src-2">[2]</a></sup>. His 1949 paper had turned the same idea into a practical method of calculation<sup><a href="#src-1">[1]</a></sup>.
+    </p>
+    <p>
+      The simulation adds the arrows for light bouncing off a mirror and a thin layer of glass, then compares QED's prediction for the electron's magnetism with the measured value.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Feynman and Quantum Electrodynamics — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: Feynman arrows for reflection from a mirror and a glass layer, and the electron g-factor digit by digit">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-mirror" type="button" aria-pressed="true">Mirror</button>
+        <button class="sim-btn" id="mode-glass" type="button" aria-pressed="false">Glass layer</button>
+        <button class="sim-btn" id="mode-g" type="button" aria-pressed="false">Electron g-factor</button>
+      </div>
+      <div id="mirror-controls" style="display:contents">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="det-slider">
+            Detector shift
+            <span class="sim-control__value" style="text-transform:none" id="det-val">+0.00</span>
+          </label>
+          <input type="range" id="det-slider" min="-0.6" max="0.6" step="0.05" value="0" aria-label="Horizontal shift of the detector away from the mirror-image position" aria-valuetext="0.00">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="middle-toggle" type="button" aria-pressed="false">Remove the middle strips</button>
+          <button class="sim-btn" id="grating-toggle" type="button" aria-pressed="false">Make a grating</button>
+        </div>
+      </div>
+      <div id="glass-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="d-slider">
+            Layer thickness
+            <span class="sim-control__value" style="text-transform:none" id="d-val">300 nm</span>
+          </label>
+          <input type="range" id="d-slider" min="50" max="950" step="5" value="300" aria-label="Thickness of the glass layer in nanometres" aria-valuetext="300 nanometres">
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Press play: one arrow per strip of mirror is added.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Draw Feynman diagrams for electron scattering and photon absorption</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how path integrals sum over all possible histories</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore how QED predicts the electron's magnetic moment to 10 decimal places</li>
-    </ul>
+    <h3>One Arrow per Path</h3>
+    <p>In QED the chance of an event is found by adding up amplitudes, one for each way the event can happen. Feynman drew each amplitude as an arrow<sup><a href="#src-2">[2]</a></sup>. For light, the arrow turns like the hand of a very fast stopwatch while the light travels, once per wavelength of path, so its direction is set by the path length $l$:</p>
+    <p style="overflow-x:auto;">$$\text{arrow} \propto e^{\,2\pi i\,l/\lambda}$$</p>
+    <p>Add the arrows head to tail. The probability is the square of the length of the final arrow<sup><a href="#src-2">[2]</a></sup>.</p>
+    <h3>Why a Mirror Reflects at Equal Angles</h3>
+    <p>Light from S can reach P by bouncing off any part of the mirror. Near the point where the angles are equal, the path length barely changes from one strip to the next, so those arrows point almost the same way and add up. Far from it the length changes quickly, the arrows spin round and cancel. The light seems to follow the shortest path because that is where the arrows agree. Remove the middle strips and the reflection nearly vanishes, even though most of the mirror is still there.</p>
+    <p>Move the detector away from the mirror-image position and the full mirror sends almost nothing there. Now scrape off the strips whose arrows point backwards: the rest add up, and the mirror reflects strongly where it did not before. This is a diffraction grating<sup><a href="#src-2">[2]</a></sup>.</p>
+    <h3>Why Thin Layers Are Coloured</h3>
+    <p>Glass reflects some light from its front surface and some from its back. At normal incidence each surface reflects an amplitude $r = (n-1)/(n+1) = 0.2$ for $n = 1.5$, which is 4 % of the light<sup><a href="#src-9">[9]</a></sup>. Feynman's rule is two arrows of length 0.2: the front one reversed, the back one turned by the extra path $2nd$ through the layer<sup><a href="#src-2">[2]</a></sup>. Depending on the thickness and the colour of the light they cancel or add, so the reflection runs from 0 to 16 %. Different wavelengths peak at different thicknesses, which is why thin layers look coloured.</p>
+    <h3>The Electron's Magnetism, Digit by Digit</h3>
+    <p>Dirac's equation predicts that the electron's magnetic moment corresponds to a g-factor of exactly 2. Measurements by Polykarp Kusch and Henry Foley, published in 1948, found it slightly larger<sup><a href="#src-4">[4]</a></sup>. The same year Julian Schwinger calculated QED's first correction, $a_e = (g-2)/2 = \alpha/2\pi$<sup><a href="#src-3">[3]</a></sup><sup><a href="#src-8">[8]</a></sup>. With today's fine-structure constant, $\alpha^{-1} = 137.035\,999\,177$<sup><a href="#src-7">[7]</a></sup>, that is 0.001 161 4.</p>
+    <p>The calculation has since been carried to the fifth power of $\alpha$. In 2018 Tatsumi Aoyama, Toichiro Kinoshita and Makiko Nio gave $a_e = 1\,159\,652\,182.032(720) \times 10^{-12}$<sup><a href="#src-5">[5]</a></sup>. In 2023 a measurement gave $g/2 = 1.001\,159\,652\,180\,59(13)$, to 0.13 parts per trillion<sup><a href="#src-6">[6]</a></sup>. Theory and measurement agree to about one part in $10^{12}$; the authors note that the comparison is now limited by disagreeing measurements of $\alpha$, on which the prediction depends<sup><a href="#src-6">[6]</a></sup>.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The mirror arrows all have the same length; real amplitudes also depend on distance and angle. The wavelength is drawn far larger than real light compared with the mirror so the turning can be seen. The glass layer uses the two-arrow rule and ignores multiple reflections inside the layer, and the colour swatch is an approximation from three wavelengths. The g-factor digits are quoted from the sources, except Schwinger's term, which is calculated.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>QED describes how light and matter interact via virtual photon exchange. Its predictions agree with experiment to 10 decimal places — the most precisely tested theory in all of science.</li>
+      <li>QED adds one amplitude arrow per possible path; the probability is the square of the final arrow's length.</li>
+      <li>A mirror reflects at equal angles because only there do neighbouring paths have nearly equal lengths and their arrows agree; a thin layer's two arrows explain its colours.</li>
+      <li>QED's prediction of the electron's magnetic moment matches the 2023 measurement to about 1 part in $10^{12}$.</li>
     </ul>
+    <p style="overflow-x:auto;">$$\frac{g-2}{2} = \frac{\alpha}{2\pi} + \dots \qquad P = \Bigl|\sum_{\text{paths}} e^{\,i\phi}\Bigr|^2$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">R. P. Feynman, "Space-Time Approach to Quantum Electrodynamics", <em>Physical Review</em> 76, 769 (1949).</li>
+      <li id="src-2">R. P. Feynman, <em>QED: The Strange Theory of Light and Matter</em>, Princeton University Press (1985). Four lectures for a general audience; the arrows, the mirror, the grating and the two-surface rule for glass.</li>
+      <li id="src-3">J. Schwinger, "On Quantum-Electrodynamics and the Magnetic Moment of the Electron", <em>Physical Review</em> 73, 416 (1948).</li>
+      <li id="src-4">P. Kusch and H. M. Foley, <em>Physical Review</em> 74, 250 (1948).</li>
+      <li id="src-5">T. Aoyama, T. Kinoshita and M. Nio, "Revised and improved value of the QED tenth-order electron anomalous magnetic moment", <em>Physical Review D</em> 97, 036001 (2018). Cited: $a_e(\text{theory}) = 1\,159\,652\,182.032(720) \times 10^{-12}$.</li>
+      <li id="src-6">X. Fan et al., <em>Physical Review Letters</em> 130, 071801 (2023); arXiv:2209.13084. Cited: $g/2 = 1.001\,159\,652\,180\,59(13)$ [0.13 ppt]; test to 1 part in $10^{12}$; limited by discrepant measurements of $\alpha$.</li>
+      <li id="src-7">NIST, CODATA 2022 recommended values of the fundamental physical constants. Cited: $\alpha^{-1} = 137.035\,999\,177$.</li>
+      <li id="src-8">Wikipedia, "Anomalous magnetic dipole moment" (accessed October 2026). Used for: Schwinger found the $\alpha/2\pi$ term in 1948.</li>
+      <li id="src-9">E. Hecht, <em>Optics</em>, 5th ed., ch. 4 (2017). Fresnel reflection at normal incidence.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>QED describes light-matter interaction. The Big Bang theory explains where everything came from — and the cosmic microwave background is its preserved echo.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>QED is the template for the rest of particle physics: the weak and strong forces were described the same way, as fields with their own carrier particles.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +176,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
