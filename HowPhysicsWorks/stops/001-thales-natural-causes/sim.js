@@ -294,7 +294,7 @@
     if (res) {
       if (revealed && isFinite(est)) {
         var err = est - H_PYR;
-        res.textContent = 'Original height: 146.6 m. Your estimate is ' + fmt(est, 1) + ' m, off by ' +
+        res.textContent = 'Original height (cited): 146.6 m. Your estimate is ' + fmt(est, 1) + ' m, off by ' +
           (err >= 0 ? '+' : '−') + fmt(Math.abs(err), 1) + ' m (' + (err >= 0 ? '+' : '−') +
           fmt(Math.abs(err) / H_PYR * 100, 1) + ' %).';
       } else {
