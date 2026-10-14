@@ -1,0 +1,80 @@
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889  /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'd95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1  /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo '30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a  /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5 ./H-H1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384  /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5 ./L-L1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ pids=
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ pids=' 11558'
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_docs_nohp cfg_GW150914_220221_peak_docs_nohp.json
++ pids=' 11558 11559'
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ pids=' 11558 11559 11560'
++ /usr/bin/time -v python ringdown_fit.py GW150914_220_dt3ms_nohp cfg_GW150914_220_dt3ms_nohp.json
++ rc=0
++ for p in $pids
++ wait 11558
++ /usr/bin/time -v python ringdown_fit.py GW250114_220_10p5M_nohp cfg_GW250114_220_10p5M_nohp.json
++ for p in $pids
++ wait 11559
++ for p in $pids
++ wait 11560
++ date -u +%s
++ grep -h '^DONE\|ACF source\|Error\|Traceback' GW150914_220221_peak_docs_nohp.log GW150914_220_dt3ms_nohp.log GW250114_220_10p5M_nohp.log
++ cut -c1-300
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+DONE GW150914_220221_peak_docs_nohp {"m_det_Msun_q05_q50_q95": [68.77685679836637, 82.0541750542112, 96.89896067308437], "chi_q05_q50_q95": [0.6050660816615804, 0.8243811536160575, 0.9360188082253874], "rhat_m": 1.0, "ess_bulk_m": 4026.0, "wall_s": 91.30865216255188}
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+DONE GW150914_220_dt3ms_nohp {"m_det_Msun_q05_q50_q95": [57.51010683116096, 75.8043198813588, 92.27987921382376], "chi_q05_q50_q95": [0.3766133572439122, 0.7860620379751495, 0.9253473841868903], "rhat_m": 1.0, "ess_bulk_m": 3083.0, "wall_s": 78.03709983825684}
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+DONE GW250114_220_10p5M_nohp {"m_det_Msun_q05_q50_q95": [65.83805261329984, 72.43194364953365, 78.59255716349448], "chi_q05_q50_q95": [0.6082016722311572, 0.7309918314430764, 0.8134536072830361], "rhat_m": 1.0, "ess_bulk_m": 5977.0, "wall_s": 77.45377111434937}
++ exit 0

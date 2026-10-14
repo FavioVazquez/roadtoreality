@@ -1,0 +1,76 @@
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889  /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'd95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1  /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo '30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a  /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5 ./H-H1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384  /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5 ./L-L1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ pids=
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ pids=' 11335'
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ /usr/bin/time -v XLA_FLAGS=--xla_force_host_platform_device_count=8 python ringdown_fit.py GW150914_220221_peak_docs_nohp cfg_GW150914_220221_peak_docs_nohp.json
++ pids=' 11335 11336'
++ for lab in GW150914_220221_peak_docs_nohp GW150914_220_dt3ms_nohp GW250114_220_10p5M_nohp
++ /usr/bin/time -v XLA_FLAGS=--xla_force_host_platform_device_count=8 python ringdown_fit.py GW150914_220_dt3ms_nohp cfg_GW150914_220_dt3ms_nohp.json
++ pids=' 11335 11336 11337'
++ rc=0
++ for p in $pids
++ wait 11335
++ /usr/bin/time -v XLA_FLAGS=--xla_force_host_platform_device_count=8 python ringdown_fit.py GW250114_220_10p5M_nohp cfg_GW250114_220_10p5M_nohp.json
++ rc=127
++ for p in $pids
++ wait 11336
++ rc=127
++ for p in $pids
++ wait 11337
++ rc=127
++ date -u +%s
++ grep -h '^DONE\|ACF source\|Error\|Traceback' GW150914_220221_peak_docs_nohp.log GW150914_220_dt3ms_nohp.log GW250114_220_10p5M_nohp.log
++ cut -c1-300

@@ -1,0 +1,101 @@
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889  /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'd95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1  /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo '30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a  /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5 ./H-H1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ echo 'b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384  /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5 ./L-L1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ pids=
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ pids=' 8943'
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ /usr/bin/time -v python ringdown_fit.py GW250114_220_10p5M_pePSD cfg_GW250114_220_10p5M_pePSD.json
++ pids=' 8943 8944'
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ /usr/bin/time -v python ringdown_fit.py GW250114_220_12M_pePSD cfg_GW250114_220_12M_pePSD.json
++ pids=' 8943 8944 8945'
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ /usr/bin/time -v python ringdown_fit.py GW250114_220_13M_pePSD cfg_GW250114_220_13M_pePSD.json
++ pids=' 8943 8944 8945 8946'
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ /usr/bin/time -v python ringdown_fit.py GW250114_220_10p5M_pePSDx100 cfg_GW250114_220_10p5M_pePSDx100.json
++ pids=' 8943 8944 8945 8946 8947'
++ for lab in GW250114_220_10p5M_pePSD GW250114_220_12M_pePSD GW250114_220_13M_pePSD GW250114_220_10p5M_pePSDx100 GW150914_220221_peak GW150914_220221_peak_docs
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak cfg_GW150914_220221_peak.json
++ pids=' 8943 8944 8945 8946 8947 8948'
++ rc=0
++ for p in $pids
++ wait 8943
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_docs cfg_GW150914_220221_peak_docs.json
++ for p in $pids
++ wait 8944
++ for p in $pids
++ wait 8945
++ for p in $pids
++ wait 8946
++ for p in $pids
++ wait 8947
++ for p in $pids
++ wait 8948
++ date -u +%s
++ cut -c1-300
++ grep -h '^DONE\|ACF source\|Error\|Traceback' GW150914_220221_peak.log GW150914_220221_peak_docs.log GW250114_220_10p5M_pePSD.log GW250114_220_10p5M_pePSDx100.log GW250114_220_12M_pePSD.log GW250114_220_13M_pePSD.log
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+DONE GW150914_220221_peak {"m_det_Msun_q05_q50_q95": [64.54795148466256, 79.09930483719673, 94.29763171325472], "chi_q05_q50_q95": [0.5079994874204748, 0.7957237890098232, 0.9227088135871115], "rhat_m": 1.0, "ess_bulk_m": 3827.0, "wall_s": 712.4598588943481}
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+DONE GW150914_220221_peak_docs {"m_det_Msun_q05_q50_q95": [69.53121840884762, 82.81322780183093, 97.87161589975646], "chi_q05_q50_q95": [0.6148507760120434, 0.8301040404707409, 0.9392677392373964], "rhat_m": 1.0, "ess_bulk_m": 3049.0, "wall_s": 684.1708183288574}
+ACF source: PSD files {"H1": "GW250114_H1_PE_psd_1024Hz_flat.txt", "L1": "GW250114_L1_PE_psd_1024Hz_flat.txt"} {'H1': (0.00048828125, 16384), 'L1': (0.00048828125, 16384)}
+DONE GW250114_220_10p5M_pePSD {"m_det_Msun_q05_q50_q95": [69.06061370698217, 75.21732297493051, 80.92898960006403], "chi_q05_q50_q95": [0.6687747753916958, 0.7676459859648475, 0.8355572246710248], "rhat_m": 1.0, "ess_bulk_m": 5914.0, "wall_s": 655.0833225250244}
+ACF source: PSD files {"H1": "GW250114_H1_PE_psd_1024Hz_x100.txt", "L1": "GW250114_L1_PE_psd_1024Hz_x100.txt"} {'H1': (0.00048828125, 16384), 'L1': (0.00048828125, 16384)}
+DONE GW250114_220_10p5M_pePSDx100 {"m_det_Msun_q05_q50_q95": [66.92765513952625, 73.40879777898607, 79.35375818242909], "chi_q05_q50_q95": [0.6282095980861242, 0.7438168070475191, 0.8197017987325179], "rhat_m": 1.0, "ess_bulk_m": 5340.0, "wall_s": 677.7837505340576}
+ACF source: PSD files {"H1": "GW250114_H1_PE_psd_1024Hz_flat.txt", "L1": "GW250114_L1_PE_psd_1024Hz_flat.txt"} {'H1': (0.00048828125, 16384), 'L1': (0.00048828125, 16384)}
+DONE GW250114_220_12M_pePSD {"m_det_Msun_q05_q50_q95": [68.97475235212625, 75.56831709119831, 81.50007313346404], "chi_q05_q50_q95": [0.6668240959064664, 0.7801429460899452, 0.8513161452543955], "rhat_m": 1.0, "ess_bulk_m": 6105.0, "wall_s": 668.4392364025116}
+ACF source: PSD files {"H1": "GW250114_H1_PE_psd_1024Hz_flat.txt", "L1": "GW250114_L1_PE_psd_1024Hz_flat.txt"} {'H1': (0.00048828125, 16384), 'L1': (0.00048828125, 16384)}
+DONE GW250114_220_13M_pePSD {"m_det_Msun_q05_q50_q95": [65.79225713004118, 73.53677143453476, 80.48101271112054], "chi_q05_q50_q95": [0.587841063460415, 0.7461379771180571, 0.8398480143681301], "rhat_m": 1.0, "ess_bulk_m": 5536.0, "wall_s": 676.8671007156372}
++ exit 0

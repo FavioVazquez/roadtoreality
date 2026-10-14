@@ -1,0 +1,5 @@
+bilby-NRSur7dq4_prod-reweighted                    n=19990 dA/A med=0.5808 90%=[0.5652,0.6176] min=0.5491 P>0=19990/19990
+bilby-NRSur7dq4_prod_nocal-reweighted              n=19989 dA/A med=0.5801 90%=[0.5659,0.6040] min=0.5543 P>0=19989/19989
+bilby-IMRPhenomXO4a_prod-reweighted                n=19989 dA/A med=0.5989 90%=[0.5703,0.6446] min=0.5528 P>0=19989/19989
+bilby-IMRPhenomXPHM-SpinTaylor_prod-reweighted     n=19989 dA/A med=0.5825 90%=[0.5634,0.6495] min=0.5506 P>0=19989/19989
+bilby-SEOBNRv5PHM-reweighted                       n=19988 dA/A med=0.5902 90%=[0.5682,0.6511] min=0.5540 P>0=19988/19988

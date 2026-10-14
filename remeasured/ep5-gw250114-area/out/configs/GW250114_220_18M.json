@@ -1,0 +1,23 @@
+{
+ "duration": 0.2,
+ "ds": 2,
+ "f_min": 20.0,
+ "slice": 128.0,
+ "m_min": 35.0,
+ "m_max": 150.0,
+ "a_scale_max": 5e-21,
+ "num_warmup": 1000,
+ "num_samples": 2000,
+ "num_chains": 4,
+ "seed": 1234,
+ "H1": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+ "L1": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+ "t0_geocenter": 1420878141.2419972,
+ "ra": 2.3332345218980706,
+ "dec": 0.19024356075903648,
+ "psi": 1.3289945095636537,
+ "start_offset_Mf": 18.0,
+ "Mf_ref_det_Msun": 68.40897469707073,
+ "t_peak_geocenter_ref": 1420878141.235932,
+ "provenance": "cited: reference peak time (geocent_time), ra, dec, psi, final_mass from the NRSur7dq4 max-likelihood sample data/analysis_settings_maxL_sample.txt in Zenodo 10.5281/zenodo.16877102 (GW250114 data release, arXiv:2509.08054); start offset 18.0 M_f: pre-declared start-time robustness scan (not tuned)"
+}

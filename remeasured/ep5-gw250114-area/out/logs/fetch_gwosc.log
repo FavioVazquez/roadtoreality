@@ -1,0 +1,6 @@
+('GW250114_082203', 'H1', 'H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5', 40961487)
+('GW250114_082203', 'L1', 'L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5', 40678340)
+('GW150914', 'H1', 'H-H1_LOSC_4_V1-1126256640-4096.hdf5', 130159479)
+('GW150914', 'L1', 'L-L1_LOSC_4_V1-1126256640-4096.hdf5', 120033701)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/scripts/fetch_gwosc.py:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  fh.write(f"# fetched {datetime.datetime.utcnow().isoformat()}Z from GWOSC (gwosc.org), license CC-BY-4.0; event GPS: {json.dumps(meta)}\n")

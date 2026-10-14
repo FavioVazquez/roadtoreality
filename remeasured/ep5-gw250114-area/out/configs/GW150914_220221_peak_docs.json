@@ -1,0 +1,40 @@
+{
+ "duration": 0.2,
+ "ds": 2,
+ "f_min": 20.0,
+ "slice": 128.0,
+ "m_min": 50.0,
+ "m_max": 150.0,
+ "a_scale_max": 1e-21,
+ "num_warmup": 1000,
+ "num_samples": 2000,
+ "num_chains": 4,
+ "seed": 1234,
+ "H1": "H-H1_LOSC_4_V1-1126256640-4096.hdf5",
+ "L1": "L-L1_LOSC_4_V1-1126256640-4096.hdf5",
+ "t0_geocenter": 1126259462.4083147,
+ "ra": 1.95,
+ "dec": -1.27,
+ "psi": 0.82,
+ "provenance": "cited: geocenter peak 1126259462.4083147, ra/dec/psi 1.95/-1.27/0.82 and 220+221 at the peak from Isi et al. 2019 (arXiv:1905.00869); other settings = this project's protocol (same as the 220 runs); priors as in the ringdown package documentation example (ringdown.readthedocs.io), cited",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ],
+  [
+   1,
+   -2,
+   2,
+   2,
+   1
+  ]
+ ],
+ "variation": "220+221 at peak, ringdown-docs example priors (a_scale_max=1e-21, M 50-150, cosi=-1)",
+ "model_kws": {
+  "cosi": -1
+ }
+}

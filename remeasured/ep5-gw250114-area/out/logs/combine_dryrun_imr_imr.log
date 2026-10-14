@@ -1,0 +1,2 @@
+     label  start_Mf  frac_med  frac_q05  frac_q95  P_Af_gt_Ai  P_se_boot  sigma_equiv_one_sided  saturated  gauss_sigma
+IMRremnant       0.0    0.5819    0.5281    0.6542         1.0        0.0                    inf       True      20.6116

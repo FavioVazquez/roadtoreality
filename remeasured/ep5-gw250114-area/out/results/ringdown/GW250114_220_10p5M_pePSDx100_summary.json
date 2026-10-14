@@ -1,0 +1,88 @@
+{
+ "label": "GW250114_220_10p5M_pePSDx100",
+ "config": {
+  "duration": 0.2,
+  "ds": 2,
+  "f_min": 20.0,
+  "slice": 128.0,
+  "m_min": 35.0,
+  "m_max": 150.0,
+  "a_scale_max": 5e-21,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "H1": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+  "L1": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+  "t0_geocenter": 1420878141.23947,
+  "ra": 2.3332345218980706,
+  "dec": 0.19024356075903648,
+  "psi": 1.3289945095636537,
+  "start_offset_Mf": 10.5,
+  "Mf_ref_det_Msun": 68.40897469707073,
+  "t_peak_geocenter_ref": 1420878141.235932,
+  "provenance": "cited: reference peak time (geocent_time), ra, dec, psi, final_mass from the NRSur7dq4 max-likelihood sample data/analysis_settings_maxL_sample.txt in Zenodo 10.5281/zenodo.16877102 (GW250114 data release, arXiv:2509.08054); start offset 10.5 M_f: 10.5 M_f is the reference 220-only start time t_ref_220 in scripts/define_area_and_ringdown_macros.py of that release; ACF from PE PSD in posterior_samples_NRSur7dq4.h5 (psds), f<20 Hz set to 100 x PSD(20 Hz) \u2014 single change vs baseline",
+  "psd_files": {
+   "H1": "GW250114_H1_PE_psd_1024Hz_x100.txt",
+   "L1": "GW250114_L1_PE_psd_1024Hz_x100.txt"
+  },
+  "variation": "pePSD_x100"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+   "sha256": "db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889"
+  },
+  "L1": {
+   "file": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+   "sha256": "d95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1"
+  },
+  "H1_psd": {
+   "file": "GW250114_H1_PE_psd_1024Hz_x100.txt",
+   "sha256": "8ba3609394826037a900128cc9cc9eec0011077ac84313e67d9cede981606de5"
+  },
+  "L1_psd": {
+   "file": "GW250114_L1_PE_psd_1024Hz_x100.txt",
+   "sha256": "1b4c07802766bf7815a66351bdfa28fd8fe6cf8bb93556109dd28a87e9019d86"
+  }
+ },
+ "acf_source": "PSD files {\"H1\": \"GW250114_H1_PE_psd_1024Hz_x100.txt\", \"L1\": \"GW250114_L1_PE_psd_1024Hz_x100.txt\"}",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  66.92765513952625,
+  73.40879777898607,
+  79.35375818242909
+ ],
+ "chi_q05_q50_q95": [
+  0.6282095980861242,
+  0.7438168070475191,
+  0.8197017987325179
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 5340.0,
+ "ess_bulk_chi": 5277.0,
+ "start_times": {
+  "H1": 1420878141.2225497,
+  "L1": 1420878141.2200544
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 677.7837505340576,
+ "script_sha256": "a27aab14c87d29e6df3fd7df1a417e373841e0394b8c6c64992589a8fd93e71d"
+}

@@ -1,0 +1,289 @@
++ mkdir -p /home/dev/remeasured/ep5
++ cd /home/dev/remeasured/ep5
++ date -u +%s
++ python3 -m venv /home/dev/remeasured/venv-ringdown
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ pip install -q --upgrade pip
++ pip install -q ringdown
++ tail -5
++ pip install -q gwpy h5py
++ tail -3
++ python -
+/home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/arviz/__init__.py:50: FutureWarning: 
+ArviZ is undergoing a major refactor to improve flexibility and extensibility while maintaining a user-friendly interface.
+Some upcoming changes may be backward incompatible.
+For details and migration guidance, visit: https://python.arviz.org/en/latest/user_guide/migration_guide.html
+  warn(
+ringdown 1.1.0 jax 0.6.0 numpyro 0.19.0 arviz 0.23.4 numpy 2.2.6
+[CpuDevice(id=0)]
+(self, modes=None, strain_scale='auto', imr_result=None, **kws)
+---- load_data (self, path: str | None = None, ifos: list[str] | None = None, channel: dict[str] | None = None, frametype: dict[str] | None = None, slide: dict[float] | None = None, **kws)
+Load data from disk.
+
+        Additional arguments are passed to :meth:`ringdown.data.Data.load`.
+
+        If a `seglen` argument is provided (e.g., to fetch data from  GWOSC),
+        the segment will be assumed to be centered on a GPS time `t0`, which
+        (if not provided) defaults to the target time :attr:`Fit.t0` (if `t0`
+        is not provided and no target was set, an error will be raised).
+
+        Arguments
+        ---------
+        path : dict, str
+            dictionary of data paths indexed by interferometer keys, or path
+            string replacement pattern, e.g.,
+            ``'path/to/{i}-{ifo}_GWOSC_16KHZ_R1-1126259447-32.hdf5'`` where `i`
+            and `ifo` will be respectively replaced by the first letter and key
+            for each detector listed in `ifos` (e.g., `H` and `H1` for LIGO
+            Hanford).
+
+        ifos : list
+            list of detector keys (e.g., ``['H1', 'L1']``), not required if
+            `path_input` is a dictionary.
+
+        channel : dict, str
+            dictionary of channel names indexed by interferometer keys, or
+            channel name string replacement pattern, e.g.,
+            ``'{ifo}:GWOSC-16KHZ_R1_STRAIN'`` where `i` and `ifo` will be
+            respectively replaced by the first letter and key for each detector
+            listed in `ifos` (e.g., `H` and `H1` for LIGO Hanford).  Only used
+            when `kind = 'frame'`.
+
+        frametype : dict, str
+            dictionary of frame types indexed by in
+---- condition_data (self, preserve_acfs: bool = False, silent: bool = False, **kwargs)
+Condition data for all detectors by calling
+        :meth:`ringdown.data.Data.condition`. Docstring for that function
+        below.
+
+        The `preserve_acfs` argument determines whether to preserve original
+        ACFs in fit after conditioning (default False).
+
+        The `silent` argument determines whether to suppress warnings.
+
+        Condition data.
+
+        Arguments
+        ---------
+        t0 : float
+            target time to be preserved after downsampling.
+        ds : int
+            decimation factor for downsampling.
+        f_min : float
+            lower frequency for high passing.
+        f_max : float
+            higher frequency for low passing.
+        trim : float
+            fraction of data to trim from edges after conditioning, to avoid
+            spectral issues if filtering (default 0.25).
+        digital_filter : bool
+            apply digital antialiasing filter by discarding Fourier components
+            higher than Nyquist; otherwise, filter through
+            :func:`scipy.signal.decimate`.(default True).
+        remove_mean : bool
+            explicitly remove mean from time series after conditioning (default
+            True).
+        decimate_kws : dict
+            options for decimation function.
+        slice_left : float
+            number of seconds before t0 to slice the strain data, e.g. to avoid
+            NaNs
+        slice_right : float
+            number of seconds after t0 to slice the strain data, e.g. to avoid
+        
+---- set_target (self, t0: float | dict | None = None, ra: float | None = None, dec: float | None = None, psi: float | None = None, duration: float | None = None, reference_ifo: str | None = None, antenna_patterns: dict | None = None, target: ringdown.target.Target | None = None, force: bool = False)
+Establish truncation target, stored to `self.target`.
+
+        Provide a targeted analysis start time `t0` to serve as beginning of
+        truncated analysis segment; this will be compared against timestamps in
+        `fit.data` objects so that the closest sample to `t0` is preserved
+        after conditioning and taken as the first sample of the analysis
+        segment.
+
+        .. important::
+          If the model accepts multiple detectors, `t0` is assumed to be
+          defined at geocenter; truncation time at individual detectors will
+          be determined based on specified sky location.
+
+        The source sky location and orientation can be specified by the `ra`,
+        `dec`, and `psi` arguments. These are use to both determine the
+        truncation time at different detectors, as well as to compute the
+        corresponding antenna patterns. Specifying a sky location is only
+        required if the model can handle data from multiple detectors.
+
+        The argument `duration` specifies the length of the analysis segment in
+        the unit of time used to index the data (e.g., s). Based on the
+        sampling rate, this argument is used to compute the number of samples
+        to be included in the segment, beginning from the first sample
+        identified from `t0`.
+
+        Alternatively, the `n_analyze` argument can be specified directly. If
+        neither `duration` nor `n_analyze` are provided, the duration will be
+        set based on the shortest
+---- set_tone_sequence (self, nmode, p=1, s=-2, l=2, m=2)
+Set template modes to be a sequence of overtones with a given
+        angular structure.
+
+        To set an arbitrary set of modes, use :meth:`Fit.set_modes`
+
+        Arguments
+        ---------
+        nmode : int
+          number of tones (`nmode=1` includes only fundamental mode).
+        p : int
+          prograde (`p=1`) vs retrograde (`p=-1`) flag.
+        s : int
+          spin-weight.
+        l : int
+          azimuthal quantum number.
+        m : int
+          magnetic quantum number.
+        
+---- update_model (self, **kws)
+Set or modify prior options or other model settings.  For example,
+        ``fit.update_model(a_scale_max=1e-21)`` sets the `a_scale_max`
+        parameter to `1e-21`.
+
+        Valid arguments for the selected model can be found in
+        :attr:`Fit.valid_model_settings`.
+        
+---- update_prior (self, *args, **kwargs)
+
+---- run (self, prior: bool = False, predictive: bool = True, store_h_det: bool = False, store_h_det_mode: bool = True, store_residuals: bool = False, rescale_strain: bool = True, suppress_warnings: bool = True, min_ess: int | None = None, prng: jaxlib.xla_extension.ArrayImpl | int | None = None, validation_enabled: bool = False, **kwargs)
+Fit model.
+
+        Additional keyword arguments not listed below are passed to the sampler
+        with the following defaults when sampling:
+
+        {'dense_mass': True, 'num_warmup': 1000, 'num_samples': 1000, 'num_chains': 4}
+
+        See docs for :func:`numpyro.infer.NUTS` and :func:`numpyro.infer.MCMC`
+        to see all available options.
+
+        Arguments
+        ---------
+        prior : bool
+            whether to sample the prior (def. `False`).
+
+        predictive : bool
+            draw secondary quantities from the posterior predictive after
+            runtime (def. `True`).
+
+        store_h_det : bool
+            store detector templates in result (def. `False`).
+
+        store_h_det_mode : bool
+            store individual-mode templates in result (def. `True`).
+
+        store_residuals : bool
+            compute whitened residuals point-wise (def. `False`).
+
+        rescale_strain : bool
+            rescale strain-like quantites by `strain_scale`, if strain was
+            rescaled before running, as could be the case when using float32
+            (def. `True`).
+
+        suppress_warnings : bool
+            suppress some sampler warnings (def. `True`).
+
+        min_ess: number
+            if given, keep re-running the sampling with longer chains until the
+            minimum effective sample size exceeds `min_ess` (def. `None`).
+
+        validation_enabled: bool
+            if True, run with numpyro.validation_enabled() to get verbose error
+            me
+---- from_config (config_input: str | configparser.ConfigParser, no_cond: bool = False, result: str | None = None)
+Creates a :class:`Fit` instance from a configuration file.
+
+        Has the ability to load and condition data, as well as to inject a
+        simulated signal and to compute or load ACFs. Does not run the fit
+        automatically.
+
+        Can initialize a fit from an IMR result, if the 'imr' section contains
+        a path to an IMR result file and the 'initialize_fit' option is set to
+        True.
+
+        Arguments
+        ---------
+        config_input : str, configparser.ConfigParser
+            path to config file on disk, or preloaded
+            :class:`configparser.ConfigParser`
+        no_cond : bool
+            option to ignore conditioning
+
+        Returns
+        -------
+        fit : Fit
+            Ringdown :class:`Fit` object.
+        
+---- add_data (self, data, time=None, ifo=None, acf=None)
+Add data to fit.
+
+        Arguments
+        ---------
+        data : array,Data
+            time series to be added.
+        time : array
+            array of time stamps (only required if `data` is not
+            :class:`ringdown.data.Data`).
+        ifo : str
+            interferometer key (optional).
+        acf : array,AutoCovariance
+            autocovariance series corresponding to these data (optional).
+        
+---- compute_acfs (self, shared=False, ifos=None, **kws)
+Compute ACFs for all data sets in `Fit.data`.
+
+        Arguments
+        ---------
+        shared : bool
+            specifies if all IFOs are to share a single ACF, in which case the
+            ACF is only computed once from the data of the first IFO (useful
+            for simulated data) (default False)
+
+        ifos : list
+            specific set of IFOs for which to compute ACF, otherwise computes
+            it for all
+
+        extra kwargs are passed to ACF constructor
+        
++ pip freeze
++ cp pip_freeze_ringdown.txt /home/dev/scratch/.claude-science/jobs/0e00d6a0-2827-4cf3-a304-bd66fb37972d/
++ cd /home/dev/scratch/.claude-science/jobs/0e00d6a0-2827-4cf3-a304-bd66fb37972d
++ cp /home/dev/remeasured/ep5/pip_freeze_ringdown.txt .
++ ls -lh
+total 40K
+drwxrwxr-x 2 dev dev 4.0K Oct 14 03:03 _lock
+-rw-rw-r-- 1 dev dev   12 Oct 14 03:03 _pgid
+-rw-rw-r-- 1 dev dev   52 Oct 14 03:03 _status.json
+-rw-rw-r-- 1 dev dev  135 Oct 14 03:03 _submitted
+-rw-rw-r-- 1 dev dev 1.2K Oct 14 03:03 cmd.sh
+-rw-rw-r-- 1 dev dev 1.4K Oct 14 03:03 job.sh
+-rw-rw-r-- 1 dev dev  12K Oct 14 03:04 nohup.out
+-rw-rw-r-- 1 dev dev 1.5K Oct 14 03:04 pip_freeze_ringdown.txt
++ date -u
+Wed Oct 14 03:04:04 UTC 2026

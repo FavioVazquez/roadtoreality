@@ -1,0 +1,88 @@
+{
+ "label": "GW250114_220_12M_pePSD",
+ "config": {
+  "duration": 0.2,
+  "ds": 2,
+  "f_min": 20.0,
+  "slice": 128.0,
+  "m_min": 35.0,
+  "m_max": 150.0,
+  "a_scale_max": 5e-21,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "H1": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+  "L1": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+  "t0_geocenter": 1420878141.2399755,
+  "ra": 2.3332345218980706,
+  "dec": 0.19024356075903648,
+  "psi": 1.3289945095636537,
+  "start_offset_Mf": 12.0,
+  "Mf_ref_det_Msun": 68.40897469707073,
+  "t_peak_geocenter_ref": 1420878141.235932,
+  "provenance": "cited: reference peak time (geocent_time), ra, dec, psi, final_mass from the NRSur7dq4 max-likelihood sample data/analysis_settings_maxL_sample.txt in Zenodo 10.5281/zenodo.16877102 (GW250114 data release, arXiv:2509.08054); start offset 12.0 M_f: pre-declared start-time robustness scan (not tuned); ACF from PE PSD in posterior_samples_NRSur7dq4.h5 (psds), f<20 Hz set to PSD(20 Hz) \u2014 single change vs baseline",
+  "psd_files": {
+   "H1": "GW250114_H1_PE_psd_1024Hz_flat.txt",
+   "L1": "GW250114_L1_PE_psd_1024Hz_flat.txt"
+  },
+  "variation": "pePSD"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+   "sha256": "db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889"
+  },
+  "L1": {
+   "file": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5",
+   "sha256": "d95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1"
+  },
+  "H1_psd": {
+   "file": "GW250114_H1_PE_psd_1024Hz_flat.txt",
+   "sha256": "6e9d39ddff37dbc17097acfb7d113b1efc536610313963b5ca687850c813f1c3"
+  },
+  "L1_psd": {
+   "file": "GW250114_L1_PE_psd_1024Hz_flat.txt",
+   "sha256": "47d4a9fd5e7ef921ab0967aac883fc65afaca88fd1d30d4f5a244dd4166bb07e"
+  }
+ },
+ "acf_source": "PSD files {\"H1\": \"GW250114_H1_PE_psd_1024Hz_flat.txt\", \"L1\": \"GW250114_L1_PE_psd_1024Hz_flat.txt\"}",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  68.97475235212625,
+  75.56831709119831,
+  81.50007313346404
+ ],
+ "chi_q05_q50_q95": [
+  0.6668240959064664,
+  0.7801429460899452,
+  0.8513161452543955
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 6105.0,
+ "ess_bulk_chi": 6133.0,
+ "start_times": {
+  "H1": 1420878141.2230551,
+  "L1": 1420878141.2205598
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 668.4392364025116,
+ "script_sha256": "a27aab14c87d29e6df3fd7df1a417e373841e0394b8c6c64992589a8fd93e71d"
+}

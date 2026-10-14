@@ -1,0 +1,73 @@
+{
+ "label": "GW150914_220_dt3ms_nohp",
+ "config": {
+  "duration": 0.2,
+  "ds": 2,
+  "f_min": null,
+  "slice": 128.0,
+  "m_min": 35.0,
+  "m_max": 150.0,
+  "a_scale_max": 5e-21,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "H1": "H-H1_LOSC_4_V1-1126256640-4096.hdf5",
+  "L1": "L-L1_LOSC_4_V1-1126256640-4096.hdf5",
+  "t0_geocenter": 1126259462.4113147,
+  "ra": 1.95,
+  "dec": -1.27,
+  "psi": 0.82,
+  "provenance": "cited: geocenter peak time 1126259462.4083147 and ra/dec/psi=1.95/-1.27/0.82 from Isi et al. 2019 (arXiv:1905.00869) as used in the ringdown package GW150914 example; start offset +3 ms for fundamental-only fit from Isi et al. 2019 and Isi et al. 2021 (arXiv:2012.04486); hypothesis test: f_min",
+  "variation": "no high-pass (f_min=None)"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_LOSC_4_V1-1126256640-4096.hdf5",
+   "sha256": "30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a"
+  },
+  "L1": {
+   "file": "L-L1_LOSC_4_V1-1126256640-4096.hdf5",
+   "sha256": "b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384"
+  }
+ },
+ "acf_source": "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  57.51010683116096,
+  75.8043198813588,
+  92.27987921382376
+ ],
+ "chi_q05_q50_q95": [
+  0.3766133572439122,
+  0.7860620379751495,
+  0.9253473841868903
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 3083.0,
+ "ess_bulk_chi": 2682.0,
+ "start_times": {
+  "H1": 1126259462.426,
+  "L1": 1126259462.4190156
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 78.03709983825684,
+ "script_sha256": "a27aab14c87d29e6df3fd7df1a417e373841e0394b8c6c64992589a8fd93e71d"
+}

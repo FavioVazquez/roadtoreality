@@ -1,0 +1,18 @@
+== ws_job_e7f0ae82 03:47:19-03:59:14 wall 715s
+GW150914_220221_peak user=7113.74 sys=2.27 wall=11:54.94
+GW150914_220221_peak_docs user=3197.34 sys=1.70 wall=11:26.78
+GW250114_220_10p5M_pePSD user=2882.28 sys=1.55 wall=10:57.57
+GW250114_220_10p5M_pePSDx100 user=3063.57 sys=1.41 wall=11:20.46
+GW250114_220_12M_pePSD user=2969.53 sys=1.39 wall=11:10.99
+GW250114_220_13M_pePSD user=3010.85 sys=1.59 wall=11:19.45
+== ws_job_0200c18a 04:06:26-04:08:00 wall 94s
+GW150914_220221_peak_docs_nohp user=836.23 sys=2.10 wall=1:33.69
+GW150914_220_dt3ms_nohp user=722.42 sys=1.97 wall=1:20.39
+GW250114_220_10p5M_nohp user=734.84 sys=1.94 wall=1:19.81
+== ws_job_fa544ba8 04:12:14-04:15:13 wall 179s
+GW250114_220_12M_nohp user=761.22 sys=2.04 wall=1:25.49
+GW250114_220_13M_nohp user=765.49 sys=1.98 wall=1:25.39
+GW250114_220_15M_nohp user=768.24 sys=1.94 wall=1:26.10
+GW250114_220_18M_nohp user=736.36 sys=1.83 wall=1:21.65
+GW250114_220_20M_nohp user=897.00 sys=1.95 wall=1:32.74
+GW250114_220_8M_nohp user=761.14 sys=1.97 wall=1:22.53

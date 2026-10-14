@@ -1,0 +1,14 @@
+== ws_job_36b618f9 start 03:08:18 end 03:10:24
+GW150914_220_dt3ms user=723.65 sys=1.80 wall=1:20.10
+GW250114_220_10p5M user=774.53 sys=1.86 wall=1:24.84
+GW250114_220_15M user=912.18 sys=1.79 wall=1:45.83
+== ws_job_2b41cd2c start 03:16:27 end 03:23:56
+GW250114_220_10p5M_acf64s user=832.49 sys=2.30 wall=1:36.51
+GW250114_220_10p5M_ds1_4096Hz user=1646.99 sys=2.49 wall=2:48.42
+GW250114_220_10p5M_dur0p1s user=54.17 sys=1.37 wall=0:33.36
+GW250114_220_10p5M_seed99 user=824.82 sys=2.25 wall=1:33.12
+GW250114_220_12M user=1709.99 sys=1.79 wall=4:35.87
+GW250114_220_13M user=1703.79 sys=1.85 wall=4:35.94
+GW250114_220_18M user=1733.04 sys=1.89 wall=4:38.02
+GW250114_220_20M user=1803.92 sys=1.97 wall=4:40.82
+GW250114_220_8M user=1739.56 sys=1.89 wall=4:37.99

@@ -1,0 +1,2 @@
+label,start_Mf,variation,n_ringdown,n_premerger,Ai_med_m2,Af_med_m2,frac_med,frac_q05,frac_q95,P_Af_gt_Ai,P_se_boot,sigma_equiv_one_sided,saturated,gauss_sigma
+IMRremnant,0.0,baseline,19990,19990,278801918972.0558,440937244275.25226,0.5819134307799938,0.5280708452730875,0.6541811307588348,1.0,0.0,inf,True,20.611557222055524

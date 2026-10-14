@@ -1,0 +1,8 @@
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ grep GGW250114_220_15M_nohp GW250114_220_18M_nohp GW250114_220_20M_nohp50114
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
+grep: GW250114_220_18M_nohp: No such file or directory
+grep: GW250114_220_20M_nohp50114: No such file or directory

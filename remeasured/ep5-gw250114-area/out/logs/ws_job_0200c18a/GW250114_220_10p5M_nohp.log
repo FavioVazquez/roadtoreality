@@ -1,0 +1,176 @@
+GW250114_220_10p5M_nohp {"H1": {"file": "H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5", "sha256": "db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889"}, "L1": {"file": "L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5", "sha256": "d95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1"}}
+ACF source: data (Fit.compute_acfs, default Welch-type estimate on conditioned data) {'H1': (0.00048828125, 8192), 'L1': (0.00048828125, 8192)}
+valid model settings: ['a_scale_max', 'marginalized', 'm_min', 'm_max', 'chi_min', 'chi_max', 'cosi_min', 'cosi_max', 'cosi', 'df_min', 'df_max', 'dg_min', 'dg_max', 'f_min', 'f_max', 'g_min', 'g_max', 'flat_amplitude_prior', 'mode_ordering', 'single_polarization', 'amplitude_cutoff_fraction']
+model settings: {'m_min': 35.0, 'm_max': 150.0, 'a_scale_max': 5e-21}
+target: SkyTarget(geocenter_time=LIGOTimeGPS(1420878141, 239470005), ra=2.3332345218980706, dec=0.19024356075903648, psi=1.3289945095636537, duration=0.2)
+start times per ifo: {'H1': 1420878141.2225497, 'L1': 1420878141.2200544}
+n_analyze: 410 fsamp: 2048.0
+  0%|          | 0/3000 [00:00<?, ?it/s]Compiling.. :   0%|          | 0/3000 [00:00<?, ?it/s]
+  0%|          | 0/3000 [00:00<?, ?it/s][A
+Compiling.. :   0%|          | 0/3000 [00:00<?, ?it/s][A
+
+  0%|          | 0/3000 [00:00<?, ?it/s][A[A
+
+Compiling.. :   0%|          | 0/3000 [00:00<?, ?it/s][A[A
+
+
+  0%|          | 0/3000 [00:00<?, ?it/s][A[A[A
+
+
+Compiling.. :   0%|          | 0/3000 [00:00<?, ?it/s][A[A[ARunning chain 0:   0%|          | 0/3000 [00:01<?, ?it/s]
+Running chain 1:   0%|          | 0/3000 [00:01<?, ?it/s][A
+
+Running chain 2:   0%|          | 0/3000 [00:01<?, ?it/s][A[A
+
+
+Running chain 3:   0%|          | 0/3000 [00:01<?, ?it/s][A[A[A
+
+
+Running chain 3:   5%|▌         | 150/3000 [00:09<02:21, 20.07it/s][A[A[A
+
+Running chain 2:   5%|▌         | 150/3000 [00:10<02:34, 18.40it/s][A[A
+Running chain 1:   5%|▌         | 150/3000 [00:10<02:50, 16.69it/s][ARunning chain 0:   5%|▌         | 150/3000 [00:11<03:05, 15.34it/s]
+
+
+Running chain 3:  10%|█         | 300/3000 [00:12<01:25, 31.43it/s][A[A[A
+
+Running chain 2:  10%|█         | 300/3000 [00:13<01:32, 29.13it/s][A[A
+Running chain 1:  10%|█         | 300/3000 [00:14<01:46, 25.32it/s][ARunning chain 0:  10%|█         | 300/3000 [00:14<01:45, 25.66it/s]
+
+
+Running chain 3:  15%|█▌        | 450/3000 [00:14<01:04, 39.82it/s][A[A[A
+
+Running chain 2:  15%|█▌        | 450/3000 [00:14<01:01, 41.44it/s][A[A
+Running chain 1:  15%|█▌        | 450/3000 [00:16<01:10, 35.99it/s][A
+
+Running chain 2:  20%|██        | 600/3000 [00:16<00:46, 51.12it/s][A[A
+
+
+Running chain 3:  20%|██        | 600/3000 [00:17<00:50, 47.41it/s][A[A[ARunning chain 0:  15%|█▌        | 450/3000 [00:17<01:12, 35.28it/s]
+
+Running chain 2:  25%|██▌       | 750/3000 [00:18<00:37, 60.06it/s][A[A
+
+
+Running chain 3:  25%|██▌       | 750/3000 [00:18<00:39, 57.13it/s][A[A[A
+Running chain 1:  20%|██        | 600/3000 [00:19<00:57, 41.77it/s][A
+
+Running chain 2:  30%|███       | 900/3000 [00:20<00:32, 64.97it/s][A[A
+
+
+Running chain 3:  30%|███       | 900/3000 [00:20<00:33, 62.64it/s][A[A[ARunning chain 0:  20%|██        | 600/3000 [00:20<01:03, 37.62it/s]
+Running chain 1:  25%|██▌       | 750/3000 [00:21<00:44, 50.43it/s][A
+
+Running chain 2:  35%|███▌      | 1050/3000 [00:22<00:30, 64.92it/s][A[A
+
+
+Running chain 3:  35%|███▌      | 1050/3000 [00:23<00:31, 62.89it/s][A[A[A
+Running chain 1:  30%|███       | 900/3000 [00:23<00:35, 58.67it/s][ARunning chain 0:  25%|██▌       | 750/3000 [00:23<00:53, 42.16it/s]Running chain 0:  30%|███       | 900/3000 [00:25<00:40, 52.39it/s]
+
+Running chain 2:  40%|████      | 1200/3000 [00:25<00:27, 64.42it/s][A[A
+Running chain 1:  35%|███▌      | 1050/3000 [00:25<00:31, 62.00it/s][A
+
+
+Running chain 3:  40%|████      | 1200/3000 [00:26<00:30, 58.81it/s][A[A[A
+Running chain 1:  40%|████      | 1200/3000 [00:27<00:27, 66.65it/s][A
+
+Running chain 2:  45%|████▌     | 1350/3000 [00:27<00:25, 65.99it/s][A[ARunning chain 0:  35%|███▌      | 1050/3000 [00:27<00:35, 55.45it/s]
+
+
+Running chain 3:  45%|████▌     | 1350/3000 [00:28<00:26, 62.96it/s][A[A[A
+Running chain 1:  45%|████▌     | 1350/3000 [00:28<00:23, 71.30it/s][ARunning chain 0:  40%|████      | 1200/3000 [00:29<00:31, 57.79it/s]
+
+Running chain 2:  50%|█████     | 1500/3000 [00:29<00:23, 64.17it/s][A[A
+
+
+Running chain 3:  50%|█████     | 1500/3000 [00:30<00:24, 60.83it/s][A[A[A
+Running chain 1:  50%|█████     | 1500/3000 [00:31<00:21, 68.74it/s][A
+
+Running chain 2:  55%|█████▌    | 1650/3000 [00:32<00:21, 62.65it/s][A[A
+Running chain 1:  55%|█████▌    | 1650/3000 [00:32<00:17, 77.63it/s][A
+
+
+Running chain 3:  55%|█████▌    | 1650/3000 [00:32<00:21, 63.51it/s][A[A[ARunning chain 0:  45%|████▌     | 1350/3000 [00:33<00:31, 51.89it/s]
+Running chain 1:  60%|██████    | 1800/3000 [00:34<00:15, 76.75it/s][A
+
+Running chain 2:  60%|██████    | 1800/3000 [00:34<00:19, 61.02it/s][A[A
+
+
+Running chain 3:  60%|██████    | 1800/3000 [00:35<00:20, 59.22it/s][A[A[ARunning chain 0:  50%|█████     | 1500/3000 [00:36<00:28, 52.61it/s]
+Running chain 1:  65%|██████▌   | 1950/3000 [00:36<00:13, 76.87it/s][A
+
+Running chain 2:  65%|██████▌   | 1950/3000 [00:38<00:18, 55.80it/s][A[ARunning chain 0:  55%|█████▌    | 1650/3000 [00:38<00:23, 56.58it/s]
+
+
+Running chain 3:  65%|██████▌   | 1950/3000 [00:38<00:18, 57.68it/s][A[A[A
+Running chain 1:  70%|███████   | 2100/3000 [00:38<00:11, 77.19it/s][A
+Running chain 1:  75%|███████▌  | 2250/3000 [00:40<00:09, 82.72it/s][ARunning chain 0:  60%|██████    | 1800/3000 [00:40<00:19, 62.85it/s]
+
+Running chain 2:  70%|███████   | 2100/3000 [00:40<00:15, 59.41it/s][A[A
+
+
+Running chain 3:  70%|███████   | 2100/3000 [00:41<00:16, 54.84it/s][A[A[A
+Running chain 1:  80%|████████  | 2400/3000 [00:41<00:07, 83.87it/s][ARunning chain 0:  65%|██████▌   | 1950/3000 [00:42<00:15, 66.22it/s]
+
+Running chain 2:  75%|███████▌  | 2250/3000 [00:42<00:11, 63.85it/s][A[A
+Running chain 1:  85%|████████▌ | 2550/3000 [00:43<00:05, 83.11it/s][A
+
+
+Running chain 3:  75%|███████▌  | 2250/3000 [00:43<00:12, 58.53it/s][A[A[A
+Running chain 1:  90%|█████████ | 2700/3000 [00:45<00:03, 88.52it/s][A
+
+Running chain 2:  80%|████████  | 2400/3000 [00:45<00:10, 59.86it/s][A[ARunning chain 0:  70%|███████   | 2100/3000 [00:45<00:15, 57.59it/s]
+
+
+Running chain 3:  80%|████████  | 2400/3000 [00:45<00:09, 62.47it/s][A[A[A
+Running chain 1:  95%|█████████▌| 2850/3000 [00:46<00:01, 89.33it/s][A
+
+Running chain 2:  85%|████████▌ | 2550/3000 [00:47<00:07, 63.60it/s][A[A
+
+
+Running chain 3:  85%|████████▌ | 2550/3000 [00:47<00:07, 64.18it/s][A[A[ARunning chain 0:  75%|███████▌  | 2250/3000 [00:48<00:13, 56.30it/s]
+
+
+Running chain 3:  90%|█████████ | 2700/3000 [00:50<00:04, 66.53it/s][A[A[A
+
+Running chain 2:  90%|█████████ | 2700/3000 [00:50<00:05, 59.83it/s][A[A
+Running chain 1: 100%|██████████| 3000/3000 [00:50<00:00, 67.42it/s][ARunning chain 1: 100%|██████████| 3000/3000 [00:50<00:00, 59.71it/s]
+Running chain 0:  80%|████████  | 2400/3000 [00:50<00:10, 57.40it/s]
+
+Running chain 2:  95%|█████████▌| 2850/3000 [00:51<00:02, 65.22it/s][A[ARunning chain 0:  85%|████████▌ | 2550/3000 [00:52<00:06, 65.29it/s]
+
+
+Running chain 3:  95%|█████████▌| 2850/3000 [00:52<00:02, 65.16it/s][A[A[A
+
+Running chain 2: 100%|██████████| 3000/3000 [00:53<00:00, 75.18it/s][A[ARunning chain 2: 100%|██████████| 3000/3000 [00:53<00:00, 56.46it/s]
+Running chain 0:  90%|█████████ | 2700/3000 [00:53<00:03, 76.14it/s]
+
+
+Running chain 3: 100%|██████████| 3000/3000 [00:53<00:00, 75.43it/s][A[A[ARunning chain 3: 100%|██████████| 3000/3000 [00:53<00:00, 55.89it/s]
+Running chain 0:  95%|█████████▌| 2850/3000 [00:54<00:01, 90.52it/s]Running chain 0: 100%|██████████| 3000/3000 [00:55<00:00, 105.20it/s]Running chain 0: 100%|██████████| 3000/3000 [00:55<00:00, 54.16it/s] 
+       mean     sd  hdi_3%  hdi_97%  mcse_mean  mcse_sd  ess_bulk  ess_tail  r_hat
+m    72.331  3.869  65.184   79.778      0.050    0.046    5977.0    4379.0    1.0
+chi   0.723  0.064   0.605    0.834      0.001    0.001    5936.0    4272.0    1.0
+DONE GW250114_220_10p5M_nohp {"m_det_Msun_q05_q50_q95": [65.83805261329984, 72.43194364953365, 78.59255716349448], "chi_q05_q50_q95": [0.6082016722311572, 0.7309918314430764, 0.8134536072830361], "rhat_m": 1.0, "ess_bulk_m": 5977.0, "wall_s": 77.45377111434937}
+	Command being timed: "python ringdown_fit.py GW250114_220_10p5M_nohp cfg_GW250114_220_10p5M_nohp.json"
+	User time (seconds): 734.84
+	System time (seconds): 1.94
+	Percent of CPU this job got: 923%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:19.81
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1535400
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 227719
+	Voluntary context switches: 162995
+	Involuntary context switches: 78987
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 105376
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

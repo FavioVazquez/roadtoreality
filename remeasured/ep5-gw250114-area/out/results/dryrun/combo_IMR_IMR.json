@@ -1,0 +1,41 @@
+{
+ "premerger": {
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/dryrun/premerger_IMR_detector.npz",
+  "sha256": "b189e26c177582513d9bd1d5fddff0c48232e9607fee197049fe9574e54adf96",
+  "frame": "detector",
+  "cols": [
+   "m1",
+   "m2",
+   "chi1",
+   "chi2"
+  ],
+  "n": 19990
+ },
+ "ringdown": {
+  "IMRremnant": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/dryrun/IMRremnant_posterior.npz",
+   "sha256": "63df75568cd248a570eea4f8a607d8f67c9629488f9bedffa723b7460b466674"
+  }
+ },
+ "args": {
+  "premerger": "results/dryrun/premerger_IMR_detector.npz",
+  "format": "auto",
+  "hdf5_path": null,
+  "frame": "detector",
+  "cols": "m1,m2,chi1,chi2",
+  "ringdown_glob": "results/dryrun/IMRremnant_posterior.npz",
+  "variation": "baseline",
+  "out_prefix": "results/dryrun/combo_IMR_IMR",
+  "npairs": 1000000,
+  "seed": 1,
+  "label": "DRY RUN: IMR x IMR"
+ },
+ "constants": {
+  "G": 6.6743e-11,
+  "c": 299792458.0,
+  "M_sun_kg": 1.98840987e+30
+ },
+ "script_sha256": "35ad224f60f4854258d51100328cec805409ef1bd9ea39c444e4b833bc1fd858",
+ "run_utc": "2026-10-14T03:49:07.554232+00:00",
+ "runtime_s": 0.0844571590423584
+}

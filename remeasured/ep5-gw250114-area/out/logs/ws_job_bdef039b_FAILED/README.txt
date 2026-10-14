@@ -1,0 +1,1 @@
+Failed submit (exit 2): placeholder 'W2' in the job-script template also matched inside 'GW250114', corrupting the grep and wave lines; no fits ran. Resubmitted as job fa544ba8 with unambiguous placeholders.

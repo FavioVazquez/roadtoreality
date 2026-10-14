@@ -38,3 +38,8 @@ remeasured/**/*.hdf5
 remeasured/**/*.gwf
 remeasured/**/*.h5
 remeasured/**/scans/
+
+# Road re-measured: large run products stay local (checksums in out/CHECKSUMS_outputs.tsv)
+remeasured/**/*.nc
+remeasured/**/*_posterior.npz
+remeasured/**/partA_area_samples.npz

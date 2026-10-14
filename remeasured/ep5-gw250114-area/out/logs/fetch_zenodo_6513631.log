@@ -1,0 +1,6 @@
+downloading IGWN-GWTC2p1-v2-GW150914_095045_PEDataRelease_mixed_cosmo.h5
+curl: (18) transfer closed with 84190346 bytes remaining to read
+curl: (18) transfer closed with 46618838 bytes remaining to read
+IGWN-GWTC2p1-v2-GW150914_095045_PEDataRelease_mixed_cosmo.h5 md5 ok
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/scripts/fetch_zenodo.py:32: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  fh.write(f"# fetched {datetime.datetime.utcnow().isoformat()}Z from zenodo record {REC} doi:10.5281/zenodo.{REC} license {meta['metadata'].get('license',{}).get('id')}\n")

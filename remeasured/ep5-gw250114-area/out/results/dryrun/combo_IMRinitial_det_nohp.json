@@ -1,0 +1,65 @@
+{
+ "premerger": {
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/dryrun/premerger_IMR_detector.npz",
+  "sha256": "b189e26c177582513d9bd1d5fddff0c48232e9607fee197049fe9574e54adf96",
+  "frame": "detector",
+  "cols": [
+   "m1",
+   "m2",
+   "chi1",
+   "chi2"
+  ],
+  "n": 19990
+ },
+ "ringdown": {
+  "GW250114_220_10p5M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_nohp_posterior.npz",
+   "sha256": "7996bac78c0f11047a9e67452b212beff1ee05e1f3a65c4da8afceed3b159e30"
+  },
+  "GW250114_220_12M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_12M_nohp_posterior.npz",
+   "sha256": "ca20dc0c68b8269ff33366a8c4e708b1ef6e65c378c004d9cc38da29028c9d11"
+  },
+  "GW250114_220_13M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_13M_nohp_posterior.npz",
+   "sha256": "d17ae2e4e6b117cc4c76e4101011c18cbe63ebb3fcc34b43c148a4e39cd3eccf"
+  },
+  "GW250114_220_15M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_15M_nohp_posterior.npz",
+   "sha256": "42dd84f4d16ff4a09463a48cc8011562c4cce3615d699cea0f603127b82bfe39"
+  },
+  "GW250114_220_18M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_18M_nohp_posterior.npz",
+   "sha256": "23d649d0509d933b1815bb84fc07a3ed2ec17e316ee3fef54dccc868cf9086ae"
+  },
+  "GW250114_220_20M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_20M_nohp_posterior.npz",
+   "sha256": "a6ac09e4b0ea188db6c00238cf976c84c706ce39e01a71ae344af73907f126de"
+  },
+  "GW250114_220_8M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_8M_nohp_posterior.npz",
+   "sha256": "2f20e195fdf126eb37650039a38fba670687c2e6078c3183f9b8ed67b32e6d12"
+  }
+ },
+ "args": {
+  "premerger": "results/dryrun/premerger_IMR_detector.npz",
+  "format": "auto",
+  "hdf5_path": null,
+  "frame": "detector",
+  "cols": "m1,m2,chi1,chi2",
+  "ringdown_glob": "results/ringdown/GW250114_220_*M_nohp_posterior.npz",
+  "variation": "no high-pass (f_min=None)",
+  "out_prefix": "results/dryrun/combo_IMRinitial_det_nohp",
+  "npairs": 1000000,
+  "seed": 1,
+  "label": "DRY RUN: IMR A_i x ringdown A_f (no high-pass)"
+ },
+ "constants": {
+  "G": 6.6743e-11,
+  "c": 299792458.0,
+  "M_sun_kg": 1.98840987e+30
+ },
+ "script_sha256": "35ad224f60f4854258d51100328cec805409ef1bd9ea39c444e4b833bc1fd858",
+ "run_utc": "2026-10-14T04:17:02.350426+00:00",
+ "runtime_s": 0.5911238193511963
+}

@@ -1,0 +1,20 @@
+{
+ "inputs": {
+  "posterior_samples_NRSur7dq4.h5": "55b4a47c2c71580e9ef0cd1ff9fa9d32e64813657e9ea31f32e24cda53922d62",
+  "posterior_samples_NRSur7dq4_no_calibration.h5": "ce3a459f034e47d2a6d32287f168f831c29695d24793425ded028c8af89fd6ac",
+  "posterior_samples_PhenomXO4a.h5": "dc35655ff0cecc932b9c95e7e675bc9a43a31e2ac5dbb57f07b6a59f0efa92e7",
+  "posterior_samples_PhenomXPHM.h5": "cb1b40416360587b12e52cd2a0e99bf9b9c38917db8f0fece08a0d47c8f04585",
+  "posterior_samples_SEOBNRv5PHM.h5": "c7da6eb05f255bf7af3c4c03b3bce1af9d755e6b7e955f6c9d438f086b3ec125"
+ },
+ "python": "3.12.15 (main, Oct 13 2026, 17:19:37) [Clang 21.1.8 ]",
+ "numpy": "2.3.5",
+ "h5py": "3.16.0",
+ "constants": {
+  "G": 6.6743e-11,
+  "c": 299792458.0,
+  "M_sun_kg": 1.98840987e+30
+ },
+ "runtime_s": 3.7115440368652344,
+ "script_sha256": "d240d549e80bc36e1ed37c8d62c4ca7f21c47af396be2e7d8905df578bb82265",
+ "platform": "macOS-15.0.1-x86_64-i386-64bit"
+}
