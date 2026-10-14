@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The Higgs field permeates all of space. Particles that interact with it gain mass. The boson that proves the field's existence was detected at the LHC in 2012.">
+  <meta name="description" content="Flip the sign of the Higgs potential&#x27;s quadratic term and watch a ball roll off the symmetric top; then fill a diphoton mass histogram event by event until a 125 GeV bump stands 5σ above the background. Plus why the Higgs is not where most of a proton&#x27;s mass comes from.">
   <meta property="og:title" content="The Higgs Boson — How Physics Works">
-  <meta property="og:description" content="The Higgs field permeates all of space. Particles that interact with it gain mass. The boson that proves the field's existence was detected at the LHC in 2012.">
+  <meta property="og:description" content="Flip the sign of the Higgs potential&#x27;s quadratic term and watch a ball roll off the symmetric top; then fill a diphoton mass histogram event by event until a 125 GeV bump stands 5σ above the background. Plus why the Higgs is not where most of a proton&#x27;s mass comes from.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/044-higgs-boson/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -52,52 +52,113 @@
   <header class="stop-header">
     <div class="stop-header__era">Contemporary Physics · Predicted 1964, found 2012</div>
     <h1 class="stop-header__title">The Higgs Boson</h1>
-    <p class="stop-header__subtitle">The particle that gives others mass</p>
+    <p class="stop-header__subtitle">The field behind the masses of elementary particles</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">Predicted 1964, found 2012</span>
       <span>·</span>
-      <span class="stop-header__scientist">Higgs, Brout & Englert</span>
+      <span class="stop-header__scientist">Higgs, Brout &amp; Englert</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>The Higgs field permeates all of space. Particles that interact with it gain mass. The boson that proves the field's existence was detected at the LHC in 2012.</p>
+    <p>
+      In 1964 three papers showed how a force-carrying particle can have mass without a mass term being put into the equations by hand, which would spoil their symmetry: one by François Englert and Robert Brout, one by Peter Higgs, and one by Gerald Guralnik, Carl Hagen and Tom Kibble<sup><a href="#src-1">[1]</a>–<a href="#src-3">[3]</a></sup>. In 1967 Steven Weinberg used the idea to build the electroweak theory<sup><a href="#src-4">[4]</a></sup>. It predicts one new particle, the Higgs boson. In 2012 the ATLAS and CMS experiments at CERN's Large Hadron Collider both reported it<sup><a href="#src-6">[6]</a>,<a href="#src-7">[7]</a></sup>. The 2024 Review of Particle Physics gives its mass as 125.20 ± 0.11 GeV<sup><a href="#src-8">[8]</a></sup>.
+    </p>
+    <p>
+      The simulation has two views: the shape of the Higgs potential, and a histogram like the ones in which the particle was found.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Higgs Boson — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: the Higgs potential with a rolling ball and the fermion couplings, and a diphoton mass histogram that fills event by event">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-pot" type="button" aria-pressed="true">Higgs potential</button>
+        <button class="sim-btn" id="mode-hist" type="button" aria-pressed="false">Diphoton histogram</button>
+      </div>
+      <div id="pot-controls" style="display:contents">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="mu2-slider">
+            Quadratic term μ²
+            <span class="sim-control__value" style="text-transform:none" id="mu2-val">−0.80</span>
+          </label>
+          <input type="range" id="mu2-slider" min="-1" max="1" step="0.05" value="-0.8" aria-label="Coefficient mu squared of the quadratic term in the Higgs potential, in model units" aria-valuetext="-0.80, broken symmetry">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="ball-top" type="button">Put the ball back on top</button>
+        </div>
+      </div>
+      <div id="hist-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="rate-slider">
+            Events per second
+            <span class="sim-control__value" style="text-transform:none" id="rate-val">1000 /s</span>
+          </label>
+          <input type="range" id="rate-slider" min="200" max="4000" step="100" value="1000" aria-label="How many simulated diphoton events are added per second" aria-valuetext="1000 events per second">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="bg-only" type="button" aria-pressed="false">Background only</button>
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Press play: the ball rolls off the symmetric top.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Visualize the Higgs field as a Mexican hat potential and observe symmetry breaking</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how particles acquire mass by interacting with the Higgs field</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore how the LHC detected the Higgs boson in 2012</li>
-    </ul>
+    <h3>A Potential Shaped Like a Hat</h3>
+    <p>The Higgs field $\phi$ has a potential energy that depends on its size. In the electroweak theory it is<sup><a href="#src-5">[5]</a></sup>
+    </p>
+    <p style="overflow-x:auto;">$$V(\phi) = \mu^2\,|\phi|^2 + \lambda\,|\phi|^4 .$$</p>
+    <p>If $\mu^2$ is positive the lowest point is $\phi = 0$ and nothing is broken. If $\mu^2$ is negative, $\phi = 0$ becomes a hilltop ($\lambda$ is positive, so the potential still rises far from the centre) and the lowest points form a ring around it: the shape of a Mexican hat. (The same potential is often written $-\mu^2|\phi|^2 + \lambda|\phi|^4$ with $\mu^2$ positive.) Every point on the ring is equally low, so the potential is symmetric, but the field has to settle at one of them. That is spontaneous symmetry breaking: the laws keep the symmetry, the state does not.</p>
+    <p>Move the slider below zero and press play. The ball leaves the top, rolls down and settles somewhere on the ring. The hat turns slowly to show that no direction is special. In nature the field's value at the bottom is $v = 246.22$ GeV<sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>Mass in Proportion to the Coupling</h3>
+    <p>Because the field is not zero in empty space, particles that couple to it carry an energy even at rest, which is a mass. The W and Z get their masses this way. Each quark and charged lepton gets its mass from its own coupling to the field, and the Higgs boson's coupling to a fermion of mass $m_f$ is $g\,m_f/2M_W = m_f/v$: proportional to the mass<sup><a href="#src-5">[5]</a></sup>. The bars in the simulation show this for six fermions with the 2024 masses<sup><a href="#src-8">[8]</a></sup>. The top quark's coupling is 0.70, the electron's about 2 × 10<sup>−6</sup>. The theory does not predict the couplings themselves; they are measured.</p>
+    <h3>Not the Source of Most Mass</h3>
+    <p>"The Higgs gives mass to everything" is wrong. It gives mass to the elementary particles. A proton is made of two up quarks and a down quark whose masses add to about 9 MeV<sup><a href="#src-8">[8]</a></sup>, while the proton's mass-energy is 938.272 MeV<sup><a href="#src-10">[10]</a></sup>. A lattice calculation of the strong interaction finds that about 33 % of the proton's mass is the energy of its moving quarks, 37 % the energy of the gluon field and 23 % a quantum effect called the trace anomaly; only about 9 % comes from the quark masses<sup><a href="#src-9">[9]</a></sup>. Most of the mass of protons and neutrons, and so of atoms and of you, is the binding energy of the strong interaction, not the Higgs.</p>
+    <h3>Finding a Bump</h3>
+    <p>A Higgs boson lives far too briefly to be seen directly. One way to find it is to collect collisions that produce two photons and compute the invariant mass of the pair. Most such pairs come from other processes and give a smooth, falling background. A Higgs boson decaying to two photons always gives the same mass, so the signal is a small bump on top.</p>
+    <p>Switch to the histogram and press play. Events arrive one at a time. Early on the bump is invisible among random fluctuations; with more data it grows in proportion to the number of events, while the fluctuations grow only as the square root. With background $B$ expected in a window and $N$ events observed, the excess in units of the fluctuation size is roughly</p>
+    <p style="overflow-x:auto;">$$Z \approx \frac{N - B}{\sqrt{B}} .$$</p>
+    <p>A claim of discovery needs $Z \geq 5$: a chance of about 3 in 10 million that background alone would fluctuate that high or higher. Try "Background only": the histogram still has bumps, but they come and go. The simulation's numbers are chosen so that the expected excess reaches 5σ at the end of the run; each run is random, and the final value scatters by about one σ around 5: roughly half of all runs end below the 5σ line, and one run in ten ends below 3.7σ. That is why real analyses quote an expected significance as well as the observed one.</p>
+    <h3>What ATLAS and CMS Saw</h3>
+    <p>ATLAS used about 4.8 fb<sup>−1</sup> of collisions at 7 TeV recorded in 2011 and 5.8 fb<sup>−1</sup> at 8 TeV recorded in 2012, and combined searches including the two-photon, four-lepton and WW channels. It found a neutral boson with a mass of 126.0 ± 0.4 (stat) ± 0.4 (sys) GeV and a significance of 5.9σ, a background fluctuation probability of 1.7 × 10<sup>−9</sup><sup><a href="#src-6">[6]</a></sup>. CMS used up to 5.1 fb<sup>−1</sup> at 7 TeV and 5.3 fb<sup>−1</sup> at 8 TeV in five decay modes and saw an excess near 125 GeV with a local significance of 5.0σ, where 5.8σ was expected for a Standard Model Higgs boson<sup><a href="#src-7">[7]</a></sup>. Both needed the data of both years.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The potential is in model units with $\lambda = 1$, and the ball's friction is a display choice. The histogram is not the 2012 data: the background is a falling exponential, the peak is a Gaussian centred at 125.20 GeV with a standard deviation of 1.6 GeV (<code>SIG</code> in sim.js), the number of events is arbitrary, and the expected background is taken as known. Real analyses fit the background and combine many categories. The significance shown is local: it is for one window chosen in advance.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>The Higgs field permeates all of space. Particles that interact strongly with it gain more mass. The Higgs boson — the quantum excitation of this field — was detected at the LHC in 2012.</li>
+      <li>When $\mu^2 < 0$ the Higgs potential has a ring of minima; the field settles on it at $v = 246.22$ GeV, breaking the electroweak symmetry.</li>
+      <li>The W, Z, quarks and charged leptons get their masses from the field, and the Higgs boson couples to each fermion in proportion to its mass.</li>
+      <li>Most of a proton's mass is strong-interaction energy, not Higgs mass.</li>
+      <li>ATLAS and CMS found the boson in 2011–2012 data; the 2024 world average of its mass is 125.20 ± 0.11 GeV.</li>
     </ul>
+    <p style="overflow-x:auto;">$$V = \mu^2|\phi|^2 + \lambda|\phi|^4,\quad \mu^2 < 0 \qquad Z \approx \frac{N-B}{\sqrt{B}}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">F. Englert and R. Brout, "Broken Symmetry and the Mass of Gauge Vector Mesons", <em>Physical Review Letters</em> 13, 321 (1964).</li>
+      <li id="src-2">P. W. Higgs, "Broken Symmetries and the Masses of Gauge Bosons", <em>Physical Review Letters</em> 13, 508 (1964).</li>
+      <li id="src-3">G. S. Guralnik, C. R. Hagen and T. W. B. Kibble, "Global Conservation Laws and Massless Particles", <em>Physical Review Letters</em> 13, 585 (1964).</li>
+      <li id="src-4">S. Weinberg, "A Model of Leptons", <em>Physical Review Letters</em> 19, 1264 (1967).</li>
+      <li id="src-5">J. Erler and A. Freitas, "Electroweak Model and Constraints on New Physics", ch. 10 of the Review of Particle Physics, ref. 8 (revised April 2024). Cited: the potential (written there as $\mu^2\phi^\dagger\phi + \lambda^2(\phi^\dagger\phi)^2$) and the condition $\mu^2 &lt; 0$; $v = 246.22$ GeV; Higgs–fermion coupling $g\,m_i/2M_W$.</li>
+      <li id="src-6">ATLAS Collaboration, "Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC", <em>Physics Letters B</em> 716, 1 (2012); arXiv:1207.7214. Cited: data sets, channels, mass, 5.9σ, 1.7 × 10<sup>−9</sup>.</li>
+      <li id="src-7">CMS Collaboration, "Observation of a new boson at a mass of 125 GeV with the CMS experiment at the LHC", <em>Physics Letters B</em> 716, 30 (2012); arXiv:1207.7235. Cited: data sets, five decay modes, 5.0σ local, 5.8σ expected.</li>
+      <li id="src-8">Particle Data Group, S. Navas et al., "Review of Particle Physics", <em>Physical Review D</em> 110, 030001 (2024), Summary Tables (pdg.lbl.gov). Cited: $m_H = 125.20 \pm 0.11$ GeV; fermion masses.</li>
+      <li id="src-9">Y.-B. Yang et al., "Proton Mass Decomposition from the QCD Energy Momentum Tensor", <em>Physical Review Letters</em> 121, 212001 (2018); arXiv:1808.08677.</li>
+      <li id="src-10">NIST, CODATA 2022 recommended values (physics.nist.gov). Cited: proton mass energy equivalent 938.272 089 43(29) MeV.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>The Higgs field gives mass. Black holes are the most extreme prediction of general relativity — regions where spacetime curvature becomes infinite.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>The Higgs boson completed the Standard Model's list of particles. Next: black holes, where the other theory of the twentieth century, general relativity, is tested at its extreme.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +184,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
