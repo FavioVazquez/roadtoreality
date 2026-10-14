@@ -97,8 +97,8 @@
     arrowLine(cx, cy, x1, cy, 'oklch(0.78 0.14 200)', 2);
     arrowLine(x1, cy, ex, ey, 'oklch(0.78 0.16 40)', 2);
     arrowLine(cx, cy, ex, ey, COL.hi, 2.6);
-    txt('front surface', cx - 10, cy + 20, 'oklch(0.78 0.14 200)', 11, 'right');
-    txt('back surface', Math.max(40, Math.min(W - 40, ex)), ey - 8, 'oklch(0.78 0.16 40)', 11, 'center');
+    txt('front surface', 16, cy + 52, 'oklch(0.78 0.14 200)', 11);
+    txt('back surface', 110, cy + 52, 'oklch(0.78 0.16 40)', 11);
     txt('at 550 nm: R = ' + (reflect(550, d) * 100).toFixed(1) + ' %', 16, cy + 70, COL.text, 12);
     var gx = narrow ? 30 : W * 0.42, gy = narrow ? 270 : 50, gw = narrow ? W - 46 : W - gx - 20, gh = narrow ? 150 : 220;
     ctx.strokeStyle = COL.faint; ctx.strokeRect(gx + 0.5, gy + 0.5, gw, gh);
@@ -135,7 +135,7 @@
       if (row[2]) txt(row[2], xs + 8, yy, COL.muted, narrow ? 10 : 12);
     }
     if (nShow === 4) {
-      var fn = narrow ? ['Green: digits that agree with the measurement.', 'They agree to about 1 part in 10¹²; the theory needs α,', 'whose measured values disagree at that level.'] : ['Green: digits that agree with the measurement. They agree to about 1 part in 10¹²; the theory needs α, whose measured values disagree at that level.'];
+      var fn = W < 900 ? ['Green: digits that agree with the measurement.', 'They agree to about 1 part in 10¹²; the theory needs α,', 'whose measured values disagree at that level.'] : ['Green: digits that agree with the measurement. They agree to about 1 part in 10¹²; the theory needs α, whose measured values disagree at that level.'];
       fn.forEach(function (ln, i) { txt(ln, x0, H - 24 - (fn.length - 1 - i) * 14, COL.muted, narrow ? 10 : 11); });
     }
   }
