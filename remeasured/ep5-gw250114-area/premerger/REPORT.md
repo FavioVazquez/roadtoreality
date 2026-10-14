@@ -78,6 +78,36 @@ This section and the results above were committed and pushed before anything und
 - `samples/GW150914_premerger_posterior.csv.gz` (committed, 5142 samples): sha256 `93666cccc7d31d6956ce906e17920f2fd30f98ffc60bca071bc0e48fdd1e7dac`
 - Run: converged at dlogz < 0.1 after 6 h 31 min on 8 cores, exit status 0; ln Z = −1392.30, ln BF = 877.92 (`results/GW250114_082203_run_meta.json`).
 
+## Comparison with lane 1 (after freeze)
+Written after the freeze commit 497bcd8 was pushed. Lane 1 is the build-box run of the same config (`premerger-box/`, npool 32, 2 h 10 min, 4772 samples).
+- **Files opened:**
+  - everything in `premerger-box/`;
+  - the `premerger/lane1_XPHM_fmax131` block of `out/results/area_task4.json`;
+  - lines 229–230 of `out/STATUS.md`, which identify that block as the `premerger-box` result (sha256 b45ccfdf…3151).
+- No remnant or area-change number from `out/` is used or quoted here.
+- **Not available:** the lane-1 `_result.json` is not committed; only its checksum is. The committed lane-1 numbers are medians of mass_1, mass_2, a_1, a_2 and the 5/50/95% quantiles of A_i. So lane-1 90% intervals for the masses and spins, and any lane-1 redshift value, cannot be given here. With the result JSON (sha256 b45ccfdf…) the table can be completed in a few minutes.
+- **Lane-1 areas:** computed by lane 1 with the same Kerr formula and constants, and converted here from m² to km². I did not recompute them, because the lane-1 samples are not committed.
+
+| quantity (detector frame unless stated) | this lane (8 cores), median [5%, 95%] | lane 1 (`premerger-box`, 32 cores) |
+|---|---|---|
+| mass_1 [M☉] | 43.22 [37.09, 53.56] | 42.78 (median only) |
+| mass_2 [M☉] | 30.33 [24.42, 35.62] | 30.45 (median only) |
+| a_1 | 0.160 [0.018, 0.526] | 0.207 (median only) |
+| a_2 | 0.280 [0.034, 0.782] | 0.268 (median only) |
+| redshift | 0.109 [0.079, 0.127] | not committed |
+| **A_i, detector frame [10⁴ km²]** | **30.24 [26.15, 37.30]** | **29.92 [25.40, 36.80]** |
+| A_i, source frame [10⁴ km²] (for information) | 24.76 [21.47, 30.25] | 24.55 [20.87, 29.83] |
+| posterior samples | 5046 | 4772 |
+| ln Z | −1392.30 ± 0.15 | −1392.10 ± 0.18 |
+| ln BF (signal vs noise) | 877.92 | 878.12 |
+| likelihood calls | 33.5 M | 33.8 M |
+
+- **Detector-frame A_i agrees.** The medians differ by 0.32×10⁴ km² (1.1%), about 3% of either 90% width (11.2 and 11.4 ×10⁴ km²). The 5% and 95% bounds differ by 0.5–0.8 ×10⁴ km².
+- **Masses agree.** The lane-1 medians of mass_1 and mass_2 lie within 0.5 M☉ of ours, well inside our 90% intervals.
+- **Spins agree within sampling noise.** a_1 differs by 0.05 at the median, against a 90% width of 0.51; a_2 differs by 0.01.
+- **ln Z agrees.** The two values differ by 0.2, about 0.9 combined standard errors.
+- The two runs used different random streams: `--seed` is ignored, and the pool sizes differ. They agree to within the scatter expected between independent dynesty runs at nlive 1000.
+
 ## GW150914 calibration: comparison with published masses (cited)
 
 | quantity | this lane (pre-merger, 20–132 Hz) | cited: GWTC-1 full signal (P1800370) |
