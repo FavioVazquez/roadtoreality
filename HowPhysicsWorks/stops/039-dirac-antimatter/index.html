@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dirac's equation predicted that electrons must have mirror-image partners with opposite charge. The positron was discovered four years later.">
+  <meta name="description" content="Dirac&#x27;s 1928 electron equation led him in 1931 to predict the anti-electron, and Anderson found its track in 1932. Annihilate a pair, make one from a photon, and read a cloud-chamber track.">
   <meta property="og:title" content="Dirac and Antimatter — How Physics Works">
-  <meta property="og:description" content="Dirac's equation predicted that electrons must have mirror-image partners with opposite charge. The positron was discovered four years later.">
+  <meta property="og:description" content="Dirac&#x27;s 1928 electron equation led him in 1931 to predict the anti-electron, and Anderson found its track in 1932. Annihilate a pair, make one from a photon, and read a cloud-chamber track.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/039-dirac-antimatter/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -60,44 +60,97 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Dirac's equation predicted that electrons must have mirror-image partners with opposite charge. The positron was discovered four years later.</p>
+    <p>
+      In 1928 Paul Dirac wrote an equation for the electron that obeys special relativity<sup><a href="#src-1">[1]</a></sup>. It had solutions with negative energy that would not go away. In 1931 he proposed that they point to a new particle, an "anti-electron" with the electron's mass and the opposite charge<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>. In 1932 Carl Anderson reported such particles in cosmic rays<sup><a href="#src-3">[3]</a></sup>.
+    </p>
+    <p>
+      The simulation does the energy bookkeeping for matter meeting antimatter, then shows how a single curved track gave the positron away.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Dirac and Antimatter — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: electron–positron annihilation, pair production near a nucleus, and reading a positron track in a cloud chamber">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-annihilate" type="button" aria-pressed="true">Annihilation</button>
+        <button class="sim-btn" id="mode-pair" type="button" aria-pressed="false">Pair production</button>
+        <button class="sim-btn" id="mode-chamber" type="button" aria-pressed="false">Cloud chamber</button>
+      </div>
+      <div id="pair-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="egamma-slider">
+            Photon energy
+            <span class="sim-control__value" style="text-transform:none" id="egamma-val">2.00 MeV</span>
+          </label>
+          <input type="range" id="egamma-slider" min="0.5" max="5" step="0.05" value="2" aria-label="Photon energy in megaelectronvolts" aria-valuetext="2.00 megaelectronvolts">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="nucleus-toggle" type="button" aria-pressed="true">Nucleus nearby: yes</button>
+        </div>
+      </div>
+      <div id="chamber-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="p-slider">
+            Momentum below the plate
+            <span class="sim-control__value" style="text-transform:none" id="p-val">60 MeV/c</span>
+          </label>
+          <input type="range" id="p-slider" min="20" max="150" step="5" value="60" aria-label="Momentum of the particle before the lead plate in MeV per c" aria-valuetext="60 MeV per c">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="charge-toggle" type="button" aria-pressed="false">Charge: positive</button>
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span id="sim-status">Press play: an electron and a positron meet.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch electron-positron pair creation from high-energy photons</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe pair annihilation producing two gamma rays</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore the Dirac sea picture and why antimatter was predicted before discovery</li>
-    </ul>
+    <h3>A Relativistic Equation for the Electron</h3>
+    <p>Schrödinger's equation treats time and space differently, so it cannot be right for fast particles. Dirac looked for an equation that is first order in both, and found one that works only if the wavefunction has four components<sup><a href="#src-1">[1]</a></sup>. The electron's spin, which Pauli had added by hand, appears on its own<sup><a href="#src-7">[7]</a></sup>.</p>
+    <p>The price was a set of solutions with negative energy. An electron in such a state would have energy below $-m_ec^2$, and nothing in the equation stopped an ordinary electron from falling into one.</p>
+    <h3>The Anti-electron</h3>
+    <p>In 1931, persuaded by arguments from Robert Oppenheimer and Hermann Weyl, Dirac predicted a particle not yet seen: an "anti-electron" with the same mass as the electron and the opposite charge, which would annihilate when it met an electron<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>Energy Bookkeeping</h3>
+    <p>When an electron and a positron at rest annihilate, their rest energy, $2m_ec^2$, becomes light. Total momentum is zero before, so it must be zero after: one photon cannot do that, but two photons going in opposite directions can, each carrying $m_ec^2 = 510.999$ keV<sup><a href="#src-6">[6]</a></sup><sup><a href="#src-7">[7]</a></sup>.</p>
+    <p>The reverse also happens. A photon with at least $2m_ec^2 \approx 1.022$ MeV can turn into an electron and a positron, but only near a nucleus. A photon of energy $E$ carries momentum $E/c$, while a pair with the same total energy can carry at most $\sqrt{E^2 - (2m_ec^2)^2}/c$. Something else has to take up the difference, and a nearby nucleus does, with almost no energy of its own. The <em>Pair production</em> view computes that missing momentum.</p>
+    <h3>Reading the Track</h3>
+    <p>Anderson was studying cosmic rays with a cloud chamber inside a magnet<sup><a href="#src-5">[5]</a></sup>. A charged particle leaves a trail of droplets, and the field bends the trail into a circle of radius</p>
+    <p style="overflow-x:auto;">$$r = \frac{p}{|q|\,B}$$</p>
+    <p>A track bending one way could be a positive particle going up or a negative one coming down. To tell which, the chamber had a lead plate across the middle, 6 mm thick<sup><a href="#src-5">[5]</a></sup>. A particle loses momentum crossing the plate, so its track curls more tightly on the far side. That fixes the direction of travel, and then the sense of the bend fixes the sign of the charge. How tightly it curled, together with how densely it ionised the gas, showed the mass was far below a proton's. In his 1933 paper Anderson reported 15 tracks of positive particles among 1300 cosmic-ray photographs and concluded that their mass was less than twenty times the electron's<sup><a href="#src-4">[4]</a></sup>.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The photon and particle energies come from $E = mc^2$ and momentum conservation, with the CODATA electron mass. In the pair view the kinetic energy is drawn split equally between the two particles, which is a display choice; real pairs share it unequally. In the cloud chamber the field (1.5 T), the 30 cm chamber and the 40 % of the momentum kept after the plate are illustrative, not Anderson's values. The radii follow from $r = p/(|q|B)$.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>The Dirac equation predicted that every particle has an antiparticle — same mass, opposite charge. When a particle meets its antiparticle, they annihilate into photons. Antimatter is real and produced in labs.</li>
+      <li>Dirac's 1928 equation had negative-energy solutions; in 1931 he read them as an anti-electron of the same mass and opposite charge.</li>
+      <li>Annihilation at rest gives two back-to-back photons of 511 keV; a photon needs at least 1.022 MeV and a nearby nucleus to make a pair.</li>
+      <li>A curved track that loses momentum in a plate gives direction, charge and a mass limit: Anderson's evidence for the positron (1932–33).</li>
     </ul>
+    <p style="overflow-x:auto;">$$e^- + e^+ \to \gamma + \gamma, \qquad E_\gamma \ge 2m_ec^2 = 1.022\ \text{MeV}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">P. A. M. Dirac, "The Quantum Theory of the Electron", <em>Proceedings of the Royal Society A</em> 117, 610–624 (1928).</li>
+      <li id="src-2">P. A. M. Dirac, "Quantised Singularities in the Quantum Field", <em>Proceedings of the Royal Society A</em> 133, 60–72 (1931).</li>
+      <li id="src-3">C. D. Anderson, "The Apparent Existence of Easily Deflectable Positives", <em>Science</em> 76, 238 (1932).</li>
+      <li id="src-4">C. D. Anderson, "The Positive Electron", <em>Physical Review</em> 43, 491–494 (1933). Cited: 15 positive tracks in 1300 cosmic-ray photographs; mass less than 20 electron masses.</li>
+      <li id="src-5">Wikipedia, "Positron" and "Carl David Anderson" (accessed October 2026). Used for: the Oppenheimer and Weyl arguments, the 6 mm lead plate, the magnetic cloud chamber, the 1932 announcement.</li>
+      <li id="src-6">NIST, CODATA 2022 recommended values of the fundamental physical constants. Cited: $m_ec^2 = 0.510\,998\,950\,69$ MeV.</li>
+      <li id="src-7">D. J. Griffiths, <em>Introduction to Elementary Particles</em>, 2nd ed., ch. 3 and 7 (2008). Relativistic kinematics, the Dirac equation and spin.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Antimatter exists. As physicists learned to split atoms, nuclear fission released the energy predicted by E=mc². The atomic age began.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Annihilation turns mass into energy completely. Six years after the positron, uranium nuclei were found to split, releasing a small part of their mass on a scale never seen before.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +176,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
