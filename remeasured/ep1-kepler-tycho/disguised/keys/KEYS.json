@@ -1,0 +1,35 @@
+{
+ "alpha": {
+  "k": 0.27027027027027023,
+  "t0": 2300100.0,
+  "phi": 137.0,
+  "mirror": false,
+  "flipb": false,
+  "seed": 11,
+  "sha256": "10c76ce43b5bd13260c662888d6b02240b6dde5a1904247140670fd7eeb6e59d",
+  "holdout_from_t": 1050.889543,
+  "JD_REF": 2302032.5
+ },
+ "beta": {
+  "k": 1.2048192771084338,
+  "t0": 2299000.0,
+  "phi": 251.5,
+  "mirror": true,
+  "flipb": false,
+  "seed": 22,
+  "sha256": "c3bb13da1d511f4e7f8d4789719ba629551371ed183389ee2065f45277c31a79",
+  "holdout_from_t": 6009.989529,
+  "JD_REF": 2302032.5
+ },
+ "gamma": {
+  "k": 0.08064516129032258,
+  "t0": 2301500.0,
+  "phi": 12.25,
+  "mirror": true,
+  "flipb": true,
+  "seed": 33,
+  "sha256": "4a4a897705ab6f5458cc17740de5f26056073dc5e38174d3aba547ce4d464fd5",
+  "holdout_from_t": 200.668654,
+  "JD_REF": 2302032.5
+ }
+}
