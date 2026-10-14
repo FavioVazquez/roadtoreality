@@ -53,7 +53,8 @@
 /* ── Era Section ────────────────────────────────────────────── */
 .era-section {
   margin-block: var(--space-16);
-  scroll-margin-top: 80px;
+  /* sticky header + sticky era bar (heights set by nav.js), plus breathing room */
+  scroll-margin-top: calc(var(--sticky-offset, 120px) + 1rem);
 }
 
 .era-section__header {
@@ -548,8 +549,3 @@
   min-height: 44px;
 }
 
-a[href*="FavioVazquez/learnship"] {
-  display: inline-flex !important;
-  align-items: center;
-  min-height: 44px;
-}

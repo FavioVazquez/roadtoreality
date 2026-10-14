@@ -66,7 +66,7 @@
     /* Sticky era tabs on scroll */
     .era-tabs-sticky {
       position: sticky;
-      top: 64px;
+      top: var(--header-h, 45px);
       z-index: 50;
       background: oklch(0.07 0 0 / 0.9);
       backdrop-filter: blur(12px);
@@ -129,9 +129,6 @@
       </a>
       <span class="site-header__tagline">An Interactive History</span>
       <span class="visit-counter" id="header-visit-counter" aria-live="polite"></span>
-      <a href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener"
-         style="font-size: 0.72rem; letter-spacing: 0.05em; color: var(--color-text-secondary); border: 1px solid oklch(1 0 0 / 0.18); border-radius: 4px; padding: 0.25rem 0.6rem; white-space: nowrap; text-decoration: none; flex-shrink: 0;"
-         title="This project was built using the Learnship agentic workflow">Built with Learnship</a>
       <button class="search-trigger" id="search-trigger-btn" aria-label="Search stops (Cmd+K)">
         <span class="search-trigger__icon">⌕</span>
         <span>Search</span>
@@ -216,6 +213,7 @@
           Inspired by How AI Works
         </a>
       </p>
+      <p class="footer-credit-row"><a class="footer-credit" href="https://github.com/FavioVazquez/learnship" target="_blank" rel="noopener" title="This project was built using the Learnship agentic workflow">Built with Learnship</a></p>
     </div>
   </footer>
 

@@ -112,6 +112,24 @@
       '</div>';
   }
 
+  /* Keep the sticky era bar flush under the header and tell scroll-margin how much is covered. */
+  function _syncStickyOffset() {
+    var h = document.querySelector('.site-header');
+    var t = document.querySelector('.era-tabs-sticky');
+    if (!h) return;
+    var hh = h.getBoundingClientRect().height;
+    var th = t ? t.getBoundingClientRect().height : 0;
+    var root = document.documentElement.style;
+    root.setProperty('--header-h', hh + 'px');
+    root.setProperty('--sticky-offset', (hh + th) + 'px');
+  }
+
+  function _jumpToHash() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var el = id && document.getElementById(id);
+    if (el) el.scrollIntoView();
+  }
+
   function _render(data) {
     var stops = data.stops || [];
     var groups = _groupByEra(stops);
@@ -130,6 +148,9 @@
 
     var visited = window.PhysicsProgress ? window.PhysicsProgress.getVisitedCount() : 0;
     _renderProgressBar(visited, stops.length);
+
+    _syncStickyOffset();
+    _jumpToHash();
   }
 
   function _esc(str) {
@@ -153,6 +174,9 @@
         }
       });
   }
+
+  window.addEventListener('resize', _syncStickyOffset);
+  _syncStickyOffset();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
