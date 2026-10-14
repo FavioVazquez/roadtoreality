@@ -90,9 +90,10 @@ def _project(r, X, w):
     return float(np.sqrt(np.sum(w * res**2) / np.sum(w)))
 
 
-def gauss_newton(t_obs, w, c_per_d, guesses, tables, p_dyn0, X, iters=12, tol=1e-3, label=""):
+def gauss_newton(t_obs, w, c_per_d, guesses, tables, p_dyn0, X, iters=12, tol=1e-3, label="", tol_D=None):
     """Damped Gauss-Newton on the 7 dynamical parameters; the 3 constants are solved linearly at each
-    step. Converges when the weighted rms changes by less than tol (s)."""
+    step. Converges when the weighted rms changes by less than tol (s), or, if tol_D is given, when the
+    proposed (undamped) change of D is below tol_D (arcsec/century)."""
     p = np.array(p_dyn0, float)
     hist = []
     with ProcessPoolExecutor(max_workers=6, initializer=_init,
@@ -118,7 +119,7 @@ def gauss_newton(t_obs, w, c_per_d, guesses, tables, p_dyn0, X, iters=12, tol=1e
                 rt = _project((t_obs - bt) * 86400, X, w)
                 if rt <= rms + 1e-4:
                     break
-            converged = abs(rms - rt) < tol
+            converged = abs(rms - rt) < tol or (tol_D is not None and abs(step[6]) < tol_D)
             p, base, rms = pt, bt, rt
             hist.append(rms)
             print(f"  {label} it{it}: weighted rms {rms:.4f} s, D {p[6]:+.4f}, damping {damp}", flush=True)

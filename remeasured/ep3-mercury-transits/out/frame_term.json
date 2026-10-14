@@ -1,0 +1,11 @@
+{
+ "i_deg": 7.018066592260923,
+ "Omega_deg": 48.60609875961769,
+ "pomega_deg": 77.10684672398861,
+ "numerical_rate_arcsec_per_cy_T0.01": 2.323778629250389,
+ "numerical_rate_arcsec_per_cy_T0.1": 2.3237794921221515,
+ "analytic_pi_A_sin(Omega-Pi_A)_tan(i/2)": -2.3237785317307327,
+ "budget_J2000_all_planets_1677_1881": 529.095,
+ "budget_J2000_all_planets_1000yr": 529.138,
+ "budget_ecliptic_of_date_1000yr": 531.4617786292504
+}

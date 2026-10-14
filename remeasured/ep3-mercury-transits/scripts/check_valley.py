@@ -1,6 +1,9 @@
 """Two post-fit checks: (1) is the time-offset solution in a flat valley? Weighted rms of the time-offset
 form at the time solution vs at the radial solution's dynamical parameters (offsets re-solved linearly).
-(2) Jacobian step-halving change per column at the radial and time solutions. Writes out/check_valley.json."""
+(2) Jacobian step-halving change per column at the radial and time solutions.
+(3) Linear re-solve of the pre-registered time-offset model around the radial solution (same Jacobian):
+D = D_radial + step, with all three offsets, and with the common mode removed (II offset fixed to 0, i.e.
+fitting III-II and IV-II only). Writes out/check_valley.json."""
 import json, os, sys
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor
@@ -29,6 +32,13 @@ if __name__ == "__main__":
         out[f"time_form_wrms_at_{k}_solution_s"] = F._project((t_obs - base) * 86400, Xt, F.W)
         J = np.column_stack([(x - base) * 86400 / F.STEPS[j] for j, x in enumerate(o[1:8])])
         Jh = np.column_stack([(x - base) * 86400 / (F.STEPS[j] / 2) for j, x in enumerate(o[8:15])])
+        r = (t_obs - base) * 86400
+        if not np.any(np.isnan(r)):
+            for tag, X in (("all_offsets", Xt), ("common_mode_removed", Xt[:, 1:])):
+                sol, cov, res, s2 = F.solve_linear(np.hstack([J, X]), r, F.W)
+                out[f"linear_resolve_time_form_around_{k}_solution_{tag}"] = {
+                    "D": float(P[k][6] + sol[6]), "sigma_D": float(np.sqrt(cov[6, 6])),
+                    "wrms_s": float(np.sqrt(np.sum(F.W * res**2) / np.sum(F.W)))}
         out[f"jac_halving_{k}"] = {n: float(np.linalg.norm(J[:, j] - Jh[:, j]) / np.linalg.norm(J[:, j])) for j, n in enumerate(names)}
     out["l_difference_arcsec"] = float((P["time"][5] - P["radial"][5]) * 206264.8)
     json.dump(out, open(F.OUT / "check_valley.json", "w"), indent=1)

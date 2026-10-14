@@ -157,17 +157,25 @@ issues:
    - My topocentric reduction against Newcomb's printed reductions:
      - It agrees within 1.4 s for every 1753 and 1881 row, and to 0.0 s for Halley III.
      - Where Newcomb added a "correction for phase", the difference equals that correction.
-     - **Exception: Halley's ingress, 1677 contacts I and II.** The Part I table (p. 384) prints the
-       reduction to the geocentre as +29.2 s. Horizons gives −25.1 s for St Helena at that moment. The same
-       site's egress agrees to 0.0 s, so the site is right.
-     - Flipping the sign removes exactly 54.3 s: 21h 34m 55.2s − 54.3 s = 21h 34m 00.9s. That is the value
-       Newcomb carries into Part II (p. 451: 21h 34m 01s). So Part II already has the correctly reduced
-       contact, and the "+" on p. 384 is a sign misprint in the Part I table, not an error in Newcomb's
-       result. It also explains why my independent topocentric O−C for Halley II (+26.1 s, 2.6") equals the
-       O−C of Newcomb's concluded value.
-     - The printed sign is what makes Halley's ingress look "a minute or more late" in the p. 384
-       commentary. Reduced correctly, it is 26 s late. Medium confidence on that reading. Worth a
-       reviewer's look before any public use.
+     - **Halley's ingress, 1677 contacts I and II: a value Newcomb corrected himself.** The Part I table
+       (p. 384) prints the reduction to the geocentre as +29.2 s. Horizons gives −25.1 s for St Helena at
+       that moment. The same site's egress agrees to 0.0 s, so the site is right. The volume's own corrigenda
+       (printed p. 484) read: "Page 384, Reduction to geocentric phase for contacts I and II, for +29s.2 read
+       −25s.1, and carry the correction forward." Our reduction therefore recovered, independently and before
+       we found the corrigenda, the value Newcomb himself corrected in his errata. We take this as a check of
+       the reduction, not as a finding about his work.
+     - Replacing the printed +29.2 s by −25.1 s moves the time by 29.2 + 25.1 = 54.3 s (a sign flip alone
+       would move it by 58.4 s): 21h 34m 55.2s − 54.3 s = 21h 34m 00.9s. That agrees to 0.3 s with the value
+       Newcomb carries into Part II (p. 451: 21h 34m 01s). So Part II already has the corrected contact. It
+       also explains why my independent topocentric O−C for Halley II (+26.1 s, 2.6") equals the O−C of
+       Newcomb's concluded value.
+     - The uncorrected value is what makes Halley's ingress look "a minute or more late" in the p. 384
+       commentary. Reduced with the corrected value, it is 26 s late.
+     - The same corrigenda leaf also corrects p. 405 (Altona, +58 to +54 s) and p. 406 (1832 contacts II,
+       21h 3m 32s to 21h 3m 30s; the summary CSV already carries 21:03:30), and warns that the longitude list
+       beginning on p. 374 "does not, in all cases, give the longitude of the station actually adopted". That
+       remark accounts for the 5 s (London) and 4 s (Sydney) differences recorded in `out/stations.csv`
+       between his table and his row arithmetic.
 7. **Systematic phase offsets, reported and not removed in the headline numbers.**
    - Interior ingress (II) averages −1.5" (observed early).
    - Interior egress (III) averages +0.1".
@@ -192,7 +200,7 @@ Scripts, all in `scripts/`:
   interior (18 at II, 19 at III) and 21 exterior egress (IV). He rejects all first external contacts.
   Weights run from 0.1 (Halley 1677, 1740) to 6 (1868 III, 1878 II).
 - Behind these sit the individual observer rows of the tabular summary (pp. 384-421), estimated at
-  **about 770 tabulated rows**: 1 at I, 315 at II, 203 at III, 253 at IV. A Haiku sub-agent counted
+  **about 770 tabulated rows**: 1 at I, 315 at II, 203 at III, 253 at IV. A sub-agent counted
   them from 130-dpi renders, ±2 on dense pages, so about ±3% overall. It matches my own transcription for
   1677 (6 rows) and 1881 (46). For 1753 it has 33. My 34 also counts the Bologna row, which is a mean of
   two unnamed observers; the agent counted that row as a summarized mean.
@@ -209,15 +217,15 @@ Scripts, all in `scripts/`:
   - reading page images and transcribing: about 15 minutes;
   - code, Horizons runs and checks: about 10 minutes;
   - write-up: about 10 minutes.
-  The Haiku row count ran in parallel for 8 minutes.
+  The row count ran in parallel for 8 minutes.
 - **Compute:** trivial. Horizons is free. It took about 180 cached API calls, around 3 minutes of network
   time on the first run and 2 s on re-runs. Neither the AWS box nor REBOUND was needed.
 - **Main cost driver:** agent tokens spent reading page images. Each table needs 300-500 dpi crops,
   because the OCR scrambles the numbers (the 1881 table is unreadable in OCR). Transcribing the full
   tabular summary (about 770 rows) is the expensive part of days 2-5. The 58-row summary on
   pp. 451-452 is cheap and already in hand.
-- **Other agents:** one Haiku sub-agent counted rows on 38 page images (about 190k tokens, 39 tool calls).
-  A Fable review is advised for the 1677 parallax-sign finding before it is used publicly.
+- **Other agents:** one sub-agent counted rows on 38 page images (about 190k tokens, 39 tool calls).
+  The 1677 ingress reduction was later checked against the volume's own corrigenda (see above).
 
 ## Fallback (not triggered)
 

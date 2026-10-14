@@ -1,0 +1,68 @@
+{
+ "time (converged wide fit)": {
+  "Part I weights (as fitted)": {
+   "D": 43.7055890650113,
+   "sigma_D": 1.0360320071934372,
+   "n": 58
+  },
+  "May x2 only": {
+   "D": 43.73576680048036,
+   "sigma_D": 0.9615159331992683,
+   "n": 58
+  },
+  "Newcomb final weighting": {
+   "D": 43.642955822167174,
+   "sigma_D": 0.8910242587867218,
+   "n": 55
+  },
+  "Newcomb final weighting, 1677 dropped": {
+   "D": 43.690069365388254,
+   "sigma_D": 0.9060728487410622,
+   "n": 52
+  }
+ },
+ "time (main-run point)": {
+  "Part I weights (as fitted)": {
+   "D": 43.775054122163716,
+   "sigma_D": 1.0193110223805455,
+   "n": 58
+  },
+  "May x2 only": {
+   "D": 43.82520828431916,
+   "sigma_D": 0.942233309518704,
+   "n": 58
+  },
+  "Newcomb final weighting": {
+   "D": 43.733936740925294,
+   "sigma_D": 0.873625033922614,
+   "n": 55
+  },
+  "Newcomb final weighting, 1677 dropped": {
+   "D": 43.798286071109075,
+   "sigma_D": 0.8883577824731418,
+   "n": 52
+  }
+ },
+ "radial": {
+  "Part I weights (as fitted)": {
+   "D": 43.5313486508116,
+   "sigma_D": 0.8379240931243281,
+   "n": 58
+  },
+  "May x2 only": {
+   "D": 43.610029183946175,
+   "sigma_D": 0.8015795497596395,
+   "n": 58
+  },
+  "Newcomb final weighting": {
+   "D": 43.38591956688697,
+   "sigma_D": 0.6620562945501415,
+   "n": 55
+  },
+  "Newcomb final weighting, 1677 dropped": {
+   "D": 43.40354134765487,
+   "sigma_D": 0.6666619802659978,
+   "n": 52
+  }
+ }
+}

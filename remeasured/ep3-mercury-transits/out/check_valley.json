@@ -1,23 +1,43 @@
 {
- "time_form_wrms_at_time_solution_s": NaN,
- "jac_halving_time": {
-  "a": NaN,
-  "e": NaN,
-  "inc": NaN,
-  "Omega": NaN,
-  "pomega": NaN,
-  "l": NaN,
-  "D": NaN
+ "time_form_wrms_at_time_solution_s": 8.241129509617828,
+ "linear_resolve_time_form_around_time_solution_all_offsets": {
+  "D": 43.81287161517249,
+  "sigma_D": 1.0475205065524806,
+  "wrms_s": 8.223726524464622
  },
- "time_form_wrms_at_radial_solution_s": 9.424699689300166,
+ "linear_resolve_time_form_around_time_solution_common_mode_removed": {
+  "D": 43.418795869383075,
+  "sigma_D": 1.0841008366399738,
+  "wrms_s": 8.706059189654605
+ },
+ "jac_halving_time": {
+  "a": 1.2178776018483806e-05,
+  "e": 0.002552506918109628,
+  "inc": 0.04372368985682966,
+  "Omega": 0.018169142577310705,
+  "pomega": 0.005896248208376039,
+  "l": 0.0022782490161473152,
+  "D": 4.512905689405473e-06
+ },
+ "time_form_wrms_at_radial_solution_s": 9.424699186837566,
+ "linear_resolve_time_form_around_radial_solution_all_offsets": {
+  "D": 43.51369617847794,
+  "sigma_D": 1.0499781484865658,
+  "wrms_s": 8.166351902675364
+ },
+ "linear_resolve_time_form_around_radial_solution_common_mode_removed": {
+  "D": 43.63968124991275,
+  "sigma_D": 1.0194737341133282,
+  "wrms_s": 8.194064239583698
+ },
  "jac_halving_radial": {
-  "a": 9.628231646917444e-06,
-  "e": 0.002036221204676415,
-  "inc": 0.035491739823824975,
-  "Omega": 0.014352984624040385,
-  "pomega": 0.006968552523261834,
-  "l": 0.0022286595027889346,
-  "D": 4.4495967262910286e-06
+  "a": 1.267612226238556e-05,
+  "e": 0.0020653718024351455,
+  "inc": 0.03609814054072417,
+  "Omega": 0.01412669032417436,
+  "pomega": 0.005416236840446626,
+  "l": 0.0022032955879198505,
+  "D": 4.4220420732109745e-06
  },
  "l_difference_arcsec": -316.84295725744056
 }

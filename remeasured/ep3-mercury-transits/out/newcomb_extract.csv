@@ -1,6 +1,6 @@
 transit,page,station,observer,contact,description,astro_local_date,local_time,time_kind,eot_s,red_geo_s,corr_phase_s,gmt_geo_astro,newcomb_use,conf,note
 1677,384,St Helena,Halley,I,Limbus Solis a Merc. temeratus,1677-11-06,21:26:17,LAT,-956,+29,,21:33:42,first external contacts rejected by Newcomb (p.378),high,
-1677,384,St Helena,Halley,II,Totus Merc. intra Solem,1677-11-06,21:27:30,LAT,-956,+29.2,,21:34:55,used with weight 0.1 after a phase correction (p.451 gives 21:34:01),high,Newcomb judges Halley's ingress phases a minute or more late (p.384)
+1677,384,St Helena,Halley,II,Totus Merc. intra Solem,1677-11-06,21:27:30,LAT,-956,+29.2,,21:34:55,used with weight 0.1; the printed reduction +29.2 is corrected to -25.1 s in the volume's corrigenda (p.484), p.451 gives 21:34:01,high,Newcomb judges Halley's ingress phases a minute or more late (p.384), written with the uncorrected reduction
 1677,384,St Helena,Halley,III,Limbus Merc. attigit Solis Limbum,1677-11-07,2:40:08,LAT,-954,+22.0,,2:47:28,used weight 0.1 (p.451 gives 2:47:27),high,
 1677,384,St Helena,Halley,IV,Solis limbus integer factus,1677-11-07,2:41:54,LAT,-954,+22,+20,2:49:34,used weight 0.1 (p.452 gives 2:49:33),high,
 1677,384,Avignon,Gallet,IV,Egressum e Sole,1677-11-07,3:26:56,LAT,-954,-4,+30,2:52:14,rejected by Newcomb,high,"more than a minute after last contact (Newcomb, p.384)"

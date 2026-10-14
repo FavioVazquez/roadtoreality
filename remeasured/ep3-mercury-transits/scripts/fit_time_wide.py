@@ -1,5 +1,6 @@
 """Pre-registered time-offset form, refitted with a +-5600 s contact search so the damped Gauss-Newton can
 follow the near-degenerate (l, common offset) valley to its minimum. Start: the radial solution.
+Converges when the proposed change of D is below 0.005 arcsec/cy (tol_D) or 40 iterations.
 Run with EP3_WIDE=1. Writes out/fit_time_wide.json."""
 import json, math, os, sys
 import numpy as np
@@ -14,7 +15,7 @@ if __name__ == "__main__":
     tables = N.earth_tables(G)
     p0 = np.array([R["historical_radial"]["params"][n] for n in F.NAMES[:7]])
     X = F.offsets_matrix("time")
-    f = F.gauss_newton(F.T_OBS["jd_tt_obs_em"], F.W, cpd, G, tables, p0, X, iters=30, tol=1e-4, label="historical/time/wide")
+    f = F.gauss_newton(F.T_OBS["jd_tt_obs_em"], F.W, cpd, G, tables, p0, X, iters=40, tol=1e-6, tol_D=0.005, label="historical/time/wide")
     s = F.summarize(f, F.W, "historical, time offsets, wide search")
     s["dyn_remainder"] = f["dyn_remainder"]
     dT_shift = (F.T_OBS["jd_tt_obs_hz"] - F.T_OBS["jd_tt_obs_em"]) * 86400
