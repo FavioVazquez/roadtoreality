@@ -1,0 +1,87 @@
+transit,page,station,observer,contact,description,time_kind,local_time,newcomb_use,conf,ut_obs,pred_ut,dT_em,dT_hz,oc_s,v_path,v_radial,oc_path_as,radial_as,gmt_geo_astro,oc_geo_s,oc_geo_path_as,topo_minus_geo_s
+1677,384,St Helena,Halley,I,Limbus Solis a Merc. temeratus,LAT,21:26:17,first external contacts rejected by Newcomb (p.378),high,09:33:13.0,09:32:15.9,17.0,23.6,57.1,5.9,-5.7,5.7,-5.5,21:33:42,111.4,11.0,-54.3
+1677,384,St Helena,Halley,II,Totus Merc. intra Solem,LAT,21:27:30,used with weight 0.1 after a phase correction (p.451 gives 21:34:01),high,09:34:26.0,09:33:59.9,17.0,23.6,26.1,5.9,-5.7,2.6,-2.5,21:34:55,80.1,7.9,-54.1
+1677,384,St Helena,Halley,III,Limbus Merc. attigit Solis Limbum,LAT,2:40:08,used weight 0.1 (p.451 gives 2:47:27),high,14:47:06.0,14:47:36.9,17.0,23.6,-30.9,5.9,5.7,-3.1,-3.0,2:47:28,-30.9,-3.1,0.0
+1677,384,St Helena,Halley,IV,Solis limbus integer factus,LAT,2:41:54,used weight 0.1 (p.452 gives 2:49:33),high,14:48:52.0,14:49:20.8,17.0,23.6,-28.8,5.9,5.7,-2.9,-2.8,2:49:34,-9.1,-0.9,-19.7
+1677,384,Avignon,Gallet,IV,Egressum e Sole,LAT,3:26:56,rejected by Newcomb,high,14:51:48.0,14:49:46.3,17.0,23.6,121.7,5.9,5.7,12.0,11.7,2:52:14,150.9,14.9,-29.2
+1677,384,Lancashire,Townley,IV,Total Egress,LAT,2:54:00,not used (time and longitude uncertain),high,,,,,,,,,,,,,
+1753,389,Naples,Cartani,III,,LAT,23:05:51,rejected (suspected time error),high,10:05:06.0,10:05:46.3,13.9,18.0,-40.3,4.0,4.0,-2.7,-2.7,22:05:17,-40.4,-2.7,0.1
+1753,389,Bologna,Unknown (mean of two),III,,LAT,22:54:43,used,high,10:05:37.0,10:05:44.7,13.9,18.0,-7.7,4.0,4.0,-0.5,-0.5,22:05:49,-8.4,-0.6,0.6
+1753,389,Rouen,Bouin,III,Premier attouchement,LAT,22:14:18,used,high,10:06:15.0,10:05:47.3,13.9,18.0,27.7,4.0,4.0,1.9,1.8,22:06:25,27.6,1.8,0.1
+1753,389,Rouen,Premagny,III,,LAT,22:14:16,used,high,10:06:13.0,10:05:47.3,13.9,18.0,25.7,4.0,4.0,1.7,1.7,22:06:23,25.6,1.7,0.1
+1753,389,Rouen,Le Cat,III,,LAT,22:13:53,used,high,10:05:50.0,10:05:47.3,13.9,18.0,2.7,4.0,4.0,0.2,0.2,22:06:00,2.6,0.2,0.1
+1753,389,Paris,Cassini,III,Le bord de Merc. me parut toucher celui du Soleil,LAT,22:19:03,used (best observer),high,10:05:59.0,10:05:47.1,13.9,18.0,11.9,4.0,4.0,0.8,0.8,22:06:09,11.6,0.8,0.3
+1753,389,Paris,Le Gentil,III,Les bords parurent se toucher,LAT,22:18:47,used (best observer),high,10:05:43.0,10:05:47.1,13.9,18.0,-4.1,4.0,4.0,-0.3,-0.3,22:05:53,-4.4,-0.3,0.3
+1753,389,Paris,Bouguer,III,,LAT,22:18:44,used,high,10:05:40.0,10:05:47.1,13.9,18.0,-7.1,4.0,4.0,-0.5,-0.5,22:05:50,-7.4,-0.5,0.3
+1753,389,Paris,De Merveille,III,Premier attouchement,LAT,22:18:39,used,high,10:05:35.0,10:05:47.1,13.9,18.0,-12.1,4.0,4.0,-0.8,-0.8,22:05:45,-12.4,-0.8,0.3
+1753,389,Paris,Libours,III,,LAT,22:18:38,used,high,10:05:34.0,10:05:47.1,13.9,18.0,-13.1,4.0,4.0,-0.9,-0.9,22:05:44,-13.4,-0.9,0.3
+1753,389,Paris,De l'Isle,III,Attouchement interieur des deux disques,LAT,22:18:41,used (best observer),high,10:05:37.0,10:05:47.1,13.9,18.0,-10.1,4.0,4.0,-0.7,-0.7,22:05:47,-10.4,-0.7,0.3
+1753,389,Leiden,Lulofs,III,,LAT,22:28:12,rejected (suspected time error),high,10:06:32.6,10:05:40.8,13.9,18.0,51.8,4.0,4.0,3.5,3.4,22:06:49,51.6,3.4,0.2
+1753,389,Hague,Gabry,III,,LAT,22:27:22,rejected (time error),high,10:06:25.0,10:05:41.1,13.9,18.0,43.9,4.0,4.0,2.9,2.9,22:06:41,43.6,2.9,0.3
+1753,389,Haarlem,Anonymous,III,,LAT,22:28:31,rejected (time error),high,10:06:15.0,10:05:40.4,13.9,18.0,34.6,4.0,4.0,2.3,2.3,22:06:31,33.6,2.2,0.9
+1753,389,London,Short,III,,LMT,22:05:35,used (best observer),high,10:06:03.0,10:05:45.3,13.9,18.0,17.7,4.0,4.0,1.2,1.2,22:06:15,17.6,1.2,0.1
+1753,389,London,Bird,III,,LMT,22:05:25,used (best observer),high,10:05:53.0,10:05:45.3,13.9,18.0,7.7,4.0,4.0,0.5,0.5,22:06:05,7.6,0.5,0.1
+1753,389,Naples,Cartani,IV,,LAT,23:09:05,rejected (suspected time error),high,10:08:20.0,10:08:48.7,13.9,18.0,-28.7,4.0,4.0,-1.9,-1.9,22:08:32,-28.6,-1.9,-0.2
+1753,389,Bologna,Anonymous,IV,,LAT,22:57:23,used,high,10:08:17.0,10:08:47.3,13.9,18.0,-30.3,4.0,4.0,-2.0,-2.0,22:08:29,-31.6,-2.1,1.3
+1753,389,Rouen,Bouin,IV,,LAT,22:16:38,used,high,10:08:35.0,10:08:50.0,13.9,18.0,-15.0,4.0,4.0,-1.0,-1.0,22:08:45,-15.6,-1.0,0.6
+1753,389,Rouen,Premagny,IV,,LAT,22:16:40,used,high,10:08:37.0,10:08:50.0,13.9,18.0,-13.0,4.0,4.0,-0.9,-0.9,22:08:47,-13.6,-0.9,0.6
+1753,389,Rouen,Le Cat,IV,,LAT,22:16:26,used,high,10:08:23.0,10:08:50.0,13.9,18.0,-27.0,4.0,4.0,-1.8,-1.8,22:08:33,-27.6,-1.8,0.6
+1753,389,Paris,Cassini,IV,,LAT,22:21:42,used (best observer),high,10:08:38.0,10:08:49.8,13.9,18.0,-11.8,4.0,4.0,-0.8,-0.8,22:08:48,-12.6,-0.8,0.8
+1753,389,Paris,Le Gentil,IV,,LAT,22:21:42,used (best observer),high,10:08:38.0,10:08:49.8,13.9,18.0,-11.8,4.0,4.0,-0.8,-0.8,22:08:48,-12.6,-0.8,0.8
+1753,389,Paris,Delisle,IV,,LAT,22:21:23,used (best observer),high,10:08:19.0,10:08:49.8,13.9,18.0,-30.8,4.0,4.0,-2.1,-2.0,22:08:29,-31.6,-2.1,0.8
+1753,389,Paris,De Merveille,IV,,LAT,22:21:35,used,high,10:08:31.0,10:08:49.8,13.9,18.0,-18.8,4.0,4.0,-1.3,-1.2,22:08:41,-19.6,-1.3,0.8
+1753,389,Paris,Libours,IV,,LAT,22:21:46,used,high,10:08:42.0,10:08:49.8,13.9,18.0,-7.8,4.0,4.0,-0.5,-0.5,22:08:52,-8.6,-0.6,0.8
+1753,389,Paris,Bouguer,IV,,LAT,22:21:13,rejected (doubtful; printed with colon),medium,10:08:09.0,10:08:49.8,13.9,18.0,-40.8,4.0,4.0,-2.7,-2.7,22:08:19,-41.6,-2.8,0.8
+1753,389,London,Short,IV,,LMT,22:08:10,used (best observer),high,10:08:38.0,10:08:48.0,13.9,18.0,-10.0,4.0,4.0,-0.7,-0.7,22:08:50,-10.6,-0.7,0.5
+1753,389,London,Bevis,IV,,LMT,22:08:06,used (best observer),high,10:08:34.0,10:08:48.0,13.9,18.0,-14.0,4.0,4.0,-0.9,-0.9,22:08:46,-14.6,-1.0,0.5
+1753,389,London,Sisson,IV,,LMT,22:08:11,used,high,10:08:39.0,10:08:48.0,13.9,18.0,-9.0,4.0,4.0,-0.6,-0.6,22:08:51,-9.6,-0.6,0.5
+1753,389,London,Bird,IV,,LMT,22:08:11,used (best observer),high,10:08:39.0,10:08:48.0,13.9,18.0,-9.0,4.0,4.0,-0.6,-0.6,22:08:51,-9.6,-0.6,0.5
+1753,389,London,Canton,IV,,LMT,22:08:40,used,high,10:09:08.0,10:08:48.0,13.9,18.0,20.0,4.0,4.0,1.3,1.3,22:09:20,19.4,1.3,0.5
+1753,389,Hague,Gabry,IV,,LAT,22:30:07,rejected (time error),high,10:09:10.0,10:08:43.8,13.9,18.0,26.2,4.0,4.0,1.8,1.7,22:09:26,25.4,1.7,0.7
+1753,389,Haarlem,Anonymous,IV,,LAT,22:31:25,rejected (time error),high,10:09:09.0,10:08:43.2,13.9,18.0,25.8,4.0,4.0,1.7,1.7,22:09:25,24.4,1.6,1.4
+1881,419,Melbourne,Ellery,II,Internal contact; good,LMT,19:58:44,used (+1/3 of interval to next row: 10:18:47),high,22:18:49.0,22:18:55.7,-5.3,-3.8,-6.7,5.9,-5.7,-0.7,0.6,10:18:39,-7.0,-0.7,0.3
+1881,419,Melbourne,Ellery,II,Black drop broken,LMT,19:59:08,combined into Ellery's value,high,22:19:13.0,22:18:55.7,-5.3,-3.8,17.3,5.9,-5.7,1.7,-1.7,10:19:03,17.0,1.7,0.3
+1881,419,Melbourne,White,II,Thread of light,LMT,19:58:47,used (minus 5 s: 10:18:37),high,22:18:52.0,22:18:55.7,-5.3,-3.8,-3.7,5.9,-5.7,-0.4,0.4,10:18:42,-4.0,-0.4,0.3
+1881,419,Melbourne,Moerlin,II,Complete separation,LMT,19:59:43,rejected (clearly too late),high,22:19:48.0,22:18:55.7,-5.3,-3.8,52.3,5.9,-5.7,5.1,-5.0,10:19:38,52.0,5.1,0.3
+1881,419,Windsor NSW,Tebbutt,II,Contact nearly made,LMT,20:22:10,used (mean of pair: 10:18:40),high,22:18:48.0,22:18:57.5,-5.3,-3.8,-9.5,5.9,-5.7,-0.9,0.9,10:18:37,-9.0,-0.9,-0.4
+1881,419,Windsor NSW,Tebbutt,II,Band of light distinct,LMT,20:22:16,used (mean of pair),high,22:18:54.0,22:18:57.5,-5.3,-3.8,-3.5,5.9,-5.7,-0.3,0.3,10:18:43,-3.0,-0.3,-0.4
+1881,419,Sydney,Russell,II,Unsatisfactory,LMT,20:23:36,used as 10:18:29 (thread made and broken during 10 s),high,22:18:45.0,22:18:57.2,-5.3,-3.8,-12.2,5.9,-5.7,-1.2,1.2,10:18:34,-12.0,-1.2,-0.2
+1881,419,Sydney,Lenehan,II,No description,LMT,20:23:43,used,medium,22:18:52.0,22:18:57.2,-5.3,-3.8,-5.2,5.9,-5.7,-0.5,0.5,10:18:41,-5.0,-0.5,-0.2
+1881,419,Sydney,Wright,II,No description,LMT,20:23:10,half weight (obviously too early),high,22:18:19.0,22:18:57.2,-5.3,-3.8,-38.2,5.9,-5.7,-3.8,3.7,10:18:08,-38.0,-3.7,-0.2
+1881,419,Sydney,Morrice,II,,LMT,20:23:46,used,high,22:18:55.0,22:18:57.2,-5.3,-3.8,-2.2,5.9,-5.7,-0.2,0.2,10:18:44,-2.0,-0.2,-0.2
+1881,419,Sydney,Hargrave,II,Definition good,LMT,20:23:41,used,high,22:18:50.0,22:18:57.2,-5.3,-3.8,-7.2,5.9,-5.7,-0.7,0.7,10:18:39,-7.0,-0.7,-0.2
+1881,419,Sydney,Bladen,II,Contact expected,LMT,20:23:25,used (mean of pair: 10:18:32),high,22:18:34.0,22:18:57.2,-5.3,-3.8,-23.2,5.9,-5.7,-2.3,2.2,10:18:23,-23.0,-2.3,-0.2
+1881,419,Sydney,Bladen,II,Band of light distinct,LMT,20:23:43,used (mean of pair),high,22:18:52.0,22:18:57.2,-5.3,-3.8,-5.2,5.9,-5.7,-0.5,0.5,10:18:41,-5.0,-0.5,-0.2
+1881,419,Sydney,Conder,II,Limbs tangential,LMT,20:23:36,used,high,22:18:45.0,22:18:57.2,-5.3,-3.8,-12.2,5.9,-5.7,-1.2,1.2,10:18:34,-12.0,-1.2,-0.2
+1881,419,Sydney,Brooks,II,First indication of white line,LMT,20:23:36,used,medium,22:18:45.0,22:18:57.2,-5.3,-3.8,-12.2,5.9,-5.7,-1.2,1.2,10:18:34,-12.0,-1.2,-0.2
+1881,419,Honolulu,Rockwell,II,,GMT?,22:18:26,small weight,low,,,,,,,,,,10:18:10,-36.0,-3.5,
+1881,419,Mt Hamilton,Holden,II,Power 50,LMT,2:12:26,used,high,22:18:58.0,22:18:50.9,-5.3,-3.8,7.1,5.9,-5.7,0.7,-0.7,10:18:53,7.0,0.7,0.2
+1881,419,Mt Hamilton,Burnham,II,Power 300,LMT,2:12:06,used,high,22:18:38.0,22:18:50.9,-5.3,-3.8,-12.9,5.9,-5.7,-1.3,1.2,10:18:33,-13.0,-1.3,0.2
+1881,419,Melbourne,Ellery,III,Thin flickering line connecting planet and limb,LMT,1:15:06,not a true contact (Newcomb),high,03:35:11.0,03:35:38.5,-5.3,-3.8,-27.5,5.9,5.7,-2.7,-2.6,15:35:27,-28.0,-2.7,0.5
+1881,419,Melbourne,Ellery,III,Internal contact,LMT,1:15:33,used,high,03:35:38.0,03:35:38.5,-5.3,-3.8,-0.5,5.9,5.7,-0.0,-0.0,15:35:54,-1.0,-0.1,0.5
+1881,419,Melbourne,White,III,,LMT,1:15:30,used,high,03:35:35.0,03:35:38.5,-5.3,-3.8,-3.5,5.9,5.7,-0.3,-0.3,15:35:51,-4.0,-0.4,0.5
+1881,419,Melbourne,Moerlin,III,,LMT,1:15:34,used,high,03:35:39.0,03:35:38.5,-5.3,-3.8,0.5,5.9,5.7,0.0,0.0,15:35:55,0.0,0.0,0.5
+1881,419,Melbourne,Turner,III,Filament assumed a solid form,LMT,1:15:23,used,high,03:35:28.0,03:35:38.5,-5.3,-3.8,-10.5,5.9,5.7,-1.0,-1.0,15:35:44,-11.0,-1.1,0.5
+1881,419,Melbourne,Turner,III,Internal contact past,LMT,1:16:04,used,medium,03:36:09.0,03:35:38.5,-5.3,-3.8,30.5,5.9,5.7,3.0,2.9,15:36:25,30.0,2.9,0.5
+1881,419,Windsor NSW,Tebbutt,III,Thread of light very fine,LMT,1:38:54,double weight,medium,03:35:32.0,03:35:35.0,-5.3,-3.8,-3.0,5.9,5.7,-0.3,-0.3,15:35:52,-3.0,-0.3,-0.1
+1881,419,Windsor NSW,Tebbutt,III,Contact complete,LMT,1:38:58,double weight,high,03:35:36.0,03:35:35.0,-5.3,-3.8,1.0,5.9,5.7,0.1,0.1,15:35:56,1.0,0.1,-0.1
+1881,420,Sydney,Russell,III,Contact good,LMT,1:40:27,double weight,high,03:35:36.0,03:35:34.9,-5.3,-3.8,1.1,5.9,5.7,0.1,0.1,15:35:56,1.0,0.1,0.1
+1881,420,Sydney,Lenehan,III,Definition not good,LMT,1:40:29,used,high,03:35:38.0,03:35:34.9,-5.3,-3.8,3.1,5.9,5.7,0.3,0.3,15:35:58,3.0,0.3,0.1
+1881,420,Sydney,Wright,III,,LMT,1:40:23,used,high,03:35:32.0,03:35:34.9,-5.3,-3.8,-2.9,5.9,5.7,-0.3,-0.3,15:35:52,-3.0,-0.3,0.1
+1881,420,Sydney,Hargrave,III,Moderately good,LMT,1:40:10,used,high,03:35:19.0,03:35:34.9,-5.3,-3.8,-15.9,5.9,5.7,-1.6,-1.5,15:35:39,-16.0,-1.6,0.1
+1881,420,Sydney,Bladen,III,Contact surely complete; boiling badly,LMT,1:40:44,rejected (images too bad),medium,03:35:53.0,03:35:34.9,-5.3,-3.8,18.1,5.9,5.7,1.8,1.7,15:36:13,18.0,1.8,0.1
+1881,420,Sydney,Brooks,III,No black drop,LMT,1:40:27,used,high,03:35:36.0,03:35:34.9,-5.3,-3.8,1.1,5.9,5.7,0.1,0.1,15:35:56,1.0,0.1,0.1
+1881,420,Honolulu,Rockwell,III,,GMT?,15:35:36,small weight,low,,,,,,,,,,15:36:12,17.0,1.7,
+1881,420,Melbourne,Ellery,IV,,LMT,1:17:13,used,high,03:37:18.0,03:37:22.6,-5.3,-3.8,-4.6,5.9,5.7,-0.5,-0.4,15:37:34,-5.3,-0.5,0.7
+1881,420,Melbourne,White,IV,,LMT,1:17:10,used,high,03:37:15.0,03:37:22.6,-5.3,-3.8,-7.6,5.9,5.7,-0.7,-0.7,15:37:32,-7.3,-0.7,-0.3
+1881,420,Melbourne,Moerlin,IV,,LMT,1:17:06,used,high,03:37:11.0,03:37:22.6,-5.3,-3.8,-11.6,5.9,5.7,-1.1,-1.1,15:37:28,-11.3,-1.1,-0.3
+1881,420,Melbourne,Turner,IV,,LMT,1:17:07,used,high,03:37:12.0,03:37:22.6,-5.3,-3.8,-10.6,5.9,5.7,-1.0,-1.0,15:37:28,-11.3,-1.1,0.7
+1881,420,Windsor NSW,Tebbutt,IV,,LMT,1:40:36,used,medium,03:37:14.0,03:37:19.1,-5.3,-3.8,-5.1,5.9,5.7,-0.5,-0.5,15:37:35,-4.3,-0.4,-0.8
+1881,420,Sydney,Russell,IV,,LMT,1:42:09,used,high,03:37:18.0,03:37:19.0,-5.3,-3.8,-1.0,5.9,5.7,-0.1,-0.1,15:37:38,-1.3,-0.1,0.4
+1881,420,Sydney,Lenehan,IV,,LMT,1:42:04,used,high,03:37:13.0,03:37:19.0,-5.3,-3.8,-6.0,5.9,5.7,-0.6,-0.6,15:37:33,-6.3,-0.6,0.4
+1881,420,Sydney,Wright,IV,,LMT,1:42:03,used,high,03:37:12.0,03:37:19.0,-5.3,-3.8,-7.0,5.9,5.7,-0.7,-0.7,15:37:32,-7.3,-0.7,0.4
+1881,420,Sydney,Morrice,IV,,LMT,1:42:16,used,high,03:37:25.0,03:37:19.0,-5.3,-3.8,6.0,5.9,5.7,0.6,0.6,15:37:45,5.7,0.6,0.4
+1881,420,Sydney,Hargrave,IV,,LMT,1:42:00,used,high,03:37:09.0,03:37:19.0,-5.3,-3.8,-10.0,5.9,5.7,-1.0,-1.0,15:37:29,-10.3,-1.0,0.4
+1881,420,Sydney,Bladen,IV,,LMT,1:42:24,used,high,03:37:33.0,03:37:19.0,-5.3,-3.8,14.0,5.9,5.7,1.4,1.3,15:37:53,13.7,1.3,0.4
+1881,420,Sydney,Brooks,IV,,LMT,1:42:09,used,high,03:37:18.0,03:37:19.0,-5.3,-3.8,-1.0,5.9,5.7,-0.1,-0.1,15:37:38,-1.3,-0.1,0.4
+1881,420,Honolulu,Rockwell,IV,,GMT?,15:36:23,small weight,low,,,,,,,,,,15:37:04,-35.3,-3.5,

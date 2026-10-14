@@ -1,0 +1,87 @@
+transit,page,station,observer,contact,description,astro_local_date,local_time,time_kind,eot_s,red_geo_s,corr_phase_s,gmt_geo_astro,newcomb_use,conf,note
+1677,384,St Helena,Halley,I,Limbus Solis a Merc. temeratus,1677-11-06,21:26:17,LAT,-956,+29,,21:33:42,first external contacts rejected by Newcomb (p.378),high,
+1677,384,St Helena,Halley,II,Totus Merc. intra Solem,1677-11-06,21:27:30,LAT,-956,+29.2,,21:34:55,used with weight 0.1 after a phase correction (p.451 gives 21:34:01),high,Newcomb judges Halley's ingress phases a minute or more late (p.384)
+1677,384,St Helena,Halley,III,Limbus Merc. attigit Solis Limbum,1677-11-07,2:40:08,LAT,-954,+22.0,,2:47:28,used weight 0.1 (p.451 gives 2:47:27),high,
+1677,384,St Helena,Halley,IV,Solis limbus integer factus,1677-11-07,2:41:54,LAT,-954,+22,+20,2:49:34,used weight 0.1 (p.452 gives 2:49:33),high,
+1677,384,Avignon,Gallet,IV,Egressum e Sole,1677-11-07,3:26:56,LAT,-954,-4,+30,2:52:14,rejected by Newcomb,high,"more than a minute after last contact (Newcomb, p.384)"
+1677,384,Lancashire,Townley,IV,Total Egress,1677-11-07,2:54:00,LAT,-954,-8,,,not used (time and longitude uncertain),high,no station longitude; not reduced here
+1753,389,Naples,Cartani,III,,1753-05-05,23:05:51,LAT,-223,+11,,22:05:17,rejected (suspected time error),high,
+1753,389,Bologna,Unknown (mean of two),III,,1753-05-05,22:54:43,LAT,-223,+12,,22:05:49,used,high,
+1753,389,Rouen,Bouin,III,Premier attouchement,1753-05-05,22:14:18,LAT,-223,+10,,22:06:25,used,high,
+1753,389,Rouen,Premagny,III,,1753-05-05,22:14:16,LAT,-223,+10,,22:06:23,used,high,
+1753,389,Rouen,Le Cat,III,,1753-05-05,22:13:53,LAT,-223,+10,,22:06:00,used,high,
+1753,389,Paris,Cassini,III,Le bord de Merc. me parut toucher celui du Soleil,1753-05-05,22:19:03,LAT,-223,+10,,22:06:09,used (best observer),high,
+1753,389,Paris,Le Gentil,III,Les bords parurent se toucher,1753-05-05,22:18:47,LAT,-223,+10,,22:05:53,used (best observer),high,
+1753,389,Paris,Bouguer,III,,1753-05-05,22:18:44,LAT,-223,+10,,22:05:50,used,high,
+1753,389,Paris,De Merveille,III,Premier attouchement,1753-05-05,22:18:39,LAT,-223,+10,,22:05:45,used,high,
+1753,389,Paris,Libours,III,,1753-05-05,22:18:38,LAT,-223,+10,,22:05:44,used,high,a footnote mark follows the seconds
+1753,389,Paris,De l'Isle,III,Attouchement interieur des deux disques,1753-05-05,22:18:41,LAT,-223,+10,,22:05:47,used (best observer),high,
+1753,389,Leiden,Lulofs,III,,1753-05-05,22:28:12,LAT,-223,+16,,22:06:49,rejected (suspected time error),high,footnote: phase observed very accurately with power 75; some mistake in his time
+1753,389,Hague,Gabry,III,,1753-05-05,22:27:22,LAT,-223,+16,,22:06:41,rejected (time error),high,
+1753,389,Haarlem,Anonymous,III,,1753-05-05,22:28:31,LAT,-223,+16,,22:06:31,rejected (time error),high,
+1753,389,London,Short,III,,1753-05-05,22:05:35,LMT,0,+12,,22:06:15,used (best observer),high,times are mean times (P.T. xlviii 192)
+1753,389,London,Bird,III,,1753-05-05,22:05:25,LMT,0,+12,,22:06:05,used (best observer),high,mean time
+1753,389,Naples,Cartani,IV,,1753-05-05,23:09:05,LAT,-223,,,22:08:32,rejected (suspected time error),high,red. column blank for IV; Newcomb's GMT implies same red. as III
+1753,389,Bologna,Anonymous,IV,,1753-05-05,22:57:23,LAT,-223,,,22:08:29,used,high,
+1753,389,Rouen,Bouin,IV,,1753-05-05,22:16:38,LAT,-223,,,22:08:45,used,high,
+1753,389,Rouen,Premagny,IV,,1753-05-05,22:16:40,LAT,-223,,,22:08:47,used,high,
+1753,389,Rouen,Le Cat,IV,,1753-05-05,22:16:26,LAT,-223,,,22:08:33,used,high,
+1753,389,Paris,Cassini,IV,,1753-05-05,22:21:42,LAT,-223,,,22:08:48,used (best observer),high,
+1753,389,Paris,Le Gentil,IV,,1753-05-05,22:21:42,LAT,-223,,,22:08:48,used (best observer),high,
+1753,389,Paris,Delisle,IV,,1753-05-05,22:21:23,LAT,-223,,,22:08:29,used (best observer),high,
+1753,389,Paris,De Merveille,IV,,1753-05-05,22:21:35,LAT,-223,,,22:08:41,used,high,
+1753,389,Paris,Libours,IV,,1753-05-05,22:21:46,LAT,-223,,,22:08:52,used,high,
+1753,389,Paris,Bouguer,IV,,1753-05-05,22:21:13,LAT,-223,,,22:08:19,rejected (doubtful; printed with colon),medium,seconds printed with a doubt colon
+1753,389,London,Short,IV,,1753-05-05,22:08:10,LMT,0,,,22:08:50,used (best observer),high,mean time
+1753,389,London,Bevis,IV,,1753-05-05,22:08:06,LMT,0,,,22:08:46,used (best observer),high,mean time
+1753,389,London,Sisson,IV,,1753-05-05,22:08:11,LMT,0,,,22:08:51,used,high,mean time
+1753,389,London,Bird,IV,,1753-05-05,22:08:11,LMT,0,,,22:08:51,used (best observer),high,mean time
+1753,389,London,Canton,IV,,1753-05-05,22:08:40,LMT,0,,,22:09:20,used,high,mean time
+1753,389,Hague,Gabry,IV,,1753-05-05,22:30:07,LAT,-223,,,22:09:26,rejected (time error),high,
+1753,389,Haarlem,Anonymous,IV,,1753-05-05,22:31:25,LAT,-223,,,22:09:25,rejected (time error),high,
+1881,419,Melbourne,Ellery,II,Internal contact; good,1881-11-07,19:58:44,LMT,0,-10,,10:18:39,used (+1/3 of interval to next row: 10:18:47),high,
+1881,419,Melbourne,Ellery,II,Black drop broken,1881-11-07,19:59:08,LMT,0,,,10:19:03,combined into Ellery's value,high,
+1881,419,Melbourne,White,II,Thread of light,1881-11-07,19:58:47,LMT,0,,,10:18:42,used (minus 5 s: 10:18:37),high,
+1881,419,Melbourne,Moerlin,II,Complete separation,1881-11-07,19:59:43,LMT,0,,,10:19:38,rejected (clearly too late),high,
+1881,419,Windsor NSW,Tebbutt,II,Contact nearly made,1881-11-07,20:22:10,LMT,0,-11,,10:18:37,used (mean of pair: 10:18:40),high,
+1881,419,Windsor NSW,Tebbutt,II,Band of light distinct,1881-11-07,20:22:16,LMT,0,,,10:18:43,used (mean of pair),high,
+1881,419,Sydney,Russell,II,Unsatisfactory,1881-11-07,20:23:36,LMT,0,-11,,10:18:34,used as 10:18:29 (thread made and broken during 10 s),high,
+1881,419,Sydney,Lenehan,II,No description,1881-11-07,20:23:43,LMT,0,,,10:18:41,used,medium,GMT minutes printed '10' (should be 18; LMT and arithmetic agree)
+1881,419,Sydney,Wright,II,No description,1881-11-07,20:23:10,LMT,0,,,10:18:08,half weight (obviously too early),high,
+1881,419,Sydney,Morrice,II,,1881-11-07,20:23:46,LMT,0,,,10:18:44,used,high,GMT printed as seconds only
+1881,419,Sydney,Hargrave,II,Definition good,1881-11-07,20:23:41,LMT,0,,,10:18:39,used,high,
+1881,419,Sydney,Bladen,II,Contact expected,1881-11-07,20:23:25,LMT,0,,,10:18:23,used (mean of pair: 10:18:32),high,
+1881,419,Sydney,Bladen,II,Band of light distinct,1881-11-07,20:23:43,LMT,0,,,10:18:41,used (mean of pair),high,
+1881,419,Sydney,Conder,II,Limbs tangential,1881-11-07,20:23:36,LMT,0,,,10:18:34,used,high,
+1881,419,Sydney,Brooks,II,First indication of white line,1881-11-07,20:23:36,LMT,0,,,10:18:34,used,medium,local seconds printed '86' (misprint; GMT column implies 36)
+1881,419,Honolulu,Rockwell,II,,1881-11-07,22:18:26,GMT?,0,-6,,10:18:10,small weight,low,local-time column is not Honolulu mean time (it looks like Greenwich civil time); topocentric reduction not attempted; GMT used as printed
+1881,419,Mt Hamilton,Holden,II,Power 50,1881-11-07,2:12:26,LMT,0,-5,,10:18:53,used,high,
+1881,419,Mt Hamilton,Burnham,II,Power 300,1881-11-07,2:12:06,LMT,0,-5,,10:18:33,used,high,
+1881,419,Melbourne,Ellery,III,Thin flickering line connecting planet and limb,1881-11-08,1:15:06,LMT,0,+16,,15:35:27,not a true contact (Newcomb),high,
+1881,419,Melbourne,Ellery,III,Internal contact,1881-11-08,1:15:33,LMT,0,,,15:35:54,used,high,
+1881,419,Melbourne,White,III,,1881-11-08,1:15:30,LMT,0,,,15:35:51,used,high,
+1881,419,Melbourne,Moerlin,III,,1881-11-08,1:15:34,LMT,0,,,15:35:55,used,high,
+1881,419,Melbourne,Turner,III,Filament assumed a solid form,1881-11-08,1:15:23,LMT,0,,,15:35:44,used,high,
+1881,419,Melbourne,Turner,III,Internal contact past,1881-11-08,1:16:04,LMT,0,,,15:36:25,used,medium,GMT printed as minute 35 and seconds 85 (= 36:25)
+1881,419,Windsor NSW,Tebbutt,III,Thread of light very fine,1881-11-08,1:38:54,LMT,0,-20,,15:35:52,double weight,medium,red. printed with minus sign but the GMT column needs +20 (Sydney's value); sign misprint
+1881,419,Windsor NSW,Tebbutt,III,Contact complete,1881-11-08,1:38:58,LMT,0,,,15:35:56,double weight,high,
+1881,420,Sydney,Russell,III,Contact good,1881-11-08,1:40:27,LMT,0,+20,,15:35:56,double weight,high,clean contact and rupture of band of light
+1881,420,Sydney,Lenehan,III,Definition not good,1881-11-08,1:40:29,LMT,0,,,15:35:58,used,high,
+1881,420,Sydney,Wright,III,,1881-11-08,1:40:23,LMT,0,,,15:35:52,used,high,
+1881,420,Sydney,Hargrave,III,Moderately good,1881-11-08,1:40:10,LMT,0,,,15:35:39,used,high,
+1881,420,Sydney,Bladen,III,Contact surely complete; boiling badly,1881-11-08,1:40:44,LMT,0,,,15:36:13,rejected (images too bad),medium,GMT printed as 35 and 73 (= 36:13)
+1881,420,Sydney,Brooks,III,No black drop,1881-11-08,1:40:27,LMT,0,,,15:35:56,used,high,
+1881,420,Honolulu,Rockwell,III,,1881-11-07,15:35:36,GMT?,0,+36,,15:36:12,small weight,low,local column looks like Greenwich time; reduction digits faint
+1881,420,Melbourne,Ellery,IV,,1881-11-08,1:17:13,LMT,0,,,15:37:34,used,high,
+1881,420,Melbourne,White,IV,,1881-11-08,1:17:10,LMT,0,,,15:37:32,used,high,
+1881,420,Melbourne,Moerlin,IV,,1881-11-08,1:17:06,LMT,0,,,15:37:28,used,high,
+1881,420,Melbourne,Turner,IV,,1881-11-08,1:17:07,LMT,0,,,15:37:28,used,high,
+1881,420,Windsor NSW,Tebbutt,IV,,1881-11-08,1:40:36,LMT,0,,,15:37:35,used,medium,first seconds digit malformed (3 or 5); 36 fits Newcomb's GMT
+1881,420,Sydney,Russell,IV,,1881-11-08,1:42:09,LMT,0,,,15:37:38,used,high,GMT minutes overprinted
+1881,420,Sydney,Lenehan,IV,,1881-11-08,1:42:04,LMT,0,,,15:37:33,used,high,
+1881,420,Sydney,Wright,IV,,1881-11-08,1:42:03,LMT,0,,,15:37:32,used,high,
+1881,420,Sydney,Morrice,IV,,1881-11-08,1:42:16,LMT,0,,,15:37:45,used,high,
+1881,420,Sydney,Hargrave,IV,,1881-11-08,1:42:00,LMT,0,,,15:37:29,used,high,
+1881,420,Sydney,Bladen,IV,,1881-11-08,1:42:24,LMT,0,,,15:37:53,used,high,
+1881,420,Sydney,Brooks,IV,,1881-11-08,1:42:09,LMT,0,,,15:37:38,used,high,
+1881,420,Honolulu,Rockwell,IV,,1881-11-07,15:36:23,GMT?,0,,,15:37:04,small weight,low,local column looks like Greenwich time

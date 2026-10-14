@@ -1,0 +1,790 @@
+{
+ "sources": [
+  "Target body name: Mercury (199)                   {source: DE441}",
+  "Target body name: Sun (10)                        {source: DE441}"
+ ],
+ "per_transit_obs": {
+  "1677 I": {
+   "all_s": {
+    "n": 1,
+    "mean": 57.09,
+    "median": 57.09,
+    "rms": 57.09,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 57.09
+   },
+   "all_as": {
+    "n": 1,
+    "mean": 5.65,
+    "median": 5.65,
+    "rms": 5.65,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 5.65
+   },
+   "accepted_s": null,
+   "accepted_as": null,
+   "accepted_radial_as": null,
+   "geo_minus_topo_s": {
+    "n": 1,
+    "mean": -54.29,
+    "median": -54.29,
+    "rms": 54.29,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 54.29
+   }
+  },
+  "1677 II": {
+   "all_s": {
+    "n": 1,
+    "mean": 26.06,
+    "median": 26.06,
+    "rms": 26.06,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 26.06
+   },
+   "all_as": {
+    "n": 1,
+    "mean": 2.58,
+    "median": 2.58,
+    "rms": 2.58,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.58
+   },
+   "accepted_s": {
+    "n": 1,
+    "mean": 26.06,
+    "median": 26.06,
+    "rms": 26.06,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 26.06
+   },
+   "accepted_as": {
+    "n": 1,
+    "mean": 2.58,
+    "median": 2.58,
+    "rms": 2.58,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.58
+   },
+   "accepted_radial_as": {
+    "n": 1,
+    "mean": -2.49,
+    "median": -2.49,
+    "rms": 2.49,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.49
+   },
+   "geo_minus_topo_s": {
+    "n": 1,
+    "mean": -54.09,
+    "median": -54.09,
+    "rms": 54.09,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 54.09
+   }
+  },
+  "1677 III": {
+   "all_s": {
+    "n": 1,
+    "mean": -30.86,
+    "median": -30.86,
+    "rms": 30.86,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 30.86
+   },
+   "all_as": {
+    "n": 1,
+    "mean": -3.05,
+    "median": -3.05,
+    "rms": 3.05,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 3.05
+   },
+   "accepted_s": {
+    "n": 1,
+    "mean": -30.86,
+    "median": -30.86,
+    "rms": 30.86,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 30.86
+   },
+   "accepted_as": {
+    "n": 1,
+    "mean": -3.05,
+    "median": -3.05,
+    "rms": 3.05,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 3.05
+   },
+   "accepted_radial_as": {
+    "n": 1,
+    "mean": -2.95,
+    "median": -2.95,
+    "rms": 2.95,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.95
+   },
+   "geo_minus_topo_s": {
+    "n": 1,
+    "mean": 0.04,
+    "median": 0.04,
+    "rms": 0.04,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 0.04
+   }
+  },
+  "1677 IV": {
+   "all_s": {
+    "n": 2,
+    "mean": 46.42,
+    "median": 46.42,
+    "rms": 88.43,
+    "sd": 106.44,
+    "robust_sd": 111.59,
+    "max_abs": 121.69
+   },
+   "all_as": {
+    "n": 2,
+    "mean": 4.59,
+    "median": 4.59,
+    "rms": 8.75,
+    "sd": 10.53,
+    "robust_sd": 11.04,
+    "max_abs": 12.04
+   },
+   "accepted_s": {
+    "n": 1,
+    "mean": -28.85,
+    "median": -28.85,
+    "rms": 28.85,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 28.85
+   },
+   "accepted_as": {
+    "n": 1,
+    "mean": -2.86,
+    "median": -2.86,
+    "rms": 2.86,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.86
+   },
+   "accepted_radial_as": {
+    "n": 1,
+    "mean": -2.76,
+    "median": -2.76,
+    "rms": 2.76,
+    "sd": 0.0,
+    "robust_sd": 0.0,
+    "max_abs": 2.76
+   },
+   "geo_minus_topo_s": {
+    "n": 2,
+    "mean": -24.45,
+    "median": -24.45,
+    "rms": 24.9,
+    "sd": 6.69,
+    "robust_sd": 7.02,
+    "max_abs": 29.18
+   }
+  },
+  "1753 III": {
+   "all_s": {
+    "n": 16,
+    "mean": 8.09,
+    "median": 5.24,
+    "rms": 24.91,
+    "sd": 24.34,
+    "robust_sd": 24.23,
+    "max_abs": 51.8
+   },
+   "all_as": {
+    "n": 16,
+    "mean": 0.54,
+    "median": 0.35,
+    "rms": 1.67,
+    "sd": 1.63,
+    "robust_sd": 1.62,
+    "max_abs": 3.47
+   },
+   "accepted_s": {
+    "n": 12,
+    "mean": 3.28,
+    "median": -0.68,
+    "rms": 14.44,
+    "sd": 14.69,
+    "robust_sd": 15.45,
+    "max_abs": 27.74
+   },
+   "accepted_as": {
+    "n": 12,
+    "mean": 0.22,
+    "median": -0.05,
+    "rms": 0.97,
+    "sd": 0.98,
+    "robust_sd": 1.03,
+    "max_abs": 1.86
+   },
+   "accepted_radial_as": {
+    "n": 12,
+    "mean": 0.22,
+    "median": -0.05,
+    "rms": 0.96,
+    "sd": 0.97,
+    "robust_sd": 1.02,
+    "max_abs": 1.84
+   },
+   "geo_minus_topo_s": {
+    "n": 16,
+    "mean": 0.27,
+    "median": 0.27,
+    "rms": 0.34,
+    "sd": 0.22,
+    "robust_sd": 0.19,
+    "max_abs": 0.94
+   }
+  },
+  "1753 IV": {
+   "all_s": {
+    "n": 18,
+    "mean": -11.43,
+    "median": -12.38,
+    "rms": 21.57,
+    "sd": 18.83,
+    "robust_sd": 8.15,
+    "max_abs": 40.79
+   },
+   "all_as": {
+    "n": 18,
+    "mean": -0.77,
+    "median": -0.83,
+    "rms": 1.45,
+    "sd": 1.26,
+    "robust_sd": 0.55,
+    "max_abs": 2.73
+   },
+   "accepted_s": {
+    "n": 14,
+    "mean": -13.44,
+    "median": -12.38,
+    "rms": 18.0,
+    "sd": 12.42,
+    "robust_sd": 5.0,
+    "max_abs": 30.79
+   },
+   "accepted_as": {
+    "n": 14,
+    "mean": -0.9,
+    "median": -0.83,
+    "rms": 1.21,
+    "sd": 0.83,
+    "robust_sd": 0.34,
+    "max_abs": 2.06
+   },
+   "accepted_radial_as": {
+    "n": 14,
+    "mean": -0.89,
+    "median": -0.82,
+    "rms": 1.19,
+    "sd": 0.82,
+    "robust_sd": 0.33,
+    "max_abs": 2.04
+   },
+   "geo_minus_topo_s": {
+    "n": 18,
+    "mean": 0.68,
+    "median": 0.66,
+    "rms": 0.75,
+    "sd": 0.32,
+    "robust_sd": 0.16,
+    "max_abs": 1.4
+   }
+  },
+  "1881 II": {
+   "all_s": {
+    "n": 17,
+    "mean": -4.55,
+    "median": -6.7,
+    "rms": 18.74,
+    "sd": 18.74,
+    "robust_sd": 8.18,
+    "max_abs": 52.3
+   },
+   "all_as": {
+    "n": 17,
+    "mean": -0.45,
+    "median": -0.66,
+    "rms": 1.85,
+    "sd": 1.84,
+    "robust_sd": 0.81,
+    "max_abs": 5.15
+   },
+   "accepted_s": {
+    "n": 16,
+    "mean": -8.11,
+    "median": -6.96,
+    "rms": 14.22,
+    "sd": 12.06,
+    "robust_sd": 7.41,
+    "max_abs": 38.22
+   },
+   "accepted_as": {
+    "n": 16,
+    "mean": -0.8,
+    "median": -0.69,
+    "rms": 1.4,
+    "sd": 1.19,
+    "robust_sd": 0.73,
+    "max_abs": 3.76
+   },
+   "accepted_radial_as": {
+    "n": 16,
+    "mean": 0.78,
+    "median": 0.67,
+    "rms": 1.36,
+    "sd": 1.15,
+    "robust_sd": 0.71,
+    "max_abs": 3.66
+   },
+   "geo_minus_topo_s": {
+    "n": 17,
+    "mean": -0.04,
+    "median": -0.18,
+    "rms": 0.26,
+    "sd": 0.27,
+    "robust_sd": 0.0,
+    "max_abs": 0.43
+   }
+  },
+  "1881 III": {
+   "all_s": {
+    "n": 14,
+    "mean": -0.59,
+    "median": -0.0,
+    "rms": 13.15,
+    "sd": 13.63,
+    "robust_sd": 4.59,
+    "max_abs": 30.5
+   },
+   "all_as": {
+    "n": 14,
+    "mean": -0.06,
+    "median": -0.0,
+    "rms": 1.29,
+    "sd": 1.34,
+    "robust_sd": 0.45,
+    "max_abs": 3.0
+   },
+   "accepted_s": {
+    "n": 12,
+    "mean": 0.1,
+    "median": -0.0,
+    "rms": 10.55,
+    "sd": 11.02,
+    "robust_sd": 4.36,
+    "max_abs": 30.5
+   },
+   "accepted_as": {
+    "n": 12,
+    "mean": 0.01,
+    "median": -0.0,
+    "rms": 1.04,
+    "sd": 1.08,
+    "robust_sd": 0.43,
+    "max_abs": 3.0
+   },
+   "accepted_radial_as": {
+    "n": 12,
+    "mean": 0.01,
+    "median": -0.0,
+    "rms": 1.01,
+    "sd": 1.05,
+    "robust_sd": 0.42,
+    "max_abs": 2.92
+   },
+   "geo_minus_topo_s": {
+    "n": 14,
+    "mean": 0.24,
+    "median": 0.12,
+    "rms": 0.32,
+    "sd": 0.21,
+    "robust_sd": 0.28,
+    "max_abs": 0.47
+   }
+  },
+  "1881 IV": {
+   "all_s": {
+    "n": 12,
+    "mean": -3.69,
+    "median": -5.56,
+    "rms": 8.02,
+    "sd": 7.43,
+    "robust_sd": 6.67,
+    "max_abs": 14.04
+   },
+   "all_as": {
+    "n": 12,
+    "mean": -0.36,
+    "median": -0.55,
+    "rms": 0.79,
+    "sd": 0.73,
+    "robust_sd": 0.66,
+    "max_abs": 1.38
+   },
+   "accepted_s": {
+    "n": 12,
+    "mean": -3.69,
+    "median": -5.56,
+    "rms": 8.02,
+    "sd": 7.43,
+    "robust_sd": 6.67,
+    "max_abs": 14.04
+   },
+   "accepted_as": {
+    "n": 12,
+    "mean": -0.36,
+    "median": -0.55,
+    "rms": 0.79,
+    "sd": 0.73,
+    "robust_sd": 0.66,
+    "max_abs": 1.38
+   },
+   "accepted_radial_as": {
+    "n": 12,
+    "mean": -0.35,
+    "median": -0.53,
+    "rms": 0.77,
+    "sd": 0.71,
+    "robust_sd": 0.64,
+    "max_abs": 1.34
+   },
+   "geo_minus_topo_s": {
+    "n": 12,
+    "mean": 0.23,
+    "median": 0.37,
+    "rms": 0.49,
+    "sd": 0.45,
+    "robust_sd": 0.0,
+    "max_abs": 0.81
+   }
+  }
+ },
+ "summary": {
+  "interior": {
+   "oc_s": {
+    "n": 37,
+    "mean": -7.26,
+    "median": -0.87,
+    "rms": 21.76,
+    "sd": 20.8,
+    "robust_sd": 15.19,
+    "max_abs": 73.02
+   },
+   "oc_path_as": {
+    "n": 37,
+    "mean": -0.67,
+    "median": -0.09,
+    "rms": 1.93,
+    "sd": 1.83,
+    "robust_sd": 1.18,
+    "max_abs": 7.15
+   },
+   "oc_path_as_weighted": {
+    "n": 37,
+    "mean": -0.56,
+    "median": -0.09,
+    "rms": 1.93,
+    "sd": 1.83,
+    "robust_sd": 1.18,
+    "max_abs": 7.15
+   },
+   "radial_as": {
+    "n": 37,
+    "mean": 0.49,
+    "median": 0.33,
+    "rms": 1.29,
+    "sd": 1.21,
+    "robust_sd": 0.63,
+    "max_abs": 4.64
+   }
+  },
+  "interior_weight_ge_1": {
+   "oc_path_as": {
+    "n": 27,
+    "mean": -0.5,
+    "median": -0.07,
+    "rms": 1.2,
+    "sd": 1.11,
+    "robust_sd": 0.86,
+    "max_abs": 4.23
+   }
+  },
+  "interior_by_century": {
+   "16": {
+    "n": 3,
+    "mean": -0.14,
+    "median": 0.16,
+    "rms": 2.35,
+    "sd": 2.88,
+    "robust_sd": 3.6,
+    "max_abs": 3.15
+   },
+   "17": {
+    "n": 17,
+    "mean": -0.53,
+    "median": -0.07,
+    "rms": 1.77,
+    "sd": 1.74,
+    "robust_sd": 1.51,
+    "max_abs": 4.23
+   },
+   "18": {
+    "n": 17,
+    "mean": -0.91,
+    "median": -0.1,
+    "rms": 1.99,
+    "sd": 1.82,
+    "robust_sd": 0.89,
+    "max_abs": 7.15
+   }
+  },
+  "exterior": {
+   "oc_s": {
+    "n": 21,
+    "mean": -18.1,
+    "median": -14.74,
+    "rms": 21.01,
+    "sd": 10.93,
+    "robust_sd": 11.31,
+    "max_abs": 42.52
+   },
+   "oc_path_as": {
+    "n": 21,
+    "mean": -1.59,
+    "median": -1.19,
+    "rms": 1.88,
+    "sd": 1.02,
+    "robust_sd": 0.72,
+    "max_abs": 4.22
+   },
+   "oc_path_as_weighted": {
+    "n": 21,
+    "mean": -1.43,
+    "median": -1.19,
+    "rms": 1.88,
+    "sd": 1.02,
+    "robust_sd": 0.72,
+    "max_abs": 4.22
+   },
+   "radial_as": {
+    "n": 21,
+    "mean": -1.16,
+    "median": -1.04,
+    "rms": 1.34,
+    "sd": 0.68,
+    "robust_sd": 0.41,
+    "max_abs": 3.27
+   }
+  },
+  "exterior_weight_ge_1": {
+   "oc_path_as": {
+    "n": 11,
+    "mean": -1.46,
+    "median": -1.04,
+    "rms": 1.77,
+    "sd": 1.05,
+    "robust_sd": 0.5,
+    "max_abs": 4.22
+   }
+  },
+  "exterior_by_century": {
+   "16": {
+    "n": 3,
+    "mean": -2.1,
+    "median": -2.46,
+    "rms": 2.24,
+    "sd": 0.97,
+    "robust_sd": 0.57,
+    "max_abs": 2.84
+   },
+   "17": {
+    "n": 9,
+    "mean": -1.87,
+    "median": -1.67,
+    "rms": 2.24,
+    "sd": 1.29,
+    "robust_sd": 0.94,
+    "max_abs": 4.22
+   },
+   "18": {
+    "n": 9,
+    "mean": -1.14,
+    "median": -0.98,
+    "rms": 1.25,
+    "sd": 0.54,
+    "robust_sd": 0.3,
+    "max_abs": 2.35
+   }
+  },
+  "all": {
+   "oc_s": {
+    "n": 58,
+    "mean": -11.19,
+    "median": -11.47,
+    "rms": 21.49,
+    "sd": 18.51,
+    "robust_sd": 17.47,
+    "max_abs": 73.02
+   },
+   "oc_path_as": {
+    "n": 58,
+    "mean": -1.0,
+    "median": -1.02,
+    "rms": 1.91,
+    "sd": 1.64,
+    "robust_sd": 1.52,
+    "max_abs": 7.15
+   },
+   "oc_path_as_weighted": {
+    "n": 58,
+    "mean": -0.72,
+    "median": -1.02,
+    "rms": 1.91,
+    "sd": 1.64,
+    "robust_sd": 1.52,
+    "max_abs": 7.15
+   },
+   "radial_as": {
+    "n": 58,
+    "mean": -0.11,
+    "median": 0.09,
+    "rms": 1.31,
+    "sd": 1.31,
+    "robust_sd": 1.35,
+    "max_abs": 4.64
+   }
+  },
+  "all_weight_ge_1": {
+   "oc_path_as": {
+    "n": 38,
+    "mean": -0.78,
+    "median": -0.81,
+    "rms": 1.39,
+    "sd": 1.16,
+    "robust_sd": 1.14,
+    "max_abs": 4.23
+   }
+  },
+  "all_by_century": {
+   "16": {
+    "n": 6,
+    "mean": -1.12,
+    "median": -1.73,
+    "rms": 2.3,
+    "sd": 2.2,
+    "robust_sd": 1.88,
+    "max_abs": 3.15
+   },
+   "17": {
+    "n": 26,
+    "mean": -0.99,
+    "median": -1.11,
+    "rms": 1.95,
+    "sd": 1.71,
+    "robust_sd": 1.8,
+    "max_abs": 4.23
+   },
+   "18": {
+    "n": 26,
+    "mean": -0.99,
+    "median": -0.86,
+    "rms": 1.77,
+    "sd": 1.49,
+    "robust_sd": 1.12,
+    "max_abs": 7.15
+   }
+  }
+ },
+ "eot": [
+  {
+   "transit": "1677",
+   "instant_ut": "09:43:26.0",
+   "E_newcomb_s": -956,
+   "E_horizons_s": -955.1,
+   "diff_s": 0.9
+  },
+  {
+   "transit": "1677",
+   "instant_ut": "14:56:02.0",
+   "E_newcomb_s": -954,
+   "E_horizons_s": -954.5,
+   "diff_s": -0.5
+  },
+  {
+   "transit": "1753",
+   "instant_ut": "10:21:43.0",
+   "E_newcomb_s": -223,
+   "E_horizons_s": -222.5,
+   "diff_s": 0.5
+  }
+ ],
+ "extra": {
+  "type_II": {
+   "n": 18,
+   "mean_as_EM": -1.47,
+   "sd_as_EM": 2.23,
+   "mean_as_HZdT": -1.19,
+   "sd_as_HZdT": 2.28
+  },
+  "type_III": {
+   "n": 19,
+   "mean_as_EM": 0.09,
+   "sd_as_EM": 0.85,
+   "mean_as_HZdT": 0.42,
+   "sd_as_HZdT": 0.79
+  },
+  "type_IV": {
+   "n": 21,
+   "mean_as_EM": -1.6,
+   "sd_as_EM": 1.02,
+   "mean_as_HZdT": -1.24,
+   "sd_as_HZdT": 0.96
+  },
+  "after_type_offsets": {
+   "rms_as": 1.43,
+   "robust_sd_as": 0.56,
+   "max_abs_as": 5.63
+  },
+  "deltaT_model_difference_as": {
+   "min": 0.12,
+   "max": 0.79
+  },
+  "trend_floor_as_per_century": {
+   "unweighted": 0.32,
+   "newcomb_weights": 0.24,
+   "sigma_per_contact_as": 1.43,
+   "span_years": 204
+  },
+  "sky_per_perihelion_factor": {
+   "Nov": -0.225,
+   "May": 0.228
+  },
+  "note": "trend floors are the 1-sigma precision of a straight line through the residuals; dividing by the |factor| converts them to perihelion-longitude units. Element correlations are not included."
+ }
+}
