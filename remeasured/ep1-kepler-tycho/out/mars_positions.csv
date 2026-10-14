@@ -1,0 +1,188 @@
+session_id,jd_tt,lon_deg,lat_deg,sigma_lon_arcmin,sigma_lat_arcmin,site,flags
+1580-11-17N,2298474.383451,66.67014,1.75263,2.47,1.63,Hven,quality:A;long_span:3.2h
+1582-11-24M,2299210.617033,116.67327,2.83535,0.73,1.74,Hven,quality:A;quadrant_zero_pooled:Q.?
+1582-12-26V,2299243.302136,107.68792,4.07242,0.92,1.34,Hven,quality:B;star_unidentified
+1582-12-27M,2299243.747267,107.49161,4.11644,1.79,1.40,Hven,quality:B;long_span:7.3h;quadrant_uncalibrated:Q. minor;star_unidentified
+1582-12-30V,2299247.338883,106.07501,4.17946,1.21,1.56,Hven,quality:B;long_span:3.8h;quadrant_calibration_reading_rejected(>10');star_unidentified
+1583-01-16V,2299264.360838,100.26024,4.09637,0.67,1.10,Hven,quality:A;long_span:3.5h;quadrant_zero_pooled:Mural;sextant_index_pooled:sext:-0.1'
+1583-01-17V,2299265.354583,100.03310,4.12444,0.84,1.93,Hven,quality:B;long_span:7.0h;sextant_index_pooled:sext:-0.1';star_unidentified;untimed_rows_at_mean_time
+1583-01-18M,2299265.635796,99.95647,4.13613,0.43,1.60,Hven,quality:B;sextant_index_pooled:sext:-0.1';star_unidentified
+1583-01-18V,2299266.318708,99.79539,4.07941,0.92,1.41,Hven,quality:B;long_span:6.3h;sextant_index_pooled:sext:-0.1';star_unidentified;untimed_rows_at_mean_time
+1583-01-19V,2299267.257350,99.59270,4.05570,0.46,0.78,Hven,quality:B;long_span:4.4h;quadrant_zero_pooled:Mural;quadrant_zero_pooled:Q. minor;sextant_index_pooled:sext:-0.1';star_unidentified
+1583-01-21V,2299269.242876,99.19038,4.02396,1.01,2.20,Hven,quality:B;quadrant_zero_pooled:Mural;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1583-01-22V,2299270.348494,98.94140,3.97217,0.72,0.85,Hven,quality:B;quadrant_zero_pooled:Mural;quadrant_zero_pooled:Q. minor;sextant_index_pooled:sext:-0.1';two_fold_ambiguity_resolved_by:printed_altitudes
+1583-01-23V,2299271.229438,98.83738,3.97851,0.57,1.25,Hven,quality:A;sextant_index_pooled:sext:-0.1'
+1583-01-25V,2299273.240687,98.35664,3.88730,0.48,1.61,Hven,quality:B;long_span:3.7h;quadrant_zero_pooled:Q. minor;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1583-02-06V,2299285.295362,97.75186,3.64568,0.39,0.83,Hven,quality:B;long_span:4.1h;quadrant_zero_pooled:Mural;quadrant_zero_pooled:Q. minor;sextant_index_pooled:sext:-0.1';star_unidentified
+1583-02-07V,2299286.276410,97.77951,3.60170,0.33,0.97,Hven,quality:A;long_span:4.4h;quadrant_zero_pooled:Mural;quadrant_zero_pooled:Q. minor;sextant_index_pooled:sext:-0.1'
+1583-02-09V,2299288.249873,97.86209,3.57003,0.50,1.22,Hven,quality:B;long_span:2.6h;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:-0.1'
+1584-11-21M,2299938.756930,145.96899,2.44784,1.25,1.01,Hven,quality:A
+1585-01-14V,2299993.323577,147.60066,4.36528,2.13,1.32,Hven,"quality:B;altitudes_suspect: the Alt. Mars column rises from 11 20 to 22 20 in about one hour (7 26 to 8 38), faster than the neighbouring Mars measurements allow;quadrant_uncalibrated:Q. Tichon.;star_unidentified;untimed_rows_at_mean_time"
+1585-01-15M,2299993.665526,147.52860,4.38291,1.43,1.10,Hven,quality:B;star_unidentified;two_fold_ambiguity_resolved_by:printed_altitudes
+1585-01-17M,2299995.622625,146.88539,4.58075,0.92,1.45,Hven,quality:B;long_span:2.9h;quadrant_uncalibrated:Q. Tichon.
+1585-01-21V,2300000.287606,145.25427,4.61602,1.56,2.95,Hven,quality:B;armillary_uncalibrated;long_span:3.7h
+1585-01-23M,2300001.651010,144.78091,4.50615,0.79,1.14,Hven,quality:B;armillary_uncalibrated;long_span:3.9h
+1585-01-24V,2300003.316587,144.15863,4.55023,0.72,1.10,Hven,quality:B;armillary_uncalibrated;below_5deg_dropped:12;long_span:9.7h;quadrant_uncalibrated:Q. Tichon.
+1585-02-03V,2300013.265145,140.24422,4.49782,0.83,1.45,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;long_span:4.3h;untimed_rows_at_mean_time
+1585-02-04V,2300014.324834,139.83445,4.45647,0.53,0.63,Hven,quality:B;armillary_uncalibrated;long_span:3.0h;untimed_rows_at_mean_time
+1585-02-09V,2300019.410748,137.98066,4.46150,0.60,0.56,Hven,quality:B;quadrant_uncalibrated:Q. Tichon.
+1585-02-17V,2300027.387770,135.23695,4.24570,0.55,0.83,Hven,quality:B;quadrant_uncalibrated:Q. Tichon.
+1585-03-09V,2300047.352923,131.83426,3.50306,0.59,0.88,Hven,quality:B;quadrant_uncalibrated:Portat.;quadrant_uncalibrated:Q. Tichon.
+1585-03-11V,2300049.371185,131.77263,3.42450,0.95,1.69,Hven,quality:B;altitudes_suspect: meridian altitude printed 44 40 40 (neighbouring days 54 4x);quadrant_uncalibrated:Q. Tichon.
+1585-03-12V,2300050.390573,131.76242,3.38182,0.64,1.09,Hven,quality:B;quadrant_uncalibrated:Portat.;quadrant_uncalibrated:Q. Tichon.
+1585-03-13V,2300051.360425,131.76380,3.34778,0.67,1.14,Hven,quality:B;quadrant_uncalibrated:Q. Tichon.
+1585-03-14V,2300052.362120,131.77508,3.31359,0.50,0.90,Hven,quality:B;quadrant_uncalibrated:Portat.;quadrant_uncalibrated:Q. Tichon.
+1585-03-16V,2300054.308645,131.85000,3.22901,0.99,1.45,Hven,quality:B;quadrant_uncalibrated:Q. Tichon.
+1585-03-19V,2300057.323954,132.06316,3.17969,0.74,1.23,Hven,"quality:B;altitudes_suspect: none; Asc. R. 125 printed (probable misprint for 135), see tycho_reduction note;quadrant_uncalibrated:Q. Tichon."
+1585-03-25V,2300063.352259,132.67884,2.81736,1.35,2.17,Hven,quality:B;quadrant_uncalibrated:Q. Tichon.
+1585-03-26V,2300064.314624,132.84383,2.84301,0.81,1.04,Hven,quality:B;quadrant_uncalibrated:Portat.;quadrant_uncalibrated:Q. Tichon.
+1585-04-07V,2300076.315652,135.30980,2.43563,1.19,2.88,Hven,quality:B;armillary_uncalibrated;long_span:6.2h
+1586-09-24M,2300610.624224,134.03261,1.32019,1.01,1.93,Hven,quality:B;armillary_uncalibrated
+1586-09-23V,2300610.678252,133.45903,1.31191,1.37,1.95,Hven,quality:B;armillary_uncalibrated
+1586-10-25M,2300641.680566,151.69162,1.69156,1.12,1.63,Hven,quality:B;armillary_uncalibrated
+1586-11-08M,2300655.732377,159.02545,2.00409,1.10,1.88,Hven,quality:B;armillary_uncalibrated
+1586-11-10M,2300657.763553,160.15160,1.89771,1.51,2.57,Hven,quality:B;armillary_uncalibrated
+1586-11-11M,2300658.710787,160.60645,1.93816,0.77,1.28,Hven,quality:B;armillary_uncalibrated;long_span:2.8h;quadrant_uncalibrated:Q.?
+1586-11-23M,2300670.752555,166.42384,2.10960,0.62,0.81,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Q. Tichon.
+1586-12-01M,2300678.780003,170.07751,2.26188,0.83,1.33,Hven,quality:B;armillary_uncalibrated
+1586-12-27M,2300704.705457,179.73055,2.80420,0.54,0.83,Hven,quality:B;altitudes_suspect: row 7 2 50 time out of sequence;armillary_uncalibrated;long_span:3.6h
+1587-01-01M,2300709.771993,181.16237,2.89010,1.42,1.03,Hven,quality:A;armillary_zero_pooled
+1587-01-09M,2300717.740401,182.93837,3.07297,0.88,1.30,Hven,quality:A;armillary_zero_pooled;clock_slip_1deg:1
+1587-01-10M,2300718.688579,183.12259,3.07940,0.71,0.85,Hven,quality:B;armillary_zero_pooled;quadrant_uncalibrated:Q.?
+1587-01-11M,2300719.750804,183.31625,3.08333,0.64,0.86,Hven,quality:B;armillary_zero_pooled;long_span:3.4h;quadrant_uncalibrated:Q. Tichon.;sextant_index_pooled:sext:+0.8';star_unidentified;untimed_rows_at_mean_time
+1587-01-15M,2300723.666378,183.91216,3.16897,0.48,0.63,Hven,quality:B;armillary_zero_pooled;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.8';star_unidentified
+1587-01-26M,2300734.702838,184.72792,3.42103,0.47,0.62,Hven,quality:A;armillary_zero_pooled
+1587-01-28M,2300736.674960,184.71018,3.46428,0.60,0.73,Hven,quality:A;armillary_zero_pooled
+1587-01-29M,2300737.720356,184.68915,3.49769,0.72,0.89,Hven,quality:A;armillary_zero_pooled
+1587-02-21V,2300761.393484,180.45021,3.69663,0.80,1.07,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';star_unidentified;two_fold_ambiguity_resolved_by:printed_altitudes
+1587-02-23V,2300763.518011,179.75584,3.76626,1.93,2.33,Hven,quality:B;armillary_zero_pooled;long_span:5.1h;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:+0.8';star_unidentified
+1587-02-27M,2300766.669331,178.66533,3.71292,2.03,2.66,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';time_assumed_row;two_fold_ambiguity_resolved_by:printed_altitudes
+1587-03-03M,2300770.555634,177.24143,3.65862,1.17,1.44,Hven,quality:B;armillary_zero_pooled;long_span:4.8h;night_assigned_to_morning_of_date;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.8';star_unidentified;untimed_rows_at_mean_time
+1587-03-03V,2300771.326404,176.91579,3.68357,0.54,0.61,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';star_unidentified
+1587-03-04M,2300771.689951,176.82093,3.70778,1.18,1.36,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';star_unidentified
+1587-03-04V,2300772.317810,176.51918,3.66500,0.45,0.66,Hven,quality:B;armillary_zero_pooled;long_session;long_span:4.2h;sextant_index_pooled:sext:+0.8';star_unidentified
+1587-03-05M,2300772.518149,176.45425,3.63169,0.46,0.69,Hven,quality:B;armillary_zero_pooled;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:+0.8'
+1587-03-05V,2300773.272003,176.16854,3.66871,0.84,0.96,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.8'
+1587-03-09V,2300777.393568,174.53802,3.54320,0.43,0.62,Hven,quality:A;armillary_zero_pooled
+1587-03-10V,2300778.346575,174.15280,3.51892,0.73,0.79,Hven,quality:B;long_session;long_span:5.3h;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:+0.8';untimed_rows_at_mean_time
+1587-03-10N,2300778.671755,174.04646,3.53145,1.12,0.92,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';star_unidentified;untimed_rows_at_mean_time
+1587-03-12V,2300780.355202,173.41435,3.49084,0.44,0.57,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.8'
+1587-03-13V,2300781.401414,172.99946,3.45012,1.26,2.12,Hven,quality:B;long_session;long_span:4.4h;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:+0.8'
+1587-03-14M,2300781.477543,172.92768,3.47430,0.67,0.88,Hven,quality:A;armillary_zero_pooled
+1587-03-17V,2300785.399758,171.52239,3.29587,0.58,0.70,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';untimed_rows_at_mean_time
+1587-03-27V,2300795.369851,168.43890,2.95440,0.54,0.71,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.8'
+1587-04-01V,2300800.359155,167.23417,2.71561,0.99,1.35,Hven,quality:B;armillary_zero_pooled;quadrant_uncalibrated:Q.?;sextant_index_pooled:sext:+0.8'
+1587-04-05V,2300804.326413,166.53337,2.55570,0.85,1.23,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.8';two_fold_ambiguity_resolved_by:printed_altitudes
+1587-04-21V,2300820.363042,165.81837,1.80796,0.73,1.00,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.8'
+1588-10-15M,2301362.643213,160.33926,1.46675,0.60,0.95,Hven,quality:B;armillary_uncalibrated;two_fold_ambiguity_resolved_by:printed_altitudes;untimed_rows_at_mean_time
+1588-11-06M,2301384.739053,173.27303,1.60193,0.97,1.38,Hven,quality:B;armillary_uncalibrated;night_assigned_to_morning_of_date;two_fold_ambiguity_resolved_by:printed_altitudes
+1588-12-27M,2301435.747764,200.61530,1.90677,0.82,0.74,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;quadrant_zero_pooled:Mural
+1589-03-10N,2301509.590231,222.26059,1.98285,0.51,0.73,Hven,quality:B;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Sext.;sextant_index_pooled:sext:+0.4';untimed_rows_at_mean_time
+1589-03-12M,2301510.583378,222.18831,1.96065,0.75,1.13,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Sext.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4';time_assumed_row
+1589-03-14M,2301512.580338,222.14804,1.96347,1.91,2.85,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4';time_assumed_row
+1589-03-16M,2301514.574241,221.95239,1.89976,1.28,1.74,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Q. minor;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1589-03-23M,2301521.587775,221.01438,1.79893,0.79,1.54,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4';time_assumed_row
+1589-04-05V,2301535.447579,217.54029,1.42408,0.58,0.87,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4'
+1589-04-08N,2301538.499118,216.52459,1.30474,0.92,1.37,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1589-04-13V,2301543.414908,214.76146,1.10799,0.71,1.16,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4'
+1589-04-20V,2301550.420492,212.18941,0.81553,0.76,1.13,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4';two_fold_ambiguity_resolved_by:printed_altitudes
+1589-04-23V,2301553.410777,211.08093,0.68767,1.10,1.88,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4'
+1589-04-24V,2301554.409545,210.74477,0.61684,0.91,1.75,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4'
+1589-05-27V,2301587.471080,205.04027,-0.75340,1.99,2.90,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+0.4'
+1590-03-04V,2301868.271762,24.32710,-0.05569,1.14,1.75,Hven,quality:B;armillary_uncalibrated;two_fold_ambiguity_resolved_by:printed_altitudes
+1590-10-06M,2302083.658090,167.40286,1.28631,1.05,0.94,Hven,quality:B;armillary_uncalibrated
+1590-10-10M,2302087.701343,169.87580,1.25080,0.99,1.42,Hven,quality:B;armillary_uncalibrated;two_fold_ambiguity_resolved_by:printed_altitudes
+1590-10-31M,2302108.717953,183.00117,1.26380,0.77,0.82,Hven,quality:B;armillary_uncalibrated
+1590-12-18M,2302156.776755,212.13687,1.20572,0.78,0.83,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1590-12-28M,2302166.758741,218.12206,1.17655,0.77,1.19,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1591-02-03M,2302203.732683,239.12592,0.93164,0.99,1.06,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-02-19M,2302219.716676,247.54905,0.73785,0.97,1.42,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-04-29N,2302289.546307,272.20676,-1.46155,0.90,1.53,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;sextant_index_pooled:sext:+0.4'
+1591-05-13M,2302302.534678,272.35786,-2.26080,1.04,1.28,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-05-21N,2302311.524164,271.19481,-2.86945,1.22,1.07,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-05-24N,2302314.506065,270.63434,-3.09176,1.06,1.03,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-05-29N,2302319.494021,269.44363,-3.42898,0.92,0.97,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-06-06N,2302327.484867,267.23131,-3.91928,1.05,1.00,Hven,quality:B;armillary_uncalibrated;clock_slip_1deg:2;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-06-10N,2302331.458072,265.99480,-4.14502,0.89,1.00,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-06-11N,2302332.446039,265.68165,-4.20250,0.78,0.97,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-06-12V,2302333.451673,265.36757,-4.25221,0.77,0.99,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4';untimed_rows_at_mean_time
+1591-06-28V,2302349.399852,261.14626,-4.77590,0.85,0.99,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-09-27V,2302440.244964,289.14033,-2.79801,1.08,1.01,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-10-02V,2302445.233685,292.24762,-2.64397,1.33,1.29,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-10-09V,2302452.222786,296.76107,-2.42022,1.51,2.44,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-10-10V,2302453.223751,297.38605,-2.39450,1.65,1.10,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1591-10-16V,2302459.223655,301.42015,-2.21707,1.06,1.01,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:+0.4'
+1592-01-23V,2302558.260717,11.49973,-0.03081,0.62,0.97,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+1.1';two_fold_ambiguity_resolved_by:printed_altitudes
+1592-02-03D,2302569.233266,19.22829,0.12661,0.53,0.79,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+1.1';time_basis_unknown_assumed;untimed_rows_at_mean_time
+1592-02-06V,2302572.259235,21.35891,0.17788,0.47,0.86,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+1.1';untimed_rows_at_mean_time
+1592-02-13V,2302579.249735,26.28962,0.26961,1.50,1.70,Hven,quality:B;armillary_uncalibrated;clock_slip_1deg:1;sextant_index_pooled:sext:+1.1'
+1592-02-17V,2302583.267252,29.06952,0.33279,0.52,0.79,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;sextant_index_pooled:sext:+1.1'
+1592-02-20V,2302586.273154,31.15990,0.36124,0.50,0.68,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+1.1'
+1592-02-29V,2302595.304871,37.40506,0.47218,0.60,0.74,Hven,quality:B;armillary_uncalibrated;sextant_index_pooled:sext:+1.1'
+1593-07-02V,2303084.506682,344.47417,-4.87204,0.89,1.05,Hven,quality:B;armillary_uncalibrated;below_5deg_dropped:5;clock_readings_scatter>2min;copy_codex_K
+1593-07-25M,2303106.531383,347.86149,-5.95897,0.81,1.58,Hven,quality:B;armillary_uncalibrated;copy_codex_K
+1593-07-31M,2303112.544047,347.65389,-6.17892,1.07,1.10,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-08-11M,2303123.534144,346.10622,-6.35100,1.44,2.27,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.;untimed_rows_at_mean_time
+1593-08-18M,2303130.516304,344.49640,-6.32915,1.46,2.38,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-08-22N,2303135.424071,343.17932,-6.19332,0.43,0.70,Hven,quality:B;armillary_uncalibrated;below_5deg_dropped:9;clock_readings_scatter>2min;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-08-23V,2303136.448576,342.90607,-6.16185,1.11,1.82,Hven,quality:B;armillary_uncalibrated;below_5deg_dropped:2;copy_codex_K;long_span:2.5h;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-08-24D,2303137.428776,342.63167,-6.11392,0.35,0.53,Hven,quality:B;armillary_uncalibrated;below_5deg_dropped:4;clock_readings_scatter>2min;clock_slip_1deg:1;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Mural;quadrant_uncalibrated:Volub.
+1593-09-08V,2303152.403472,338.88957,-5.33058,1.27,2.14,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-09-21V,2303165.364867,337.33405,-4.29040,0.64,1.07,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-09-26V,2303170.367466,337.30498,-3.93666,0.48,0.62,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-09-28V,2303172.335724,337.38909,-3.74960,0.38,0.47,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-10-29V,2303203.267428,344.50517,-1.67363,0.69,0.84,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;clock_slip_1deg:1;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-11-26V,2303231.235180,357.14351,-0.44389,1.52,1.89,Hven,quality:B;armillary_uncalibrated;clock_slip_1deg:1;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-11-27V,2303232.268226,357.33329,-0.23201,0.65,0.96,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-12-07V,2303242.297383,3.03841,-0.04822,0.71,0.92,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;clock_slip_1deg:2;copy_codex_K;star_unidentified
+1593-12-10V,2303245.265625,4.71964,-0.00547,0.73,1.17,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-12-13V,2303248.242194,6.37213,0.04706,0.46,0.77,Hven,quality:B;armillary_uncalibrated;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1593-12-19V,2303254.218796,9.76795,0.22163,0.43,0.72,Hven,quality:B;armillary_uncalibrated;clock_readings_scatter>2min;clock_slip_1deg:4;copy_codex_K;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1594-01-03V,2303269.222710,18.56889,0.47306,0.51,0.73,Hven,quality:B;armillary_uncalibrated;quadrant_uncalibrated:Chalyb.;quadrant_uncalibrated:Volub.
+1594-02-14V,2303311.262057,45.03267,1.00123,1.05,2.76,Hven,quality:B;armillary_uncalibrated;two_fold_ambiguity_resolved_by:printed_altitudes
+1595-07-22M,2303833.583064,34.19401,-2.49528,0.79,0.80,Hven,quality:B;sextant_index_pooled:sext:+0.7';star_name_conflict: header 'ab ore Peg.' vs reduction 'prima alae Peg.'; Markab used (Tycho's printed RA/Dec = Markab);time_assumed_row
+1595-09-07M,2303880.575717,54.38790,-2.09403,0.35,0.55,Hven,quality:B;clock_readings_scatter>2min;sextant_index_pooled:sext:+0.7';time_assumed_row
+1595-09-22M,2303895.643494,56.38611,-1.75571,0.86,1.45,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.7'
+1595-09-30M,2303903.619357,56.12158,-1.40018,1.14,1.49,Hven,quality:B;sextant_index_pooled:sext:+0.7';time_assumed_row
+1595-10-16M,2303919.605069,52.92946,-0.72129,0.40,0.45,Hven,quality:B;clock_readings_scatter>2min;clock_slip_suspected: row printed 5 35 1/6 sits between 3 31 2/3 and 3 37; hour probably 3;sextant_index_pooled:sext:+0.7';time_assumed_row
+1595-10-25V,2303929.288007,49.64888,-0.21450,0.40,0.36,Hven,"quality:B;altitudes_suspect: Mars altitudes rise about 10 deg/h;clock_slip_1deg:3;clock_slip_suspected: Vultur 48 35 (8 4 2/5), 50 0 (8 10), 51 25 (8 15 2/3) run 1 deg high against the others; transcribed as printed;long_span:2.6h;sextant_index_pooled:sext:+0.7';time_assumed_row"
+1595-10-28V,2303932.359733,48.51362,-0.01986,0.28,0.30,Hven,quality:A;clock_readings_scatter>2min;long_session;long_span:5.8h;sextant_index_pooled:sext:+0.7'
+1595-10-30V,2303934.286844,47.81420,0.08482,0.33,0.36,Hven,quality:A;long_session;sextant_index_pooled:sext:+0.7'
+1595-11-03V,2303938.439155,46.31385,0.29059,0.40,0.48,Hven,quality:B;clock_readings_scatter>2min;clock_slip_1deg:1;sextant_index_pooled:sext:+0.7';time_assumed_row
+1595-11-07V,2303942.311374,45.00733,0.49511,0.55,0.91,Hven,quality:B;armillary_zero_pooled;sextant_index_pooled:sext:+0.7';time_assumed_row
+1595-11-13V,2303948.296290,43.21333,0.80692,0.61,1.06,Hven,quality:A;armillary_zero_pooled;sextant_index_pooled:sext:+0.7'
+1595-11-15V,2303950.385344,42.68582,0.85305,0.49,0.63,Hven,quality:A;armillary_zero_pooled;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.;sextant_index_pooled:sext:+0.7'
+1595-11-21V,2303956.376668,41.42053,1.09628,0.50,0.69,Hven,quality:A;armillary_zero_pooled;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.;sextant_index_pooled:sext:+0.7'
+1595-12-04V,2303969.320363,40.39340,1.45353,1.01,1.41,Hven,quality:A;armillary_zero_pooled;clock_readings_scatter>2min;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.;sextant_index_pooled:sext:+0.7'
+1595-12-06V,2303971.324907,40.44712,1.49793,0.90,1.26,Hven,quality:B;armillary_zero_pooled;quadrant_uncalibrated:Q.?;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.;sextant_index_pooled:sext:+0.7'
+1595-12-14V,2303979.314460,41.10294,1.64639,2.86,1.22,Hven,quality:A;armillary_zero_pooled;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.
+1595-12-18V,2303983.317601,41.70568,1.70236,0.27,0.42,Hven,"quality:B;clock_readings_scatter>2min;clock_slip_suspected: clock-star column is named 'Os Pegasi occid.' then '1 alae Peg. occ.' then (unlabelled, then 'Luc. Mand. Cete occid.' on p.459); the unlabelled rows between 7 45 and 8 4 are assigned to Luc. Mand. Cete at conf L;long_session: 5 49 to 9 46 after noon;long_span:5.0h;sextant_index_pooled:sext:+0.7';sextant_index_pooled:sext_nov:+0.3';time_assumed_row;untimed_rows_at_mean_time"
+1595-12-23V,2303988.291309,42.66801,1.75502,0.43,0.62,Hven,quality:A;armillary_zero_pooled;clock_readings_scatter>2min;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.;sextant_index_pooled:sext:+0.7'
+1596-01-16D,2304012.238821,50.21468,1.88014,0.43,0.52,Hven,quality:A;armillary_zero_pooled;clock_readings_scatter>2min;quadrant_zero_pooled:Chalyb.;quadrant_zero_pooled:Volub.
+1596-01-29V,2304025.235817,55.67847,1.87446,0.42,0.34,Hven,quality:A;clock_slip_suspected: Pollux distance 52 observed vs 57 41 30 printed in the reduction (not fixed)
+1596-02-24V,2304051.262261,68.36200,1.83776,0.47,0.74,Hven,quality:B;clock_slip_1deg:2;time_assumed_row
+1596-03-05V,2304061.279476,73.63744,1.78819,0.39,0.61,Hven,quality:B;armillary_zero_pooled;time_assumed_row
+1596-03-09D,2304065.304580,75.80279,1.79257,0.48,0.60,Hven,quality:B;time_assumed_row
+1596-03-22D,2304078.340832,83.00093,1.74686,0.63,0.71,Hven,quality:B;star_name_conflict: header 'Capite Medusae' vs Dreyer: Sequens sinistri pedis (Persei);star_unidentified;time_assumed_row;two_fold_ambiguity_resolved_by:printed_altitudes
+1596-05-10V,2304127.370224,111.35865,1.51632,0.52,0.50,Hven,quality:A;altitudes_suspect: Altit. Mars falls 24 30 -> 20 0 in 14 1/2 min of clock;armillary_zero_pooled;clock_readings_scatter>2min;clock_slip_1deg:1
+1598-03-02V,2304788.422628,92.24388,-14.31603,1.11,2.02,Wandsbek,quality:B;sextant_index_pooled:sext:+2.5';site_approx:Wandsbek
+1598-03-04V,2304790.341510,92.79803,2.53994,0.81,0.88,Wandsbek,quality:B;sextant_index_pooled:sext:+2.5';site_approx:Wandsbek
+1598-03-06V,2304792.373290,93.61342,2.55005,0.82,0.84,Wandsbek,quality:B;sextant_index_pooled:sext:+2.5';site_approx:Wandsbek;star_name_conflict: the italic sub-heading 'A Boreali Cornu' prints the Leo sign; taken as the boreal horn of Taurus (see stars);untimed_rows_at_mean_time
+1598-03-07V,2304793.426307,93.99785,2.55774,0.68,0.80,Wandsbek,quality:B;long_span:3.5h;sextant_index_pooled:sext:+2.5';site_approx:Wandsbek
+1600-01-01N,2305447.634421,137.52529,3.81458,1.78,2.96,Benatky,quality:B;calendar_by_site:gregorian;quadrant_uncalibrated:Sext.;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:-0.1'
+1600-01-05N,2305451.528552,136.73238,3.94290,1.78,2.90,Benatky,quality:A;calendar_by_site:gregorian;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1'
+1600-01-24N,2305470.471028,130.68135,4.56757,0.67,1.32,Benatky,quality:B;quadrant_uncalibrated:Volub.;sextant_index_pooled:sext:-0.1'
+1600-02-18V,2305496.375937,121.44940,4.20762,0.80,0.97,Benatky,quality:B;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1600-02-22N,2305499.379765,120.74981,4.17089,0.60,0.95,Benatky,quality:B;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1600-03-02V,2305509.385607,119.26967,3.86064,0.68,0.98,Benatky,quality:B;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1600-03-09N,2305516.333162,118.98960,3.65246,0.56,1.17,Benatky,quality:A;calendar_by_site:gregorian;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1'
+1600-03-23V,2305530.362732,120.23060,3.22793,1.41,2.97,Benatky,quality:A;altitudes_suspect: 'Altit. Arcturi' rises 33 42 -> 36 50 in 19 min (about 10 deg/h); transcribed as printed;calendar_by_site:gregorian;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1'
+1600-04-06V,2305544.304933,123.29566,2.63659,0.42,1.03,Benatky,quality:B;calendar_by_site:gregorian;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1600-04-11V,2305549.331725,124.77894,2.52213,0.80,1.56,Benatky,quality:A;calendar_by_site:gregorian;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1'
+1600-04-12V,2305550.349771,125.08519,2.51680,0.86,1.64,Benatky,quality:B;calendar_by_site:gregorian;long_span:2.8h;quadrant_zero_pooled:Q.?;sextant_index_pooled:sext:-0.1';untimed_rows_at_mean_time
+1600-04-27V,2305565.386333,130.48712,2.08820,0.49,0.67,Benatky,quality:A;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1'
+1600-05-03V,2305571.364636,132.94622,1.92052,0.47,0.53,Benatky,quality:A;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1'
+1600-06-27V,2305626.365839,160.80500,0.88960,2.08,2.28,Benatky,quality:A;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1';star_name_conflict: printed longitude of 'inferior sequentium in quadrato Vrsae maioris' (25 45 Leo) is 1 deg from the index (24 45 Leo); latitude matches; kept gamma UMa
+1600-06-28V,2305627.352592,161.40837,0.90271,0.84,0.98,Benatky,"quality:A;altitudes_suspect: 27 Jun gives Mars altitude 'quasi 16' then 'quasi 14' within 13 min, 28 Jun 21 5 at 9 29 1/2; transcribed only;calendar_by_site:gregorian;sextant_index_pooled:sext:-0.1'"
+1601-10-10M,2306095.598414,132.26462,1.38176,0.58,1.10,Prague,quality:B;calendar_by_site:gregorian;site_approx:Prague;untimed_rows_at_mean_time
+1601-10-11M,2306096.639903,132.86485,1.33181,0.96,1.95,Prague,quality:B;calendar_by_site:gregorian;site_approx:Prague;untimed_rows_at_mean_time

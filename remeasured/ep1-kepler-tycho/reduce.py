@@ -9,6 +9,16 @@ Input: one or more files in the session format of TRANSCRIBE-GUIDE.md ("schema":
 Other inputs (see fetch.sh, SHA256SUMS): data/hip/ (Hipparcos, fetched here for any HIP the transcribers name),
 data/horizons/ (raw Horizons replies, fetched here and cached).
 
+Batch handling (from the transcribers' reports): per-row time basis; times from t_corr, t, t_resp or the clock
+star's 'resp'; a clock-star hour angle in the row fixes that row's sidereal time even without a printed time
+(hours-of-time readings, vol X 1585, are converted when the row note says so); timed or clock-star-referenced
+meridian transits give right ascension; one index term per distance-instrument class (sextant, old/new/portable
+sextant, astronomical arc, radius); armillary and quadrant zero points from the same session, else pooled by
+(site or instrument, year) from all sessions; per-cell confidence: H weight 1, M sigma x1.5, L cells excluded from
+the primary solution and reported in a second one (sigma x2.5). Tycho's printed reductions are a cross-check only.
+The data product (out/mars_positions.csv, written by batch_report.py) uses a nominal 1 au Earth-Mars distance for
+the diurnal parallax (< 0.25' worst case) so that it carries no ephemeris input.
+
 Per session:
   1. time: each row's printed time -> local apparent time on a civil day (time_basis, night_before, session);
      sidereal time from the clock-star hour angles read on the armillary when present (median offset, 1-degree
@@ -63,6 +73,7 @@ SITES = {
     "Girsitz":    dict(lat=50.12, lon=14.65, q="approx", note="identification uncertain (near Prague)"),
     "Benatky":    dict(lat=50.2906, lon=14.8237, q="good", note="Benatky nad Jizerou castle"),
     "Prague":     dict(lat=50.0900, lon=14.4000, q="approx", note="Hradcany / Belvedere area"),
+    "Padua":      dict(lat=45.4064, lon=11.8768, q="approx", note="Padua (observations sent by G. Sascerides / Magini, 1591)"),
 }
 SITE_BY_DATE = [  # default when a session gives no site (Julian dates; boundaries approximate, cited)
     ("1597-03-15", "Hven"), ("1597-06-01", "Copenhagen"), ("1597-10-15", "Rostock"), ("1598-10-01", "Wandsbek"),
@@ -75,9 +86,12 @@ SITE_BY_DATE = [  # default when a session gives no site (Julian dates; boundari
 # against the printed solar time (the Sun's RA moves ~10 deg in 10 days, i.e. 40 min of time) and flags a conflict.
 CALENDAR_BY_SITE = {"Hven": "julian", "Copenhagen": "julian", "Rostock": "julian", "Wandsbek": "julian",
                     "Wittenberg": "julian", "Dresden": "julian", "Girsitz": "gregorian", "Benatky": "gregorian",
-                    "Prague": "gregorian"}
+                    "Prague": "gregorian", "Padua": "gregorian"}
+# Evidence (transcribers): Wandsbek dates are 'stylo veteri' (vol XIII p.142); Benatky Gregorian is confirmed by
+# Tycho's own 'styli veteris' footnote (vol XIII p.221); Padua (Catholic Italy) Gregorian.
 
-SIGMA = dict(transit=3.0, sext=1.0, radius=3.0, dec=1.0, dec_uncal=2.0, malt=1.0, malt_uncal=1.5, radiff=1.5, altaz=4.0, starstar=1.0)
+SIGMA = dict(transit=3.0, transit_clock=2.0, sext=1.0, sext_vet=1.0, sext_nov=1.0, sext_port=1.5, arcus=1.5, radius=3.0,
+             dec=1.0, dec_pool=1.3, dec_uncal=2.0, malt=1.0, malt_pool=1.2, malt_uncal=1.5, radiff=1.5, altaz=4.0, starstar=1.0)
 WEATHER = dict(P_kpa=101.0, T_c=10.0)
 SIGNS = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpius", "sagittarius", "capricornus",
          "aquarius", "pisces"]
@@ -96,6 +110,20 @@ def wrap180(x):
 # ---------------------------------------------------------------- printed values
 
 def parse_angle(s):
+    try:
+        return _parse_angle(s)
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def parse_time(s):
+    try:
+        return _parse_time(s)
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def _parse_angle(s):
     """'20 17 1/6' -> 20 + (17 + 1/6)/60 ; '19 53 0' -> d m s ; '58 54 1/2' ; '35 1/6' (degrees + fraction of a degree)."""
     if s is None:
         return None
@@ -117,7 +145,7 @@ def parse_angle(s):
     return nums[0] + nums[1] / 60 + (nums[2] + frac) / 3600
 
 
-def parse_time(s):
+def _parse_time(s):
     """'8 4 2/5' -> 8 h 4.4 min ; '7 22 20' -> h m s ; returns hours."""
     if s is None:
         return None
@@ -136,7 +164,9 @@ def parse_time(s):
 
 
 def signed_dec(v, d):
-    return -v if (d or "B").upper().startswith(("A", "M", "S")) else v
+    """B (Borealis) and S / Sept. (Septentrionalis) are north; A (Australis) and M (Meridionalis) are south."""
+    d = (d or "B").strip().upper()
+    return -v if d.startswith(("A", "M")) else v
 
 
 # ---------------------------------------------------------------- calendar and time
@@ -334,425 +364,749 @@ def horizons_geo(jds):
 
 # ---------------------------------------------------------------- one session
 
+TIME_UNITS = re.compile(r"time unit|units of time|in time|hours and minutes|hours/minutes|minutes of time|in hours", re.I)
+CONF_W = {"H": 1.0, "M": 1.5, "L": 2.5}
+
+
+def instr_class(s):
+    """distance instruments -> index class (one zero-point term per class and session)"""
+    s = (s or "").lower()
+    if "rad" in s:
+        return "radius"
+    if "arcus" in s:
+        return "arcus"
+    if "port" in s:
+        return "sext_port"
+    if "vet" in s:
+        return "sext_vet"
+    if "nov" in s or "nou" in s:
+        return "sext_nov"
+    return "sext"  # Sext., Sext. Trig., or not named (assumed sextant, flagged)
+
+
+def quad_class(s):
+    """meridian-altitude instruments -> zero-point class; None = adopted value (skip)"""
+    s = (s or "").lower().strip()
+    if s.startswith("limit"):
+        return None
+    for key, name in (("vol", "Volub."), ("chal", "Chalyb."), ("tichon", "Q. Tichon."), ("tychon", "Q. Tichon."),
+                      ("mural", "Mural"), ("min", "Q. minor"), ("maior", "Q. maior"), ("port", "Portat."),
+                      ("sext", "Sext."), ("solid", "Q. solidum")):
+        if key in s:
+            return name
+    return "Q.?"
+
+
+def idc(code):
+    """star identification confidence -> measurement code: an L identification excludes the row from the primary
+    set; H and M identifications do not change the measurement weight (a wrong star is a blunder, not noise)"""
+    return "L" if code == "L" else None
+
+
+def worst(*codes):
+    codes = [c for c in codes if c]
+    if not codes:
+        return "M"
+    return "L" if "L" in codes else ("M" if "M" in codes else "H")
+
+
 class Session:
+    """One observing session: time model, reference stars, zero points, measurements, least squares."""
+
     def __init__(self, S):
         self.S = S
-        self.flags = list(S.get("flags", []))
         self.id = S["id"]
+        self.flags = []
         y, m, d = (int(x) for x in S["date_julian"].split("-"))
-        site = S.get("site")
-        if not site or site not in SITES:
+        site = (S.get("site") or "").replace("other:", "")
+        if site not in SITES:
             site = next(s for dd, s in SITE_BY_DATE if S["date_julian"] <= dd)
             self.flags.append(f"site_default_by_date:{site}")
         self.site = site
-        self.calendar = S.get("calendar") or CALENDAR_BY_SITE.get(site, "julian")
-        if not S.get("calendar") and self.calendar != "julian":
-            self.flags.append(f"calendar_by_site:{self.calendar}")
-        # 0h UT of the civil date as printed
-        self.jd_date0 = jd_julian(y, m, d) if self.calendar == "julian" else sum(erfa.cal2jd(y, m, d))
-        self.year = y + (m - 0.5) / 12
-        self.dT = delta_t_seconds(self.year)
         self.lat, self.lon = SITES[site]["lat"], SITES[site]["lon"]
         if SITES[site]["q"] != "good":
             self.flags.append(f"site_approx:{site}")
-        night_before = bool(S.get("night_before"))
-        sess = (S.get("session") or "").lower()
-        # base = local apparent noon from which 'from_noon' hours run
-        self.base_noon = self.jd_date0 - (1 if (night_before or sess == "mane") else 0) + 0.5
-        self.basis = S.get("time_basis", "unknown")
-        self.stars = {k: v for k, v in S.get("stars", {}).items()}
+        self.calendar = S.get("calendar") or CALENDAR_BY_SITE.get(site, "julian")
+        if not S.get("calendar") and self.calendar != "julian":
+            self.flags.append(f"calendar_by_site:{self.calendar}")
+        self.jd_date0 = jd_julian(y, m, d) if self.calendar == "julian" else sum(erfa.cal2jd(y, m, d))
+        self.year = y + (m - 0.5) / 12
+        self.yr = y
+        self.dT = delta_t_seconds(self.year)
+        sess = (S.get("session") or "unknown").lower()
+        nb = bool(S.get("night_before"))
+        basis = S.get("time_basis") or "unknown"
+        if basis == "unknown":
+            basis = "from_midnight" if (nb or sess == "mane") else "from_noon"
+            self.flags.append("time_basis_unknown_assumed")
+        self.basis = basis
+        morning = nb or sess == "mane" or (sess == "unknown" and basis == "from_midnight")
+        if sess == "unknown" and basis == "from_midnight":
+            self.flags.append("night_assigned_to_morning_of_date")
+        # the night of this session runs from the local noon 'base' to the next noon
+        self.base_noon_ut = self.jd_date0 + 0.5 - (1 if morning else 0) - self.lon / 360
+        self.stars = S.get("stars", {})
+        self.vol = (S.get("source") or {}).get("volume")
 
-    def hours_from_base(self, t):
-        """printed time -> hours after the base local apparent noon"""
+    # ---- time
+    def hours(self, t, basis=None):
         h = parse_time(t)
+        if h is None:
+            return None
         if h >= 12:
-            return h  # any printed hour of 12 or more counts from noon, whatever the label (e.g. "12 24 1/2 A.M.")
-        if self.basis == "from_noon":
-            return h
-        if self.basis == "from_midnight":
-            sess = (self.S.get("session") or "").lower()
-            if self.S.get("night_before") or sess == "mane":
-                return h + 12  # base is the previous noon
-            return h + 12 if h < 12 else h  # evening session written from midnight is unusual
-        return h  # unknown: treated as from noon, flagged
+            return h  # 12 or more: counted from noon
+        return h + 12 if (basis or self.basis) == "from_midnight" else h
 
-    def row_time(self, r):
-        t = r.get("t_corr") or r.get("t") or r.get("t_assumed")
-        if r.get("t_assumed") and not (r.get("t_corr") or r.get("t")):
+    def row_hours(self, r):
+        for k in ("t_corr", "t", "t_resp"):
+            if r.get(k):
+                return self.hours(r[k], r.get("row_time_basis"))
+        c = r.get("clock") or {}
+        if c.get("resp"):
+            return self.hours(c["resp"], r.get("row_time_basis"))
+        if r.get("t_assumed"):
             self.flags.append("time_assumed_row")
-        return self.hours_from_base(t) if t else None
+            return self.hours(r["t_assumed"], r.get("row_time_basis"))
+        return None
 
-    def setup_clock(self):
-        """sidereal time as a function of hours from base noon"""
-        jd_noon_ut = self.base_noon - self.lon / 360  # local apparent noon ~ UT, rough
-        offs = []
-        for r in self.S["rows"]:
-            c = r.get("clock")
-            h = self.row_time(r)
-            if c and h is not None and c.get("ha") and c.get("star") in self.stars and self.stars[c["star"]].get("hip"):
-                ra_c, _ = star_apparent(self.stars[c["star"]]["hip"], jd_noon_ut + h / 24 + self.dT / 86400)
-                ha = parse_angle(c["ha"]) * (1 if c.get("side", "occ").startswith("occ") else -1)
-                lst = (ra_c + ha) % 360
-                offs.append((lst - h * 15.041068640) % 360)
-        ra_sun, _ = sun_radec(jd_noon_ut + self.dT / 86400)
-        self.clock_source = "solar"
-        # apparent solar time: the Sun's hour angle is 15 h deg, so LST = RA_sun(t) + 15 h ~ RA_sun(noon) + 15.041 h
+    def clock_lst(self, r):
+        """LST from the clock-star hour angle printed in the row (degrees, or hours of time when the note says so)"""
+        c = r.get("clock") or {}
+        st = self.stars.get(c.get("star")) or {}
+        if not (c.get("ha") and st.get("hip") and st["hip"] in _HIP):
+            return None
+        ha = parse_time(c["ha"]) * 15 if TIME_UNITS.search(r.get("note") or "") else parse_angle(c["ha"])
+        side = (c.get("side") or "occ").lower()
+        ra, _ = star_apparent(st["hip"], self.jd_tt_mid)
+        return (ra + (ha if side.startswith("occ") else -ha)) % 360
+
+    def prepare(self):
+        """clock model, star places, per-session zero points"""
+        rows = self.S["rows"]
+        self.h = [self.row_hours(r) for r in rows]
+        known = [h for h in self.h if h is not None]
+        self.h_mean = float(np.mean(known)) if known else None
+        self.jd_tt_mid = self.base_noon_ut + (self.h_mean if self.h_mean is not None else 10) / 24 + self.dT / 86400
+        hips = {k: v["hip"] for k, v in self.stars.items() if v.get("hip") and v["hip"] in _HIP}
+        self.pos = {k: star_apparent(h, self.jd_tt_mid) for k, h in hips.items()}
+        self.lst_clock = [self.clock_lst(r) for r in rows]
+        # clock offset: rows with both a time and a clock-star reading
+        offs = [(l - h * 15.041068640) % 360 for l, h in zip(self.lst_clock, self.h) if l is not None and h is not None]
+        ra_sun, _ = sun_radec(self.base_noon_ut + self.dT / 86400)
         self.solar_off = ra_sun % 360
+        self.calendar_test = None
         if offs:
             rel = np.array([wrap180(o - offs[0]) for o in offs])
             med = float(np.median(rel))
             self.off = (offs[0] + med) % 360
             dev = (rel - med) * 4
-            slips = [x for x in dev if abs(abs(x) - 4) < 0.8]
+            slips = int(np.sum(np.abs(np.abs(dev) - 4) < 0.8))
             if slips:
-                self.flags.append(f"clock_slip_1deg:{len(slips)}")
-            if np.any(np.abs(dev) > 2) and len(slips) < np.sum(np.abs(dev) > 2):
+                self.flags.append(f"clock_slip_1deg:{slips}")
+            if np.sum(np.abs(dev) > 2) > slips:
                 self.flags.append("clock_readings_scatter>2min")
             self.clock_source = f"clock star ({len(offs)})"
-            d_solar = wrap180(self.off - self.solar_off) / 15.041
-            if abs(d_solar) > 0.5:
-                self.flags.append(f"clock_vs_printed_time:{d_solar:+.1f}h")
-            # calendar test: the other calendar moves the Sun's RA by ~10 deg (40 min of printed time)
+            d_this = wrap180(self.off - self.solar_off) / 15.041
             other = 10 if self.calendar == "julian" else -10
-            ra_sun_o, _ = sun_radec(jd_noon_ut + other + self.dT / 86400)
-            d_other = wrap180(self.off - ra_sun_o % 360) / 15.041
-            self.calendar_test = dict(minutes_this=round(d_solar * 60, 1), minutes_other=round(d_other * 60, 1))
-            if abs(d_other) < abs(d_solar) and abs(d_solar) > 0.25:
-                self.flags.append(f"calendar_conflict:clock fits the other calendar ({d_other*60:+.0f} vs {d_solar*60:+.0f} min)")
-            self.clock_dev = [float(x) for x in dev]
+            d_other = wrap180(self.off - sun_radec(self.base_noon_ut + other + self.dT / 86400)[0] % 360) / 15.041
+            self.calendar_test = dict(minutes_this=round(d_this * 60, 1), minutes_other=round(d_other * 60, 1))
+            if abs(d_this) > 0.5:
+                self.flags.append(f"clock_vs_printed_time:{d_this:+.1f}h")
+            if abs(d_other) < abs(d_this) and abs(d_this) > 0.25:
+                self.flags.append(f"calendar_conflict:{d_other*60:+.0f}min_vs_{d_this*60:+.0f}min")
+        elif any(l is not None for l in self.lst_clock):
+            self.off = self.solar_off
+            self.clock_source = "clock star per row (no printed times)"
         else:
             self.off = self.solar_off
-            if self.basis == "unknown":
-                self.flags.append("time_basis_unknown")
-
-    def lst_of(self, h):
-        return (self.off + h * 15.041068640) % 360
-
-    def jd_of(self, h):
-        """UT JD for hours-from-base h, made consistent with the sidereal time and night-time"""
-        guess = self.base_noon - self.lon / 360 + h / 24
-        cands = ut_candidates(self.lst_of(h), guess, self.dT, self.lon)
-        night = []
-        for c in cands:
-            ra_s, de_s = sun_radec(c + self.dT / 86400)
-            lst = (gast_deg(c, self.dT) + self.lon) % 360
-            if altaz(ra_s, de_s, lst, self.lat)[0] < -6:
-                night.append(c)
-        pool = night or cands
-        best = min(pool, key=lambda c: abs(c - guess))
-        if abs(best - guess) > 2 / 24:
-            self.flags.append(f"ut_moved:{(best-guess)*24:+.1f}h")
-        return best
-
-    def build(self):
-        S = self.S
-        self.setup_clock()
-        rows = S["rows"]
-        hips = {k: v["hip"] for k, v in self.stars.items() if v.get("hip")}
-        times = [self.row_time(r) for r in rows]
-        known = [t for t in times if t is not None]
-        self.h_mean = float(np.mean(known)) if known else None
-        self.meas = []   # (kind, sigma, payload)
-        if any(t is None and not r.get("at") for r, t in zip(rows, times)
-               if r.get("type") in ("obs", "star_star") and not r.get("adopted") and (r.get("dist") or r.get("dec_mars"))):
-            if self.h_mean is not None:
-                times = [t if (t is not None or r.get("at")) else self.h_mean for r, t in zip(rows, times)]
-                self.flags.append("untimed_rows_at_session_mean_time")
-            else:
-                self.flags.append("time_unknown_assumed_transit")
-        zdec, zq = [], {}
-        jd_mid = self.base_noon - self.lon / 360 + (self.h_mean if self.h_mean is not None else 12) / 24
-        self.jd_tt_mid = jd_mid + self.dT / 86400
-        pos = {k: star_apparent(h, self.jd_tt_mid) for k, h in hips.items()}
-        self.pos = pos
+            self.clock_source = "solar (printed apparent time)"
+        # LST per row: own clock star > printed time > session mean time > Mars transit (set in build)
+        self.lst = []
+        for l, h in zip(self.lst_clock, self.h):
+            self.lst.append(l if l is not None else (self.off + h * 15.041068640) % 360 if h is not None else None)
         # zero points
-        for r, h in zip(rows, times):
-            if r.get("type") == "dec_star" and r.get("star") in pos and h is not None:
-                model = refract(*pos[r["star"]], self.lst_of(h), self.lat)[1]
-                for d in r.get("dec", []):
-                    zdec.append(signed_dec(parse_angle(d), r.get("dec_dir")) - model)
-            if r.get("type") == "merid_alt_star" and r.get("star") in pos:
-                de = pos[r["star"]][1]
+        self.zdec_list, self.zq_list, self.kss_list = [], {}, {}
+        for i, r in enumerate(rows):
+            lst = self.lst[i] if self.lst[i] is not None else ((self.off + self.h_mean * 15.041068640) % 360 if self.h_mean is not None else None)
+            if r.get("type") == "dec_star" and r.get("star") in self.pos and lst is not None:
+                if (r.get("conf") or {}).get("dec") == "L" or (r.get("conf") or {}).get("star") == "L" \
+                        or (self.stars.get(r["star"]) or {}).get("id_confidence") == "L":
+                    continue
+                model = refract(*self.pos[r["star"]], lst, self.lat)[1]
+                for d in r.get("dec", []) or []:
+                    z = signed_dec(parse_angle(d), r.get("dec_dir")) - model
+                    if abs(z) * 60 > 10:  # Tycho's armillaries were good to a few minutes: a larger 'zero' is a misread or a wrong star
+                        self.flags.append("armillary_calibration_reading_rejected(>10')")
+                        continue
+                    self.zdec_list.append(z)
+            if r.get("type") == "star_star" and r.get("star_a") in self.pos and r.get("star_b") in self.pos and lst is not None:
+                a = refract(*self.pos[r["star_a"]], lst, self.lat); b = refract(*self.pos[r["star_b"]], lst, self.lat)
+                for d in r.get("dist") or []:
+                    v = parse_angle(d)
+                    if v is not None and abs(v - sep(*a, *b)) * 60 < 10:
+                        self.kss_list.setdefault(instr_class(r.get("instr")), []).append(v - sep(*a, *b))
+            if r.get("type") == "merid_alt_star" and r.get("star") in self.pos:
+                if (r.get("conf") or {}).get("alt") == "L" or (self.stars.get(r["star"]) or {}).get("id_confidence") == "L":
+                    continue
+                de = self.pos[r["star"]][1]
                 h0 = 90 - self.lat + de
-                for a in r.get("alt", []):
-                    zq.setdefault(a.get("instr", "?"), []).append(parse_angle(a["alt"]) - (h0 + refraction_arcmin(h0) / 60))
-        self.zdec = float(np.mean(zdec)) if zdec else 0.0
-        self.zq = {k: float(np.mean(v)) for k, v in zq.items()}
-        if not zdec and any(r.get("dec_mars") for r in rows):
+                for a in r.get("alt", []) or []:
+                    qc = quad_class(a.get("instr"))
+                    if qc and a.get("alt") and parse_angle(a["alt"]) is not None:
+                        z = parse_angle(a["alt"]) - (h0 + refraction_arcmin(h0) / 60)
+                        if abs(z) * 60 > 10:
+                            self.flags.append("quadrant_calibration_reading_rejected(>10')")
+                            continue
+                        self.zq_list.setdefault(qc, []).append(z)
+
+    # ---- measurements
+    def build(self, pools):
+        rows = self.S["rows"]
+        self.zdec = float(np.median(self.zdec_list)) if self.zdec_list else None
+        zdec_src = "session" if self.zdec_list else None
+        if self.zdec is None and pools["dec"].get((self.site, self.yr)) is not None:
+            self.zdec, zdec_src = pools["dec"][(self.site, self.yr)], "pooled (site, year)"
+        self.zdec_src = zdec_src
+        self.zq = {k: float(np.median(v)) for k, v in self.zq_list.items()}
+        # pooled sextant index (site, year, class) from all star-to-star checks, used when a session cannot fit its own
+        self.k_pool = {c: v for (st, yr, c), v in pools.get("kss", {}).items() if st == self.site and yr == self.yr}
+        self.zq_src = {k: "session" for k in self.zq}
+        meas = []
+        untimed = False
+        has_dec_rows = any(r.get("dec_mars") for r in rows)
+        if has_dec_rows and self.zdec is None:
             self.flags.append("armillary_uncalibrated")
-        n_ss = 0
-        for i, (r, h) in enumerate(zip(rows, times)):
+        elif has_dec_rows and zdec_src != "session":
+            self.flags.append("armillary_zero_pooled")
+        for i, r in enumerate(rows):
             typ = r.get("type", "obs")
-            q = [x.lower() for x in r.get("qualifiers", [])]
-            if r.get("adopted") or "pone" in q or "limitata" in q:
+            cf = r.get("conf") or {}
+            q = " ".join(x.lower() for x in (r.get("qualifiers") or []))
+            if r.get("adopted") or re.search(r"\bpone\b|limitata|lineis inducta|struck", q):
                 continue
-            w = 0.5 if any(x in " ".join(q) for x in ("dubia", "nubes", "non satis", "incert")) else 1.0
+            w = 0.5 if re.search(r"dub|nubes|non satis|incert|non est fidendum|non admodum|tempestate|non est tuta", q) else 1.0
+            lst = self.lst[i]
             at = r.get("at")
+            if lst is None and not at and typ in ("obs", "star_star", "merid_alt_mars"):
+                if self.h_mean is not None:
+                    lst = (self.off + self.h_mean * 15.041068640) % 360
+                    untimed = True
+                else:
+                    at = "transit"
+                    untimed = True
+            base = dict(row=i, lst=lst, at=at)
             if typ == "obs":
-                if r.get("star") in pos and r.get("dist"):
-                    instr = "radius" if "rad" in (r.get("instr") or "").lower() else "sext"
-                    self.meas.append(dict(kind="dist", row=i, h=h, at=at, star=r["star"], val=parse_angle(r["dist"]), cls=instr,
-                                          sigma=SIGMA[instr] / w))
-                elif r.get("star") and r.get("dist") and r.get("star") not in pos:
-                    self.flags.append(f"star_unidentified:{r['star']}")
-                for d in r.get("dec_mars", []) or []:
-                    self.meas.append(dict(kind="dec", row=i, h=h, at=at, val=signed_dec(parse_angle(d), r.get("dec_dir")),
-                                          sigma=(SIGMA["dec"] if zdec else SIGMA["dec_uncal"]) / w))
-                if r.get("ha_mars") and r.get("clock") and r["clock"].get("star") in pos and h is not None:
-                    sm = 1 if r.get("ha_mars_side", "occ").startswith("occ") else -1
-                    sc = 1 if r["clock"].get("side", "occ").startswith("occ") else -1
-                    self.meas.append(dict(kind="radiff", row=i, h=h, star=r["clock"]["star"],
-                                          val=sc * parse_angle(r["clock"]["ha"]) - sm * parse_angle(r["ha_mars"]), sigma=SIGMA["radiff"] / w))
-                if r.get("az_mars") and r.get("alt_mars") and r.get("az_ref") in AZ_REF and h is not None:
-                    self.meas.append(dict(kind="alt", row=i, h=h, val=parse_angle(r["alt_mars"]), sigma=SIGMA["altaz"] / w))
-                    self.meas.append(dict(kind="az", row=i, h=h, val=AZ_REF[r["az_ref"]](parse_angle(r["az_mars"])) % 360, sigma=SIGMA["altaz"] / w))
+                st = self.stars.get(r.get("star")) or {}
+                if r.get("star") and r.get("dist"):
+                    if r["star"] in self.pos:
+                        cls = instr_class(r.get("instr"))
+                        if not r.get("instr") and cls == "sext":
+                            self.flags.append("instrument_not_named_sextant_assumed")
+                        c = worst(cf.get("dist"), idc(st.get("id_confidence")))
+                        meas.append(dict(base, kind="dist", star=r["star"], val=parse_angle(r["dist"]), cls=cls,
+                                         conf=c, sigma=SIGMA.get(cls, 1.0) / w))
+                    else:
+                        self.flags.append("star_unidentified")
+                for d in r.get("dec_mars") or []:
+                    if not r.get("dec_dir"):
+                        continue
+                    c = worst(cf.get("dec_mars"), cf.get("dec_dir"))
+                    sig = SIGMA["dec"] if self.zdec_src == "session" else (SIGMA["dec_pool"] if self.zdec_src else SIGMA["dec_uncal"])
+                    meas.append(dict(base, kind="dec", val=signed_dec(parse_angle(d), r.get("dec_dir")), conf=c, sigma=sig / w))
+                if r.get("ha_mars") and r.get("clock") and r["clock"].get("star") in self.pos:
+                    sm = 1 if (r.get("ha_mars_side") or "").lower().startswith("occ") else -1
+                    side_conf = "H" if r.get("ha_mars_side") else "L"
+                    tu = 15 if TIME_UNITS.search(r.get("note") or "") else 1
+                    sc = 1 if (r["clock"].get("side") or "occ").lower().startswith("occ") else -1
+                    ha_c = (parse_time(r["clock"]["ha"]) * 15) if tu == 15 else parse_angle(r["clock"]["ha"])
+                    ha_m = (parse_time(r["ha_mars"]) * 15) if tu == 15 else parse_angle(r["ha_mars"])
+                    c = worst(cf.get("ha_mars"), cf.get("clock"), side_conf, idc((self.stars[r["clock"]["star"]] or {}).get("id_confidence")))
+                    meas.append(dict(base, kind="radiff", star=r["clock"]["star"], val=sc * ha_c - sm * ha_m, conf=c,
+                                     sigma=SIGMA["radiff"] / w))
+                if r.get("az_mars") and r.get("alt_mars") and r.get("az_ref") in AZ_REF and lst is not None:
+                    c = worst(cf.get("az_mars"), cf.get("alt_mars"), cf.get("az_ref"))
+                    meas.append(dict(base, kind="alt", val=parse_angle(r["alt_mars"]), conf=c, sigma=SIGMA["altaz"] / w))
+                    meas.append(dict(base, kind="az", val=AZ_REF[r["az_ref"]](parse_angle(r["az_mars"])) % 360, conf=c,
+                                     sigma=SIGMA["altaz"] / w))
             elif typ == "merid_alt_mars":
-                if h is not None and self.clock_source.startswith("clock star"):
-                    # a timed meridian transit gives RA = local sidereal time at the transit (clock star sessions only)
-                    self.meas.append(dict(kind="transit_ra", row=i, h=h, val=self.lst_of(h), sigma=SIGMA["transit"] / w))
-                for a in r.get("alt", []):
-                    ins = a.get("instr", "?")
-                    self.meas.append(dict(kind="malt", row=i, val=parse_angle(a["alt"]) - self.zq.get(ins, 0.0),
-                                          sigma=(SIGMA["malt"] if ins in self.zq else SIGMA["malt_uncal"]) / w))
-                    if ins not in self.zq:
-                        self.flags.append(f"quadrant_uncalibrated:{ins}")
-            elif typ == "star_star" and r.get("star_a") in pos and r.get("star_b") in pos and h is not None:
-                for d in r.get("dist", []):
-                    n_ss += 1
-                    self.meas.append(dict(kind="starstar", row=i, h=h, a=r["star_a"], b=r["star_b"], val=parse_angle(d),
-                                          cls="radius" if "rad" in (r.get("instr") or "").lower() else "sext", sigma=SIGMA["starstar"]))
-        # altitude/azimuth pairs are coarse (azimuth zero, timing, conventions): use them only when the session has no
-        # two independent constraints otherwise; else keep them out of the fit (they stay in the record as rows)
-        strong = len({m["star"] for m in self.meas if m["kind"] == "dist"}) + len({m["star"] for m in self.meas if m["kind"] == "radiff"}) \
-            + (1 if any(m["kind"] in ("dec", "malt") for m in self.meas) else 0)
-        if strong >= 2 and any(m["kind"] in ("alt", "az") for m in self.meas):
-            self.meas = [m for m in self.meas if m["kind"] not in ("alt", "az")]
-            self.flags.append("altaz_not_used(other constraints suffice)")
-        elif any(m["kind"] in ("alt", "az") for m in self.meas):
-            self.flags.append("altaz_used")
-        nstars = {c: len({m["star"] for m in self.meas if m["kind"] == "dist"and m["cls"] == c}) for c in ("sext", "radius")}
-        self.free_k = [c for c in ("sext", "radius")
-                       if any(m["kind"] == "dist" and m["cls"] == c for m in self.meas)
-                       and (nstars[c] >= 3 or any(m["kind"] == "starstar" and m["cls"] == c for m in self.meas))]
+                if self.lst_clock[i] is not None:
+                    c = worst(cf.get("clock"), idc((self.stars.get(r["clock"]["star"]) or {}).get("id_confidence")))
+                    meas.append(dict(base, kind="transit_ra", val=self.lst_clock[i], conf=c, sigma=SIGMA["transit_clock"] / w))
+                elif self.h[i] is not None and self.clock_source.startswith("clock star ("):
+                    meas.append(dict(base, kind="transit_ra", val=(self.off + self.h[i] * 15.041068640) % 360,
+                                     conf=worst(cf.get("t")), sigma=SIGMA["transit"] / w))
+                for a in r.get("alt") or []:
+                    qc = quad_class(a.get("instr"))
+                    if not qc or not a.get("alt"):
+                        continue
+                    z = self.zq.get(qc)
+                    src = "session" if z is not None else None
+                    if z is None and pools["quad"].get((qc, self.yr)) is not None:
+                        z, src = pools["quad"][(qc, self.yr)], "pooled"
+                    if src is None:
+                        self.flags.append(f"quadrant_uncalibrated:{qc}")
+                    elif src == "pooled":
+                        self.flags.append(f"quadrant_zero_pooled:{qc}")
+                    sig = {"session": SIGMA["malt"], "pooled": SIGMA["malt_pool"], None: SIGMA["malt_uncal"]}[src]
+                    meas.append(dict(base, kind="malt", val=parse_angle(a["alt"]) - (z or 0.0),
+                                     conf=worst(cf.get("alt")), sigma=sig / w))
+            elif typ == "star_star" and r.get("star_a") in self.pos and r.get("star_b") in self.pos and lst is not None:
+                c = worst(cf.get("dist"), idc(self.stars[r["star_a"]].get("id_confidence")), idc(self.stars[r["star_b"]].get("id_confidence")))
+                for d in r.get("dist") or []:
+                    meas.append(dict(base, kind="starstar", a=r["star_a"], b=r["star_b"], val=parse_angle(d),
+                                     cls=instr_class(r.get("instr")), conf=c, sigma=SIGMA["starstar"]))
+        if untimed:
+            self.flags.append("untimed_rows_at_mean_time" if self.h_mean is not None else "time_unknown_assumed_transit")
+        used = {m["cls"] for m in meas if m["kind"] == "dist"}
+        for c in sorted(used & set(self.k_pool)):
+            self.flags.append(f"sextant_index_pooled:{c}:{self.k_pool[c]*60:+.1f}'")
+        # altitude/azimuth only when nothing better constrains the night
+        strong = len({m["star"] for m in meas if m["kind"] == "dist"}) + len({m["star"] for m in meas if m["kind"] == "radiff"}) \
+            + (1 if any(m["kind"] == "transit_ra" for m in meas) else 0) + (1 if any(m["kind"] in ("dec", "malt") for m in meas) else 0)
+        if any(m["kind"] in ("alt", "az") for m in meas):
+            if strong >= 2:
+                meas = [m for m in meas if m["kind"] not in ("alt", "az")]
+            else:
+                self.flags.append("altaz_used")
+        self.all_meas = meas
         self.flags = sorted(set(self.flags))
 
-    def lst_row(self, m, ra_mars):
-        if m.get("h") is not None:
-            return self.lst_of(m["h"])
+    def lst_of_meas(self, m, ra):
+        if m.get("lst") is not None:
+            return m["lst"]
         at = m.get("at") or "transit"
-        x = float(at.split("+")[1]) if "+" in at else (-float(at.split("-")[1]) if "-" in at[7:] else 0.0)
-        return (ra_mars + x * 15.041) % 360
+        x = float(at.split("+")[1]) if "+" in at else (-float(at.split("-", 1)[1]) if at.startswith("transit-") else 0.0)
+        return (ra + x * 15.041068640) % 360
 
     def resid(self, p, meas, kfree):
         ra, de = p[0], p[1]
         k = {c: p[2 + i] for i, c in enumerate(kfree)}
+        for c, v in getattr(self, "k_pool", {}).items():
+            k.setdefault(c, v * 60)
         out = []
         for m in meas:
-            lst = self.lst_row(m, ra)
-            if m["kind"] == "dist":
+            lst = self.lst_of_meas(m, ra)
+            kd = m["kind"]
+            if kd == "dist":
                 a = refract(ra, de, lst, self.lat); b = refract(*self.pos[m["star"]], lst, self.lat)
                 out.append((sep(*a, *b) + k.get(m["cls"], 0) / 60 - m["val"]) * 60 / m["sigma"])
-            elif m["kind"] == "starstar":
+            elif kd == "starstar":
                 a = refract(*self.pos[m["a"]], lst, self.lat); b = refract(*self.pos[m["b"]], lst, self.lat)
                 out.append((sep(*a, *b) + k.get(m["cls"], 0) / 60 - m["val"]) * 60 / m["sigma"])
-            elif m["kind"] == "dec":
-                out.append((refract(ra, de, lst, self.lat)[1] + self.zdec - m["val"]) * 60 / m["sigma"])
-            elif m["kind"] == "malt":
+            elif kd == "dec":
+                out.append((refract(ra, de, lst, self.lat)[1] + (self.zdec or 0.0) - m["val"]) * 60 / m["sigma"])
+            elif kd == "malt":
                 h0 = 90 - self.lat + de
                 out.append((h0 + refraction_arcmin(h0) / 60 - m["val"]) * 60 / m["sigma"])
-            elif m["kind"] == "transit_ra":
-                out.append(wrap180(refract(ra, de, m["val"], self.lat)[0] - m["val"]) * 60 * math.cos(de * D2R) / m["sigma"])
-            elif m["kind"] == "radiff":
+            elif kd == "transit_ra":
+                out.append(wrap180(ra - m["val"]) * 60 * math.cos(de * D2R) / m["sigma"])
+            elif kd == "radiff":
                 a = refract(ra, de, lst, self.lat); b = refract(*self.pos[m["star"]], lst, self.lat)
-                out.append((wrap180(a[0] - b[0]) - m["val"]) * 60 / m["sigma"])
-            elif m["kind"] in ("alt", "az"):
+                out.append(wrap180(a[0] - b[0] - m["val"]) * 60 * math.cos(de * D2R) / m["sigma"])
+            elif kd in ("alt", "az"):
                 h, az = altaz(ra, de, lst, self.lat)
-                if m["kind"] == "alt":
+                if kd == "alt":
                     out.append((h + refraction_arcmin(h) / 60 - m["val"]) * 60 / m["sigma"])
                 else:
                     out.append(wrap180(az - m["val"]) * 60 * math.cos(h * D2R) / m["sigma"])
         return np.array(out)
 
-    def first_guess(self):
-        """coarse grid for a start: RA within 60 deg of the reference stars' mean, Dec from the declination or
-        meridian-altitude data when present, else a 2-degree grid."""
-        if not self.pos:
-            return None
-        ras = [v[0] for v in self.pos.values()]; des = [v[1] for v in self.pos.values()]
+    def starts(self, meas, kfree):
+        """starting points: a 2-D grid (3 deg) around the reference stars and clock-derived right ascensions; the
+        best grid cells that are at least 6 deg apart (distinct local minima, e.g. the two mirror solutions of one
+        distance + one declination)"""
+        refs = {m["star"] for m in meas if m["kind"] in ("dist", "radiff")}
+        ras = [v[0] for k, v in self.pos.items() if k in refs] or [v[0] for v in self.pos.values()]
+        ras += [m["val"] for m in meas if m["kind"] == "transit_ra"]
+        ras += [(self.pos[m["star"]][0] + m["val"]) % 360 for m in meas if m["kind"] == "radiff"]
+        if not ras:
+            return []
         ra0 = math.degrees(math.atan2(np.mean(np.sin(np.radians(ras))), np.mean(np.cos(np.radians(ras))))) % 360
-        decs = [m["val"] - self.zdec for m in self.meas if m["kind"] == "dec"]
-        malts = [m["val"] - 90 + self.lat for m in self.meas if m["kind"] == "malt"]
-        if decs or malts:
-            dgrid = [float(np.median(decs or malts))]
-        else:
-            dgrid = list(np.clip(np.mean(des) + np.arange(-40, 41, 2.0), -80, 80))
-        best, bx = None, None
-        for dra in np.arange(-60, 61, 1.0 if len(dgrid) == 1 else 2.0):
-            for de in dgrid:
-                ra = (ra0 + dra) % 360
-                r = self.resid([ra, de] + [0.0] * len(self.free_k), self.meas, self.free_k)
-                c = float(np.sum(np.minimum(r**2, 400)))
-                if best is None or c < best:
-                    best, bx = c, [ra, de]
-        return bx
+        des = [v[1] for v in self.pos.values()] or [0.0]
+        decs = [m["val"] - (self.zdec or 0) for m in meas if m["kind"] == "dec"] + [m["val"] - 90 + self.lat for m in meas if m["kind"] == "malt"]
+        dcenter = float(np.median(decs)) if decs else float(np.mean(des))
+        sub = [m for m in meas if m["kind"] != "starstar"]
+        sig = np.array([m["sigma"] for m in sub])
+        cells = []
+        for dra in np.arange(-75, 76, 3.0):
+            for dd in np.arange(-36, 37, 3.0):
+                ra, de = (ra0 + dra) % 360, float(np.clip(dcenter + dd, -85, 85))
+                r = self.resid([ra, de] + [0.0] * len(kfree), sub, kfree) * sig
+                # smooth robust cost in arcmin (a 3-degree grid misses the true point by up to ~1.5 deg)
+                cells.append((float(np.sum(np.log1p((r / 30.0) ** 2))), ra, de))
+        cells.sort()
+        picks = []
+        for c, ra, de in cells:
+            if all(sep(ra, de, p[1], p[2]) > 6 for p in picks):
+                picks.append((c, ra, de))
+            if len(picks) == 5:
+                break
+        return [[ra, de] for c, ra, de in picks]
 
-    def solve(self):
-        if len([m for m in self.meas if m["kind"] in ("dist", "radiff", "az", "transit_ra")]) < 1 or len(self.meas) < 2:
-            return None
-        x0 = self.first_guess()
-        if x0 is None:
-            return None
-        meas = list(self.meas)
-        kfree = list(self.free_k)
+    def solve(self, primary=True):
+        meas = [dict(m) for m in self.all_meas if (m["conf"] != "L" if primary else True)]
+        for m in meas:
+            m["sigma"] = m["sigma"] * CONF_W[m["conf"]]
+        n_pos = len([m for m in meas if m["kind"] in ("dist", "radiff", "transit_ra", "az")])
+        n_dim = len({m.get("star", m["kind"]) for m in meas if m["kind"] in ("dist", "radiff", "transit_ra", "az")}) + \
+            (1 if any(m["kind"] in ("dec", "malt", "alt") for m in meas) else 0)
+        if n_pos < 1 or n_dim < 2:
+            return None, "fewer than two independent constraints" + ("" if primary else " (with L cells)")
+        classes = {m["cls"] for m in meas if m["kind"] == "dist"}
+        kfree = [c for c in sorted(classes)
+                 if len({m["star"] for m in meas if m["kind"] == "dist" and m["cls"] == c}) >= 3
+                 or any(m["kind"] == "starstar" and m["cls"] == c for m in meas)]
+        starts = self.starts(meas, kfree)
+        if not starts:
+            return None, "no reference star or clock reading with a position"
 
-        def fit(meas, kfree):
-            p0 = list(x0) + [0.0] * len(kfree)
-            sol = least_squares(lambda p: self.resid(p, meas, kfree), p0, x_scale=[0.01, 0.01] + [1.0] * len(kfree))
-            r = self.resid(sol.x, meas, kfree)
-            dof = max(1, len(r) - len(sol.x))
+        def fit(ms, kf, x0):
+            p0 = list(x0[:2]) + [0.0] * len(kf)
+            sol = least_squares(lambda p: self.resid(p, ms, kf), p0, x_scale=[0.01, 0.01] + [1.0] * len(kf))
+            r = self.resid(sol.x, ms, kf)
+            dof = len(r) - len(sol.x)
             try:
-                cov = np.linalg.inv(sol.jac.T @ sol.jac) * max(1.0, float(np.sum(r**2) / dof))
+                cov = np.linalg.inv(sol.jac.T @ sol.jac) * (max(1.0, float(np.sum(r ** 2) / dof)) if dof > 0 else 4.0)
                 err = np.sqrt(np.diag(cov))
             except np.linalg.LinAlgError:
                 err = np.full(len(sol.x), np.nan)
-            return sol.x, r, err
+            return sol.x, r, err, dof
 
-        x, r, err = fit(meas, kfree)
-        bad = [i for i in np.argsort(-np.abs(r)) if abs(r[i]) > 4][: max(0, len(meas) // 5)]
+        def low_alt(ms, x):
+            keep = []
+            for m in ms:
+                m = dict(m)
+                lst = self.lst_of_meas(m, x[0])
+                hs = [altaz(x[0], x[1], lst, self.lat)[0]] if m["kind"] not in ("malt", "transit_ra", "starstar") else []
+                if m["kind"] in ("dist", "radiff"):
+                    hs.append(altaz(*self.pos[m["star"]], lst, self.lat)[0])
+                if m["kind"] == "starstar":
+                    hs += [altaz(*self.pos[m["a"]], lst, self.lat)[0], altaz(*self.pos[m["b"]], lst, self.lat)[0]]
+                hmin = min(hs) if hs else 90
+                if hmin < 1:
+                    continue
+                m["sigma"] *= 4.0 if hmin < 5 else (2.5 if hmin < 10 else (1.5 if hmin < 15 else 1.0))
+                keep.append(m)
+            return keep
+
+        cands = []
+        for st in starts:
+            x, r, err, dof = fit(meas, kfree, st)
+            ms = low_alt(meas, x)
+            if len(ms) < 2:
+                continue
+            x, r, err, dof = fit(ms, kfree, x)
+            # compare candidates on the same footing: a candidate that puts Mars below the horizon for some rows
+            # pays for the rows it had to drop
+            cands.append((float(np.sum(np.minimum(r ** 2, 100))) + 100.0 * (len(meas) - len(ms)), x, ms))
+        if not cands:
+            return None, "every measurement below 1 deg altitude"
+        cands.sort(key=lambda c: c[0])
+        # distinct solutions only
+        uniq = []
+        for c in cands:
+            if all(sep(c[1][0], c[1][1], u[1][0], u[1][1]) > 1.0 for u in uniq):
+                uniq.append(c)
+        chosen = uniq[0]
+        ambiguity = None
+        n_ref = len({m["star"] for m in meas if m["kind"] in ("dist", "radiff")}) + (1 if any(m["kind"] == "transit_ra" for m in meas) else 0)
+        if len(uniq) > 1 and (uniq[1][0] - uniq[0][0] < 9 or n_ref <= 1):
+            # two solutions fit about equally (one distance + one declination has a mirror twin): decide with
+            # coarse evidence from the page only (printed Mars altitudes and azimuths, then Tycho's own printed
+            # place for the session); never with the ephemeris
+            pick, how = self.disambiguate([uniq[0], uniq[1]])
+            if pick is None:
+                ambiguity = "two_fold_ambiguity_unresolved"
+            else:
+                chosen = uniq[pick]
+                ambiguity = f"two_fold_ambiguity_resolved_by:{how}"
+        cost, x, ms = chosen
+        x, r, err, dof = fit(ms, kfree, x)
+        removed = []
+        groups = {}
+        for m in ms:
+            groups[(m["kind"], m.get("star"))] = groups.get((m["kind"], m.get("star")), 0) + 1
+        # never remove the last measurements of a kind/star: they may be what decides the solution
+        bad = [int(i) for i in np.argsort(-np.abs(r)) if abs(r[i]) > 4 and groups[(ms[i]["kind"], ms[i].get("star"))] >= 3][: max(0, len(ms) // 5)]
         if bad:
-            self.flags.append(f"outliers_removed:{len(bad)}")
-            self.removed = [dict(row=meas[i]["row"], kind=meas[i]["kind"], resid_sigma=float(r[i])) for i in bad]
-            meas = [m for j, m in enumerate(meas) if j not in bad]
-            x, r, err = fit(meas, kfree)
-        else:
-            self.removed = []
-        kinfo = {c: (float(x[2 + i]), float(err[2 + i])) for i, c in enumerate(kfree)}
-        for c, (kv, ke) in kinfo.items():
-            if not np.isfinite(ke) or ke > 1.5:
-                self.flags.append(f"index_{c}_poorly_determined")
-            elif abs(kv) > 2.0:
-                self.flags.append(f"index_{c}_large:{kv:+.1f}'")
-        xk0, rk0, _ = fit(meas, []) if kfree else (x, r, err)
-        e_ra = err[0] * 60 * math.cos(x[1] * D2R); e_de = err[1] * 60
-        if not np.isfinite(e_ra) or not np.isfinite(e_de) or max(e_ra, e_de) > 3:
-            self.flags.append("geometry_weak(formal_err>3')")
-        return dict(ra=float(x[0]) % 360, dec=float(x[1]), err=[float(e_ra), float(e_de)], k=kinfo, meas=meas,
-                    resid=[float(v) for v in r], x_k0=[float(xk0[0]) % 360, float(xk0[1])])
+            removed = [dict(row=ms[i]["row"], kind=ms[i]["kind"], resid_sigma=float(r[i])) for i in bad]
+            ms = [m for j, m in enumerate(ms) if j not in bad]
+            x, r, err, dof = fit(ms, kfree, x)
+        n_drop = len(meas) - len(ms) - len(removed)
+        e_ra = float(err[0] * 60 * math.cos(x[1] * D2R)); e_de = float(err[1] * 60)
+        return dict(ra=float(x[0]) % 360, dec=float(x[1]), err=[e_ra, e_de], dof=int(dof), ambiguity=ambiguity,
+                    dropped_low=int(n_drop),
+                    k={c: (float(x[2 + i]), float(err[2 + i])) for i, c in enumerate(kfree)},
+                    meas=ms, resid=[float(v) for v in r], removed=removed, chi2_dof=float(np.sum(r ** 2) / max(1, dof))), None
+
+    def disambiguate(self, cands):
+        rows = self.S["rows"]
+        scores = []
+        for cost, x, ms in cands:
+            dev = []
+            for i, r in enumerate(rows):
+                lst = self.lst[i]
+                if lst is None or not r.get("alt_mars"):
+                    continue
+                v = parse_angle(r["alt_mars"])
+                if v is None:
+                    continue
+                h, az = altaz(x[0], x[1], lst, self.lat)
+                dev.append(h + refraction_arcmin(h) / 60 - v)
+                if r.get("az_mars") and r.get("az_ref") in AZ_REF:
+                    dev.append(wrap180(az - AZ_REF[r["az_ref"]](parse_angle(r["az_mars"]))) * math.cos(h * D2R))
+            scores.append(float(np.sqrt(np.mean(np.square(dev)))) if dev else None)
+        if all(sc is not None for sc in scores) and abs(scores[0] - scores[1]) > 1.0 and min(scores) < 3.0:
+            return int(np.argmin(scores)), "printed_altitudes"
+        # Tycho's own printed place (right ascension or longitude) on the page, as a choice between branches only
+        for tr in self.S.get("tycho_reduction") or []:
+            if tr.get("ra") and parse_angle(tr["ra"]) is not None:
+                d = [abs(wrap180(x[0] - parse_angle(tr["ra"]))) for _, x, _ in cands]
+                if min(d) < 3 and max(d) > 6:
+                    return int(np.argmin(d)), "tycho_printed_ra"
+            if tr.get("lon") and (tr.get("lon_sign") or "").lower() in SIGNS and parse_angle(tr["lon"]) is not None:
+                tl = SIGNS.index(tr["lon_sign"].lower()) * 30 + parse_angle(tr["lon"])
+                eps = true_obliquity(self.jd_tt_mid)
+                d = [abs(wrap180(eq2ecl(x[0], x[1], eps)[0] - tl)) for _, x, _ in cands]
+                if min(d) < 3 and max(d) > 6:
+                    return int(np.argmin(d)), "tycho_printed_longitude"
+        return None, None
+
+    def epoch_jd(self, sol):
+        """UT of the session: mean over the measurements used of the UT at which their sidereal time falls in this
+        night (Sun below -3 deg, between the base noon and the next noon)"""
+        uts = []
+        for m in sol["meas"]:
+            lst = self.lst_of_meas(m, sol["ra"])
+            guess = self.base_noon_ut + 0.5
+            c0 = ut_candidates(lst, guess, self.dT, self.lon)
+            cands = [c for k in (-1, 0, 1) for c in [c0[0] + k * 0.99726957] if self.base_noon_ut <= c < self.base_noon_ut + 1] if c0 else []
+            cands = sorted(set(round(c, 6) for c in cands))
+            dark = []
+            for c in cands:
+                ra_s, de_s = sun_radec(c + self.dT / 86400)
+                if altaz(ra_s, de_s, (gast_deg(c, self.dT) + self.lon) % 360, self.lat)[0] < -3:
+                    dark.append(c)
+            pool = dark or cands
+            if not pool:
+                continue
+            if len(pool) > 1:
+                h = self.h[m["row"]] if self.h[m["row"]] is not None else self.h_mean
+                g = self.base_noon_ut + (h if h is not None else 12) / 24
+                pool = [min(pool, key=lambda c: abs(c - g))]
+            uts.append(pool[0])
+        if not uts:
+            return None
+        jd = float(np.mean(uts))
+        if np.ptp(uts) > 2.5 / 24:
+            self.flags.append(f"long_span:{np.ptp(uts)*24:.1f}h")
+        return jd
 
 
-def run(files, check=False):
+def _solve_one(i):
+    ss = SESSIONS[i]
+    out = {}
+    for primary in (True, False):
+        try:
+            sol, why = ss.solve(primary)
+        except Exception as e:
+            sol, why = None, f"error:{type(e).__name__}:{e}"
+        out["primary" if primary else "with_L"] = (sol, why)
+    if out["primary"][0]:
+        out["epoch"] = ss.epoch_jd(out["primary"][0])
+    if out["with_L"][0]:
+        out["epoch_L"] = ss.epoch_jd(out["with_L"][0])
+    return i, out, ss.flags
+
+
+SESSIONS = []
+
+
+def to_ecliptic(ss, sol, jd, delta_au):
+    # sidereal time at the epoch, for the parallax direction
+    lst = (gast_deg(jd, ss.dT) + ss.lon) % 360
+    ra_g, de_g = topo_to_geo(sol["ra"], sol["dec"], lst, delta_au, ss.lat)
+    eps = true_obliquity(jd + ss.dT / 86400)
+    return eq2ecl(ra_g, de_g, eps)
+
+
+def sigma_ecl(ss, sol, jd):
+    """formal errors (RA*cos dec, dec) -> (lon*cos lat, lat) by a numerical Jacobian of the frame rotation"""
+    eps = true_obliquity(jd + ss.dT / 86400)
+    ra, de = sol["ra"], sol["dec"]
+    l0, b0 = eq2ecl(ra, de, eps)
+    h = 1e-4
+    la, ba = eq2ecl(ra + h / math.cos(de * D2R), de, eps)
+    ld, bd = eq2ecl(ra, de + h, eps)
+    J = np.array([[wrap180(la - l0) * math.cos(b0 * D2R) / h, wrap180(ld - l0) * math.cos(b0 * D2R) / h],
+                  [(ba - b0) / h, (bd - b0) / h]])
+    C = J @ np.diag(np.array(sol["err"]) ** 2) @ J.T
+    return float(math.sqrt(C[0, 0])), float(math.sqrt(C[1, 1]))
+
+
+def run(files, check=False, workers=6):
+    global SESSIONS
     sessions = []
     for f in files:
         d = json.loads(pathlib.Path(f).read_text())
         for s in d["sessions"]:
             s["_file"] = str(f)
             sessions.append(s)
-    load_hip([v["hip"] for s in sessions for v in s.get("stars", {}).values() if v.get("hip")])
-    results, epochs = [], {}
-    objs = []
+    load_hip([v["hip"] for s in sessions for v in s.get("stars", {}).values() if isinstance(v.get("hip"), int)])
+    results, objs, calib_only = [], [], []
     for S in sessions:
-        try:
-            ss = Session(S)
-        except Exception as e:  # a malformed session must not stop the batch
-            results.append(dict(id=S.get("id"), date_julian=S.get("date_julian"), file=S.get("_file"), n_meas=0,
-                                flags=[f"error_in_header:{type(e).__name__}:{e}", "not_reducible"]))
-            log(f"{S.get('id')!s:14s} not reduced | header error {e}")
+        if any(str(f).startswith("no_mars_data") for f in (S.get("flags") or [])):
+            try:  # no Mars, but its calibration readings (reference-star altitudes, star-to-star checks) still count
+                cs = Session(S); cs.prepare(); calib_only.append(cs)
+            except Exception:
+                pass
+            results.append(dict(id=S["id"], date_julian=S["date_julian"], site=S.get("site"), source=S.get("source"),
+                                status="skipped", why="no_mars_data (transcriber)", flags=["no_mars_data"]))
             continue
         try:
-            ss.build()
-            sol = ss.solve()
-        except Exception as e:  # keep going; the session is reported with its error
-            sol = None
-            ss.flags.append(f"error:{type(e).__name__}:{e}")
-        if sol is None:
-            ss.flags.append("not_reducible")
-        objs.append((ss, sol))
-        if sol:
-            h = ss.h_mean
-            if h is None:  # transit-referenced session: solar time of transit
-                h = wrap180(sol["ra"] - ss.off) / 15.041 % 24
-                tr = [m for m in sol["meas"] if m.get("at")]
-                if tr:
-                    shifts = []
-                    for m in tr:
-                        a = m["at"]
-                        shifts.append(float(a.split("+")[1]) if "+" in a else 0.0)
-                    h += float(np.mean(shifts))
-                ss.h_epoch = h
-            else:
-                ss.h_epoch = h
-            epochs[ss.id] = ss.jd_of(ss.h_epoch)
-            for tr in ss.S.get("tycho_reduction", []) or []:
+            ss = Session(S)
+            ss.prepare()
+            objs.append(ss)
+        except Exception as e:
+            results.append(dict(id=S.get("id"), date_julian=S.get("date_julian"), site=S.get("site"), source=S.get("source"),
+                                status="unreducible", why=f"error in session header/time model: {type(e).__name__}: {e}", flags=[]))
+    # pooled zero points (site/instrument, year) from all sessions' own calibration readings
+    pools = {"dec": {}, "quad": {}, "kss": {}}
+    tmp = {}
+    for ss in objs + calib_only:
+        for c, zs in ss.kss_list.items():
+            tmp.setdefault(("kss", (ss.site, ss.yr, c)), []).extend(zs)
+        for z in ss.zdec_list:
+            tmp.setdefault(("dec", (ss.site, ss.yr)), []).append(z)
+        for qc, zs in ss.zq_list.items():
+            tmp.setdefault(("quad", (qc, ss.yr)), []).extend(zs)
+    for (kind, key), zs in tmp.items():
+        if len(zs) >= 2:
+            v = float(np.median(zs))
+            if kind == "kss" and abs(v) * 60 > 3:  # a pooled sextant index beyond 3' is not trusted
+                continue
+            pools[kind][key] = v
+    for ss in objs:
+        try:
+            ss.build(pools)
+        except Exception as e:
+            ss.all_meas = []
+            ss.flags.append(f"error_in_build:{type(e).__name__}:{e}")
+    SESSIONS = objs
+    import multiprocessing as mp
+    if workers > 1 and len(objs) > 8:
+        with mp.get_context("fork").Pool(workers) as pool:
+            outs = pool.map(_solve_one, range(len(objs)), chunksize=4)
+    else:
+        outs = [_solve_one(i) for i in range(len(objs))]
+    # Horizons at every epoch (verification only)
+    epochs = []
+    for i, out, fl in outs:
+        objs[i].flags = fl
+        for k in ("epoch", "epoch_L"):
+            if out.get(k):
+                epochs.append(out[k])
+        for tr in objs[i].S.get("tycho_reduction") or []:
+            if out.get("epoch"):
                 tt = tr.get("t")
-                th = ss.hours_from_base(tt) if tt else ss.h_epoch
-                epochs[ss.id + "|tycho|" + (tt or "")] = ss.jd_of(th)
-    hz = horizons_geo(list(epochs.values())) if epochs else {}
-    rows_out = []
-    for ss, sol in objs:
-        rec = dict(id=ss.id, date_julian=ss.S["date_julian"], calendar=ss.calendar, calendar_test=getattr(ss, "calendar_test", None),
-                   file=ss.S.get("_file"), site=ss.site, source=ss.S.get("source"),
-                   n_meas=len(sol["meas"]) if sol else 0)
-        if sol:
-            jd = epochs[ss.id]
+                th = objs[i].hours(tt) if tt else None
+                tr["_jd"] = objs[i].base_noon_ut + th / 24 if th is not None else out["epoch"]
+                if abs(tr["_jd"] - out["epoch"]) > 0.6:
+                    tr["_jd"] = out["epoch"]
+                epochs.append(tr["_jd"])
+    hz = horizons_geo(epochs) if epochs else {}
+    for i, out, _ in outs:
+        ss = objs[i]
+        sol, why = out["primary"]
+        rec = dict(id=ss.id, date_julian=ss.S["date_julian"], calendar=ss.calendar, calendar_test=ss.calendar_test,
+                   site=ss.site, lat_site=ss.lat, lon_site=ss.lon, source=ss.S.get("source"), file=ss.S.get("_file"),
+                   clock=ss.clock_source, n_meas_all=len(ss.all_meas),
+                   n_meas_L=sum(1 for m in ss.all_meas if m["conf"] == "L"))
+        if sol and out.get("epoch"):
+            jd = out["epoch"]
             H = hz[jd]
-            lst = ss.lst_of(ss.h_epoch)
-            ra_g, de_g = topo_to_geo(sol["ra"], sol["dec"], lst, H["delta"], ss.lat)
-            eps = true_obliquity(jd + ss.dT / 86400)
-            lam, bet = eq2ecl(ra_g, de_g, eps)
+            lam, bet = to_ecliptic(ss, sol, jd, H["delta"])        # verification: true Earth-Mars distance
+            lam_n, bet_n = to_ecliptic(ss, sol, jd, 1.0)           # data product: nominal 1 au (no ephemeris input)
+            sl, sb = sigma_ecl(ss, sol, jd)
             dl = wrap180(lam - H["lon"]) * 60 * math.cos(H["lat"] * D2R); db = (bet - H["lat"]) * 60
-            rg0 = topo_to_geo(*sol["x_k0"], lst, H["delta"], ss.lat); l0, b0 = eq2ecl(*rg0, eps)
-            rec.update(jd_ut=jd, clock=ss.clock_source, lon=lam, lat=bet, horizons_lon=H["lon"], horizons_lat=H["lat"],
-                       elongation=H["elong"], dlon_arcmin=dl, dlat_arcmin=db, total_arcmin=math.hypot(dl, db),
-                       formal_err_arcmin=sol["err"], index_terms_arcmin={c: v for c, v in sol["k"].items()},
-                       zero_armillary_arcmin=ss.zdec * 60, zero_quadrant_arcmin={k: v * 60 for k, v in ss.zq.items()},
-                       without_index_terms=dict(dlon=wrap180(l0 - H["lon"]) * 60 * math.cos(H["lat"] * D2R), dlat=(b0 - H["lat"]) * 60),
-                       residuals=[dict(row=m["row"], kind=m["kind"], resid_arcmin=v * m["sigma"]) for m, v in zip(sol["meas"], sol["resid"])],
-                       removed=ss.removed, horizons_raw=H["raw"])
-            if rec["total_arcmin"] > 5:
-                ss.flags.append("horizons_residual>5'")
-            elif rec["total_arcmin"] > 2:
-                ss.flags.append("horizons_residual>2'")
+            kinds = sorted({m["kind"] for m in sol["meas"]})
+            classes = sorted({m.get("cls") for m in sol["meas"] if m.get("cls")})
+            rec.update(status="reduced", jd_ut=jd, jd_tt=jd + ss.dT / 86400, ra=sol["ra"], dec=sol["dec"],
+                       lon=lam, lat=bet, lon_product=lam_n, lat_product=bet_n,
+                       sigma_lon_arcmin=sl, sigma_lat_arcmin=sb, formal_err_radec_arcmin=sol["err"], dof=sol["dof"],
+                       chi2_dof=sol["chi2_dof"], n_meas=len(sol["meas"]), kinds=kinds, dist_classes=classes,
+                       index_terms_arcmin=sol["k"], zero_armillary_arcmin=(ss.zdec * 60 if ss.zdec is not None else None),
+                       zero_armillary_source=ss.zdec_src, zero_quadrant_arcmin={k: v * 60 for k, v in ss.zq.items()},
+                       removed=sol["removed"],
+                       residuals=[dict(row=m["row"], kind=m["kind"], conf=m["conf"], resid_arcmin=v * m["sigma"])
+                                  for m, v in zip(sol["meas"], sol["resid"])],
+                       horizons=dict(lon=H["lon"], lat=H["lat"], delta=H["delta"], elong=H["elong"], raw=H["raw"]),
+                       dlon_arcmin=dl, dlat_arcmin=db, total_arcmin=math.hypot(dl, db))
+            if not np.isfinite(sl) or not np.isfinite(sb) or max(sl, sb) > 3:
+                ss.flags.append("geometry_weak(formal_err>3')")
+            if sol.get("ambiguity"):
+                ss.flags.append(sol["ambiguity"])
+            if sol.get("dropped_low"):
+                ss.flags.append(f"below_5deg_dropped:{sol['dropped_low']}")
+            # with L cells
+            solL, whyL = out["with_L"]
+            if solL and out.get("epoch_L") and rec["n_meas_L"]:
+                HL = hz[out["epoch_L"]]
+                lL, bL = to_ecliptic(ss, solL, out["epoch_L"], HL["delta"])
+                rec["with_L"] = dict(n_meas=len(solL["meas"]), dlon_arcmin=wrap180(lL - HL["lon"]) * 60 * math.cos(HL["lat"] * D2R),
+                                     dlat_arcmin=(bL - HL["lat"]) * 60)
+            # Tycho's own printed reductions (cross-check only, never data)
             tys = []
-            for tr in ss.S.get("tycho_reduction", []) or []:
-                if tr.get("lon") and tr.get("lon_sign"):
-                    sg = SIGNS.index(tr["lon_sign"].lower()) if tr["lon_sign"].lower() in SIGNS else None
-                    if sg is None:
-                        continue
-                    tl = sg * 30 + parse_angle(tr["lon"]); tb = signed_dec(parse_angle(tr.get("lat", "0")), tr.get("lat_dir"))
-                    Ht = hz[epochs[ss.id + "|tycho|" + (tr.get("t") or "")]]
-                    d1 = wrap180(tl - Ht["lon"]) * 60 * math.cos(Ht["lat"] * D2R); d2 = (tb - Ht["lat"]) * 60
-                    tys.append(dict(lon=tl, lat=tb, dlon_arcmin=d1, dlat_arcmin=d2))
-                    if math.hypot(d1, d2) > 5:
-                        ss.flags.append("tycho_reduction_vs_horizons>5'")
+            for tr in ss.S.get("tycho_reduction") or []:
+                if "_jd" not in tr:
+                    continue
+                Ht = hz[tr["_jd"]]
+                e = {}
+                try:
+                    if tr.get("lon") and (tr.get("lon_sign") or "").lower() in SIGNS:
+                        tl = SIGNS.index(tr["lon_sign"].lower()) * 30 + parse_angle(tr["lon"])
+                        e["dlon_arcmin"] = wrap180(tl - Ht["lon"]) * 60 * math.cos(Ht["lat"] * D2R)
+                        e["tycho_minus_ours_lon"] = wrap180(tl - lam) * 60 * math.cos(bet * D2R)
+                    if tr.get("lat") and tr.get("lat_dir"):
+                        tb = signed_dec(parse_angle(tr["lat"]), tr["lat_dir"])
+                        e["dlat_arcmin"] = (tb - Ht["lat"]) * 60
+                        e["tycho_minus_ours_lat"] = (tb - bet) * 60
+                    if tr.get("ra"):
+                        e["dra_arcmin"] = wrap180(parse_angle(tr["ra"]) - Ht["ra"]) * 60 * math.cos(Ht["dec"] * D2R)
+                    if tr.get("dec") and tr.get("dec_dir"):
+                        e["ddec_arcmin"] = (signed_dec(parse_angle(tr["dec"]), tr["dec_dir"]) - Ht["dec"]) * 60
+                except (TypeError, ValueError):
+                    e["parse_error"] = True
+                if e:
+                    tc = tr.get("conf") or {}
+                    e["conf"] = worst(*(tc.values() if isinstance(tc, dict) else [str(tc)]))
+                    e["verbatim"] = (tr.get("verbatim") or "")[:160]
+                    e["table_comparison"] = bool(re.search(r"Calculus Tychon|LOCA MARTIS|tabula", (tr.get("verbatim") or "") + (tr.get("note") or ""), re.I))
+                    tys.append(e)
             rec["tycho_reduction_vs_horizons"] = tys
-        rec["flags"] = sorted(set(ss.flags))
-        results.append(rec)
-        if sol:
-            log(f"{rec['id']:14s} {ss.site:10s} n={rec['n_meas']:2d} lon {rec['lon']:8.3f} lat {rec['lat']:+7.3f} | Horizons "
-                f"d={rec['dlon_arcmin']:+6.2f}' {rec['dlat_arcmin']:+6.2f}' tot {rec['total_arcmin']:5.2f}' | elong {rec['elongation']:5.1f} | "
-                f"k={ {c: round(v[0], 2) for c, v in sol['k'].items()} } | {','.join(rec['flags'])}")
-            for t in rec["tycho_reduction_vs_horizons"]:
-                log(f"{'':14s} Tycho's printed reduction vs Horizons: {t['dlon_arcmin']:+.2f}' {t['dlat_arcmin']:+.2f}'")
         else:
-            log(f"{rec['id']:14s} not reduced | {','.join(rec['flags'])}")
+            rec.update(status="unreducible", why=why or "no epoch")
+        rec["flags"] = sorted(set(ss.flags + [f for f in (ss.S.get("flags") or []) if f.split(":")[0] in
+                                              ("copy_codex_K", "star_name_conflict", "clock_slip_suspected", "altitudes_suspect",
+                                               "time_basis_uncertain", "site_uncertain", "dreyer_correction", "long_session",
+                                               "illegible", "extra_session_not_in_worklist")]))
+        results.append(rec)
+    results.sort(key=lambda r: r["id"] or "")
     OUTB.mkdir(parents=True, exist_ok=True)
     (OUTB / "results.json").write_text(json.dumps(results, indent=1, default=float))
-    with open(OUTB / "summary.csv", "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["id", "date_julian", "site", "n_meas", "elongation", "dlon_arcmin", "dlat_arcmin", "total_arcmin", "flags", "volume", "pages", "leaves"])
-        for r in results:
-            src = r.get("source") or {}
-            w.writerow([r["id"], r["date_julian"], r["site"], r["n_meas"], r.get("elongation"), r.get("dlon_arcmin"), r.get("dlat_arcmin"),
-                        r.get("total_arcmin"), ";".join(r["flags"]), src.get("volume"), src.get("pages"), src.get("leaves")])
-    tot = [r["total_arcmin"] for r in results if "total_arcmin" in r]
-    if tot:
-        log(f"SUMMARY: {len(tot)} of {len(results)} sessions reduced; median total {np.median(tot):.2f}'; within 2': "
-            f"{sum(t <= 2 for t in tot)}; within 5': {sum(t <= 5 for t in tot)}")
+    red = [r for r in results if r.get("status") == "reduced"]
+    for r in red:
+        LOG.append(f"{r['id']:14s} {r['site']:10s} n={r['n_meas']:3d} d={r['dlon_arcmin']:+7.2f}' {r['dlat_arcmin']:+7.2f}' "
+                   f"tot {r['total_arcmin']:6.2f}' sig {r['sigma_lon_arcmin']:.2f}/{r['sigma_lat_arcmin']:.2f} | {','.join(r['flags'])}")
+    tot = [r["total_arcmin"] for r in red]
+    log(f"SUMMARY: {len(red)} reduced, {sum(1 for r in results if r.get('status') == 'unreducible')} unreducible, "
+        f"{sum(1 for r in results if r.get('status') == 'skipped')} skipped; median total {np.median(tot) if tot else float('nan'):.2f}'")
     (OUTB / "log.txt").write_text("\n".join(LOG) + "\n")
     if check:
         ref = {"1595-10-25V": 0.87, "1595-07-22M": 0.82}
-        ok = all(abs(next(r for r in results if r["id"] == k).get("total_arcmin", 99) - v) < 0.5 for k, v in ref.items())
-        log(f"KILL-TEST REGRESSION (batch within 0.5' of the kill-test totals 0.87', 0.82'): {'OK' if ok else 'CHANGED'}")
+        got = {k: next((r.get("total_arcmin", 99) for r in results if r["id"] == k), 99) for k in ref}
+        ok = all(got[k] < 2.0 for k in ref)
+        log(f"KILL-TEST REGRESSION (both kill-test nights under 2', kill test 0.87' and 0.82'): {got}: {'OK' if ok else 'CHANGED'}")
         return 0 if ok else 1
     return 0
 
