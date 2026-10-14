@@ -70,7 +70,7 @@ Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cite
 - 031 E = mc²: glowing energy sphere scaled logarithmically to mass, landmark lines (TNT/Hiroshima/city), shockwave ring animation, velocity + SR energy bars
 - 032 Rutherford: gold foil scattering stream (8-particle pool, Coulomb deflection) + manual aim mode, nuclear charge slider, H/C/Fe/Au presets, element label
 - 033 Bohr: classical spiral collapse (3.5 s) → quantized orbits toggle, orbit ring click → Balmer emission, spectrum bar with glow + white flash + dedup
-- 034 General Relativity: Mercury RK4 orbit, planets' pull (ring model, scaled to cited 532.3″/cy) + 1PN Schwarzschild toggle, perihelion advance readout in ″/century (model + measured in sim), planets-vs-leftover split with ghost orbit, exaggeration slider
+- 034 General Relativity: Mercury RK4 orbit, planets' pull (ring model, scaled to cited 532.3″/cy) + 1PN Schwarzschild toggle, perihelion advance readout in ″/century (model + sim's own value), planets-vs-leftover split with ghost orbit, exaggeration slider
 - 048 Gravitational Waves: leading-order BBH inspiral + ringdown, two mass sliders, live strain chirp (face-on, 410 Mpc), expanding ripples, Web Audio chirp (pitch ×4, stretched to 4 s, labelled scaled)
 
 ## Milestone

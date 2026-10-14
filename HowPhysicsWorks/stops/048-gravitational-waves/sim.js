@@ -1,7 +1,7 @@
 /* ============================================================
    sim.js — Stop 048: Gravitational Waves
    Binary black-hole inspiral at leading (quadrupole) order:
-     r(t)  = [ (256/5) η (t_c − t) ]^(1/4)        (units of GM/c³)
+     r(t)  = [ (256/5) η (t_c − t) ]^(1/4)        (units of GM/c²)
      φ(r)  = (r0^(5/2) − r^(5/2)) / (32 η)
      f_GW  = ω/π,  ω = r^(−3/2)
      h     = 4 η (GM/c²) / (r D) · cos 2φ       (face-on)
@@ -55,7 +55,7 @@
     var tM = M * T_SUN;                         /* seconds per unit of GM/c³ */
     var tc = 5 / 256 * Math.pow(R0, 4) / eta;   /* to r = 0, units of M */
     var tMerge = tc - 5 / 256 * Math.pow(R_MERGE, 4) / eta;
-    var fRing = (1.5251 - 1.1568 * Math.pow(1 - SPIN_F, 0.1292)) / (2 * Math.PI * tM);
+    var fRing = (1.5251 - 1.1568 * Math.pow(1 - SPIN_F, 0.1292)) / (2 * Math.PI * 0.95 * tM);   /* remnant ~0.95 M */
     var Q = 0.7 + 1.4187 * Math.pow(1 - SPIN_F, -0.4990);
     var tauD = Q / (Math.PI * fRing);           /* seconds */
     var tIns = tMerge * tM;                     /* seconds */

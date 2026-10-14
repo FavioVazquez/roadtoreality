@@ -57,7 +57,7 @@
     return c;
   }());
 
-  var exagIdx = 2;
+  var exagIdx = 1;
   var K = EXAG[exagIdx];
   var RING_SCALE = PLANETS_CITED / RING_RAW[exagIdx];
 
@@ -226,9 +226,9 @@
       parts.push('Pure Newton, Sun only: the ellipse stays put.');
     } else {
       parts.push('Model: ' + model.toFixed(1) + '″ per century (planets ' +
-        (planetsOn ? PLANETS_CITED.toFixed(1) : '0') + '″ + GR ' + (grOn ? GR_RATE.toFixed(1) : '0') + '″).');
+        (planetsOn ? PLANETS_CITED.toFixed(1) : '0') + '″ cited + GR ' + (grOn ? GR_RATE.toFixed(1) : '0') + '″ formula).');
     }
-    parts.push('Sim measures ' + fmt(meas) + ' per century.');
+    parts.push('From the sim’s orbit: ' + fmt(meas) + ' per century.');
     if (splitOn) {
       var g = measured(bodies.ghost);
       var left = (meas !== null && g !== null) ? meas - g : null;
@@ -424,10 +424,10 @@
     ctx.fillText('Orbits shown: ' + orbits + '  (≈ ' + (orbits * 87.97 / 365.25).toFixed(1) + ' years)', x, y + lh);
     ctx.font = (narrow ? '13px' : '14px') + ' "DM Sans", sans-serif';
     ctx.fillStyle = COL.text;
-    ctx.fillText('Perihelion advance: ' + modelRate(grOn).toFixed(1) + '″ per century', x, y + 2 * lh + 4);
+    ctx.fillText('Model (cited planets + 1PN): ' + modelRate(grOn).toFixed(1) + '″ per century', x, y + 2 * lh + 4);
     ctx.font = (narrow ? '11px' : '12px') + ' "DM Sans", sans-serif';
     ctx.fillStyle = COL.muted;
-    ctx.fillText('measured in the sim: ' + fmt(measured(m)), x, y + 3 * lh + 4);
+    ctx.fillText('from the sim’s orbit: ' + fmt(measured(m)), x, y + 3 * lh + 4);
   }
 
   function drawBudget(L) {
