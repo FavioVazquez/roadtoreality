@@ -197,7 +197,7 @@
     var cx = W / 2;
     var half = Math.min(W / 2 - 8, (H - top - bottom) / 2);
     var scale = half / viewRadius();
-    var cy = top + (H - top - bottom) / 2 + (farMode() ? 0.45 * bRs * R_S * scale : 0);
+    var cy = top + (H - top - bottom) / 2 + (farMode() ? 0.6 * bRs * R_S * scale : 0);
     return { cx: cx, cy: cy, scale: scale, top: top, bottom: bottom, narrow: narrow };
   }
 

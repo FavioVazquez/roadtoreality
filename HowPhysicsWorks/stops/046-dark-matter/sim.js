@@ -399,7 +399,7 @@
       var r = 0.02 + 46 * k / 230;
       var v2 = fn(r);
       var v = v2 >= 0 ? Math.sqrt(v2) : -Math.sqrt(-v2);
-      var x = xMap(L, r), y = yMap(L, Math.max(-5, Math.min(V_TOP, v)));
+      var x = xMap(L, r), y = yMap(L, Math.max(-5, Math.min(V_TOP + 60, v)));
       if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
     ctx.stroke();
@@ -435,6 +435,7 @@
 
     /* components */
     var pp = P[halo] || [0, 0];
+    ctx.save(); ctx.beginPath(); ctx.rect(L.px0, yMap(L, 200) - 2, L.px1 - L.px0, L.py1 - yMap(L, 200) + 2); ctx.clip();
     curve(L, function (r) { return v2Gas(r); }, COL.teal, 1.3, [2, 3]);
     curve(L, function (r) { return v2Disk(r, ups * L36, RD); }, COL.gold, 1.3, [6, 4]);
     if (showLight) {
@@ -451,6 +452,7 @@
     if (halo !== 'none') curve(L, function (r) { return v2Halo(r, halo, pp); }, COL.blue, 1.5, [7, 4]);
     curve(L, function (r) { return v2Baryons(r, v2Gas(r)); }, COL.bary, 1.2, null);
     curve(L, function (r) { return v2Baryons(r, v2Gas(r)) + v2Halo(r, halo, pp); }, COL.era, 2.4, null);
+    ctx.restore();
 
     /* observed points with error bars */
     for (var i = 0; i < N; i++) {
