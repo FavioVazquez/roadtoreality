@@ -21,7 +21,8 @@ for v in 10 11 12 13; do
   gunzip -kf data/ocr/v${v}_search.txt.gz data/ocr/v${v}_pageidx.json.gz
 done
 
-# Page images used in the kill test: "vol n leaf printed-page"
+# Page images used in the kill test and in writing TRANSCRIBE-GUIDE.md: "vol n leaf printed-page"
+# (transcribers fetch their own pages with fetch_pages.py into data/pages/v{vol}_leaf{leaf}.jpg; not checksummed here)
 while read -r v n leaf page; do
   [ -z "$v" ] && continue
   get "https://archive.org/download/operaomniaedidit${v}brahuoft/page/n${n}.jpg" "data/pages/v${v}_p${page}_leaf${leaf}.jpg"
@@ -34,6 +35,15 @@ done <<'EOF'
 10 216 217 175
 11 196 197 183
 13 261 262 244
+10 125 126 84
+10 425 426 384
+11 345 346 332
+11 347 348 334
+12 155 170 142
+12 301 322 288
+13 128 129 111
+13 236 237 219
+13 199 200 182
 EOF
 
 # Tycho's star catalogue, Verbunt & van Gent 2010 (A&A 516, A28; arXiv 1003.3836), CDS J/A+A/516/A28

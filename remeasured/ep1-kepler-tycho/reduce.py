@@ -1,58 +1,86 @@
-"""Kill test, episode 1: reduce two of Tycho Brahe's 1595 Mars nights to geocentric apparent ecliptic
-longitude and latitude of date, and compare with JPL Horizons (Mars barycenter, body 4, DE441).
+"""Episode 1 batch reducer: Tycho Brahe's Mars sessions -> geocentric apparent ecliptic longitude and latitude of date,
+each compared with JPL Horizons (Mars barycenter, body 4, DE441). Nothing about the motion of Mars is fitted here: each session stands alone.
 
-Run:  data/.venv/bin/python -I reduce.py      (writes out/reduction.json and out/reduction_log.txt)
+Run:  data/.venv/bin/python -I reduce.py [merged.json ...]        (default: transcription.json)
+      data/.venv/bin/python -I reduce.py --check                   (kill-test regression on transcription.json)
+Writes out/batch/results.json, out/batch/summary.csv, out/batch/log.txt.
 
-Inputs (see fetch.sh, SHA256SUMS):
-  transcription.json                 hand transcription from the page images (Dreyer, Opera Omnia XII)
-  data/hip/hip2_refstars.tsv         Hipparcos (van Leeuwen 2007, CDS I/311) for the reference and clock stars
-  data/catalog/keplere.dat           Tycho's star catalogue (Verbunt & van Gent 2010, CDS J/A+A/516/A28)
-  data/horizons/*.txt                raw JPL Horizons replies (fetched here if missing)
+Input: one or more files in the session format of TRANSCRIBE-GUIDE.md ("schema": "tycho-mars-session/2").
+Other inputs (see fetch.sh, SHA256SUMS): data/hip/ (Hipparcos, fetched here for any HIP the transcribers name),
+data/horizons/ (raw Horizons replies, fetched here and cached).
 
-Steps, per night (each is a function below):
-  1. clock: local sidereal time from the clock star's hour angle that the observers read on the armillary
-     (LST = apparent RA of the star + hour angle west); other rows shifted by their clock difference at the
-     sidereal rate. UT1 from LST by inverting Greenwich apparent sidereal time; TT = UT + Delta T.
-  2. star places: Hipparcos positions moved to the date with proper motion, parallax and radial velocity, then
-     apparent place (precession, nutation, annual aberration) on the true equator and equinox of date (astropy
-     TETE). This is the primary frame.
-  3. forward model of each measurement: Mars and the star are refracted (Saemundsson formula, standard
-     atmosphere scaled to a guessed temperature and pressure) at the row's sidereal time; the model distance is the
-     arc between the two refracted points; the armillary declination is the refracted declination plus a zero
-     point fixed by the reference star whose declination the observers took the same night.
-  4. least squares for Mars's true topocentric RA/Dec at the mean epoch of the rows used.
-  5. diurnal parallax removed (topocentric to geocentric; uses the Earth-Mars distance from Horizons, a <0.4'
-     effect), then rotation to the true ecliptic of date.
-  6. comparison with Horizons: geocentric apparent ecliptic longitude/latitude of date (ObsEcLon/ObsEcLat),
-     and topocentric RA/Dec from the Hven site as a second check.
-  Side tracks: (a) Tycho's own arithmetic on the page, recomputed (checks transcription and geometry) and his
-  printed result compared with Horizons; (b) the same least squares with Tycho's own catalogue positions
-  (equinox 1601.0, moved back with Tycho's 51"/yr; cited) to show what his star frame does to the result;
-  (c) sensitivity to the refraction weather guess.
+Per session:
+  1. time: each row's printed time -> local apparent time on a civil day (time_basis, night_before, session);
+     sidereal time from the clock-star hour angles read on the armillary when present (median offset, 1-degree
+     slips detected and flagged), else from the apparent solar time; rows given relative to Mars's meridian transit
+     ('at': 'transit+2') use Mars's own right ascension. UT from sidereal time; the UT candidate is chosen at
+     night (Sun below -6 deg) closest to the printed time, and a jump of more than 2 h is flagged.
+  2. reference stars: Hipparcos moved to the date (proper motion, parallax), apparent place on the true equator and
+     equinox of date (astropy TETE).
+  3. measurements, each with a forward model that includes refraction (Saemundsson, 101 kPa, 10 C):
+       distance Mars-star (sextant sigma 1', radius 3') + per-session index term per instrument class
+       ('sext', 'radius') when the session can determine it (star-to-star checks, or 3+ reference stars);
+       armillary declination (sigma 1') with a zero point from the reference-star declinations of the same
+       session (sigma 2' and a flag when there are none);
+       meridian altitude (sigma 1') with a zero point per instrument from reference-star meridian altitudes of the
+       same session (sigma 1.5' and a flag when there are none);
+       armillary hour angles of Mars and a clock star in the same row -> right-ascension difference (sigma 1.5');
+       a timed meridian transit -> right ascension = sidereal time of the transit (sigma 3'; only in sessions whose
+       clock is fixed by clock-star readings);
+       altitude + azimuth pairs (sigma 4'), used only when the row has an azimuth and the session has no two
+       independent constraints of the kinds above (else they are left out of the fit and flagged).
+  4. least squares for Mars's true topocentric RA/Dec (+ index terms); one pass of outlier removal (> 4 sigma,
+     at most a fifth of the rows); covariance -> formal errors; degeneracy flagged.
+  5. diurnal parallax removed with the Earth-Mars distance from Horizons (cited; < 0.4'), rotation to the true
+     ecliptic of date.
+  6. Horizons comparison at the session epoch; Tycho's own printed reductions (if transcribed) compared too.
 """
-import json, math, pathlib, subprocess, sys, warnings
+import csv, hashlib, json, math, pathlib, re, subprocess, sys, warnings
 import numpy as np
 from scipy.optimize import least_squares
 
-warnings.filterwarnings("ignore")  # erfa 'dubious year' warnings for 1595 are expected
+warnings.filterwarnings("ignore")  # erfa 'dubious year' warnings for 1580-1601 are expected
 import erfa
 import astropy.units as u
 from astropy.time import Time
-from astropy.coordinates import SkyCoord, ICRS, TETE, Distance
+from astropy.coordinates import SkyCoord, ICRS, TETE, Distance, get_sun
 
 HERE = pathlib.Path(__file__).resolve().parent
 DATA = HERE / "data"
-OUT = HERE / "out"
-OUT.mkdir(exist_ok=True)
-(DATA / "horizons").mkdir(parents=True, exist_ok=True)
-
-# Uraniborg, Hven (modern position of the site, approx.; cited). Tycho's own value for the latitude was 55 54 1/2.
-LAT = 55.9075
-LON_E = 12.6967
-ELEV_KM = 0.05
-
+OUTB = HERE / "out" / "batch"
 D2R = math.pi / 180
 LOG = []
+
+# Observing sites (modern coordinates of the places; cited, approximate). Latitude matters for meridian altitudes
+# (an error of 0.1 deg is 6' in declination): sessions at 'approx' sites are flagged.
+SITES = {
+    "Hven":       dict(lat=55.9075, lon=12.6967, q="good", note="Uraniborg / Stjerneborg (60 m apart)"),
+    "Copenhagen": dict(lat=55.6786, lon=12.5790, q="approx", note="city centre"),
+    "Rostock":    dict(lat=54.0887, lon=12.1405, q="approx", note="city centre"),
+    "Wandsbek":   dict(lat=53.5733, lon=10.0717, q="approx", note="Wandsbek castle, Hamburg"),
+    "Wittenberg": dict(lat=51.8664, lon=12.6460, q="good", note="town; observers' own pole height 51 52 30 to 51 53 30 (vol XIII pp.123, 182)"),
+    "Dresden":    dict(lat=51.0504, lon=13.7373, q="approx", note="city centre"),
+    "Girsitz":    dict(lat=50.12, lon=14.65, q="approx", note="identification uncertain (near Prague)"),
+    "Benatky":    dict(lat=50.2906, lon=14.8237, q="good", note="Benatky nad Jizerou castle"),
+    "Prague":     dict(lat=50.0900, lon=14.4000, q="approx", note="Hradcany / Belvedere area"),
+}
+SITE_BY_DATE = [  # default when a session gives no site (Julian dates; boundaries approximate, cited)
+    ("1597-03-15", "Hven"), ("1597-06-01", "Copenhagen"), ("1597-10-15", "Rostock"), ("1598-10-01", "Wandsbek"),
+    ("1598-12-01", "Dresden"), ("1599-08-28", "Wittenberg"), ("1600-08-01", "Benatky"), ("1601-12-31", "Prague")]
+
+# Calendar of the printed dates. Denmark and the Protestant German towns kept the Julian calendar ("stylo veteri");
+# Bohemia used the Gregorian. Evidence for Benatky: 1600-01-01N (vol XIII p.219) only fits as a Gregorian date
+# (Tycho's own printed longitude and the reduced one both sit 10 days of motion away under the Julian reading).
+# A session can override with "calendar": "julian" | "gregorian"; with a clock star the reducer also tests both
+# against the printed solar time (the Sun's RA moves ~10 deg in 10 days, i.e. 40 min of time) and flags a conflict.
+CALENDAR_BY_SITE = {"Hven": "julian", "Copenhagen": "julian", "Rostock": "julian", "Wandsbek": "julian",
+                    "Wittenberg": "julian", "Dresden": "julian", "Girsitz": "gregorian", "Benatky": "gregorian",
+                    "Prague": "gregorian"}
+
+SIGMA = dict(transit=3.0, sext=1.0, radius=3.0, dec=1.0, dec_uncal=2.0, malt=1.0, malt_uncal=1.5, radiff=1.5, altaz=4.0, starstar=1.0)
+WEATHER = dict(P_kpa=101.0, T_c=10.0)
+SIGNS = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpius", "sagittarius", "capricornus",
+         "aquarius", "pisces"]
 
 
 def log(*a):
@@ -61,26 +89,65 @@ def log(*a):
     LOG.append(s)
 
 
-def dm(x):
-    """[deg, min] -> degrees"""
-    return x[0] + x[1] / 60.0
-
-
-def fmt_dms(deg):
-    s = "-" if deg < 0 else ""
-    d = abs(deg)
-    D = int(d); m = (d - D) * 60; M = int(m); S = (m - M) * 60
-    return f"{s}{D}d{M:02d}'{S:04.1f}\""
-
-
 def wrap180(x):
     return (x + 180.0) % 360.0 - 180.0
 
 
-# ---------------------------------------------------------------- time
+# ---------------------------------------------------------------- printed values
+
+def parse_angle(s):
+    """'20 17 1/6' -> 20 + (17 + 1/6)/60 ; '19 53 0' -> d m s ; '58 54 1/2' ; '35 1/6' (degrees + fraction of a degree)."""
+    if s is None:
+        return None
+    if isinstance(s, (int, float)):
+        return float(s)
+    toks = str(s).replace(",", " ").split()
+    nums, frac = [], 0.0
+    for t in toks:
+        if "/" in t:
+            a, b = t.split("/"); frac = float(a) / float(b)
+        else:
+            nums.append(float(t))
+    if not nums:
+        return None
+    if len(nums) == 1:
+        return nums[0] + frac
+    if len(nums) == 2:
+        return nums[0] + (nums[1] + frac) / 60
+    return nums[0] + nums[1] / 60 + (nums[2] + frac) / 3600
+
+
+def parse_time(s):
+    """'8 4 2/5' -> 8 h 4.4 min ; '7 22 20' -> h m s ; returns hours."""
+    if s is None:
+        return None
+    toks = str(s).split()
+    nums, frac = [], 0.0
+    for t in toks:
+        if "/" in t:
+            a, b = t.split("/"); frac = float(a) / float(b)
+        else:
+            nums.append(float(t))
+    if len(nums) == 1:
+        return nums[0] + frac
+    if len(nums) == 2:
+        return nums[0] + (nums[1] + frac) / 60
+    return nums[0] + nums[1] / 60 + (nums[2] + frac) / 3600
+
+
+def signed_dec(v, d):
+    return -v if (d or "B").upper().startswith(("A", "M", "S")) else v
+
+
+# ---------------------------------------------------------------- calendar and time
+
+def jd_julian(y, m, d):
+    if m <= 2:
+        y -= 1; m += 12
+    return math.floor(365.25 * (y + 4716)) + math.floor(30.6001 * (m + 1)) + d - 1524.5
+
 
 def delta_t_seconds(year):
-    """Espenak & Meeus polynomial (NASA eclipse site), valid 1500-1600 and 1600-1700."""
     if year < 1600:
         uu = (year - 1000) / 100
         return (1574.2 - 556.01 * uu + 71.23472 * uu**2 + 0.319781 * uu**3 - 0.8503463 * uu**4
@@ -90,64 +157,83 @@ def delta_t_seconds(year):
 
 
 def gast_deg(jd_ut1, dt_s):
-    jd_tt = jd_ut1 + dt_s / 86400
-    return math.degrees(erfa.gst06a(jd_ut1, 0.0, jd_tt, 0.0)) % 360
+    return math.degrees(erfa.gst06a(jd_ut1, 0.0, jd_ut1 + dt_s / 86400, 0.0)) % 360
 
 
-def jd_from_lst(lst_deg, jd_guess, dt_s):
-    """UT1 Julian date near jd_guess at which the local apparent sidereal time equals lst_deg."""
+def ut_candidates(lst_deg, jd_guess, dt_s, lon):
+    """UT JDs within +-14 h of jd_guess at which the local apparent sidereal time equals lst_deg."""
     jd = jd_guess
-    for _ in range(6):
-        cur = (gast_deg(jd, dt_s) + LON_E) % 360
-        jd += wrap180(lst_deg - cur) / 360.98564736629
-    return jd
+    for _ in range(5):
+        jd += wrap180(lst_deg - (gast_deg(jd, dt_s) + lon) % 360) / 360.98564736629
+    sid_day = 0.99726957
+    return [jd + k * sid_day for k in (-1, 0, 1) if abs(jd + k * sid_day - jd_guess) < 14 / 24]
+
+
+_SUN = {}
+
+
+def sun_radec(jd_tt):
+    k = round(jd_tt, 3)
+    if k not in _SUN:
+        t = Time(jd_tt, format="jd", scale="tt")
+        s = get_sun(t).transform_to(TETE(obstime=t))
+        _SUN[k] = (s.ra.deg, s.dec.deg)
+    return _SUN[k]
+
+
+def true_obliquity(jd_tt):
+    return math.degrees(erfa.obl06(jd_tt, 0.0) + erfa.nut06a(jd_tt, 0.0)[1])
 
 
 # ---------------------------------------------------------------- stars
 
-def load_hip():
+HIP_FILE = DATA / "hip" / "hip2_all.tsv"
+_HIP = {}
+
+
+def load_hip(needed):
     rows = {}
-    for line in (DATA / "hip" / "hip2_refstars.tsv").read_text().splitlines():
-        if not line or line.startswith("#") or line.startswith("HIP") or line.startswith("-") or line.startswith(" \t"):
-            continue
-        p = line.split("\t")
-        try:
-            rows[int(p[0])] = dict(ra=float(p[1]), dec=float(p[2]), plx=float(p[3]), pmra=float(p[4]), pmde=float(p[5]))
-        except ValueError:
-            pass
+    for f in [DATA / "hip" / "hip2_refstars.tsv", HIP_FILE]:
+        if f.exists():
+            for line in f.read_text().splitlines():
+                p = line.split("\t")
+                try:
+                    rows[int(p[0])] = dict(ra=float(p[1]), dec=float(p[2]), plx=float(p[3]), pmra=float(p[4]), pmde=float(p[5]))
+                except (ValueError, IndexError):
+                    pass
+    missing = sorted(set(needed) - set(rows))
+    if missing:
+        url = ("https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=I/311/hip2&-out=HIP,RArad,DErad,Plx,pmRA,pmDE,Hpmag&HIP="
+               + ",".join(str(h) for h in missing))
+        txt = subprocess.run(["/usr/bin/curl", "-sf", "-m", "120", url], capture_output=True, text=True, check=True).stdout
+        HIP_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(HIP_FILE, "a") as f:
+            for line in txt.splitlines():
+                if line.split("\t")[0].strip().isdigit():
+                    f.write(line.strip() + "\n")
+        return load_hip([])
+    _HIP.update(rows)
     return rows
 
 
-# radial velocities (km/s), SIMBAD; only a second-order effect over 405 years (cited)
-RV = {9884: -14.64, 15863: -2.04, 21421: 54.26, 113963: -2.71, 97649: -26.60, 107315: 3.39}
+RV = {9884: -14.64, 15863: -2.04, 21421: 54.26, 113963: -2.71, 97649: -26.60, 107315: 3.39}  # SIMBAD, cited
+_STAR = {}
 
 
-def star_apparent_tete(hip, jd_tt):
-    """Apparent RA/Dec (deg) of a Hipparcos star on the true equator and equinox of date."""
-    h = HIP[hip]
-    c = SkyCoord(ra=h["ra"] * u.deg, dec=h["dec"] * u.deg, distance=Distance(parallax=h["plx"] * u.mas),
-                 pm_ra_cosdec=h["pmra"] * u.mas / u.yr, pm_dec=h["pmde"] * u.mas / u.yr,
-                 radial_velocity=RV.get(hip, 0.0) * u.km / u.s, frame=ICRS, obstime=Time(1991.25, format="jyear", scale="tt"))
-    t = Time(jd_tt, format="jd", scale="tt")
-    c2 = c.apply_space_motion(new_obstime=t)
-    a = c2.transform_to(TETE(obstime=t))
-    return a.ra.deg, a.dec.deg
+def star_apparent(hip, jd_tt):
+    k = (hip, round(jd_tt, 2))
+    if k not in _STAR:
+        h = _HIP[hip]
+        c = SkyCoord(ra=h["ra"] * u.deg, dec=h["dec"] * u.deg, distance=Distance(parallax=max(h["plx"], 0.5) * u.mas),
+                     pm_ra_cosdec=h["pmra"] * u.mas / u.yr, pm_dec=h["pmde"] * u.mas / u.yr,
+                     radial_velocity=RV.get(hip, 0.0) * u.km / u.s, frame=ICRS, obstime=Time(1991.25, format="jyear", scale="tt"))
+        t = Time(jd_tt, format="jd", scale="tt")
+        a = c.apply_space_motion(new_obstime=t).transform_to(TETE(obstime=t))
+        _STAR[k] = (a.ra.deg, a.dec.deg)
+    return _STAR[k]
 
 
-def load_tycho_catalog():
-    cat = {}
-    for line in (DATA / "catalog" / "keplere.dat").read_text().splitlines():
-        try:
-            hip = int(line[49:55])
-        except ValueError:
-            continue
-        Z = int(line[25:27]); d = int(line[28:30]); m = float(line[31:35])
-        bd = int(line[36:38]); bm = float(line[39:43]); sg = line[44]
-        cat[hip] = dict(lon=(Z - 1) * 30 + d + m / 60, lat=(1 if sg == "B" else -1) * (bd + bm / 60), raw=line)
-    return cat
-
-
-# ---------------------------------------------------------------- spherical geometry
+# ---------------------------------------------------------------- geometry and refraction
 
 def vec(ra, dec):
     a, d = ra * D2R, dec * D2R
@@ -167,427 +253,510 @@ def sep(ra1, de1, ra2, de2):
 def eq2ecl(ra, dec, eps):
     e = eps * D2R
     x, y, z = vec(ra, dec)
-    y2 = y * math.cos(e) + z * math.sin(e)
-    z2 = -y * math.sin(e) + z * math.cos(e)
-    return math.degrees(math.atan2(y2, x)) % 360, math.degrees(math.asin(z2))
+    return math.degrees(math.atan2(y * math.cos(e) + z * math.sin(e), x)) % 360, math.degrees(math.asin(-y * math.sin(e) + z * math.cos(e)))
 
 
 def ecl2eq(lon, lat, eps):
     e = eps * D2R
     x, y, z = vec(lon, lat)
-    y2 = y * math.cos(e) - z * math.sin(e)
-    z2 = y * math.sin(e) + z * math.cos(e)
-    return math.degrees(math.atan2(y2, x)) % 360, math.degrees(math.asin(z2))
+    return math.degrees(math.atan2(y * math.cos(e) - z * math.sin(e), x)) % 360, math.degrees(math.asin(y * math.sin(e) + z * math.cos(e)))
 
 
-def true_obliquity(jd_tt):
-    eps0 = erfa.obl06(jd_tt, 0.0)
-    dpsi, deps = erfa.nut06a(jd_tt, 0.0)
-    return math.degrees(eps0 + deps)
+def refraction_arcmin(h):
+    h = max(h, -1.0)
+    return 1.02 / math.tan((h + 10.3 / (h + 5.11)) * D2R) * (WEATHER["P_kpa"] / 101.0) * (283.0 / (273.0 + WEATHER["T_c"]))
 
 
-# ---------------------------------------------------------------- refraction
-
-WEATHER = dict(P_kpa=101.0, T_c=10.0)
-
-
-def refraction_arcmin(h_true_deg, P_kpa=None, T_c=None):
-    """Saemundsson (1986) refraction for a true altitude, scaled to pressure and temperature."""
-    P = WEATHER["P_kpa"] if P_kpa is None else P_kpa
-    T = WEATHER["T_c"] if T_c is None else T_c
-    h = max(h_true_deg, -1.0)
-    R = 1.02 / math.tan((h + 10.3 / (h + 5.11)) * D2R)
-    return R * (P / 101.0) * (283.0 / (273.0 + T))
-
-
-def altaz(ra, dec, lst):
-    H = (lst - ra) * D2R; d = dec * D2R; p = LAT * D2R
-    sh = math.sin(p) * math.sin(d) + math.cos(p) * math.cos(d) * math.cos(H)
-    h = math.asin(sh)
+def altaz(ra, dec, lst, lat):
+    H = (lst - ra) * D2R; d = dec * D2R; p = lat * D2R
+    h = math.asin(math.sin(p) * math.sin(d) + math.cos(p) * math.cos(d) * math.cos(H))
     az = math.atan2(-math.cos(d) * math.sin(H), math.sin(d) * math.cos(p) - math.cos(d) * math.sin(p) * math.cos(H))
     return math.degrees(h), math.degrees(az) % 360
 
 
-def from_altaz(h, az, lst):
-    hh, A, p = h * D2R, az * D2R, LAT * D2R
-    sd = math.sin(p) * math.sin(hh) + math.cos(p) * math.cos(hh) * math.cos(A)
-    d = math.asin(sd)
+def from_altaz(h, az, lst, lat):
+    hh, A, p = h * D2R, az * D2R, lat * D2R
+    d = math.asin(math.sin(p) * math.sin(hh) + math.cos(p) * math.cos(hh) * math.cos(A))
     H = math.atan2(-math.cos(hh) * math.sin(A), math.sin(hh) * math.cos(p) - math.cos(hh) * math.sin(p) * math.cos(A))
     return (lst - math.degrees(H)) % 360, math.degrees(d)
 
 
-def refract(ra, dec, lst, **w):
-    h, az = altaz(ra, dec, lst)
-    h2 = h + refraction_arcmin(h, **w) / 60.0
-    return from_altaz(h2, az, lst)
+def refract(ra, dec, lst, lat):
+    h, az = altaz(ra, dec, lst, lat)
+    return from_altaz(h + refraction_arcmin(h) / 60.0, az, lst, lat)
 
 
-# ---------------------------------------------------------------- parallax
-
-def topo_to_geo(ra, dec, lst, dist_au):
-    """Remove diurnal parallax: geocentric vector = topocentric vector + observer's geocentric position."""
+def topo_to_geo(ra, dec, lst, dist_au, lat):
     a, b = 6378.137, 6356.752
-    p = LAT * D2R
-    # geocentric distance and latitude of the site (WGS84 reference figure)
-    C = 1 / math.sqrt(math.cos(p) ** 2 + (b / a) ** 2 * math.sin(p) ** 2)
-    S = (b / a) ** 2 * C
-    rx = (a * C + ELEV_KM) * math.cos(p) * math.cos(lst * D2R)
-    ry = (a * C + ELEV_KM) * math.cos(p) * math.sin(lst * D2R)
-    rz = (a * S + ELEV_KM) * math.sin(p)
-    AU = 149597870.7
-    v = vec(ra, dec) * dist_au * AU + np.array([rx, ry, rz])
-    return radec(v)
+    p = lat * D2R
+    C = 1 / math.sqrt(math.cos(p) ** 2 + (b / a) ** 2 * math.sin(p) ** 2); S = (b / a) ** 2 * C
+    r = np.array([a * C * math.cos(p) * math.cos(lst * D2R), a * C * math.cos(p) * math.sin(lst * D2R), a * S * math.sin(p)])
+    return radec(vec(ra, dec) * dist_au * 149597870.7 + r)
 
 
-# ---------------------------------------------------------------- Horizons
+AZ_REF = {"mer_ort": lambda A: 180 - A, "mer_occ": lambda A: 180 + A, "sept_ort": lambda A: A, "sept_occ": lambda A: 360 - A}
 
-def horizons(name, jd_ut, center, site=None, quantities="1,2,20,23,31"):
-    path = DATA / "horizons" / f"{name}.txt"
-    if not path.exists():
-        params = {
-            "format": "text", "COMMAND": "'4'", "OBJ_DATA": "'YES'", "MAKE_EPHEM": "'YES'", "EPHEM_TYPE": "'OBSERVER'",
-            "CENTER": f"'{center}'", "TLIST": f"'{jd_ut:.8f}'", "TLIST_TYPE": "'JD'", "TIME_TYPE": "'UT'",
-            "QUANTITIES": f"'{quantities}'", "ANG_FORMAT": "'DEG'", "EXTRA_PREC": "'YES'", "CAL_FORMAT": "'BOTH'",
-            "APPARENT": "'AIRLESS'", "REF_SYSTEM": "'ICRF'", "CSV_FORMAT": "'YES'",
-        }
-        if site:
-            params["COORD_TYPE"] = "'GEODETIC'"
-            params["SITE_COORD"] = f"'{site}'"
+
+# ---------------------------------------------------------------- Horizons (batched, cached)
+
+HZ_CACHE = DATA / "horizons" / "batch_cache.json"
+
+
+def horizons_geo(jds):
+    cache = json.loads(HZ_CACHE.read_text()) if HZ_CACHE.exists() else {}
+    need = sorted({f"{j:.6f}" for j in jds} - set(cache))
+    for i in range(0, len(need), 40):
+        part = need[i:i + 40]
+        params = {"format": "text", "COMMAND": "'4'", "OBJ_DATA": "'YES'", "MAKE_EPHEM": "'YES'", "EPHEM_TYPE": "'OBSERVER'",
+                  "CENTER": "'500@399'", "TLIST": "'" + " ".join(part) + "'", "TLIST_TYPE": "'JD'", "TIME_TYPE": "'UT'",
+                  "QUANTITIES": "'2,20,23,31'", "ANG_FORMAT": "'DEG'", "EXTRA_PREC": "'YES'", "CAL_FORMAT": "'JD'",
+                  "APPARENT": "'AIRLESS'", "CSV_FORMAT": "'YES'"}
         q = "&".join(f"{k}={v}" for k, v in params.items())
-        url = "https://ssd.jpl.nasa.gov/api/horizons.api?" + q.replace("'", "%27").replace("@", "%40").replace(",", "%2C")
-        txt = subprocess.run(["/usr/bin/curl", "-sf", "-m", "120", url], capture_output=True, text=True, check=True).stdout
-        path.write_text(txt)
-    txt = path.read_text()
-    body = txt.split("$$SOE")[1].split("$$EOE")[0].strip()
-    head = txt.split("$$SOE")[0]
-    cols = [c.strip() for c in head.strip().splitlines()[-2].split(",")]
-    vals = [v.strip() for v in body.split(",")]
-    rec = dict(zip(cols, vals))
-    meta = [l.strip() for l in txt.splitlines() if ("Target body name" in l or "Center body name" in l
-                                                     or "ephemeris" in l.lower() and "DE" in l or "Center geodetic" in l)]
-    return rec, meta
+        q = q.replace("'", "%27").replace("@", "%40").replace(",", "%2C").replace(" ", "%20")
+        txt = subprocess.run(["/usr/bin/curl", "-sf", "-m", "180", "https://ssd.jpl.nasa.gov/api/horizons.api?" + q],
+                             capture_output=True, text=True, check=True).stdout
+        raw = DATA / "horizons" / "raw" / (hashlib.sha1("".join(part).encode()).hexdigest()[:12] + ".txt")
+        raw.parent.mkdir(parents=True, exist_ok=True)
+        raw.write_text(txt)
+        head = txt.split("$$SOE")[0].strip().splitlines()[-2]
+        cols = [c.strip() for c in head.split(",")]
+        meta = [l.strip() for l in txt.splitlines() if "Target body name" in l or "Center body name" in l]
+        for line in txt.split("$$SOE")[1].split("$$EOE")[0].strip().splitlines():
+            rec = dict(zip(cols, [v.strip() for v in line.split(",")]))
+            jd = float(rec["Date_________JDUT"])
+            key = min(part, key=lambda p: abs(float(p) - jd))
+            cache[key] = dict(lon=float(rec["ObsEcLon"]), lat=float(rec["ObsEcLat"]), delta=float(rec["delta"]),
+                              elong=float(rec["S-O-T"]), ra=float(rec["R.A.__(a-app)"]), dec=float(rec["DEC___(a-app)"]),
+                              raw=raw.name, meta=meta)
+        HZ_CACHE.write_text(json.dumps(cache, indent=0))
+    return {j: cache[f"{j:.6f}"] for j in jds}
 
 
-# ---------------------------------------------------------------- solver
+# ---------------------------------------------------------------- one session
 
-def solve(rows, star_pos, lsts, dec_rows, dec_zero, x0, use_dec=True, w=None):
-    """rows: [(star_key, measured_distance_deg, row_index)], star_pos: key -> (ra, dec) in the working frame
-    (true, unrefracted); lsts: row_index -> LST deg; dec_rows: [(measured_dec_deg, row_index)].
-    Unknown: Mars (ra, dec) true topocentric at the mean epoch. Returns solution and residuals (arcmin)."""
-    w = w or {}
+class Session:
+    def __init__(self, S):
+        self.S = S
+        self.flags = list(S.get("flags", []))
+        self.id = S["id"]
+        y, m, d = (int(x) for x in S["date_julian"].split("-"))
+        site = S.get("site")
+        if not site or site not in SITES:
+            site = next(s for dd, s in SITE_BY_DATE if S["date_julian"] <= dd)
+            self.flags.append(f"site_default_by_date:{site}")
+        self.site = site
+        self.calendar = S.get("calendar") or CALENDAR_BY_SITE.get(site, "julian")
+        if not S.get("calendar") and self.calendar != "julian":
+            self.flags.append(f"calendar_by_site:{self.calendar}")
+        # 0h UT of the civil date as printed
+        self.jd_date0 = jd_julian(y, m, d) if self.calendar == "julian" else sum(erfa.cal2jd(y, m, d))
+        self.year = y + (m - 0.5) / 12
+        self.dT = delta_t_seconds(self.year)
+        self.lat, self.lon = SITES[site]["lat"], SITES[site]["lon"]
+        if SITES[site]["q"] != "good":
+            self.flags.append(f"site_approx:{site}")
+        night_before = bool(S.get("night_before"))
+        sess = (S.get("session") or "").lower()
+        # base = local apparent noon from which 'from_noon' hours run
+        self.base_noon = self.jd_date0 - (1 if (night_before or sess == "mane") else 0) + 0.5
+        self.basis = S.get("time_basis", "unknown")
+        self.stars = {k: v for k, v in S.get("stars", {}).items()}
 
-    def resid(x):
-        ra, de = x
-        r = []
-        for key, dmeas, i in rows:
-            mra, mde = refract(ra, de, lsts[i], **w)
-            sra, sde = refract(*star_pos[key], lsts[i], **w)
-            r.append((sep(mra, mde, sra, sde) - dmeas) * 60)
-        if use_dec:
-            for dmeas, i in dec_rows:
-                r.append((refract(ra, de, lsts[i], **w)[1] + dec_zero - dmeas) * 60)
-        return np.array(r)
+    def hours_from_base(self, t):
+        """printed time -> hours after the base local apparent noon"""
+        h = parse_time(t)
+        if h >= 12:
+            return h  # any printed hour of 12 or more counts from noon, whatever the label (e.g. "12 24 1/2 A.M.")
+        if self.basis == "from_noon":
+            return h
+        if self.basis == "from_midnight":
+            sess = (self.S.get("session") or "").lower()
+            if self.S.get("night_before") or sess == "mane":
+                return h + 12  # base is the previous noon
+            return h + 12 if h < 12 else h  # evening session written from midnight is unusual
+        return h  # unknown: treated as from noon, flagged
 
-    sol = least_squares(resid, x0, x_scale=[0.01, 0.01])
-    J = sol.jac
-    res = resid(sol.x)
-    dof = max(1, len(res) - 2)
-    s2 = float(np.sum(res**2) / dof)
-    try:
-        cov = np.linalg.inv(J.T @ J) * s2
-        err = np.sqrt(np.diag(cov)) * 60  # arcmin
-    except np.linalg.LinAlgError:
-        err = [float("nan"), float("nan")]
-    return sol.x, res, err
+    def row_time(self, r):
+        t = r.get("t_corr") or r.get("t") or r.get("t_assumed")
+        if r.get("t_assumed") and not (r.get("t_corr") or r.get("t")):
+            self.flags.append("time_assumed_row")
+        return self.hours_from_base(t) if t else None
 
+    def setup_clock(self):
+        """sidereal time as a function of hours from base noon"""
+        jd_noon_ut = self.base_noon - self.lon / 360  # local apparent noon ~ UT, rough
+        offs = []
+        for r in self.S["rows"]:
+            c = r.get("clock")
+            h = self.row_time(r)
+            if c and h is not None and c.get("ha") and c.get("star") in self.stars and self.stars[c["star"]].get("hip"):
+                ra_c, _ = star_apparent(self.stars[c["star"]]["hip"], jd_noon_ut + h / 24 + self.dT / 86400)
+                ha = parse_angle(c["ha"]) * (1 if c.get("side", "occ").startswith("occ") else -1)
+                lst = (ra_c + ha) % 360
+                offs.append((lst - h * 15.041068640) % 360)
+        ra_sun, _ = sun_radec(jd_noon_ut + self.dT / 86400)
+        self.clock_source = "solar"
+        # apparent solar time: the Sun's hour angle is 15 h deg, so LST = RA_sun(t) + 15 h ~ RA_sun(noon) + 15.041 h
+        self.solar_off = ra_sun % 360
+        if offs:
+            rel = np.array([wrap180(o - offs[0]) for o in offs])
+            med = float(np.median(rel))
+            self.off = (offs[0] + med) % 360
+            dev = (rel - med) * 4
+            slips = [x for x in dev if abs(abs(x) - 4) < 0.8]
+            if slips:
+                self.flags.append(f"clock_slip_1deg:{len(slips)}")
+            if np.any(np.abs(dev) > 2) and len(slips) < np.sum(np.abs(dev) > 2):
+                self.flags.append("clock_readings_scatter>2min")
+            self.clock_source = f"clock star ({len(offs)})"
+            d_solar = wrap180(self.off - self.solar_off) / 15.041
+            if abs(d_solar) > 0.5:
+                self.flags.append(f"clock_vs_printed_time:{d_solar:+.1f}h")
+            # calendar test: the other calendar moves the Sun's RA by ~10 deg (40 min of printed time)
+            other = 10 if self.calendar == "julian" else -10
+            ra_sun_o, _ = sun_radec(jd_noon_ut + other + self.dT / 86400)
+            d_other = wrap180(self.off - ra_sun_o % 360) / 15.041
+            self.calendar_test = dict(minutes_this=round(d_solar * 60, 1), minutes_other=round(d_other * 60, 1))
+            if abs(d_other) < abs(d_solar) and abs(d_solar) > 0.25:
+                self.flags.append(f"calendar_conflict:clock fits the other calendar ({d_other*60:+.0f} vs {d_solar*60:+.0f} min)")
+            self.clock_dev = [float(x) for x in dev]
+        else:
+            self.off = self.solar_off
+            if self.basis == "unknown":
+                self.flags.append("time_basis_unknown")
 
-# ---------------------------------------------------------------- the nights
+    def lst_of(self, h):
+        return (self.off + h * 15.041068640) % 360
 
-def night(key, cfg):
-    T = json.loads((HERE / "transcription.json").read_text())["nights"][key]
-    log("=" * 100)
-    log(f"NIGHT {key}  ({T['label']})  Julian {T['date_julian']} = Gregorian {T['date_gregorian']}  {T['session']}")
-    log(f"  source: vol {T['source']['volume']}, p. {T['source']['printed_page']} ({T['source']['column']} column), "
-        f"leaf {T['source']['leaf']}, {T['source']['image_url']}")
-    stars = T["stars"]
-    hip_of = {k: v["hip"] for k, v in stars.items()}
+    def jd_of(self, h):
+        """UT JD for hours-from-base h, made consistent with the sidereal time and night-time"""
+        guess = self.base_noon - self.lon / 360 + h / 24
+        cands = ut_candidates(self.lst_of(h), guess, self.dT, self.lon)
+        night = []
+        for c in cands:
+            ra_s, de_s = sun_radec(c + self.dT / 86400)
+            lst = (gast_deg(c, self.dT) + self.lon) % 360
+            if altaz(ra_s, de_s, lst, self.lat)[0] < -6:
+                night.append(c)
+        pool = night or cands
+        best = min(pool, key=lambda c: abs(c - guess))
+        if abs(best - guess) > 2 / 24:
+            self.flags.append(f"ut_moved:{(best-guess)*24:+.1f}h")
+        return best
 
-    # Gregorian civil date and a first guess of UT from the clock (local apparent time minus longitude)
-    y, mo, d = (int(x) for x in T["date_gregorian"].split("-"))
-    jd0 = sum(erfa.cal2jd(y, mo, d))  # 0h UT of the civil date
-    year = y + (mo - 0.5) / 12
-    dT = delta_t_seconds(year)
-    hours_from_midnight = (lambda t: (12 + t[0] + t[1] / 60) if cfg["session"] == "vesperi" else (t[0] + t[1] / 60))
-    rows = T["rows"]
+    def build(self):
+        S = self.S
+        self.setup_clock()
+        rows = S["rows"]
+        hips = {k: v["hip"] for k, v in self.stars.items() if v.get("hip")}
+        times = [self.row_time(r) for r in rows]
+        known = [t for t in times if t is not None]
+        self.h_mean = float(np.mean(known)) if known else None
+        self.meas = []   # (kind, sigma, payload)
+        if any(t is None and not r.get("at") for r, t in zip(rows, times)
+               if r.get("type") in ("obs", "star_star") and not r.get("adopted") and (r.get("dist") or r.get("dec_mars"))):
+            if self.h_mean is not None:
+                times = [t if (t is not None or r.get("at")) else self.h_mean for r, t in zip(rows, times)]
+                self.flags.append("untimed_rows_at_session_mean_time")
+            else:
+                self.flags.append("time_unknown_assumed_transit")
+        zdec, zq = [], {}
+        jd_mid = self.base_noon - self.lon / 360 + (self.h_mean if self.h_mean is not None else 12) / 24
+        self.jd_tt_mid = jd_mid + self.dT / 86400
+        pos = {k: star_apparent(h, self.jd_tt_mid) for k, h in hips.items()}
+        self.pos = pos
+        # zero points
+        for r, h in zip(rows, times):
+            if r.get("type") == "dec_star" and r.get("star") in pos and h is not None:
+                model = refract(*pos[r["star"]], self.lst_of(h), self.lat)[1]
+                for d in r.get("dec", []):
+                    zdec.append(signed_dec(parse_angle(d), r.get("dec_dir")) - model)
+            if r.get("type") == "merid_alt_star" and r.get("star") in pos:
+                de = pos[r["star"]][1]
+                h0 = 90 - self.lat + de
+                for a in r.get("alt", []):
+                    zq.setdefault(a.get("instr", "?"), []).append(parse_angle(a["alt"]) - (h0 + refraction_arcmin(h0) / 60))
+        self.zdec = float(np.mean(zdec)) if zdec else 0.0
+        self.zq = {k: float(np.mean(v)) for k, v in zq.items()}
+        if not zdec and any(r.get("dec_mars") for r in rows):
+            self.flags.append("armillary_uncalibrated")
+        n_ss = 0
+        for i, (r, h) in enumerate(zip(rows, times)):
+            typ = r.get("type", "obs")
+            q = [x.lower() for x in r.get("qualifiers", [])]
+            if r.get("adopted") or "pone" in q or "limitata" in q:
+                continue
+            w = 0.5 if any(x in " ".join(q) for x in ("dubia", "nubes", "non satis", "incert")) else 1.0
+            at = r.get("at")
+            if typ == "obs":
+                if r.get("star") in pos and r.get("dist"):
+                    instr = "radius" if "rad" in (r.get("instr") or "").lower() else "sext"
+                    self.meas.append(dict(kind="dist", row=i, h=h, at=at, star=r["star"], val=parse_angle(r["dist"]), cls=instr,
+                                          sigma=SIGMA[instr] / w))
+                elif r.get("star") and r.get("dist") and r.get("star") not in pos:
+                    self.flags.append(f"star_unidentified:{r['star']}")
+                for d in r.get("dec_mars", []) or []:
+                    self.meas.append(dict(kind="dec", row=i, h=h, at=at, val=signed_dec(parse_angle(d), r.get("dec_dir")),
+                                          sigma=(SIGMA["dec"] if zdec else SIGMA["dec_uncal"]) / w))
+                if r.get("ha_mars") and r.get("clock") and r["clock"].get("star") in pos and h is not None:
+                    sm = 1 if r.get("ha_mars_side", "occ").startswith("occ") else -1
+                    sc = 1 if r["clock"].get("side", "occ").startswith("occ") else -1
+                    self.meas.append(dict(kind="radiff", row=i, h=h, star=r["clock"]["star"],
+                                          val=sc * parse_angle(r["clock"]["ha"]) - sm * parse_angle(r["ha_mars"]), sigma=SIGMA["radiff"] / w))
+                if r.get("az_mars") and r.get("alt_mars") and r.get("az_ref") in AZ_REF and h is not None:
+                    self.meas.append(dict(kind="alt", row=i, h=h, val=parse_angle(r["alt_mars"]), sigma=SIGMA["altaz"] / w))
+                    self.meas.append(dict(kind="az", row=i, h=h, val=AZ_REF[r["az_ref"]](parse_angle(r["az_mars"])) % 360, sigma=SIGMA["altaz"] / w))
+            elif typ == "merid_alt_mars":
+                if h is not None and self.clock_source.startswith("clock star"):
+                    # a timed meridian transit gives RA = local sidereal time at the transit (clock star sessions only)
+                    self.meas.append(dict(kind="transit_ra", row=i, h=h, val=self.lst_of(h), sigma=SIGMA["transit"] / w))
+                for a in r.get("alt", []):
+                    ins = a.get("instr", "?")
+                    self.meas.append(dict(kind="malt", row=i, val=parse_angle(a["alt"]) - self.zq.get(ins, 0.0),
+                                          sigma=(SIGMA["malt"] if ins in self.zq else SIGMA["malt_uncal"]) / w))
+                    if ins not in self.zq:
+                        self.flags.append(f"quadrant_uncalibrated:{ins}")
+            elif typ == "star_star" and r.get("star_a") in pos and r.get("star_b") in pos and h is not None:
+                for d in r.get("dist", []):
+                    n_ss += 1
+                    self.meas.append(dict(kind="starstar", row=i, h=h, a=r["star_a"], b=r["star_b"], val=parse_angle(d),
+                                          cls="radius" if "rad" in (r.get("instr") or "").lower() else "sext", sigma=SIGMA["starstar"]))
+        # altitude/azimuth pairs are coarse (azimuth zero, timing, conventions): use them only when the session has no
+        # two independent constraints otherwise; else keep them out of the fit (they stay in the record as rows)
+        strong = len({m["star"] for m in self.meas if m["kind"] == "dist"}) + len({m["star"] for m in self.meas if m["kind"] == "radiff"}) \
+            + (1 if any(m["kind"] in ("dec", "malt") for m in self.meas) else 0)
+        if strong >= 2 and any(m["kind"] in ("alt", "az") for m in self.meas):
+            self.meas = [m for m in self.meas if m["kind"] not in ("alt", "az")]
+            self.flags.append("altaz_not_used(other constraints suffice)")
+        elif any(m["kind"] in ("alt", "az") for m in self.meas):
+            self.flags.append("altaz_used")
+        nstars = {c: len({m["star"] for m in self.meas if m["kind"] == "dist"and m["cls"] == c}) for c in ("sext", "radius")}
+        self.free_k = [c for c in ("sext", "radius")
+                       if any(m["kind"] == "dist" and m["cls"] == c for m in self.meas)
+                       and (nstars[c] >= 3 or any(m["kind"] == "starstar" and m["cls"] == c for m in self.meas))]
+        self.flags = sorted(set(self.flags))
 
-    def clock_h(r):
-        return hours_from_midnight(r["t"]) if r.get("t") else None
+    def lst_row(self, m, ra_mars):
+        if m.get("h") is not None:
+            return self.lst_of(m["h"])
+        at = m.get("at") or "transit"
+        x = float(at.split("+")[1]) if "+" in at else (-float(at.split("-")[1]) if "-" in at[7:] else 0.0)
+        return (ra_mars + x * 15.041) % 360
 
-    # 1. clock: LST from the clock star readings
-    ref = [r for r in rows if r.get("clock_star") and r.get("t") and "clock_ha_west" in r]
-    jd_guess = jd0 + (clock_h(ref[0]) - LON_E / 15) / 24
-    jd_tt_guess = jd_guess + dT / 86400
-    clk_star = stars[ref[0]["clock_star"]]["hip"]
-    ra_clk, de_clk = star_apparent_tete(clk_star, jd_tt_guess)
-    log(f"  Delta T used: {dT:.0f} s (Espenak-Meeus polynomial; Mars moves <1'/h so this is irrelevant to the residual)")
-    log(f"  clock star {ref[0]['clock_star']} = {stars[ref[0]['clock_star']]['modern']}: apparent RA {ra_clk:.4f}, Dec {de_clk:.4f}")
-    offs = []
-    for r in ref:
-        lst = (ra_clk + dm(r["clock_ha_west"])) % 360
-        # LST at clock 0 (sidereal degrees), assuming the clock ran at solar rate between rows
-        offs.append(wrap180(lst - clock_h(r) * 15.041068640) % 360)
-        log(f"    clock {r['t'][0]}h{r['t'][1]:05.2f}m  HA west {dm(r['clock_ha_west']):.4f} -> LST {lst:.4f} deg "
-            f"({lst/15:.4f} h)")
-    offs = np.array(offs)
-    rel = np.array([wrap180(o - offs[0]) for o in offs])
-    off = (offs[0] + float(np.median(rel))) % 360
-    dev = (rel - np.median(rel)) * 4  # minutes of time
-    log(f"    clock-to-LST offset: median of {len(offs)} readings; deviations of single readings (min of time): "
-        f"{', '.join(f'{x:+.1f}' for x in dev)}; MAD {np.median(np.abs(dev)):.1f} min")
+    def resid(self, p, meas, kfree):
+        ra, de = p[0], p[1]
+        k = {c: p[2 + i] for i, c in enumerate(kfree)}
+        out = []
+        for m in meas:
+            lst = self.lst_row(m, ra)
+            if m["kind"] == "dist":
+                a = refract(ra, de, lst, self.lat); b = refract(*self.pos[m["star"]], lst, self.lat)
+                out.append((sep(*a, *b) + k.get(m["cls"], 0) / 60 - m["val"]) * 60 / m["sigma"])
+            elif m["kind"] == "starstar":
+                a = refract(*self.pos[m["a"]], lst, self.lat); b = refract(*self.pos[m["b"]], lst, self.lat)
+                out.append((sep(*a, *b) + k.get(m["cls"], 0) / 60 - m["val"]) * 60 / m["sigma"])
+            elif m["kind"] == "dec":
+                out.append((refract(ra, de, lst, self.lat)[1] + self.zdec - m["val"]) * 60 / m["sigma"])
+            elif m["kind"] == "malt":
+                h0 = 90 - self.lat + de
+                out.append((h0 + refraction_arcmin(h0) / 60 - m["val"]) * 60 / m["sigma"])
+            elif m["kind"] == "transit_ra":
+                out.append(wrap180(refract(ra, de, m["val"], self.lat)[0] - m["val"]) * 60 * math.cos(de * D2R) / m["sigma"])
+            elif m["kind"] == "radiff":
+                a = refract(ra, de, lst, self.lat); b = refract(*self.pos[m["star"]], lst, self.lat)
+                out.append((wrap180(a[0] - b[0]) - m["val"]) * 60 / m["sigma"])
+            elif m["kind"] in ("alt", "az"):
+                h, az = altaz(ra, de, lst, self.lat)
+                if m["kind"] == "alt":
+                    out.append((h + refraction_arcmin(h) / 60 - m["val"]) * 60 / m["sigma"])
+                else:
+                    out.append(wrap180(az - m["val"]) * 60 * math.cos(h * D2R) / m["sigma"])
+        return np.array(out)
 
-    def lst_of(h):
-        return (off + h * 15.041068640) % 360
+    def first_guess(self):
+        """coarse grid for a start: RA within 60 deg of the reference stars' mean, Dec from the declination or
+        meridian-altitude data when present, else a 2-degree grid."""
+        if not self.pos:
+            return None
+        ras = [v[0] for v in self.pos.values()]; des = [v[1] for v in self.pos.values()]
+        ra0 = math.degrees(math.atan2(np.mean(np.sin(np.radians(ras))), np.mean(np.cos(np.radians(ras))))) % 360
+        decs = [m["val"] - self.zdec for m in self.meas if m["kind"] == "dec"]
+        malts = [m["val"] - 90 + self.lat for m in self.meas if m["kind"] == "malt"]
+        if decs or malts:
+            dgrid = [float(np.median(decs or malts))]
+        else:
+            dgrid = list(np.clip(np.mean(des) + np.arange(-40, 41, 2.0), -80, 80))
+        best, bx = None, None
+        for dra in np.arange(-60, 61, 1.0 if len(dgrid) == 1 else 2.0):
+            for de in dgrid:
+                ra = (ra0 + dra) % 360
+                r = self.resid([ra, de] + [0.0] * len(self.free_k), self.meas, self.free_k)
+                c = float(np.sum(np.minimum(r**2, 400)))
+                if best is None or c < best:
+                    best, bx = c, [ra, de]
+        return bx
 
-    # check: local apparent solar time implied by the clock star (Tycho's 'Resp.' if printed)
-    jd_r = jd_from_lst(lst_of(clock_h(ref[-1])), jd_guess, dT)
-    ra_sun = radec_sun(jd_r + dT / 86400)
-    lat_solar = ((lst_of(clock_h(ref[-1])) - ra_sun) / 15 + 12) % 24
-    log(f"    local apparent solar time at clock {ref[-1]['t']}: {int(lat_solar)}h{(lat_solar%1)*60:04.1f}m "
-        f"(sun apparent RA {ra_sun:.3f})" + (f"; Tycho's note: {ref[-1].get('clock_note')}" if ref[-1].get('clock_note') else ""))
+    def solve(self):
+        if len([m for m in self.meas if m["kind"] in ("dist", "radiff", "az", "transit_ra")]) < 1 or len(self.meas) < 2:
+            return None
+        x0 = self.first_guess()
+        if x0 is None:
+            return None
+        meas = list(self.meas)
+        kfree = list(self.free_k)
 
-    # 2. reference star places (modern, apparent of date)
-    jd_tt = jd_r + dT / 86400
-    pos = {}
-    for k, v in stars.items():
-        pos[k] = star_apparent_tete(v["hip"], jd_tt)
-        log(f"  star {k:45s} {v['modern']:24s} apparent RA {pos[k][0]:9.4f}  Dec {pos[k][1]:8.4f}")
+        def fit(meas, kfree):
+            p0 = list(x0) + [0.0] * len(kfree)
+            sol = least_squares(lambda p: self.resid(p, meas, kfree), p0, x_scale=[0.01, 0.01] + [1.0] * len(kfree))
+            r = self.resid(sol.x, meas, kfree)
+            dof = max(1, len(r) - len(sol.x))
+            try:
+                cov = np.linalg.inv(sol.jac.T @ sol.jac) * max(1.0, float(np.sum(r**2) / dof))
+                err = np.sqrt(np.diag(cov))
+            except np.linalg.LinAlgError:
+                err = np.full(len(sol.x), np.nan)
+            return sol.x, r, err
 
-    # rows used: distances to reference stars
-    use = [(i, r) for i, r in enumerate(rows) if r.get("star") and r.get("dist") and i not in cfg.get("skip", [])]
-    lsts = {i: lst_of(clock_h(r)) for i, r in enumerate(rows) if r.get("t")}
-    for i in cfg.get("assume_time", {}):
-        lsts[i] = lst_of(hours_from_midnight(cfg["assume_time"][i]))
-    meas = [(r["star"], dm(r["dist"]), i) for i, r in use]
-    decs = []
-    for i, r in use + [(j, rows[j]) for j in cfg.get("dec_extra_rows", [])]:
-        for dd in r.get("dec_mars", []):
-            decs.append((dm(dd), i))
-    decs = sorted(set(decs), key=lambda x: (x[1], x[0]))
-    mean_lst_h = np.mean([clock_h(r) for _, r in use])
-    jd_mean = jd_from_lst(lst_of(mean_lst_h), jd_guess, dT)
-    log(f"  rows used: {len(meas)} distances, {len(decs)} declination readings; mean clock time "
-        f"{int(mean_lst_h % 24)}h{(mean_lst_h % 1)*60:05.2f}m -> UT JD {jd_mean:.5f} ({jd_to_str(jd_mean)})")
-
-    # armillary zero point from the reference star's declination the same night
-    zr = cfg["dec_zero_star"]
-    zrows = [(i, r) for i, r in enumerate(rows) if zr["field"] in r]
-    zs = []
-    zlst = {}
-    for i, r in zrows:
-        lst = lsts.get(i) if i in lsts else lst_of(hours_from_midnight(zr["assume_time"]))
-        zlst[i] = lst
-        model = refract(*pos[zr["star"]], lst)[1]
-        for dd in r[zr["field"]]:
-            zs.append(dm(dd) - model)
-    dec_zero = float(np.mean(zs))
-    log(f"  armillary zero point from {zr['star']}: measured - (modern refracted apparent) = "
-        f"{', '.join(f'{z*60:+.2f}' for z in zs)} arcmin; mean {dec_zero*60:+.2f}'")
-
-    # 3-4. least squares in the modern frame
-    x0 = cfg["x0"]
-    xs, res, err = solve(meas, pos, lsts, decs, dec_zero, x0, use_dec=cfg["use_dec"])
-    log(f"  solution (true topocentric, equator of date): RA {xs[0]:.4f}  Dec {xs[1]:.4f}   formal err "
-        f"{err[0]*math.cos(xs[1]*D2R):.2f}' (RA*cosDec), {err[1]:.2f}' (Dec)")
-    for (k, dmeas, i), rr in zip(meas, res[:len(meas)]):
-        log(f"    dist row {i:2d} {k[:28]:28s} meas {dmeas:8.4f}  residual {rr:+.2f}'")
-    if cfg["use_dec"]:
-        log(f"    declination residuals: {', '.join(f'{x:+.2f}' for x in res[len(meas):])} arcmin")
-    # distance-only and declination checks
-    xd, resd, errd = solve(meas, pos, lsts, decs, dec_zero, x0, use_dec=False)
-    log(f"  distance-only solution: RA {xd[0]:.4f} Dec {xd[1]:.4f}  formal err {errd[0]*math.cos(xd[1]*D2R):.2f}', {errd[1]:.2f}'")
-    dec_pred = [refract(xd[0], xd[1], lsts[i])[1] + dec_zero for _, i in decs]
-    log(f"    armillary declination minus distance-only prediction: "
-        f"{', '.join(f'{(dmeas-p)*60:+.2f}' for (dmeas, _), p in zip(decs, dec_pred))} arcmin")
-
-    # sextant check: the observers' own star-to-star distance (Aldebaran - Hamal) against the modern refracted arc
-    for i, r in enumerate(rows):
-        if r.get("dist_aldebaran_hamal") and i in lsts:
-            a = refract(*pos["Oculus Tauri / Aldebaran"], lsts[i]); b = refract(*pos["Lucida Arietis"], lsts[i])
-            model = sep(*a, *b)
-            for dd in r["dist_aldebaran_hamal"]:
-                log(f"    sextant check row {i}: Aldebaran-Hamal measured {dm(dd):.4f}, modern refracted {model:.4f} "
-                    f"-> measured - model {(dm(dd)-model)*60:+.2f}'")
-
-    # Mars altitude check against the 'Altit.' column
-    for i, r in enumerate(rows):
-        if r.get("alt_mars") and i in lsts:
-            h, _ = altaz(xs[0], xs[1], lsts[i])
-            h_ref = h + refraction_arcmin(h) / 60
-            log(f"    altitude check row {i}: printed {dm(r['alt_mars']):.3f}, model (refracted) {h_ref:.3f} "
-                f"-> diff {(dm(r['alt_mars'])-h_ref)*60:+.1f}'")
-
-    # 5. parallax and ecliptic
-    hz_geo, meta_geo = horizons(f"{key}_geo", jd_mean, "500@399")
-    hz_top, meta_top = horizons(f"{key}_hven", jd_mean, "coord@399", site=f"{LON_E},{LAT},{ELEV_KM}")
-    delta = float(hz_geo["delta"])
-    lst_mean = lst_of(mean_lst_h)
-    ra_g, de_g = topo_to_geo(xs[0], xs[1], lst_mean, delta)
-    eps = true_obliquity(jd_mean + dT / 86400)
-    lam, bet = eq2ecl(ra_g, de_g, eps)
-    lam_t, bet_t = eq2ecl(xs[0], xs[1], eps)
-    log(f"  parallax: Earth-Mars distance {delta:.4f} au (Horizons, cited); shift "
-        f"{sep(xs[0], xs[1], ra_g, de_g)*3600:.1f}\"")
-    log(f"  true obliquity of date {eps:.5f}")
-    log(f"  RESULT geocentric apparent ecliptic of date: lon {lam:.4f} ({fmt_dms(lam)})  lat {bet:.4f} ({fmt_dms(bet)})")
-
-    # 6. Horizons
-    hl, hb = float(hz_geo["ObsEcLon"]), float(hz_geo["ObsEcLat"])
-    dl = wrap180(lam - hl) * 60 * math.cos(hb * D2R)
-    db = (bet - hb) * 60
-    log(f"  HORIZONS (geocentric, body 4, apparent ecliptic of date): lon {hl:.4f}  lat {hb:.4f}")
-    for m in meta_geo:
-        log(f"    | {m}")
-    log(f"  RESIDUAL Tycho - Horizons: dlon*cos(lat) {dl:+.2f}'  dlat {db:+.2f}'  total {math.hypot(dl, db):.2f}'")
-    # topocentric RA/Dec check (Horizons apparent RA/Dec from the site; airless)
-    hra, hde = float(hz_top["R.A.__(a-app)"]), float(hz_top["DEC___(a-app)"])
-    log(f"  Horizons topocentric (Hven) airless apparent RA/Dec {hra:.4f} {hde:.4f}; ours {xs[0]:.4f} {xs[1]:.4f}: "
-        f"dRA*cos {wrap180(xs[0]-hra)*60*math.cos(hde*D2R):+.2f}' dDec {(xs[1]-hde)*60:+.2f}'")
-    log(f"  Sun-Observer-Target elongation (Horizons): {hz_geo.get('S-O-T')} deg {hz_geo.get('/r')}")
-
-    # sensitivity: refraction weather and distance-only
-    sens = {}
-    for lab, w in [("P-1kPa", dict(P_kpa=100.0)), ("P+1kPa", dict(P_kpa=102.0)), ("T-10C", dict(T_c=WEATHER['T_c'] - 10)),
-                   ("T+10C", dict(T_c=WEATHER['T_c'] + 10)), ("no refraction", dict(P_kpa=0.0))]:
-        xw, _, _ = solve(meas, pos, lsts, decs, dec_zero, x0, use_dec=cfg["use_dec"], w=w)
-        rg = topo_to_geo(xw[0], xw[1], lst_mean, delta)
-        l2, b2 = eq2ecl(*rg, eps)
-        sens[lab] = (wrap180(l2 - hl) * 60 * math.cos(hb * D2R), (b2 - hb) * 60)
-    rg = topo_to_geo(xd[0], xd[1], lst_mean, delta)
-    l2, b2 = eq2ecl(*rg, eps)
-    sens["distance-only (no armillary)"] = (wrap180(l2 - hl) * 60 * math.cos(hb * D2R), (b2 - hb) * 60)
-    sens["no parallax correction"] = (wrap180(lam_t - hl) * 60 * math.cos(hb * D2R), (bet_t - hb) * 60)
-    for k, (a, b) in sens.items():
-        log(f"    sensitivity {k:30s}: dlon {a:+.2f}'  dlat {b:+.2f}'")
-
-    # side track (b): Tycho's catalogue frame
-    tyc = tycho_frame_solution(stars, meas, decs, lsts, xs, cfg, pos, year, hl, hb, zr, rows, zlst)
-
-    return dict(night=key, label=T["label"], source=T["source"], jd_ut=jd_mean, ut=jd_to_str(jd_mean),
-                lon=lam, lat=bet, horizons_lon=hl, horizons_lat=hb, dlon_arcmin=dl, dlat_arcmin=db,
-                total_arcmin=math.hypot(dl, db), formal_err_arcmin=[float(err[0] * math.cos(xs[1] * D2R)), float(err[1])],
-                dist_residuals_arcmin=[float(x) for x in res[:len(meas)]], dec_zero_arcmin=dec_zero * 60,
-                delta_au=delta, elongation=hz_geo.get("S-O-T"), sensitivity=sens, tycho_catalog=tyc,
-                horizons_meta=meta_geo)
-
-
-def tycho_frame_solution(stars, meas, decs, lsts, xs, cfg, pos, year, hl, hb, zr, rows, zlst):
-    """Same measurements, reference stars from Tycho's own catalogue (equinox 1601.0), moved back to the date
-    with Tycho's precession of 51"/yr, and Tycho's obliquity 23 31 30 (both cited: Tycho's published constants, not on
-    the pages read). Refraction is removed from the distances
-    and declinations with the modern model evaluated at the modern solution (Tycho's own refraction table gave
-    nothing above 20 deg for stars, so this is the honest correction, not his)."""
-    cat = load_tycho_catalog()
-    EPS_T = 23 + 31.5 / 60
-    dyear = 1601.0 - year
-    tpos = {}
-    for k, v in stars.items():
-        c = cat[v["hip"]]
-        lon = c["lon"] - 51.0 / 3600 * dyear
-        tpos[k] = ecl2eq(lon, c["lat"], EPS_T)
-    # refraction corrections from the modern model
-    corr_meas = []
-    for k, dmeas, i in meas:
-        mra, mde = refract(xs[0], xs[1], lsts[i]); sra, sde = refract(*pos[k], lsts[i])
-        dref = sep(mra, mde, sra, sde) - sep(xs[0], xs[1], *pos[k])
-        corr_meas.append((k, dmeas - dref, i))
-    corr_dec = [(dd - (refract(xs[0], xs[1], lsts[i])[1] - xs[1]), i) for dd, i in decs]
-    # armillary zero from the same reference star, Tycho frame
-    zs = []
-    for i, r in enumerate(rows):
-        if zr["field"] in r:
-            lst = zlst[i]
-            dref = refract(*pos[zr["star"]], lst)[1] - pos[zr["star"]][1]
-            for dd in r[zr["field"]]:
-                zs.append(dm(dd) - dref - tpos[zr["star"]][1])
-    z = float(np.mean(zs))
-
-    def resid(x):
-        r = [(sep(x[0], x[1], *tpos[k]) - d) * 60 for k, d, i in corr_meas]
-        if cfg["use_dec"]:
-            r += [(x[1] + z - d) * 60 for d, i in corr_dec]
-        return np.array(r)
-
-    sol = least_squares(resid, xs, x_scale=[0.01, 0.01])
-    lam, bet = eq2ecl(sol.x[0], sol.x[1], EPS_T)
-    dl = wrap180(lam - hl) * 60 * math.cos(hb * D2R); db = (bet - hb) * 60
-    log(f"  [Tycho-catalogue frame] stars (lon, lat at date): " + "; ".join(
-        f"{k.split(' (')[0][:22]} {eq2ecl(*tpos[k], EPS_T)[0]:.3f},{eq2ecl(*tpos[k], EPS_T)[1]:.3f}" for k in tpos))
-    log(f"  [Tycho-catalogue frame] armillary zero {z*60:+.2f}'; Mars lon {lam:.4f} lat {bet:.4f} -> vs Horizons "
-        f"dlon {dl:+.2f}' dlat {db:+.2f}' (diurnal parallax not removed; <0.4')")
-    log(f"    distance residuals: {', '.join(f'{x:+.2f}' for x in resid(sol.x)[:len(corr_meas)])} arcmin")
-    return dict(lon=lam, lat=bet, dlon_arcmin=dl, dlat_arcmin=db)
-
-
-def radec_sun(jd_tt):
-    """Apparent RA of the Sun (deg), from erfa's Earth ephemeris + aberration, via astropy."""
-    from astropy.coordinates import get_sun
-    s = get_sun(Time(jd_tt, format="jd", scale="tt")).transform_to(TETE(obstime=Time(jd_tt, format="jd", scale="tt")))
-    return s.ra.deg
-
-
-def jd_to_str(jd):
-    y, m, d, f = erfa.jd2cal(jd, 0.0)
-    h = f * 24
-    return f"{y:04d}-{m:02d}-{d:02d} {int(h):02d}:{int((h%1)*60):02d} UT (Gregorian)"
-
-
-# ---------------------------------------------------------------- Tycho's own arithmetic (side track a)
-
-def tycho_own_arithmetic():
-    log("=" * 100)
-    log("TYCHO'S OWN ARITHMETIC, recomputed from the numbers printed on p. 441 (1595 Jul 22 mane)")
-    EPS_T = 23 + 31.5 / 60
-    dmars = 10 + 36 / 60
-    out = {}
-    for name, ra_s, de_s, dist, sign in [("prima alae Peg. (Markab)", 341 + 9.25 / 60, 13 + 3 / 60 + 37 / 3600, 50 + 28 / 60, +1),
-                                          ("Aldebaran", 63 + 12.5 / 60, 15 + 37 / 60, 29 + 58.5 / 60, -1)]:
-        # spherical triangle pole-star-Mars: cos d = sin d1 sin d2 + cos d1 cos d2 cos dRA
-        c = (math.cos(dist * D2R) - math.sin(de_s * D2R) * math.sin(dmars * D2R)) / (math.cos(de_s * D2R) * math.cos(dmars * D2R))
-        dra = math.degrees(math.acos(c))
-        ra = (ra_s + sign * dra) % 360
-        out[name] = (dra, ra)
-        log(f"  {name:28s} Ang. diff. ascens. {fmt_dms(dra)}  -> RA Mars {fmt_dms(ra)}")
-    ra_m = np.mean([v[1] for v in out.values()])
-    lam, bet = eq2ecl(ra_m, dmars, EPS_T)
-    log(f"  mean ('limitata') RA {fmt_dms(ra_m)} [printed 32d47'14\"]; with Tycho's obliquity 23d31'30\": "
-        f"lon {fmt_dms(lam)} [printed 34d11'10\" = 4 11 1/6 Taurus], lat {fmt_dms(bet)} [printed -2d30']")
-    return dict(ra=ra_m, lon=lam, lat=bet, printed_lon=34 + 11 / 60 + 10 / 3600, printed_lat=-2.5)
+        x, r, err = fit(meas, kfree)
+        bad = [i for i in np.argsort(-np.abs(r)) if abs(r[i]) > 4][: max(0, len(meas) // 5)]
+        if bad:
+            self.flags.append(f"outliers_removed:{len(bad)}")
+            self.removed = [dict(row=meas[i]["row"], kind=meas[i]["kind"], resid_sigma=float(r[i])) for i in bad]
+            meas = [m for j, m in enumerate(meas) if j not in bad]
+            x, r, err = fit(meas, kfree)
+        else:
+            self.removed = []
+        kinfo = {c: (float(x[2 + i]), float(err[2 + i])) for i, c in enumerate(kfree)}
+        for c, (kv, ke) in kinfo.items():
+            if not np.isfinite(ke) or ke > 1.5:
+                self.flags.append(f"index_{c}_poorly_determined")
+            elif abs(kv) > 2.0:
+                self.flags.append(f"index_{c}_large:{kv:+.1f}'")
+        xk0, rk0, _ = fit(meas, []) if kfree else (x, r, err)
+        e_ra = err[0] * 60 * math.cos(x[1] * D2R); e_de = err[1] * 60
+        if not np.isfinite(e_ra) or not np.isfinite(e_de) or max(e_ra, e_de) > 3:
+            self.flags.append("geometry_weak(formal_err>3')")
+        return dict(ra=float(x[0]) % 360, dec=float(x[1]), err=[float(e_ra), float(e_de)], k=kinfo, meas=meas,
+                    resid=[float(v) for v in r], x_k0=[float(xk0[0]) % 360, float(xk0[1])])
 
 
-# ---------------------------------------------------------------- main
+def run(files, check=False):
+    sessions = []
+    for f in files:
+        d = json.loads(pathlib.Path(f).read_text())
+        for s in d["sessions"]:
+            s["_file"] = str(f)
+            sessions.append(s)
+    load_hip([v["hip"] for s in sessions for v in s.get("stars", {}).values() if v.get("hip")])
+    results, epochs = [], {}
+    objs = []
+    for S in sessions:
+        try:
+            ss = Session(S)
+        except Exception as e:  # a malformed session must not stop the batch
+            results.append(dict(id=S.get("id"), date_julian=S.get("date_julian"), file=S.get("_file"), n_meas=0,
+                                flags=[f"error_in_header:{type(e).__name__}:{e}", "not_reducible"]))
+            log(f"{S.get('id')!s:14s} not reduced | header error {e}")
+            continue
+        try:
+            ss.build()
+            sol = ss.solve()
+        except Exception as e:  # keep going; the session is reported with its error
+            sol = None
+            ss.flags.append(f"error:{type(e).__name__}:{e}")
+        if sol is None:
+            ss.flags.append("not_reducible")
+        objs.append((ss, sol))
+        if sol:
+            h = ss.h_mean
+            if h is None:  # transit-referenced session: solar time of transit
+                h = wrap180(sol["ra"] - ss.off) / 15.041 % 24
+                tr = [m for m in sol["meas"] if m.get("at")]
+                if tr:
+                    shifts = []
+                    for m in tr:
+                        a = m["at"]
+                        shifts.append(float(a.split("+")[1]) if "+" in a else 0.0)
+                    h += float(np.mean(shifts))
+                ss.h_epoch = h
+            else:
+                ss.h_epoch = h
+            epochs[ss.id] = ss.jd_of(ss.h_epoch)
+            for tr in ss.S.get("tycho_reduction", []) or []:
+                tt = tr.get("t")
+                th = ss.hours_from_base(tt) if tt else ss.h_epoch
+                epochs[ss.id + "|tycho|" + (tt or "")] = ss.jd_of(th)
+    hz = horizons_geo(list(epochs.values())) if epochs else {}
+    rows_out = []
+    for ss, sol in objs:
+        rec = dict(id=ss.id, date_julian=ss.S["date_julian"], calendar=ss.calendar, calendar_test=getattr(ss, "calendar_test", None),
+                   file=ss.S.get("_file"), site=ss.site, source=ss.S.get("source"),
+                   n_meas=len(sol["meas"]) if sol else 0)
+        if sol:
+            jd = epochs[ss.id]
+            H = hz[jd]
+            lst = ss.lst_of(ss.h_epoch)
+            ra_g, de_g = topo_to_geo(sol["ra"], sol["dec"], lst, H["delta"], ss.lat)
+            eps = true_obliquity(jd + ss.dT / 86400)
+            lam, bet = eq2ecl(ra_g, de_g, eps)
+            dl = wrap180(lam - H["lon"]) * 60 * math.cos(H["lat"] * D2R); db = (bet - H["lat"]) * 60
+            rg0 = topo_to_geo(*sol["x_k0"], lst, H["delta"], ss.lat); l0, b0 = eq2ecl(*rg0, eps)
+            rec.update(jd_ut=jd, clock=ss.clock_source, lon=lam, lat=bet, horizons_lon=H["lon"], horizons_lat=H["lat"],
+                       elongation=H["elong"], dlon_arcmin=dl, dlat_arcmin=db, total_arcmin=math.hypot(dl, db),
+                       formal_err_arcmin=sol["err"], index_terms_arcmin={c: v for c, v in sol["k"].items()},
+                       zero_armillary_arcmin=ss.zdec * 60, zero_quadrant_arcmin={k: v * 60 for k, v in ss.zq.items()},
+                       without_index_terms=dict(dlon=wrap180(l0 - H["lon"]) * 60 * math.cos(H["lat"] * D2R), dlat=(b0 - H["lat"]) * 60),
+                       residuals=[dict(row=m["row"], kind=m["kind"], resid_arcmin=v * m["sigma"]) for m, v in zip(sol["meas"], sol["resid"])],
+                       removed=ss.removed, horizons_raw=H["raw"])
+            if rec["total_arcmin"] > 5:
+                ss.flags.append("horizons_residual>5'")
+            elif rec["total_arcmin"] > 2:
+                ss.flags.append("horizons_residual>2'")
+            tys = []
+            for tr in ss.S.get("tycho_reduction", []) or []:
+                if tr.get("lon") and tr.get("lon_sign"):
+                    sg = SIGNS.index(tr["lon_sign"].lower()) if tr["lon_sign"].lower() in SIGNS else None
+                    if sg is None:
+                        continue
+                    tl = sg * 30 + parse_angle(tr["lon"]); tb = signed_dec(parse_angle(tr.get("lat", "0")), tr.get("lat_dir"))
+                    Ht = hz[epochs[ss.id + "|tycho|" + (tr.get("t") or "")]]
+                    d1 = wrap180(tl - Ht["lon"]) * 60 * math.cos(Ht["lat"] * D2R); d2 = (tb - Ht["lat"]) * 60
+                    tys.append(dict(lon=tl, lat=tb, dlon_arcmin=d1, dlat_arcmin=d2))
+                    if math.hypot(d1, d2) > 5:
+                        ss.flags.append("tycho_reduction_vs_horizons>5'")
+            rec["tycho_reduction_vs_horizons"] = tys
+        rec["flags"] = sorted(set(ss.flags))
+        results.append(rec)
+        if sol:
+            log(f"{rec['id']:14s} {ss.site:10s} n={rec['n_meas']:2d} lon {rec['lon']:8.3f} lat {rec['lat']:+7.3f} | Horizons "
+                f"d={rec['dlon_arcmin']:+6.2f}' {rec['dlat_arcmin']:+6.2f}' tot {rec['total_arcmin']:5.2f}' | elong {rec['elongation']:5.1f} | "
+                f"k={ {c: round(v[0], 2) for c, v in sol['k'].items()} } | {','.join(rec['flags'])}")
+            for t in rec["tycho_reduction_vs_horizons"]:
+                log(f"{'':14s} Tycho's printed reduction vs Horizons: {t['dlon_arcmin']:+.2f}' {t['dlat_arcmin']:+.2f}'")
+        else:
+            log(f"{rec['id']:14s} not reduced | {','.join(rec['flags'])}")
+    OUTB.mkdir(parents=True, exist_ok=True)
+    (OUTB / "results.json").write_text(json.dumps(results, indent=1, default=float))
+    with open(OUTB / "summary.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["id", "date_julian", "site", "n_meas", "elongation", "dlon_arcmin", "dlat_arcmin", "total_arcmin", "flags", "volume", "pages", "leaves"])
+        for r in results:
+            src = r.get("source") or {}
+            w.writerow([r["id"], r["date_julian"], r["site"], r["n_meas"], r.get("elongation"), r.get("dlon_arcmin"), r.get("dlat_arcmin"),
+                        r.get("total_arcmin"), ";".join(r["flags"]), src.get("volume"), src.get("pages"), src.get("leaves")])
+    tot = [r["total_arcmin"] for r in results if "total_arcmin" in r]
+    if tot:
+        log(f"SUMMARY: {len(tot)} of {len(results)} sessions reduced; median total {np.median(tot):.2f}'; within 2': "
+            f"{sum(t <= 2 for t in tot)}; within 5': {sum(t <= 5 for t in tot)}")
+    (OUTB / "log.txt").write_text("\n".join(LOG) + "\n")
+    if check:
+        ref = {"1595-10-25V": 0.87, "1595-07-22M": 0.82}
+        ok = all(abs(next(r for r in results if r["id"] == k).get("total_arcmin", 99) - v) < 0.5 for k, v in ref.items())
+        log(f"KILL-TEST REGRESSION (batch within 0.5' of the kill-test totals 0.87', 0.82'): {'OK' if ok else 'CHANGED'}")
+        return 0 if ok else 1
+    return 0
+
 
 if __name__ == "__main__":
-    HIP = load_hip()
-    results = {}
-    results["tycho_arithmetic_jul22"] = tycho_own_arithmetic()
-    cfg_oct = dict(session="vesperi", x0=[50.5, 17.5], use_dec=False, skip=[0],
-                   dec_zero_star=dict(star="Oculus Tauri / Aldebaran", field="dec_aldebaran", assume_time=[7, 0]))
-    cfg_jul = dict(session="mane", x0=[32.8, 10.6], use_dec=True, dec_extra_rows=[6],
-                   dec_zero_star=dict(star="Lucida Arietis", field="dec_hamal", assume_time=[2, 50]))
-    results["oct25"] = night("1595-10-25_vesperi", cfg_oct)
-    results["jul22"] = night("1595-07-22_mane", cfg_jul)
-
-    # Tycho's printed Jul 22 result vs Horizons at his stated time (2h40m clock)
-    j = results["jul22"]
-    ta = results["tycho_arithmetic_jul22"]
-    dl = wrap180(ta["printed_lon"] - j["horizons_lon"]) * 60 * math.cos(j["horizons_lat"] * D2R)
-    db = (ta["printed_lat"] - j["horizons_lat"]) * 60
-    log(f"Tycho's own printed result for Jul 22 (his stars, his obliquity, no refraction) vs Horizons: "
-        f"dlon {dl:+.2f}' dlat {db:+.2f}'")
-    results["tycho_printed_vs_horizons_jul22"] = dict(dlon_arcmin=dl, dlat_arcmin=db)
-
-    worst = max(results["oct25"]["total_arcmin"], results["jul22"]["total_arcmin"])
-    log("=" * 100)
-    log(f"KILL-TEST POSITIONAL CRITERION (both nights within 5'): {'MET' if worst <= 5 else 'NOT MET'} (worst {worst:.2f}')")
-    (OUT / "reduction.json").write_text(json.dumps(results, indent=2, default=float))
-    (OUT / "reduction_log.txt").write_text("\n".join(LOG) + "\n")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    sys.exit(run(args or [HERE / "transcription.json"], check="--check" in sys.argv))

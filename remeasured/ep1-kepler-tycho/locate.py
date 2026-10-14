@@ -37,6 +37,7 @@ def main():
         if k >= mx:
             break
         leaf = page_of(idx, m.start())
+        leaf = None if leaf is None else leaf + (1 if vol == 10 else 0)  # vol X leaves start at 1 (see worklist.py)
         ctx = text[max(0, m.start() - 60): m.end() + 60].replace("\n", " ")
         print(f"v{vol} leaf{leaf} n{nidx.get(leaf)} p.{pn.get(leaf, '?')} | {ctx}")
 

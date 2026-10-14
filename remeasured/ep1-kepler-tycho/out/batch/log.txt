@@ -1,0 +1,7 @@
+1595-10-25V    Hven       n=30 lon   49.655 lat  -0.204 | Horizons d= +0.01'  -0.66' tot  0.66' | elong 172.2 | k={'sext': 0.54} | clock_slip_1deg:3,clock_slip_suspected (3 Vultur readings 1 deg high, rows 8 4 2/5 to 8 15 2/3),time_assumed_row
+1595-07-22M    Hven       n= 9 lon   34.194 lat  -2.497 | Horizons d= +0.51'  +0.30' tot  0.60' | elong  93.9 | k={} | star_name_conflict (header Os Pegasi vs reduction prima alae Peg.; geometry says Markab),time_assumed_row
+               Tycho's printed reduction vs Horizons: +0.10' +0.13'
+1587-03-04M    Hven       n= 8 lon  176.823 lat  +3.702 | Horizons d= +2.50'  +1.70' tot  3.02' | elong 174.8 | k={} | altaz_not_used(other constraints suffice),armillary_uncalibrated,armillary_uncalibrated: no reference-star declination this morning,horizons_residual>2',star_unidentified:3 Alae Virginis
+1600-01-01N    Benatky    n= 7 lon  137.526 lat  +3.816 | Horizons d= +4.03'  -0.18' tot  4.03' | elong 142.5 | k={} | calendar_by_site:gregorian,geometry_weak(formal_err>3'),horizons_residual>2',quadrant_uncalibrated:Sext.,quadrant_uncalibrated:Volub.
+               Tycho's printed reduction vs Horizons: +2.27' -3.44'
+SUMMARY: 4 of 4 sessions reduced; median total 1.84'; within 2': 2; within 5': 4

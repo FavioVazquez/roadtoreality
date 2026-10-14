@@ -1,0 +1,518 @@
+[
+ {
+  "id": "1595-10-25V",
+  "date_julian": "1595-10-25",
+  "calendar": "julian",
+  "calendar_test": {
+   "minutes_this": -0.7,
+   "minutes_other": -41.0
+  },
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep1-kepler-tycho/transcription.json",
+  "site": "Hven",
+  "source": {
+   "volume": 12,
+   "pages": [
+    447
+   ],
+   "leaves": [
+    497
+   ],
+   "image_n": [
+    460
+   ],
+   "columns": "right"
+  },
+  "n_meas": 30,
+  "jd_ut": 2303929.2875004024,
+  "clock": "clock star (10)",
+  "lon": 49.65501386532567,
+  "lat": -0.2043350650209111,
+  "horizons_lon": 49.6548168,
+  "horizons_lat": -0.1933063,
+  "elongation": 172.2185,
+  "dlon_arcmin": 0.011823852245665657,
+  "dlat_arcmin": -0.6617259012546661,
+  "total_arcmin": 0.6618315283161021,
+  "formal_err_arcmin": [
+   0.39034495882985243,
+   0.2244668985620835
+  ],
+  "index_terms_arcmin": {
+   "sext": [
+    0.5359095761008282,
+    0.298484007778012
+   ]
+  },
+  "zero_armillary_arcmin": -0.2634572837265914,
+  "zero_quadrant_arcmin": {},
+  "without_index_terms": {
+   "dlon": 0.05257931256572046,
+   "dlat": -0.7673851229827566
+  },
+  "residuals": [
+   {
+    "row": 0,
+    "kind": "dist",
+    "resid_arcmin": -2.042767089086013
+   },
+   {
+    "row": 0,
+    "kind": "dec",
+    "resid_arcmin": 0.6166997404703523
+   },
+   {
+    "row": 0,
+    "kind": "dec",
+    "resid_arcmin": -1.5499669261963334
+   },
+   {
+    "row": 2,
+    "kind": "dist",
+    "resid_arcmin": 0.5138620959704809
+   },
+   {
+    "row": 2,
+    "kind": "dec",
+    "resid_arcmin": 0.19971635169156343
+   },
+   {
+    "row": 2,
+    "kind": "dec",
+    "resid_arcmin": -0.30028364830840815
+   },
+   {
+    "row": 3,
+    "kind": "dist",
+    "resid_arcmin": 1.0299451110710578
+   },
+   {
+    "row": 3,
+    "kind": "dec",
+    "resid_arcmin": -0.8291842545834527
+   },
+   {
+    "row": 3,
+    "kind": "dec",
+    "resid_arcmin": -0.8291842545834527
+   },
+   {
+    "row": 4,
+    "kind": "dist",
+    "resid_arcmin": 0.547959662562576
+   },
+   {
+    "row": 4,
+    "kind": "dec",
+    "resid_arcmin": 0.1383043721597943
+   },
+   {
+    "row": 4,
+    "kind": "dec",
+    "resid_arcmin": 0.1383043721597943
+   },
+   {
+    "row": 5,
+    "kind": "dist",
+    "resid_arcmin": 0.267772145539098
+   },
+   {
+    "row": 5,
+    "kind": "dec",
+    "resid_arcmin": 0.44124079247005454
+   },
+   {
+    "row": 5,
+    "kind": "dec",
+    "resid_arcmin": 0.6079074591366407
+   },
+   {
+    "row": 6,
+    "kind": "dist",
+    "resid_arcmin": 0.2860864822734044
+   },
+   {
+    "row": 6,
+    "kind": "dec",
+    "resid_arcmin": 0.5811635996651177
+   },
+   {
+    "row": 6,
+    "kind": "dec",
+    "resid_arcmin": 0.5811635996651177
+   },
+   {
+    "row": 7,
+    "kind": "dist",
+    "resid_arcmin": 0.46697126566492386
+   },
+   {
+    "row": 8,
+    "kind": "dist",
+    "resid_arcmin": -0.06651604647302634
+   },
+   {
+    "row": 8,
+    "kind": "dec",
+    "resid_arcmin": 0.5148522180224546
+   },
+   {
+    "row": 8,
+    "kind": "dec",
+    "resid_arcmin": 0.18151888468906918
+   },
+   {
+    "row": 10,
+    "kind": "dist",
+    "resid_arcmin": 0.3349328417056441
+   },
+   {
+    "row": 10,
+    "kind": "dec",
+    "resid_arcmin": 0.28856689611231445
+   },
+   {
+    "row": 10,
+    "kind": "dec",
+    "resid_arcmin": 0.2052335627789148
+   },
+   {
+    "row": 11,
+    "kind": "dist",
+    "resid_arcmin": -0.14427089769146306
+   },
+   {
+    "row": 11,
+    "kind": "dec",
+    "resid_arcmin": 0.10310750666704394
+   },
+   {
+    "row": 11,
+    "kind": "dec",
+    "resid_arcmin": -0.0635591599995422
+   },
+   {
+    "row": 12,
+    "kind": "starstar",
+    "resid_arcmin": -0.513645864617871
+   },
+   {
+    "row": 12,
+    "kind": "starstar",
+    "resid_arcmin": -0.6803125312846703
+   }
+  ],
+  "removed": [],
+  "horizons_raw": "8558aa5eb460.txt",
+  "tycho_reduction_vs_horizons": [],
+  "flags": [
+   "clock_slip_1deg:3",
+   "clock_slip_suspected (3 Vultur readings 1 deg high, rows 8 4 2/5 to 8 15 2/3)",
+   "time_assumed_row"
+  ]
+ },
+ {
+  "id": "1595-07-22M",
+  "date_julian": "1595-07-22",
+  "calendar": "julian",
+  "calendar_test": {
+   "minutes_this": 3.7,
+   "minutes_other": -34.7
+  },
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep1-kepler-tycho/transcription.json",
+  "site": "Hven",
+  "source": {
+   "volume": 12,
+   "pages": [
+    441
+   ],
+   "leaves": [
+    491
+   ],
+   "image_n": [
+    454
+   ],
+   "columns": "right"
+  },
+  "n_meas": 9,
+  "jd_ut": 2303833.583620121,
+  "clock": "clock star (1)",
+  "lon": 34.1937416994702,
+  "lat": -2.497094311364671,
+  "horizons_lon": 34.1851508,
+  "horizons_lat": -2.5021604,
+  "elongation": 93.8729,
+  "dlon_arcmin": 0.5149625221072406,
+  "dlat_arcmin": 0.3039653181197455,
+  "total_arcmin": 0.5979810313000642,
+  "formal_err_arcmin": [
+   0.5141158118386105,
+   0.5544485678101859
+  ],
+  "index_terms_arcmin": {},
+  "zero_armillary_arcmin": -1.266000822836233,
+  "zero_quadrant_arcmin": {},
+  "without_index_terms": {
+   "dlon": 0.5149625221072406,
+   "dlat": 0.3039653181197455
+  },
+  "residuals": [
+   {
+    "row": 0,
+    "kind": "dist",
+    "resid_arcmin": 1.030306364653626
+   },
+   {
+    "row": 0,
+    "kind": "dec",
+    "resid_arcmin": 0.17944732363282867
+   },
+   {
+    "row": 0,
+    "kind": "dec",
+    "resid_arcmin": -0.3205526763671429
+   },
+   {
+    "row": 1,
+    "kind": "dist",
+    "resid_arcmin": 1.539431660869326
+   },
+   {
+    "row": 2,
+    "kind": "dist",
+    "resid_arcmin": 0.37566256175637136
+   },
+   {
+    "row": 3,
+    "kind": "dist",
+    "resid_arcmin": 1.4915177497584153
+   },
+   {
+    "row": 4,
+    "kind": "dist",
+    "resid_arcmin": 1.4995485435699152
+   },
+   {
+    "row": 6,
+    "kind": "dec",
+    "resid_arcmin": 0.6173153095843276
+   },
+   {
+    "row": 6,
+    "kind": "dec",
+    "resid_arcmin": 0.6173153095843276
+   }
+  ],
+  "removed": [],
+  "horizons_raw": "8558aa5eb460.txt",
+  "tycho_reduction_vs_horizons": [
+   {
+    "lon": 34.18611111111111,
+    "lat": -2.5,
+    "dlon_arcmin": 0.10262872460573365,
+    "dlat_arcmin": 0.12963000000000058
+   }
+  ],
+  "flags": [
+   "star_name_conflict (header Os Pegasi vs reduction prima alae Peg.; geometry says Markab)",
+   "time_assumed_row"
+  ]
+ },
+ {
+  "id": "1587-03-04M",
+  "date_julian": "1587-03-04",
+  "calendar": "julian",
+  "calendar_test": {
+   "minutes_this": -7.5,
+   "minutes_other": -43.8
+  },
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep1-kepler-tycho/transcription.json",
+  "site": "Hven",
+  "source": {
+   "volume": 11,
+   "pages": [
+    183,
+    183
+   ],
+   "leaves": [
+    197,
+    197
+   ],
+   "image_n": [
+    196,
+    196
+   ],
+   "columns": "left lower (table 1), right upper (armillary and azimuth tables)"
+  },
+  "n_meas": 8,
+  "jd_ut": 2300771.6886601606,
+  "clock": "clock star (5)",
+  "lon": 176.8226425501927,
+  "lat": 3.7024913875581493,
+  "horizons_lon": 176.7808829,
+  "horizons_lat": 3.6741629,
+  "elongation": 174.7519,
+  "dlon_arcmin": 2.5004290874750725,
+  "dlat_arcmin": 1.6997092534889724,
+  "total_arcmin": 3.023434664067915,
+  "formal_err_arcmin": [
+   0.7535768169590868,
+   1.1061808642326179
+  ],
+  "index_terms_arcmin": {},
+  "zero_armillary_arcmin": 0.0,
+  "zero_quadrant_arcmin": {},
+  "without_index_terms": {
+   "dlon": 2.5004290874750725,
+   "dlat": 1.6997092534889724
+  },
+  "residuals": [
+   {
+    "row": 2,
+    "kind": "dist",
+    "resid_arcmin": 2.5791124756360873
+   },
+   {
+    "row": 3,
+    "kind": "dist",
+    "resid_arcmin": 1.7943655675358983
+   },
+   {
+    "row": 5,
+    "kind": "dist",
+    "resid_arcmin": -0.44772349105183906
+   },
+   {
+    "row": 6,
+    "kind": "dist",
+    "resid_arcmin": -0.45952178100922225
+   },
+   {
+    "row": 7,
+    "kind": "radiff",
+    "resid_arcmin": 0.9450618539926836
+   },
+   {
+    "row": 8,
+    "kind": "radiff",
+    "resid_arcmin": 0.9812451283892187
+   },
+   {
+    "row": 9,
+    "kind": "radiff",
+    "resid_arcmin": 0.2715939894102348
+   },
+   {
+    "row": 12,
+    "kind": "dec",
+    "resid_arcmin": 1.8246561732610722
+   }
+  ],
+  "removed": [],
+  "horizons_raw": "860ebb99fcfb.txt",
+  "tycho_reduction_vs_horizons": [],
+  "flags": [
+   "altaz_not_used(other constraints suffice)",
+   "armillary_uncalibrated",
+   "armillary_uncalibrated: no reference-star declination this morning",
+   "horizons_residual>2'",
+   "star_unidentified:3 Alae Virginis"
+  ]
+ },
+ {
+  "id": "1600-01-01N",
+  "date_julian": "1600-01-01",
+  "calendar": "gregorian",
+  "calendar_test": null,
+  "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep1-kepler-tycho/transcription.json",
+  "site": "Benatky",
+  "source": {
+   "volume": 13,
+   "pages": [
+    219
+   ],
+   "leaves": [
+    237
+   ],
+   "image_n": [
+    236
+   ],
+   "columns": "left, lower half"
+  },
+  "n_meas": 7,
+  "jd_ut": 2305447.659571642,
+  "clock": "solar",
+  "lon": 137.52572774044933,
+  "lat": 3.816175302820936,
+  "horizons_lon": 137.4584224,
+  "horizons_lat": 3.8192399,
+  "elongation": 142.5227,
+  "dlon_arcmin": 4.029351952464478,
+  "dlat_arcmin": -0.18387583074382263,
+  "total_arcmin": 4.033545274068587,
+  "formal_err_arcmin": [
+   1.6108890284122737,
+   3.114139962424753
+  ],
+  "index_terms_arcmin": {},
+  "zero_armillary_arcmin": 0.0,
+  "zero_quadrant_arcmin": {},
+  "without_index_terms": {
+   "dlon": 4.029351952464478,
+   "dlat": -0.18387583074382263
+  },
+  "residuals": [
+   {
+    "row": 0,
+    "kind": "malt",
+    "resid_arcmin": 3.30848547530735
+   },
+   {
+    "row": 0,
+    "kind": "malt",
+    "resid_arcmin": 3.8084854753073216
+   },
+   {
+    "row": 1,
+    "kind": "dist",
+    "resid_arcmin": 3.7214414866651424
+   },
+   {
+    "row": 2,
+    "kind": "dist",
+    "resid_arcmin": 3.7214414866651424
+   },
+   {
+    "row": 3,
+    "kind": "dist",
+    "resid_arcmin": 2.417053006064478
+   },
+   {
+    "row": 4,
+    "kind": "dist",
+    "resid_arcmin": 1.9170530060645063
+   },
+   {
+    "row": 5,
+    "kind": "dist",
+    "resid_arcmin": 2.417053006064478
+   }
+  ],
+  "removed": [],
+  "horizons_raw": "987025898bf9.txt",
+  "tycho_reduction_vs_horizons": [
+   {
+    "lon": 137.4963888888889,
+    "lat": 3.7619444444444445,
+    "dlon_arcmin": 2.2729302773219437,
+    "dlat_arcmin": -3.4377273333333225
+   }
+  ],
+  "flags": [
+   "calendar_by_site:gregorian",
+   "geometry_weak(formal_err>3')",
+   "horizons_residual>2'",
+   "quadrant_uncalibrated:Sext.",
+   "quadrant_uncalibrated:Volub."
+  ]
+ }
+]

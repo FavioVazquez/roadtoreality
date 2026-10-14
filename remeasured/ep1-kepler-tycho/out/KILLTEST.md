@@ -148,6 +148,20 @@ Results:
   1600 Jan 19: 3. **10 of 10 covered, 8 of them with 6 or more sessions.**
 - **Off-opposition sessions** (elongation < 135°): 276, of which 198 have elongation < 110°. Another 52 fall between 135° and the opposition windows.
 
+**Correction (13 Oct 2026, while building `WORKLIST.json`).** The count above included 41 false sessions: fixed-star blocks inside
+the 1599 year (vol XIII p. 182, "ALTITUDINES MERIDIANÆ & DISTANTIÆ FIXARUM"), whose dates the finder read as Mars headings.
+It also missed six "NOCTE QUÆ PRÆCEDEBAT …" headings. The corrected finder (`legibility.py`) gives:
+- **379 Mars dates**;
+- **10 of 10 oppositions covered** (1600 Jan 19 now has 7 sessions);
+- **238 off-opposition sessions** (159 below 110°).
+
+The verdict is unchanged.
+
+**Note on `reduce.py`.** After commit 0eab93b, `reduce.py` was replaced by the batch reducer (session format of `TRANSCRIBE-GUIDE.md`).
+The kill-test version of the script is in that commit. Run as `reduce.py --check`, the batch reducer reproduces both kill-test nights:
+- 1595-10-25V: 0.66′ (with the sextant index fitted from three stars and the armillary declinations included);
+- 1595-07-22M: 0.60′.
+
 Legibility on the images is not the bottleneck. The pages are Dreyer's typeset edition, not the manuscript, and every sampled page is crisp at the archive's full
 resolution: vol X p. 175, vol XI p. 183, vol XII pp. 441, 442, 446–448 and 478, and vol XIII p. 244. Numerals and fractions read unambiguously once cropped at full size. The OCR is the
 weak link: it mangles ♂ (as cf, cT, (^, d′), drops fractions, and splits tables across columns. Every number must therefore be read on the image, as was done here.

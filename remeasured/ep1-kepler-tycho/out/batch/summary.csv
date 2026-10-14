@@ -1,0 +1,5 @@
+id,date_julian,site,n_meas,elongation,dlon_arcmin,dlat_arcmin,total_arcmin,flags,volume,pages,leaves
+1595-10-25V,1595-10-25,Hven,30,172.2185,0.011823852245665657,-0.6617259012546661,0.6618315283161021,"clock_slip_1deg:3;clock_slip_suspected (3 Vultur readings 1 deg high, rows 8 4 2/5 to 8 15 2/3);time_assumed_row",12,[447],[497]
+1595-07-22M,1595-07-22,Hven,9,93.8729,0.5149625221072406,0.3039653181197455,0.5979810313000642,star_name_conflict (header Os Pegasi vs reduction prima alae Peg.; geometry says Markab);time_assumed_row,12,[441],[491]
+1587-03-04M,1587-03-04,Hven,8,174.7519,2.5004290874750725,1.6997092534889724,3.023434664067915,altaz_not_used(other constraints suffice);armillary_uncalibrated;armillary_uncalibrated: no reference-star declination this morning;horizons_residual>2';star_unidentified:3 Alae Virginis,11,"[183, 183]","[197, 197]"
+1600-01-01N,1600-01-01,Benatky,7,142.5227,4.029351952464478,-0.18387583074382263,4.033545274068587,calendar_by_site:gregorian;geometry_weak(formal_err>3');horizons_residual>2';quadrant_uncalibrated:Sext.;quadrant_uncalibrated:Volub.,13,[219],[237]

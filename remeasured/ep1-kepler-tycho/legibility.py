@@ -55,11 +55,20 @@ MIXED_SEC = re.compile(r"RELIQUORUM|PLANETAR")
 MARS_SIGN = re.compile(r"(?<![A-Za-z])(cf|cT|c\?|\(\^|\(f|d'|\(j\"|Martis|Mars|MARTIS)(?![a-z])")
 
 
+CAPS_HEAD = re.compile(r"^[A-Z][A-Z ,.;:&^]{11,}$")
+NIGHT_BEFORE = re.compile(r"NOCT[UE]\s+QU\S*\s+PR\S*CE[DS]")
+DATE_ANY = re.compile(r"(\d{1,2})\s*([A-Z]{3,})")
+
+
 def sessions():
+    """Mars session headings. A Mars section ends at the next section heading or at an all-caps heading of a
+    fixed-star block (e.g. ALTITUDINES MERIDIANAE & DISTANTIAE FIXARUM). 'NOCTE QUAE PRAECEDEBAT [DIEM] d MONTH'
+    headings count, dated as printed (kind_note 'night before'). A month running backwards inside one section
+    (December -> January) moves the year on by one and is flagged."""
     out = []  # (vol, year, month, day, kind, line)
     for vol in (10, 11, 12, 13):
         lines = (OCR / f"v{vol}.txt").read_text(encoding="utf-8", errors="replace").splitlines()
-        year = None; mode = None; appendix = False
+        year = None; mode = None; appendix = False; sec_year = None; last_mo = None
         block = None
         for n, line in enumerate(lines):
             m = YEAR.search(line)
@@ -71,21 +80,36 @@ def sessions():
                 if appendix:
                     mode = None
                 elif MARS_SEC.search(line):
-                    mode = "mars"
+                    mode = "mars"; sec_year = year; last_mo = None
                 elif MIXED_SEC.search(line) and vol == 10:
-                    mode = "mixed"
+                    mode = "mixed"; sec_year = year; last_mo = None
                 elif "ANNI" not in line:
                     mode = None
+            elif mode and CAPS_HEAD.match(line.strip()) and re.search(r"FIXAR|STELLAR|ALTITUDINES", line):
+                mode = None  # a fixed-star block inside the year (e.g. vol XIII p. 182): not Mars
             if year is None or year < 1580 or year > 1601:
                 continue
             d = DIE.match(line)
-            if d and mode:
+            nb = None
+            if not d and mode and NIGHT_BEFORE.search(line):
+                for look in lines[n:n + 3]:
+                    dd = DATE_ANY.search(look.replace("DIEM", " "))
+                    if dd and month_of(dd.group(2)):
+                        nb = dd; break
+            if (d or nb) and mode:
                 if block:
                     out.append(block)
-                mo = month_of(d.group(2)); day = int(d.group(1))
+                g = d or nb
+                mo = month_of(g.group(2)); day = int(g.group(1))
                 block = None
                 if mo and 1 <= day <= 31:
-                    block = dict(vol=vol, year=year, month=mo, day=day, kind=mode, line=n + 1, hits=0)
+                    y = sec_year
+                    if last_mo is not None and mo < last_mo - 6:
+                        sec_year += 1; y = sec_year
+                    last_mo = mo
+                    block = dict(vol=vol, year=y, month=mo, day=day, kind=mode, line=n + 1, hits=0,
+                                 note="night before the printed date" if nb else "",
+                                 rollover=(y != year))
                 continue
             if block and mode == "mixed":
                 block["hits"] += len(MARS_SIGN.findall(line))
