@@ -210,7 +210,9 @@
     }
 
     /* ── Legend ── */
-    var legX = ox + gW * 0.52;
+    ctx.font = '10px monospace';
+    var legW = 26 + ctx.measureText('Rayleigh-Jeans (classical)').width;
+    var legX = Math.min(ox + gW * 0.52, ox + gW - legW - 4);
     var legY = oy - gH * 0.92;
     ctx.strokeStyle = planckColor;
     ctx.lineWidth   = 2.5;
