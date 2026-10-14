@@ -20,7 +20,7 @@ recognised the system.
 | alpha | 3.7 d per unit, rotated | succeeded | two Kepler ellipses, common centre | median 2.05′, RMS 2.96′ | size ratio 1.52363, e 0.0931 / 0.0169, i 1.86° |
 | beta | 0.83 d per unit, rotated, mirrored | **failed** | none (`winner: null`) | best median 1045′ | search failure (see below) |
 | beta2 | same data as beta, declared rerun | succeeded | two Kepler ellipses, direction = target − observer | median 2.13′, RMS 3.20′ | ratio 1.5236, exponent 1.50017 ± 0.00014, mirror detected |
-| gamma | 12.4 d per unit, rotated, mirrored, latitude flipped | succeeded | two Kepler ellipses | median 2.18′, RMS 3.02′ | same ellipses, flags the same 14° latitude slip |
+| gamma | 12.4 d per unit, rotated, mirrored, latitude flipped | succeeded | two Kepler ellipses | median 2.02′, RMS 3.02′ (all 29 rows: median 2.18′) | same ellipses, flags the same 14° latitude slip |
 
 Every run is reported. The three successful runs recognised the system as Mars seen from Earth only *after* fitting,
 from the invariants (size ratio, eccentricities, tilt, period ratio). They recovered the hidden time unit (beta2:
