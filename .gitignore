@@ -18,6 +18,9 @@
 !assets/
 !assets/**
 
+!remeasured/
+!remeasured/**
+
 !package.json
 !package-lock.json
 node_modules/
@@ -28,3 +31,10 @@ node_modules/
 **/*.pyc
 **/*.pyo
 **/.DS_Store
+
+# Road re-measured: never commit raw data (re-download scripts + checksums instead)
+remeasured/**/data/
+remeasured/**/*.hdf5
+remeasured/**/*.gwf
+remeasured/**/*.h5
+remeasured/**/scans/
