@@ -80,20 +80,21 @@
   function drawPair() {
     var cy = H * 0.36, nx = W * 0.5, T = 4, ph = t % T, thr = 2 * MEC2, ok = eGamma >= thr && nucleus;
     txt('A photon of ' + eGamma.toFixed(2) + ' MeV ' + (nucleus ? 'passes a nucleus' : 'in empty space'), 16, 22, COL.text, 14);
-    var f = ph / T, ny0 = cy + 14, recoil = eGamma >= thr ? eGamma - Math.sqrt(eGamma * eGamma - thr * thr) : 0, made = ok && f >= 0.45, gm = made ? Math.min(1, (f - 0.45) / 0.15) : 0;
+    var f = ph / T, ny0 = cy + 50, recoil = eGamma >= thr ? eGamma - Math.sqrt(eGamma * eGamma - thr * thr) : 0, made = ok && f >= 0.45, gm = made ? Math.min(1, (f - 0.45) / 0.15) : 0;
     if (nucleus) {
       /* the nucleus's Coulomb field: faint rings, with the vertex inside it */
       ctx.lineWidth = 1;
-      [30, 52, 74].forEach(function (rr, i) { ctx.strokeStyle = 'rgba(255,255,255,' + (0.14 - i * 0.03).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(nx, ny0, rr, 0, 2 * Math.PI); ctx.stroke(); });
-      var ny1 = ny0 + 3 * gm;
-      dot(nx, ny1, 9, 'rgba(255,255,255,0.5)');
-      txt('nucleus', nx - 16, ny1 + 4, COL.muted, 11, 'right');
+      [36, 58, 80].forEach(function (rr, i) { ctx.strokeStyle = 'rgba(255,255,255,' + (0.14 - i * 0.03).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(nx, ny0, rr, 0, 2 * Math.PI); ctx.stroke(); });
+      var nx1 = nx + 3 * gm;
+      dot(nx1, ny0, 9, 'rgba(255,255,255,0.5)');
+      txt('nucleus', nx1 - 16, ny0 + 4, COL.muted, 11, 'right');
       if (made) {
-        var al = 14 + 26 * Math.min(1, recoil / 1.5), ay0 = ny1 + 12, ay1 = ay0 + al * gm;
+        /* recoil is forward, along the photon's direction (+x) */
+        var al = 14 + 26 * Math.min(1, recoil / 1.5), ax0 = nx1 + 12, ax1 = ax0 + al * gm;
         ctx.strokeStyle = COL.ph; ctx.fillStyle = COL.ph; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(nx, ay0); ctx.lineTo(nx, ay1); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(nx, ay1 + 6); ctx.lineTo(nx - 4, ay1 - 2); ctx.lineTo(nx + 4, ay1 - 2); ctx.closePath(); ctx.fill();
-        if (gm >= 1) txt('recoil ≥ ' + recoil.toFixed(3) + ' MeV/c', nx, ay1 + 20, COL.ph, W < 560 ? 10 : 11, 'center');
+        ctx.beginPath(); ctx.moveTo(ax0, ny0); ctx.lineTo(ax1, ny0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(ax1 + 6, ny0); ctx.lineTo(ax1 - 2, ny0 - 4); ctx.lineTo(ax1 - 2, ny0 + 4); ctx.closePath(); ctx.fill();
+        if (gm >= 1) txt('recoil ≥ ' + recoil.toFixed(3) + ' MeV/c', nx1 - 30, ny0 + 26, COL.ph, W < 560 ? 10 : 11, 'left');
       }
     }
     var x0 = 16;
