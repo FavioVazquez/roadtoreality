@@ -338,9 +338,11 @@
   list-style: none;
 }
 
+/* block + absolutely placed arrow: a flex row split inline italics and KaTeX into separate columns */
 .takeaway-box__list li {
-  display: flex;
-  gap: var(--space-3);
+  position: relative;
+  display: block;
+  padding-left: calc(1em + var(--space-3));
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   line-height: 1.6;
@@ -349,10 +351,11 @@
 
 .takeaway-box__list li::before {
   content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
   color: var(--era-stop-color, var(--color-gold));
-  flex-shrink: 0;
   font-family: var(--font-mono);
-  margin-top: 2px;
 }
 
 /* ── Bridge Sentence ────────────────────────────────────────── */
