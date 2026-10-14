@@ -21,10 +21,10 @@
   var q = 'h0', tourT = 0, intro = 1;   /* intro: 0..1 easing of the current gauge */
 
   /* ── Cited numbers ─────────────────────────────────────── */
-  var PLANCK_H0 = { v: 67.4, e: 0.5, label: 'Planck 2018 (CMB + ΛCDM)' };          /* Planck 2018 VI abstract */
+  var PLANCK_H0 = { v: 67.4, e: 0.5, dp: 1, label: 'Planck 2018 (CMB + ΛCDM)' };          /* Planck 2018 VI abstract */
   var LOCAL = {
-    shoes: { v: 73.04, e: 1.04, label: 'SH0ES 2022 (Cepheids + SNe Ia)' },            /* Riess et al. 2022 */
-    cchp:  { v: 70.39, e: Math.sqrt(1.22 * 1.22 + 1.33 * 1.33 + 0.70 * 0.70), label: 'CCHP 2025 (TRGB + SNe Ia)' } /* Freedman et al. 2025; terms added in quadrature here */
+    shoes: { v: 73.04, e: 1.04, dp: 2, label: 'SH0ES 2022 (Cepheids + SNe Ia)' },            /* Riess et al. 2022 */
+    cchp:  { v: 70.39, e: Math.sqrt(1.22 * 1.22 + 1.33 * 1.33 + 0.70 * 0.70), dp: 2, label: 'CCHP 2025 (TRGB + SNe Ia)' } /* Freedman et al. 2025; terms added in quadrature here */
   };
   var localKey = 'shoes', hypo = null;      /* hypothetical local value, or null */
 
@@ -127,7 +127,7 @@
   function sigmaSep(a, b) { return Math.abs(a.v - b.v) / Math.sqrt(a.e * a.e + b.e * b.e); }
   function localNow() {
     var L = LOCAL[localKey];
-    return hypo === null ? L : { v: hypo, e: L.e, label: 'Hypothetical: ' + hypo.toFixed(1) + ' ± ' + L.e.toFixed(2) };
+    return hypo === null ? L : { v: hypo, e: L.e, dp: L.dp, label: 'Hypothetical local value' };
   }
 
   function drawH0() {
@@ -155,7 +155,7 @@
       var ly = y1 - peak * scale - 8;
       ctx.textAlign = m.v < (lo + hi) / 2 ? 'left' : 'right';
       var lx = m.v < (lo + hi) / 2 ? sx(m.v) - 6 : Math.min(x1, sx(m.v) + (W < 520 ? 60 : 6));
-      ctx.fillText(m.v.toFixed(2) + ' ± ' + m.e.toFixed(2), lx, ly);
+      ctx.fillText(m.v.toFixed(m.dp) + ' ± ' + m.e.toFixed(m.dp), lx, ly);
       ctx.fillText(W < 520 ? label.replace(/ \(.*\)$/, '') : label, lx, ly - 14);
     }
     gauss(PLANCK_H0, COL.gold, PLANCK_H0.label);
@@ -267,7 +267,7 @@
     ctx.strokeStyle = COL.text; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X, y - 8); ctx.lineTo(X, y + 8); ctx.stroke();
     font(W < 520 ? 12 : 13, '500'); ctx.fillStyle = COL.text; ctx.textAlign = 'left';
     var ty = y + 72;
-    ctx.fillText(sci(N, 1) + ' photons  →  about ' + (nb >= 10 ? Math.round(nb).toLocaleString('en-US') : nb.toPrecision(2)) + ' baryons', 16, ty);
+    ctx.fillText(sci(N, 1) + ' photons  →  about ' + (nb >= 10 ? Math.round(nb).toLocaleString('en-US') : nb >= 0.01 ? nb.toPrecision(2) : sci(nb, 1)) + ' baryons', 16, ty);
     font(11); ctx.fillStyle = COL.muted;
     wrap('Today: about 411 photons per cubic centimetre at 2.725 K, and about 0.25 protons or neutrons per cubic metre (both computed here). Had matter and antimatter been exactly equal, they would have annihilated almost completely; this small excess is what remains.', 16, ty + 18, W - 32, 15);
   }

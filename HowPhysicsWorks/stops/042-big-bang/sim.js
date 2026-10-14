@@ -232,7 +232,7 @@
     var Hs = is29 ? H1929 : Htoday;
     var f = Math.pow(10, corr1929 / 5);
     var B = plotBox();
-    var xmax = is29 ? 2.3 * f : 230, ymin = is29 ? -300 : 0, ymax = is29 ? 1200 : 13000;
+    var xmax = is29 ? 2.3 * f : 230 * Math.pow(10, Math.max(0, -dMB) / 5), ymin = is29 ? -300 : 0, ymax = is29 ? 1200 : 15500;
     var ax = axes(B, 0, xmax, ymin, ymax, is29 ? 'Distance (Mpc), Hubble 1929' + (corr1929 > 0 ? ' × ' + f.toFixed(2) : '') : 'Distance now (Mpc), from the supernova brightness',
       is29 ? 'Velocity (km/s)' : 'Velocity c·z (km/s)');
     lastAx = ax;
@@ -353,7 +353,7 @@
       ctx.globalAlpha = alpha;
       ctx.font = (narrow ? '10px' : '11px') + ' "DM Sans", sans-serif';
       ctx.fillStyle = COL.gold; ctx.textAlign = 'left';
-      ctx.fillText('◂ Penzias & Wilson 1965, 4.08 GHz', sx(PW.nuGHz) + 8, sy(Ipw(PW.T)) - 8);
+      ctx.fillText('◂ Penzias & Wilson 1965, 4.08 GHz', sx(PW.nuGHz) + 8, sy(Ipw(PW.T)) - (narrow ? 16 : 8));
       ctx.fillStyle = COL.muted; ctx.textAlign = 'right';
       ctx.fillText('COBE/FIRAS, 43 points (error bars × 400)', W - 14, B.y0 - 8);
       ctx.globalAlpha = 1;
@@ -404,7 +404,7 @@
       ctx.fillStyle = COL.muted;
       ctx.fillText('Axes rescaled by 1 + z: the shape never changes', x, y + 3 * lh);
     } else {
-      ctx.fillText('Best fit to these 43 points: ' + FIRAS_FIT.T.toFixed(4) + ' K', x, y + 2 * lh);
+      ctx.fillText('Fit to these 43 points: ' + FIRAS_FIT.T.toFixed(4) + ' K (the file is built on a 2.725 K blackbody)', x, y + 2 * lh);
     }
   }
 
