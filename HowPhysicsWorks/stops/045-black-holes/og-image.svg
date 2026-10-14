@@ -66,7 +66,7 @@
   <text x="88" y="455"
     font-family="'DM Sans', Arial, sans-serif"
     font-size="20" font-weight="300"
-    fill="#ffffff" fill-opacity="0.45">When mass is compressed past a critical density, spacetime curves so severely that nothing…</text>
+    fill="#ffffff" fill-opacity="0.45">When mass is compressed inside its Schwarzschild radius 2GM/c², not even light can escape…</text>
 
   <!-- Year badge — bottom right -->
   <rect x="774" y="560" width="410" height="44" rx="8"
