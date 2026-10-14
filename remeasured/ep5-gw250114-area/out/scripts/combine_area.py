@@ -15,7 +15,7 @@ The two posteriors come from disjoint data and are treated as independent:
 No prior reweighting is applied: each posterior keeps its own analysis priors (state this when quoting results).
 
 Usage:
-  combine_area.py --premerger FILE [--format auto|npz|csv|hdf5] [--hdf5-path GROUP/DATASET] --frame detector|source
+  combine_area.py --premerger FILE [--format auto|npz|csv|hdf5|bilby]  (bilby = bilby result .json; auto picks it for .json) [--hdf5-path GROUP/DATASET] --frame detector|source
                   [--cols m1,m2,chi1,chi2[,z]] --ringdown-glob 'results/ringdown/GW250114_220_*M_posterior.npz'
                   [--variation baseline] --out-prefix results/area_combo_<tag> [--npairs 1000000] [--seed 1]
 Outputs: <prefix>.csv (one row per ringdown run), <prefix>.json (provenance incl. sha256 of all inputs), <prefix>.png
@@ -38,6 +38,9 @@ def load_table(path, fmt, h5path):
         z = np.load(path); return {k: z[k] for k in z.files}
     if fmt in ("csv", "dat", "txt"):
         return {k: v.values for k, v in pd.read_csv(path, sep=None, engine="python").items()}
+    if fmt in ("json", "bilby"):
+        R = json.load(open(path)); post = R["posterior"]; post = post.get("content", post)   # bilby result: posterior -> content
+        return {k: np.asarray(v) for k, v in post.items() if isinstance(v, list) and len(v) and isinstance(v[0], (int, float))}
     if fmt in ("h5", "hdf5"):
         import h5py
         with h5py.File(path) as f:

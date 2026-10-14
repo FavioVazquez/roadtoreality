@@ -224,15 +224,176 @@ Table: results/task3_isifarr_ladder.csv (scripts/task3_compare.py); figure: figu
 - The owner was told at about 07:17 UTC that the job had finished. The owner stops the box.
 - Locally: the R1 16 kHz download (1.0 GB, 10.3 min), source reading, and the table and figure (seconds).
 
-## Open issues (updated in S5)
+## S6 — Task 4: area-law combination for GW250114 (PRE-REGISTERED 2026-10-14 08:18 UTC, before any area was computed)
+**Inputs.**
+- "Before": the owner's pre-merger bilby run, ../premerger-box/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/…_result.json.
+  - sha256 b45ccfdf62dd5ef9255fcb9ef6ebdf56e1df66d5663f3d330e5a05e32bde3151, re-verified locally; matches ../premerger-box/SHA256SUMS.
+  - 4,772 posterior samples; IMRPhenomXPHM, 20–131 Hz, full likelihood, dynesty nlive 1000, dlogz 0.1, bilby 2.8.2 (run_meta.json).
+  - The 131 Hz cutoff rule (branch remeasured-ep5-premerger, results/fc_rule.json) was derived by the other lane. It is not checked here and is marked as given.
+  - So far only the checksum, column names and sample count were read. No masses, spins or areas were looked at before this section was written.
+- "After": our own ringdown 220-only fits (ringdown 1.1.0) in results/ringdown/GW250114_220_*; 8,000 samples each; M_f is detector frame.
+- The IMR posteriors of Part A are not used. Their area increase is built into the GR waveform models, so it is not a test.
+
+**Frame.** Both sides use the detector frame: the pre-merger columns mass_1, mass_2 (detector frame) with a_1, a_2, against the ringdown detector-frame M_f and chi_f. A ∝ M², so with a common frame the factor (1+z)² cancels in A_f/A_i.
+- Check, not a result: mass_1/mass_1_source − 1 must equal the sample's redshift column to < 1e-6. A source-frame A_i is also reported for information only.
+- Area formula: A = 8π (G M / c²)² (1 + sqrt(1 − chi²)), in SI m² (CODATA G, c; M_sun = 1.98840987e30 kg). A_i = A(m1, a1) + A(m2, a2). The spin *magnitudes* enter, so precession (tilts) does not change A.
+
+**Statistics, for every (start time, variant) cell.**
+- ΔA/A_i = (A_f − A_i)/A_i: median and 90% interval, from 10⁶ random independent pairs.
+- P(ΔA > 0): exact over all 4,772 × 8,000 sample pairs, with a 200-draw bootstrap standard error over both sample sets.
+- A one-sided Gaussian-equivalent σ = Φ⁻¹(P). If no pair has ΔA ≤ 0, P is reported as "> 1 − 1/(N_i N_f)", flagged saturated, and the Gaussian-approximation σ is given.
+- The two posteriors are treated as independent. The data segments are disjoint: pre-merger below 131 Hz, ringdown ≥ 8 M_f after the peak. No prior reweighting is done; each side keeps its own analysis priors.
+
+**Which "after" posteriors.** Start times after the peak are 8, 10.5, 12, 13, 15, 18 and 20 M_f. 10.5 M_f is the release's reference 220 start, t_ref_220 (cited: Zenodo 10.5281/zenodo.16877102, scripts/define_area_and_ringdown_macros.py; arXiv:2509.08054).
+- Conditioning variants in the decision set:
+  - V0 baseline (project protocol: 20 Hz high-pass, ACF from data), at all start times;
+  - V1 no high-pass, at all start times;
+  - V2 PE PSD (PSD from the LVK PE file), at 10.5, 12 and 13 M_f only (not run at other times).
+- **Decision set: start times 10.5–20 M_f × the variants above** (17 cells).
+- 8 M_f is reported but not in the decision set, because it is earlier than the release's reference start for a 220-only model.
+- Robustness rows at 10.5 M_f are reported in the table but not in the decision set: ACF from 64 s, 4096 Hz analysis, 0.1 s window, another seed. These were already shown to move M_f by ≤ 0.5 M_sun (Part B robustness).
+- The `pePSDx100` run is a deliberate diagnostic (PSD × 100) and is excluded.
+
+**Decimation-filter systematic (S5).** All GW250114 fits used the 1.1.0 FFT-cut decimation. No GW250114 fit with scipy decimation exists, and this task is local only, so it is **carried as a separate, not-yet-assessed variant (V3: empty slot)**, not folded in. As a stand-in, for every cell we report the robustness margin δ*: the uniform fractional decrease of all ringdown M_f samples, at fixed chi_f, that would bring P(ΔA > 0) down to 0.90 (δ*₀.₉₀) and to 0.50 (δ*₀.₅₀).
+- Fixed chi is the conservative choice: in S5 the filter lowered both M and chi, and a lower chi raises the area at fixed M.
+- For scale, S5's filter shift on GW150914 was −3.2/78.5 = −4.1% in M_f (a different event, so indicative only).
+
+**How systematics are combined.** Start times are not averaged; they are not exchangeable alternatives, and the 220-only remnant moves with start time (Open issue 4).
+- At each start time, the decision-set variants are also combined as an equal-weight mixture, as a secondary row.
+- **The headline uses the envelope:** the minimum of P(ΔA > 0) over all 17 decision-set cells, and the range of medians of ΔA/A_i.
+
+**Decision rule for the paper's sentence** (P_min = minimum P over the decision set; δ*_min = minimum δ*₀.₉₀ over the decision set):
+1. P_min ≥ 0.99 and δ*_min > 4.1%: "The total horizon area increased: P(ΔA > 0) ≥ P_min at every ringdown start time and conditioning variant we tried, with fractional change between … and …"
+2. P_min ≥ 0.99 but δ*_min ≤ 4.1%: as in 1, with the qualifier "conditional on the decimation-filter choice, which we have not yet tested for this event".
+3. 0.90 ≤ P_min < 0.99: "The data favour an increase in total horizon area (P between P_min and P_max), but how strongly depends on the ringdown start time and conditioning."
+4. P_min < 0.90: "Whether the area increased depends on analysis choices; with our ringdown fits we cannot claim it."
+If P_min ≥ 0.99 but P_min − 2 × (its bootstrap s.e.) < 0.99, rule 3 applies instead of 1 or 2.
+
+**Comparison with LVK** (arXiv:2509.08054; companion arXiv:2509.08099): only after our table and sentence are written in this file.
+
+**Second pre-merger run (other lane).** It plugs in as a second `--premerger` input to the same driver (scripts/area_task4.py). The whole table is recomputed with it, and both sets are shown side by side. The headline stays tied to the run named here, unless the two runs' A_i medians differ by more than the larger 1σ width. In that case we report both and apply the decision rule to the union of cells.
+
+### S6 results (computed 08:21 UTC, after the pre-registration above was saved as STATUS.md v10, sha256 3021e9e1…; copy in prereg/STATUS_S6_preregistered.md)
+Run: scripts/area_task4.py (uses scripts/combine_area.py, extended with a bilby-JSON loader; the old version is in scripts/archive/). Log: logs/area_task4_run.log. Table: results/area_task4.csv. Provenance with the sha256 of every input posterior: results/area_task4.json. Figure: figures/area_task4.png (scripts/area_task4_figure.py). Local Intel Mac, 12 s wall.
+
+**Checks.**
+- Frame check passed: max |m/m_source − 1 − z| = 3e-16.
+- Pre-merger medians (detector frame): m1 = 42.8 and m2 = 30.4 M_sun, a1 = 0.21, a2 = 0.27.
+- A_i (detector frame) = 2.99 [2.54, 3.68] × 10¹¹ m² (median [5%, 95%]). In the source frame, for information only: 2.46 [2.09, 2.98] × 10¹¹ m².
+- No cell is saturated: every cell has some pairs with ΔA ≤ 0, so P is resolved.
+- **Counting error in the pre-registration.** It said "17 cells". Its own definition (10.5–20 M_f × V0, V1, plus V2 at 10.5/12/13 M_f) gives **15**. The set is used exactly as defined, and the count is corrected here.
+
+| start [M_f] | variant | in decision set | M_f det [M_sun] | chi_f | ΔA/A_i median [5%, 95%] | P(ΔA>0) ± s.e. | σ (one-sided) | δ*₀.₉₀ | δ*₀.₅₀ |
+|---|---|---|---|---|---|---|---|---|---|
+| 8 | equal mixture of 2 variants | no | — | — | 0.75 [0.39, 1.13] | 0.9994 ± 0.0003 | 3.24 | 17.7% | 24.5% |
+| 8 | V0 baseline | no | 75.5 | 0.72 | 0.76 [0.40, 1.14] | 0.9994 ± 0.0002 | 3.26 | 17.9% | 24.7% |
+| 8 | V1 no high-pass | no | 74.9 | 0.71 | 0.75 [0.38, 1.12] | 0.9993 ± 0.0003 | 3.21 | 17.4% | 24.3% |
+| 10.5 | equal mixture of 3 variants | no | — | — | 0.68 [0.32, 1.04] | 0.9989 ± 0.0004 | 3.06 | 15.6% | 22.8% |
+| 10.5 | R: 4096 Hz | no | 76.8 | 0.79 | 0.73 [0.38, 1.10] | 0.9993 ± 0.0003 | 3.20 | 17.3% | 24.0% |
+| 10.5 | R: ACF 64 s | no | 76.8 | 0.79 | 0.74 [0.38, 1.10] | 0.9993 ± 0.0003 | 3.21 | 17.4% | 24.1% |
+| 10.5 | R: 0.1 s window | no | 76.0 | 0.78 | 0.72 [0.37, 1.08] | 0.9992 ± 0.0003 | 3.17 | 16.8% | 23.7% |
+| 10.5 | R: seed 99 | no | 76.4 | 0.79 | 0.73 [0.38, 1.09] | 0.9993 ± 0.0003 | 3.20 | 17.2% | 23.9% |
+| 10.5 | V0 baseline | yes | 76.4 | 0.79 | 0.73 [0.38, 1.09] | 0.9993 ± 0.0003 | 3.20 | 17.1% | 23.9% |
+| 10.5 | V1 no high-pass | yes | 72.4 | 0.73 | 0.61 [0.27, 0.96] | 0.9983 ± 0.0004 | 2.93 | 13.8% | 21.2% |
+| 10.5 | V2 PE PSD | yes | 75.2 | 0.77 | 0.69 [0.35, 1.06] | 0.9991 ± 0.0003 | 3.13 | 16.3% | 23.2% |
+| 12 | equal mixture of 3 variants | no | — | — | 0.67 [0.32, 1.04] | 0.9989 ± 0.0003 | 3.07 | 15.5% | 22.7% |
+| 12 | V0 baseline | yes | 76.5 | 0.79 | 0.72 [0.37, 1.08] | 0.9993 ± 0.0003 | 3.18 | 16.9% | 23.8% |
+| 12 | V1 no high-pass | yes | 73.4 | 0.77 | 0.61 [0.27, 0.97] | 0.9984 ± 0.0005 | 2.94 | 13.9% | 21.2% |
+| 12 | V2 PE PSD | yes | 75.6 | 0.78 | 0.69 [0.35, 1.05] | 0.9991 ± 0.0004 | 3.13 | 16.2% | 23.1% |
+| 13 | equal mixture of 3 variants | no | — | — | 0.64 [0.29, 1.01] | 0.9985 ± 0.0004 | 2.97 | 14.5% | 22.0% |
+| 13 | V0 baseline | yes | 74.0 | 0.75 | 0.66 [0.30, 1.03] | 0.9986 ± 0.0003 | 3.00 | 14.9% | 22.3% |
+| 13 | V1 no high-pass | yes | 74.3 | 0.78 | 0.63 [0.29, 0.99] | 0.9985 ± 0.0004 | 2.96 | 14.3% | 21.7% |
+| 13 | V2 PE PSD | yes | 73.5 | 0.75 | 0.64 [0.29, 1.01] | 0.9984 ± 0.0004 | 2.95 | 14.4% | 21.9% |
+| 15 | equal mixture of 2 variants | no | — | — | 0.41 [0.05, 0.80] | 0.9702 ± 0.0011 | 1.88 | 5.8% | 15.8% |
+| 15 | V0 baseline | yes | 64.7 | 0.60 | 0.37 [0.02, 0.75] | 0.9581 ± 0.0016 | 1.73 | 4.2% | 14.5% |
+| 15 | V1 no high-pass | yes | 68.2 | 0.69 | 0.46 [0.10, 0.84] | 0.9823 ± 0.0010 | 2.10 | 7.6% | 17.1% |
+| 18 | equal mixture of 2 variants | no | — | — | 0.39 [0.02, 0.79] | 0.9603 ± 0.0014 | 1.75 | 4.7% | 15.3% |
+| 18 | V0 baseline | yes | 65.4 | 0.65 | 0.36 [0.00, 0.75] | 0.9513 ± 0.0018 | 1.66 | 3.7% | 14.3% |
+| 18 | V1 no high-pass | yes | 67.4 | 0.68 | 0.43 [0.05, 0.83] | 0.9693 ± 0.0013 | 1.87 | 5.9% | 16.3% |
+| 20 | equal mixture of 2 variants | no | — | — | 0.26 [-0.11, 0.71] | 0.8636 ± 0.0027 | 1.10 | -2.0% | 10.9% |
+| 20 | V0 baseline | yes | 62.3 | 0.58 | 0.27 [-0.11, 0.73] | 0.8640 ± 0.0033 | 1.10 | -2.1% | 11.4% |
+| 20 | V1 no high-pass | yes | 60.7 | 0.51 | 0.25 [-0.10, 0.70] | 0.8631 ± 0.0030 | 1.09 | -1.9% | 10.5% |
+
+(δ* = uniform fractional decrease of every ringdown M_f sample, at fixed chi_f, that would bring P down to 0.90 or 0.50. Negative means P is already below that level. V3, scipy decimation, has an empty slot for every start time: not run.)
+
+**Envelope over the decision set (15 cells).**
+- P(ΔA > 0) runs from **0.863 (20 M_f, no high-pass)** to 0.9993 (10.5 M_f, baseline).
+- Median ΔA/A_i runs from 0.25 to 0.73.
+- By start time:
+  - 10.5–13 M_f: P = 0.998–0.999 in every variant (2.9–3.2σ one-sided).
+  - 15 and 18 M_f: P = 0.951–0.982.
+  - 20 M_f: P = 0.86.
+- The drop between 13 and 15 M_f matches the 9 M_sun fall of the 220-only remnant mass between those start times (Open issue 4), which we have not explained.
+- Decimation margin:
+  - At 10.5–13 M_f, δ*₀.₉₀ = 14–17%, well above the 4.1% shift seen in S5, so the untested filter choice could not overturn those cells.
+  - At 15–18 M_f it is 3.7–7.6%, the same size as that shift.
+  - At 20 M_f, P is already below 0.90.
+
+**Decision rule → sentence 4** (P_min = 0.863 < 0.90). Headline for the paper:
+> "Whether the total horizon area of GW250114 grew depends on analysis choices: combining an inspiral-only (20–131 Hz) posterior with our own 220-mode ringdown fits, P(ΔA > 0) is 0.998–0.999 for ringdown start times 10.5–13 M_f after the peak but falls to 0.95–0.98 at 15–18 M_f and 0.86 at 20 M_f, so with our ringdown fits we cannot claim it."
+
+That is what the pre-registered rule gives, and we keep it as is. We did not drop the 20 M_f cell or move the decision-set boundary after seeing the numbers.
+- Reading the numbers, apart from the rule: every cell favours an increase (P > 0.86 everywhere, medians ΔA/A_i > 0.24). The evidence is strong only at the earlier start times, which are also the times where our 220-only remnant sits ~4 M_sun above the published fits (S2.1).
+- The most likely route to a firmer statement is to explain the 13→15 M_f jump, not to add more start times.
+
+**Second pre-merger run (other lane), when it arrives:** `python scripts/area_task4.py --premerger lane1_XPHM_fmax131=<this run> --premerger lane2_<tag>=<their file>`. It needs columns mass_1, mass_2, a_1, a_2, redshift, mass_1_source, mass_2_source (bilby JSON, or npz/csv/hdf5 with the same names). The table gains a `premerger` column. The S6 rule on A_i medians decides whether the headline uses one run or both.
+
+### S6 comparison with LVK (done 08:28 UTC, after the S6 results and headline above were saved as STATUS.md v11, sha256 93467e6d…)
+Sources (cited):
+- arXiv:2509.08054v1 full text: PDF from arxiv.org, sha256 1d10e5bc…, not stored in the project folder.
+- The LVK data release, Zenodo 10.5281/zenodo.16877102: release/scripts/define_area_and_ringdown_macros.py, which generates the paper's area macros, and the files it reads, area_law_inspiral_data.hdf5 (sha256 85a113aa4e9e…), ringdown_areas/220_*M_final_mass_spin_area.hdf5 (10.5 M_f: sha256 0d64acd151c9…) and remnant_area_pyring_reweighted.npy (sha256 5486524aca50…).
+- Script: scripts/area_task4_lvk_compare.py. Log: logs/area_task4_lvk_compare.log. Tables: results/area_task4_vs_LVK.csv, results/area_task4_LVK_scan.csv. Overlay added to figures/area_task4.png, panel c.
+- The companion paper arXiv:2509.08099 (abstract checked) covers spectroscopy and GR tests and gives no separate area number we use.
+
+**What LVK did and found.**
+- Their "before" is a time-domain inspiral analysis truncated at t< = −40 t_M before the peak; ours is a frequency cut at 131 Hz.
+- Their "after" is the 220 fit at 10.5 M_f, combining their `ringdown` and pyRing posteriors.
+- Their statistic is the Gaussian significance (μ_f − μ_i)/sqrt(σ_f² + σ_i²). The paper argues that sampling the posterior tails beyond ~4σ is unreliable, and uses this statistic for that reason.
+- Published (2509.08054): "For t< = −40 tM, Af > Ai at the 4.4σ level", and at least 3.4σ for all truncation times after −250 t_M.
+- Our recomputation from the release files gives 4.447σ and a minimum of 3.358σ, matching both.
+- They vary the *inspiral* truncation time and keep the ringdown start fixed at 10.5 M_f. We vary the *ringdown* start.
+
+**Like-for-like** (A in 10¹¹ m², detector frame; "σ_exact" = Φ⁻¹ of our exact P(ΔA > 0); "σ_gauss" = their statistic):
+
+| combination | A_i median | A_f median | ΔA/A_i median [5%, 95%] | P(ΔA>0) | σ_exact | σ_gauss |
+|---|---|---|---|---|---|---|
+| LVK before × LVK after (their headline) | 2.82 | 4.85 | 0.73 [0.41, 1.16] | 0.99991 | 3.76 | **4.45** |
+| ours before × ours after (10.5 M_f, V0) | 2.99 | 5.18 | 0.73 [0.38, 1.09] | 0.99931 | **3.20** | 4.62 |
+| LVK before × ours after | 2.82 | 5.18 | 0.84 [0.54, 1.29] | 0.999998 | 4.61 | 5.70 |
+| ours before × LVK after | 2.99 | 4.85 | 0.61 [0.27, 0.98] | 0.9981 | 2.90 | 3.61 |
+
+- **At their reference point the two analyses agree** on the fractional change (median 0.73 in both). On their own statistic ours is 4.6σ against their 4.4σ.
+- **The difference in significance is mostly the choice of statistic.** On their own samples, the exact tail probability is 3.8σ against 4.4σ Gaussian. On ours it is 3.2σ against 4.6σ.
+  - The pre-merger A_i posterior has a long upper tail (figure, panel a), so the Gaussian formula overstates the significance.
+  - Our pre-registered statistic is the exact P. LVK's statement that tails beyond ~4σ are unreliable to sample applies to both: our P floors are ~2.6e-8 per cell, but only ~3e4 pairs fall below zero at 10.5 M_f.
+- **Our "before" is the more conservative input.** Our A_i is 6% larger (2.99 vs 2.82). Swapping the "before" posteriors moves the significance more than swapping the "after" ones.
+  - Why the 131 Hz frequency cut gives a larger A_i than their −40 t_M time cut is not investigated here.
+  - It is the main thing the second pre-merger lane should check.
+- **Ringdown start time** (results/area_task4_LVK_scan.csv; LVK A_i at −40 t_M × LVK 220 fits; our exact P):
+  - P ≈ 0.9999 at 10.5–12 M_f.
+  - 0.9994 at 13 M_f.
+  - **0.983 at 15 M_f**; 0.97–0.98 at 16–18 M_f.
+  - 0.949 at 19 M_f and 0.960 at 20 M_f.
+- **The LVK samples show the same 13 → 15 M_f fall.** Their M_f median goes 70.2 → 64.3 M_sun, against our 74.0 → 64.7. So our Open issue 4 is a feature of the 220-only fits of this event, not of our pipeline alone.
+- **Our pre-registered rule applied to LVK's own scan** over our decision range (10.5–20 M_f): P_min = 0.949, which gives rule 3 ("favour, strength depends on start time"). Ours gives P_min = 0.863, rule 4.
+  - The gap between the two comes from the larger A_i in our "before" run and our lower remnant area at 20 M_f.
+  - LVK do not make a ringdown-start-time statement of this kind. Their robustness scan is over the inspiral truncation time.
+
+**Headline unchanged.** The S6 rule gives sentence 4, and the comparison does not change the pre-registered decision. One line for the article is supported by both analyses: at the LVK reference point we find the same fractional growth, about +73% (90% intervals +38% to +109% in ours, +41% to +116% in LVK's). A Gaussian approximation gives 4.4–4.6σ in both analyses. The exact tail gives 3.2–3.8σ. The evidence weakens to about 2σ or less for ringdown fits that start ≥ 15 M_f after the peak.
+
+## Open issues (updated in S6)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
 2. [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
    - which choice is right, to be settled by an injection with a known answer (rule 3);
    - why a filter acting above ~800 Hz moves M_f by 3 M_sun;
    - the valid B1 rerun on the R1 file (about 1 min);
    - our settings at 16384 Hz without decimation.
-3. The area-law test needs the inspiral-only A_i (other lane). The combination script is ready and tested.
-4. The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
+3. [S6: done for lane 1] Area-law combination with the owner's 20–131 Hz pre-merger run: the pre-registered rule gives sentence 4 (P_min = 0.863 at 20 M_f). Still open:
+   - the second lane's pre-merger run, which plugs into scripts/area_task4.py with a second --premerger;
+   - why our A_i is 6% above LVK's −40 t_M value;
+   - the GW250114 decimation-filter fit (V3 slot, empty);
+   - the 13 → 15 M_f remnant drop, also present in the LVK samples.
+4. [S6: also in LVK's own 220 posteriors, 70.2 → 64.3 M_sun] The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
 5. Not supported by the package: calibration marginalisation (bound given in S2.1).
 6. Two ws submits failed on script bugs on my side (exit 127: an env-var prefix inside /usr/bin/time; exit 2: a text-substitution placeholder that also matched inside "GW250114"). No fits ran in either; both were resubmitted. Records are in logs/ws_job_*_FAILED/.
 7. [S5] GW250114 220-only fits all used FFT-cut decimation, the 1.1.0 default. Testing digital_filter = False at 10.5 M_f is a single fit, not yet run.
@@ -252,6 +413,8 @@ Table: results/task3_isifarr_ladder.csv (scripts/task3_compare.py); figure: figu
 - **Session 2 (follow-up):** 03:36–04:20 UTC wall (about 45 min, mostly local analysis and writing). ws was in use from about 03:40 to 04:17 UTC (about 37 min; the owner was told it could be shut down at 04:17). ws jobs: e7f0ae82, 6 fits, 715 s wall; 0200c18a, 3 fits, 94 s; fa544ba8, 6 fits, 179 s; plus 2 failed submits (seconds each, no fits). That is 15 fits and **8.1 core-hours** of CPU (per-fit table: logs/compute_accounting_raw_followup.txt). Job e7f0ae82 ran 6 fits at once on 32 vCPU, about 4x oversubscribed: each GW250114 fit took about 11 min and about 3,000 CPU-s, against about 1.4 min and 750 CPU-s when running ≤3 at a time. About 6 core-hours were wasted to contention; in future, run at most 3 fits at once. Estimated cost of session 2 on ws: under $1.5 (on-demand estimate, not a bill). Local: GWTC-2.1 download (134 MB, about 8 min with two resumed connections); all comparison, combination and plotting scripts take under 1 min of CPU in total.
 
 - **Session 5 (Task 3):** from the Task 3 brief (after 05:31 UTC) to 07:21 UTC, mostly local work (source reading, configs, pre-registration, analysis). The R1 16 kHz download took 10.3 min locally. ws job 52094c2c ran 06:48:23–07:16:35 UTC (28.2 min) on the shared box, with at most 2 fits at once and threads capped: 13 fits, 8,836 CPU-s (2.45 core-hours). A rough cost share is under $1 (on-demand estimate, not a bill). The owner stops the box.
+
+- **Session 6 (Task 4):** local only, no ws: from the Task 4 brief to 08:28 UTC. Area combination 12 s and LVK comparison about 10 s of CPU on the Intel Mac; arXiv PDF download (16.5 MB).
 
 ## File checksums of outputs
 See CHECKSUMS_outputs.tsv (sha256 of every file in out/ at the time of writing).
