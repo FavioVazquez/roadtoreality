@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Euler formalized the mathematics of rotating rigid bodies — the physics that keeps gyroscopes upright and explains precession.">
+  <meta name="description" content="Euler formalized the mathematics of rotating rigid bodies — and why the shape of a body, not just its mass, sets how it turns.">
   <meta property="og:title" content="Euler and Rigid Body Rotation — How Physics Works">
-  <meta property="og:description" content="Euler formalized the mathematics of rotating rigid bodies — the physics that keeps gyroscopes upright and explains precession.">
+  <meta property="og:description" content="Euler formalized the mathematics of rotating rigid bodies — and why the shape of a body, not just its mass, sets how it turns.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/016-euler-rotation/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+    .katex-block, .katex-display { overflow-x: auto; max-width: 100%; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -50,18 +54,18 @@
 <main class="stop-page container" data-era="classical">
   <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">Classical Physics · ~1750</div>
+    <div class="stop-header__era">Classical Physics · 1750–1765</div>
     <h1 class="stop-header__title">Euler and Rigid Body Rotation</h1>
-    <p class="stop-header__subtitle">Why gyroscopes don't fall over</p>
+    <p class="stop-header__subtitle">Spinning things: why the shape of a body, not just its mass, sets how it turns</p>
     <div class="stop-header__meta">
-      <span class="stop-header__year">~1750</span>
+      <span class="stop-header__year">1750–1765</span>
       <span>·</span>
       <span class="stop-header__scientist">Leonhard Euler</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Newton gave us F = ma for translating bodies. Euler extended this to rotation. A force applied off-center creates a torque, and that torque produces angular acceleration — but how much depends not on mass alone, but on how that mass is distributed around the axis of rotation.</p>
-    <p>The three shapes below — disk, rod, and ring — have identical mass and the same torque applied. Watch how their angular velocities diverge. The disk spins fastest; the ring, slowest. The graph traces every angular velocity over time, making the difference unmistakable.</p>
+    <p>Newton's second law, in the form F = ma we all learn, was first written down by Euler in 1750, and Euler then did the same for rotation. A force applied off-center creates a torque, and that torque produces angular acceleration — but how much depends not on mass alone, but on how that mass is distributed around the axis of rotation.</p>
+    <p>The three shapes below — rod, disk, and ring — have identical mass, the same outer size, and the same torque applied. Watch their angular velocities diverge. The rod spins up fastest, because most of its mass sits near the axis; the ring slowest, because all of its mass sits at the rim. The graph traces every angular velocity over time, making the difference unmistakable.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Euler and Rigid Body Rotation — rigid body simulation">
@@ -95,19 +99,27 @@
     <p class="katex-block">$$\tau = I \alpha$$</p>
     <p>where \(\tau\) is torque (N·m), \(I\) is moment of inertia (kg·m²), and \(\alpha\) is angular acceleration (rad/s²). The shape of the object determines \(I\).</p>
     <h3>Moments of inertia</h3>
-    <p>For the three shapes in the simulation, each rotating about a central axis:</p>
-    <p class="katex-block">$$I_{\text{disk}} = \tfrac{1}{2}mr^2 \qquad I_{\text{rod}} = \tfrac{1}{3}mL^2 \qquad I_{\text{ring}} = mr^2$$</p>
-    <p>Given the same torque, the disk accelerates fastest (\(I\) is smallest), the ring slowest (\(I\) is largest). The angular velocity at time \(t\) is:</p>
+    <p>For the three shapes in the simulation, each rotating about an axis through its centre, with the rod's length equal to the disk's diameter (L = 2r):</p>
+    <p class="katex-block">$$I_{\text{rod}} = \tfrac{1}{12}mL^2 \qquad I_{\text{disk}} = \tfrac{1}{2}mr^2 \qquad I_{\text{ring}} = mr^2$$</p>
+    <p>Given the same torque, the rod accelerates fastest (\(I = mr^2/3\) is smallest), the ring slowest (\(I = mr^2\) is largest), the disk in between (\(I = mr^2/2\)). The angular velocity at time \(t\) is:</p>
     <p class="katex-block">$$\omega(t) = \alpha \, t = \frac{\tau}{I} \, t$$</p>
     <p>The graph on the right shows three diverging straight lines — one per shape — confirming that angular velocity rises linearly at a rate inversely proportional to \(I\).</p>
     <h3>Euler's equations for 3D rotation</h3>
-    <p>In three dimensions Euler extended this to a set of equations relating the angular velocity components \(\omega_1, \omega_2, \omega_3\) along the principal axes of a body to the applied torques. These equations govern gyroscope precession, spacecraft attitude control, and the wobbly path of a thrown frisbee.</p>
+    <p>Between 1750 (his 'new principle of mechanics') and 1765 (<em>Theoria motus corporum solidorum</em>), Euler extended this to a set of equations relating the angular velocity components \(\omega_1, \omega_2, \omega_3\) along the principal axes of a body to the applied torques. These equations govern gyroscope precession, spacecraft attitude control, and the wobbly path of a thrown frisbee.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>
     <ul class="takeaway-box__list">
-      <li>\(\tau = I\alpha\) — the rotational analogue of Newton's second law. A body with more mass spread far from the axis (high \(I\)) is harder to spin. This is why figure skaters pull in their arms to speed up, and why hollow wheels roll differently than solid ones.</li>
+      <li><span>\(\tau = I\alpha\) — the rotational analogue of Newton's second law. A body with more mass spread far from the axis (high \(I\)) is harder to spin. This is why figure skaters pull in their arms to speed up (angular momentum \(L = I\omega\) is conserved, so a smaller \(I\) means a larger \(\omega\)), and why hollow wheels roll differently than solid ones.</span></li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">L. Euler, "Découverte d'un nouveau principe de mécanique", <em>Mémoires de l'Académie des Sciences de Berlin</em> 6 (1752, for 1750).</li>
+      <li id="src-2">L. Euler, "Du mouvement de rotation des corps solides autour d'un axe variable", <em>Mémoires de l'Académie des Sciences de Berlin</em> 14 (1765, for 1758).</li>
+      <li id="src-3">L. Euler, <em>Theoria motus corporum solidorum seu rigidorum</em> (Rostock and Greifswald, 1765).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

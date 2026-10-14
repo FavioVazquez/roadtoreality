@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>In 1887, Heinrich Hertz built a spark-gap transmitter and a loop detector just a few meters away. When sparks jumped in the transmitter, sparks also jumped in the detector — confirming that invisible electromagnetic waves travel through space at the speed of light, exactly as Maxwell had predicted 22 years earlier.</p>
+    <p>In 1887 Heinrich Hertz built a spark-gap transmitter and a loop detector a few metres away and saw sparks answer sparks; in 1888 he set up standing waves against a metal sheet, measured their wavelength, and showed the waves travel at the speed of light and reflect, refract and polarise like light, as Maxwell had predicted twenty-three years earlier.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Hertz and Radio Waves — teaser animation">
@@ -75,8 +78,8 @@
           <span id="dipole-frequency-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">1.2</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;">
-          <label for="wave-speed-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Wave propagation speed:</label>
-          <input id="wave-speed-slider" type="range" min="50" max="200" step="10" value="100" style="flex:1;" aria-label="Wave speed 50 to 200 pixels per second">
+          <label for="wave-speed-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Animation speed (px/s; the real speed is c):</label>
+          <input id="wave-speed-slider" type="range" min="50" max="200" step="10" value="100" style="flex:1;" aria-label="Animation speed, 50 to 200 pixels per second (the real wave speed is c)">
           <span id="wave-speed-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3rem;text-align:right;">100</span>
         </div>
       </div>
@@ -87,12 +90,12 @@
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Oscillate the dipole and watch EM wavefronts radiate. Adjust frequency and wave speed.</span>
+      <span>Oscillate the dipole and watch EM wavefronts radiate. Adjust the frequency and the animation speed; the wavelength shown on the canvas is the animation speed divided by the frequency.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <p>A dipole antenna — two conducting rods with alternating charge — is the simplest EM radiator. The radiation is not uniform in all directions: it is zero directly along the antenna axis and strongest perpendicular to it. This angular dependence is one of the most fundamental results in electrodynamics.</p>
-    <p>Each half-cycle of oscillation reverses the E-field direction, producing a new wavefront of opposite polarity. The colored rings in the simulation show successive half-cycles: red for positive E-field, blue for negative. The spacing between rings equals the wavelength &lambda; = v/f.</p>
+    <p>A dipole antenna — two conducting rods with alternating charge — is the simplest EM radiator. The radiation is not uniform in all directions: it is zero directly along the antenna axis and strongest perpendicular to it. This sin&sup2;&theta; pattern is why a radio antenna is mounted vertically for horizontal coverage, and why Hertz saw nothing when his loop faced the ends of his dipole.</p>
+    <p>Each half-cycle of oscillation reverses the E-field direction, producing a new wavefront of opposite polarity. The colored rings in the simulation show successive half-cycles: red for positive E-field, blue for negative. Rings of the same colour are one wavelength &lambda; = v/f apart; a red ring and the next blue ring are half a wavelength apart.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
@@ -101,8 +104,16 @@
       <li>$$I(\theta) \propto \sin^2\!\theta$$</li>
       <li>The emitted wave travels at the speed of light. Each half-cycle reverses the E-field direction — the alternating red and blue rings represent successive half-cycles.</li>
       <li>$$c = \lambda f = \frac{1}{\sqrt{\mu_0 \varepsilon_0}}$$</li>
-      <li>Hertz's experiment — done in 1887 — directly confirmed Maxwell's 1865 prediction and opened the door to radio, television, and wireless communication.</li>
+      <li>Hertz's experiments of 1887–88 directly confirmed Maxwell's 1865 prediction and opened the door to radio, television, and wireless communication.</li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>H. Hertz, "Ueber sehr schnelle electrische Schwingungen", <em>Annalen der Physik und Chemie</em> 267 (31), 421–448 (1887).</li>
+      <li>H. Hertz, "Ueber elektrodynamische Wellen im Luftraume und deren Reflexion", <em>Annalen der Physik und Chemie</em> 270 (34), 609–623 (1888).</li>
+      <li>H. Hertz, <em>Untersuchungen über die Ausbreitung der elektrischen Kraft</em> (Leipzig, 1892); English translation <em>Electric Waves</em> (1893). Collects both papers.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

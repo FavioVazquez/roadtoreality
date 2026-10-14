@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -50,17 +53,17 @@
 <main class="stop-page container" data-era="classical">
   <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Classical Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">Classical Physics · 1843</div>
+    <div class="stop-header__era">Classical Physics · 1843–1850</div>
     <h1 class="stop-header__title">Joule and Conservation of Energy</h1>
     <p class="stop-header__subtitle">Heat is just motion in disguise</p>
     <div class="stop-header__meta">
-      <span class="stop-header__year">1843</span>
+      <span class="stop-header__year">1843&ndash;1850</span>
       <span>·</span>
       <span class="stop-header__scientist">James Prescott Joule</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>James Prescott Joule was a brewer who became one of the most precise experimentalists in history. He showed that mechanical work and heat are interchangeable — that they are both forms of the same thing, energy. His paddle-wheel experiment measured the conversion ratio with extraordinary accuracy, and in doing so established the first law of thermodynamics: energy is conserved across all its forms.</p>
+    <p>James Prescott Joule was a brewer who became one of the most precise experimentalists in history. He showed that mechanical work and heat are interchangeable — that they are both forms of the same thing, energy. His experiments of 1843&ndash;1850, ending with the famous paddle-wheel, measured the conversion ratio with extraordinary accuracy, and in doing so gave the first law of thermodynamics its experimental foundation (Mayer had argued for the equivalence in 1842; Helmholtz generalised it in 1847): energy is conserved across all its forms.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Joule's weight-drop apparatus — live energy pie chart">
@@ -92,18 +95,26 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Experiment</h3>
-    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">Joule suspended a known mass from a cord wound around a paddle-wheel axle. When the mass fell, it rotated the paddle through water. The temperature rise in the water was measured with extraordinary precision — a few thousandths of a degree per drop. By repeating the experiment thousands of times and accumulating the effect, Joule established that 4.184 joules of mechanical work raise one gram of water by one degree Celsius.</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">Joule suspended a known mass from a cord wound around a paddle-wheel axle. When the mass fell, it rotated the paddle through water. The temperature rise in the water was measured with extraordinary precision — a few hundredths of a degree per drop. By letting the weights fall twenty times per run and averaging dozens of runs, Joule found that 772.7 foot-pounds of work warm a pound of water by one degree Fahrenheit, which in today's units is 4.16 joules per calorie, within 0.7 % of the modern value (4.186 J). The energy bars show the first drop: the kinetic energy of the slowly falling weight is only 0.09 J of the 29.4 J at the defaults.</p>
     <h3 style="margin-top:1.25rem;">Why It Was Controversial</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">In 1843, most physicists believed in caloric — a weightless fluid that flowed from hot bodies to cold ones. Joule's result implied that heat is not a substance but a mode of motion. The temperature rise is tiny (drop a 2 kg weight from 1.5 m and you heat 1 kg of water by just 0.007°C), but it is perfectly reproducible — which is the whole point.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
-      <li>Energy is conserved — it changes form, but the total never changes. Joule proved that mechanical work and heat are interchangeable.</li>
+      <li>Energy is conserved — it changes form, but the total never changes. Joule's measurements showed that mechanical work and heat are interchangeable.</li>
       <li>$$E_{\text{total}} = mgh = \underbrace{mg(h-y)}_{\text{PE}} + \underbrace{\tfrac{1}{2}mv^2}_{\text{KE}} + \underbrace{Q}_{\text{heat}}$$</li>
-      <li>Joule's mechanical equivalent of heat: \(1 \text{ cal} = 4.184 \text{ J}\)</li>
+      <li>Joule's mechanical equivalent of heat (1850): 772.7 ft&middot;lbf per Btu = 4.16 J per cal; modern value 4.186 J</li>
       <li>This result unified mechanics and thermodynamics, displacing the caloric theory of heat. It became the foundation of the first law of thermodynamics.</li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">J. P. Joule, "On the Calorific Effects of Magneto-Electricity, and on the Mechanical Value of Heat", <em>Philosophical Magazine</em> ser. 3, 23, 263&ndash;276, 347&ndash;355, 435&ndash;443 (1843).</li>
+      <li id="src-2">J. P. Joule, "On the Mechanical Equivalent of Heat", <em>Philosophical Transactions of the Royal Society</em> 140, 61&ndash;82 (1850).</li>
+      <li id="src-3">J. R. Mayer, "Bemerkungen &uuml;ber die Kr&auml;fte der unbelebten Natur", <em>Annalen der Chemie und Pharmacie</em> 42, 233&ndash;240 (1842).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

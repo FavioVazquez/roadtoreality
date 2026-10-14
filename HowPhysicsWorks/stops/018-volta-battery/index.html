@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the first battery, enabling all of electrical science.">
+  <meta name="description" content="Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the voltaic pile, the ancestor of every battery.">
   <meta property="og:title" content="Volta and the Electric Battery — How Physics Works">
-  <meta property="og:description" content="Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the first battery, enabling all of electrical science.">
+  <meta property="og:description" content="Volta stacked zinc and copper discs with wet cloth between them and produced a steady electric current — the voltaic pile, the ancestor of every battery.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/018-volta-battery/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -52,7 +55,7 @@
   <header class="stop-header">
     <div class="stop-header__era">Classical Physics · 1800</div>
     <h1 class="stop-header__title">Volta and the Electric Battery</h1>
-    <p class="stop-header__subtitle">The first device to produce a steady electric current</p>
+    <p class="stop-header__subtitle">A steady electric current from a stack of metal discs</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1800</span>
       <span>·</span>
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>In 1800, Alessandro Volta wrote to the Royal Society of London describing a remarkable device: alternating discs of zinc and copper, separated by cloth soaked in brine, stacked into a pile. When he connected a wire from the top to the bottom, charge flowed continuously — the first sustained electric current ever produced. Volta had discovered that a chemical reaction could drive electricity indefinitely. He had invented the battery.</p>
+    <p>In 1800, Alessandro Volta wrote to the Royal Society of London describing a remarkable device: alternating discs of zinc and copper, separated by cloth soaked in brine, stacked into a pile. When he connected a wire from the top to the bottom, charge flowed continuously, for as long as the discs stayed wet. Volta had a source of steady current where everything before it, Leyden jars and friction machines, gave a single spark. A chemical reaction was driving the current, though Volta himself attributed it to the mere contact of the two metals and never accepted the chemical account.</p>
     <p>Use the controls below to build your own voltaic pile. Stack more cells to increase voltage. Switch between series and parallel configurations to see how they affect voltage and current. Watch the glowing bulb respond to the circuit power.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
@@ -79,9 +82,9 @@
       <div class="sim-control">
         <label class="sim-control__label" for="emf-slider">
           EMF per cell
-          <span class="sim-control__value" id="emf-value">1.5 V</span>
+          <span class="sim-control__value" id="emf-value">0.8 V</span>
         </label>
-        <input type="range" id="emf-slider" min="0.5" max="2.0" step="0.1" value="1.5" aria-label="EMF per cell in volts">
+        <input type="range" id="emf-slider" min="0.5" max="2.0" step="0.1" value="0.8" aria-label="EMF per cell in volts">
       </div>
       <div class="sim-control">
         <label class="sim-control__label" for="rint-slider">
@@ -89,6 +92,13 @@
           <span class="sim-control__value" id="rint-value">0.5 Ω</span>
         </label>
         <input type="range" id="rint-slider" min="0.0" max="5.0" step="0.1" value="0.5" aria-label="Internal resistance per cell in ohms">
+      </div>
+      <div class="sim-control">
+        <label class="sim-control__label" for="rload-slider">
+          Load resistance
+          <span class="sim-control__value" id="rload-value">0.3 Ω</span>
+        </label>
+        <input type="range" id="rload-slider" min="0.1" max="20" step="0.1" value="0.3" aria-label="Load resistance in ohms">
       </div>
       <div style="display:flex;gap:0.5rem;align-items:flex-end;flex-wrap:wrap;">
         <button class="sim-btn" id="series-parallel-btn" aria-label="Toggle series or parallel configuration" style="min-width:90px;">Series</button>
@@ -106,7 +116,7 @@
   <div class="stop-body content-column">
     <h3>How Volta made the discovery</h3>
     <p>Volta's insight grew from a dispute. His colleague Luigi Galvani had shown that frogs' legs twitch when touched by two different metals — and concluded the animal itself was the source of "animal electricity." Volta disagreed. He argued the frog was merely a detector and that the electricity came from the contact between the two metals in the presence of a moist conductor. To prove it, he built his pile without any biology at all — just metal and brine.</p>
-    <p>The key physics is electrochemical: zinc dissolves into the electrolyte more readily than copper, releasing electrons that flow through the external circuit. Each zinc-copper pair separated by electrolyte acts as a cell with an EMF of roughly 1.1 V. Stack \(n\) cells in series and the voltages add:</p>
+    <p>The key physics is electrochemical: zinc dissolves into the electrolyte more readily than copper, releasing electrons that flow through the external circuit. Each zinc-copper pair separated by electrolyte acts as a cell with an EMF of about 0.8 V (the familiar 1.1 V belongs to the later Daniell cell, which adds copper sulfate). Stack \(n\) cells in series and the voltages add:</p>
     <p style="font-size:var(--text-md);text-align:center;margin:var(--space-6) 0;">
       $$V_\text{series} = n \cdot \varepsilon$$
     </p>
@@ -117,17 +127,25 @@
     <p>In a <em>parallel</em> configuration the voltage stays at \(\varepsilon\) (same as one cell), but the internal resistances add in parallel, so the effective internal resistance drops to \(r/n\) — increasing the maximum current the battery can deliver before internal resistance causes significant voltage sag.</p>
 
     <h3>Series vs. parallel — when to use which</h3>
-    <p>Series cells give you higher voltage — useful for applications that need more electrical "pressure." Parallel cells give you higher current capacity at the same voltage — useful when the load demands more current than one cell can sustain without excessive heat. Modern battery packs in electric vehicles mix both: cells in series to reach hundreds of volts, and those series strings connected in parallel for current capacity and redundancy.</p>
+    <p>Series cells give you higher voltage — useful for applications that need more electrical "pressure." Parallel cells give you higher current capacity at the same voltage — but only into a load smaller than a cell's own internal resistance; into anything larger, series wins on current as well. Parallel is useful when the load demands more current than one cell can sustain without excessive heat. Modern battery packs in electric vehicles mix both: cells in series to reach hundreds of volts, and those series strings connected in parallel for current capacity and redundancy.</p>
 
     <h3>Why this was revolutionary</h3>
-    <p>Before Volta, you could generate static electricity with a Leyden jar or a friction machine, but these discharged in an instant. Volta's pile sustained current for minutes or hours. Within months of Volta's announcement, scientists across Europe were using it to decompose water into hydrogen and oxygen (electrolysis), deposit metals from solution (electroplating), and arc-weld metals with incandescent carbon electrodes. Every electrical device ever built — from a 19th-century telegraph to a modern neural implant — traces its power supply back to the voltaic pile.</p>
+    <p>Before Volta, you could generate static electricity with a Leyden jar or a friction machine, but these discharged in an instant. Volta's pile sustained current for minutes or hours. Within weeks of Volta's letter, Nicholson and Carlisle in London used a pile to split water into hydrogen and oxygen (May 1800); within a decade Davy had isolated potassium and sodium with it (1807) and shown the carbon arc.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>A chemical potential difference between two dissimilar metals in an electrolyte drives charge continuously. Each cell contributes \(\varepsilon \approx 1.1\) V; stack them in series and voltages add linearly.</li>
-      <li>Series connection: \(V = n\varepsilon\), \(I = V/(R + nr)\). Parallel connection: voltage stays \(\varepsilon\), internal resistance drops to \(r/n\), boosting current capacity without raising voltage.</li>
+      <li><span>A chemical potential difference between two dissimilar metals in an electrolyte drives charge continuously. Each cell contributes \(\varepsilon \approx 0.8\) V; stack them in series and voltages add linearly.</span></li>
+      <li><span>Series connection: \(V = n\varepsilon\), \(I = V/(R + nr)\). Parallel connection: voltage stays \(\varepsilon\), internal resistance drops to \(r/n\), boosting current capacity without raising voltage.</span></li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. Volta, "On the Electricity excited by the mere Contact of conducting Substances of different kinds", <em>Philosophical Transactions of the Royal Society</em> 90, 403–431 (1800). Letter to Sir Joseph Banks dated 20 March 1800.</li>
+      <li id="src-2">W. Nicholson, "Account of the new electrical or galvanic apparatus of Sig. Alex. Volta, and experiments performed with the same", <em>Journal of Natural Philosophy, Chemistry and the Arts</em> 4 (1800).</li>
+      <li id="src-3">J. F. Daniell, <em>Philosophical Transactions of the Royal Society</em> 126, 107–124 (1836). The 1.1 V cell.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
