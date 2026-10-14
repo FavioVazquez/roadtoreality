@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality.">
+  <meta name="description" content="The Pythagoreans are credited with finding that the consonant intervals match simple ratios of string lengths: 2:1 the octave, 3:2 the fifth, 4:3 the fourth.">
   <meta property="og:title" content="Pythagoras and Mathematical Harmony — How Physics Works">
-  <meta property="og:description" content="Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality.">
+  <meta property="og:description" content="The Pythagoreans are credited with finding that the consonant intervals match simple ratios of string lengths: 2:1 the octave, 3:2 the fifth, 4:3 the fourth.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/002-pythagoras-harmony/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -60,7 +60,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Pythagoras discovered that musical harmony follows precise mathematical ratios — and concluded that mathematics is the deep structure of reality. When he plucked strings of different lengths, he found that simple integer ratios produced consonant sounds: a 2:1 ratio gives an octave, 3:2 a perfect fifth. This was the first time anyone had linked abstract number to physical phenomenon.</p>
+    <p>The Pythagoreans are credited with finding that the consonant intervals correspond to simple ratios of string lengths: 2:1 the octave, 3:2 the fifth, 4:3 the fourth. The story that Pythagoras heard it in a blacksmith's hammers (told by Nicomachus six centuries later) cannot be true as told: a hammer's pitch does not follow its weight that way. The monochord experiment is real; who first did it is not known. It is the earliest Greek case we know of in which a sensation (consonance) was tied to a number; Babylonian astronomers had been fitting the sky with arithmetic for centuries.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="false">
     <div class="sim-container" id="sim-mount" aria-label="Pythagoras and Mathematical Harmony — teaser animation">
@@ -77,7 +77,7 @@
         <button class="sim-btn" data-ratio="2/1" aria-label="Octave — ratio 2:1">2:1 Octave</button>
         <button class="sim-btn" data-ratio="3/2" aria-label="Perfect Fifth — ratio 3:2">3:2 Fifth</button>
         <button class="sim-btn" data-ratio="4/3" aria-label="Perfect Fourth — ratio 4:3">4:3 Fourth</button>
-        <button class="sim-btn" data-ratio="5/4" aria-label="Major Third — ratio 5:4">5:4 Major Third</button>
+        <button class="sim-btn" data-ratio="5/4" aria-label="Major Third, just intonation, a later interval — ratio 5:4">5:4 Major Third (just, later)</button>
         <button class="sim-btn" data-ratio="9/8" aria-label="Whole Tone — ratio 9:8">9:8 Whole Tone</button>
       </div>
       <div class="sim-actions" style="margin-left:auto;">
@@ -87,23 +87,31 @@
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Click a ratio button to hear the interval and see its standing wave pattern</span>
+      <span>Click a ratio button to hear both strings together and see the second string's length</span>
     </div>
   </div>
   <div class="stop-body content-column">
     <h3>How to explore</h3>
     <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Click any ratio button to hear Pythagoras's intervals — the browser plays a sine tone at 220 Hz × ratio</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch the standing wave change: the harmonic number n shows how many half-wavelengths fit the string</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Node points (fixed dots) show where the string never moves — the signature of whole-number harmonics</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Click any ratio button to hear Pythagoras's intervals — the browser plays two sine tones together: 220 Hz for the reference string and 220 Hz × ratio for the second</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Watch the second string: a string 2/3 as long vibrates 3/2 as fast. Frequency is inversely proportional to length; that is the whole experiment.</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ The fixed end points show where each string never moves; both strings sound their fundamental, one half-wave between the ends</li>
     </ul>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
       <li>Mathematics is not just a tool for describing nature — Pythagoras argued it is the very substance of nature. Every physical law we have discovered since is written in mathematics.</li>
-      <li>$$f_n = n \cdot f_1, \quad n = 1, 2, 3, \ldots$$</li>
+      <li>$$\frac{f_2}{f_1} = \frac{L_1}{L_2}$$ (shorter string, higher pitch: frequency is inversely proportional to length)</li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>Nicomachus of Gerasa, <em>Enchiridion</em>, ch. 6: the blacksmith story.</li>
+      <li>W. Burkert, <em>Lore and Science in Ancient Pythagoreanism</em> (Harvard University Press, 1972).</li>
+      <li>D. Creese, <em>The Monochord in Ancient Greek Harmonic Science</em> (Cambridge University Press, 2010).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

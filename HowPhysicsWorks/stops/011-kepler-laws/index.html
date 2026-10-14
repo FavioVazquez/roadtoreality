@@ -61,7 +61,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      Kepler spent years staring at Tycho Brahe's precise observational data, trying to fit planets to perfect circles. Nothing worked — there was always a tiny error. Finally, in frustration, he tried an ellipse. It fit perfectly.
+      Kepler spent years fitting Mars to Tycho Brahe's observations with circles and an off-centre Sun. His best model missed by eight minutes of arc, a fifth of the Moon's width. Older data would have hidden it; Tycho's were good to two. "These eight minutes", he wrote, "point the way to the reform of all astronomy." He tried an egg-shaped oval for two years before he saw, in 1605, that the orbit was an ellipse with the Sun at a focus.
     </p>
     <p>
       He then discovered something stranger: planets don't move at constant speed. They speed up near the Sun and slow down far away, but always sweep out the same area of space in the same amount of time. Watch the shaded triangle below — it stays constant even as the planet's speed changes.
@@ -78,9 +78,9 @@
       <div class="sim-control" style="flex:1">
         <label class="sim-control__label" for="ecc-slider">
           Eccentricity
-          <span class="sim-control__value" id="ecc-val">0.4 (like Mercury)</span>
+          <span class="sim-control__value" id="ecc-val">0.2 (Mercury 0.21)</span>
         </label>
-        <input type="range" id="ecc-slider" min="0.0" max="0.9" step="0.05" value="0.4" aria-label="Orbital eccentricity">
+        <input type="range" id="ecc-slider" min="0.0" max="0.9" step="0.05" value="0.2" aria-label="Orbital eccentricity">
       </div>
       <div class="sim-control">
         <label class="sim-control__label" for="law-select">
@@ -103,7 +103,7 @@
     <h3>The Three Laws</h3>
     <p><strong>First Law (1609):</strong> Planets orbit the Sun in ellipses, with the Sun at one focus — not the center.</p>
     <p><strong>Second Law (1609):</strong> A line from the Sun to a planet sweeps out equal areas in equal times. This means planets move faster when closer to the Sun (perihelion) and slower when farther away (aphelion).</p>
-    <p><strong>Third Law (1619):</strong> The square of a planet's orbital period is proportional to the cube of its average distance from the Sun: T² ∝ a³. This single equation links all planets in one mathematical relationship.</p>
+    <p><strong>Third Law (1619):</strong> The square of a planet's orbital period is proportional to the cube of its semi-major axis (half the long diameter, which is the average of its nearest and farthest distances): T² ∝ a³. This single equation links all planets in one mathematical relationship.</p>
     <p>Kepler had no idea <em>why</em> these laws held. They were purely empirical — extracted from data through years of painstaking calculation. It took Newton, 70 years later, to show they all follow from a single law of gravitation.</p>
   </div>
   <div class="takeaway-box content-column">
@@ -115,9 +115,16 @@
     </ul>
     <p>$$T^2 = \frac{4\pi^2}{GM} a^3$$</p>
   </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>J. Kepler, <em>Astronomia Nova</em> (1609), ch. 19 (the eight minutes of arc) and ch. 58 (the ellipse).</li>
+      <li>J. Kepler, <em>Harmonices Mundi</em> (1619), Book V (the third law).</li>
+    </ol>
+  </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Kepler described the geometry of orbits but couldn't explain it. A generation later, Isaac Newton would derive all three of Kepler's laws from a single force law — and in doing so, unify earthly and celestial mechanics for the first time.</span>
+    <span>Kepler described the geometry of orbits but couldn't explain it. A generation later, Isaac Newton would derive all three of Kepler's laws from a single force law — and in doing so, show that one law governs the apple and the planets.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

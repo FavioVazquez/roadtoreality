@@ -57,14 +57,24 @@
   /* ── Field lines ──────────────────────────────────────────── */
   function drawFieldLines() {
     /* Draw 16 field lines originating from q1 toward q2 (or away for like charges) */
-    var numLines = 16;
     var r0 = 22; /* radius offset from charge center */
 
+    /* Lines leave positive charges and are followed along +E; if both charges
+       are negative they are launched from both and followed along -E. */
+    var sources = [];
+    if (q1.sign > 0) sources.push({ q: q1, dir: 1 });
+    if (q2.sign > 0) sources.push({ q: q2, dir: 1 });
+    if (!sources.length) sources = [{ q: q1, dir: -1 }, { q: q2, dir: -1 }];
+
+    for (var si = 0; si < sources.length; si++) {
+    var src = sources[si].q, dir = sources[si].dir;
+    /* line density tracks charge magnitude */
+    var numLines = Math.max(4, Math.min(32, Math.round(8 * src.mag)));
     for (var i = 0; i < numLines; i++) {
       var angle = (i / numLines) * Math.PI * 2;
-      /* Start near q1 */
-      var sx = q1.x + r0 * Math.cos(angle);
-      var sy = q1.y + r0 * Math.sin(angle);
+      /* Start near the source charge */
+      var sx = src.x + r0 * Math.cos(angle);
+      var sy = src.y + r0 * Math.sin(angle);
 
       /* Trace field line with small steps */
       var px = sx, py = sy;
@@ -102,8 +112,8 @@
         ex /= eMag;
         ey /= eMag;
 
-        px += ex * stepSize;
-        py += ey * stepSize;
+        px += dir * ex * stepSize;
+        py += dir * ey * stepSize;
 
         /* Clip to left panel */
         if (px < 0 || px > splitX || py < 0 || py > H) break;
@@ -121,6 +131,7 @@
       ctx.strokeStyle = 'rgba(90,160,220,' + alpha + ')';
       ctx.lineWidth = 1;
       ctx.stroke();
+    }
     }
   }
 
@@ -168,7 +179,7 @@
     /* Arrow length proportional to force, capped for display */
     var r_m = pixelsToMeters(dist);
     var F = coulombForce(r_m, q1.mag, q2.mag);
-    var arrowLen = Math.min(50, Math.max(15, F * 2e7));
+    var arrowLen = 15 + 35 * Math.max(0, Math.min(1, (Math.log10(F) + 3.5) / 4.5));
 
     var attract = isAttracting();
 
@@ -277,7 +288,7 @@
     ctx.fillText('r (m)', gx1, gy1 + 3);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('F (N)', gx0 + 3, gy0);
+    ctx.fillText('F (N, log scale)', gx0 + 3, gy0);
     ctx.restore();
 
     /* 1/r² theory curve */
@@ -595,7 +606,7 @@
     canvas.style.display = 'block';
     canvas.style.width = '100%';
     canvas.style.cursor = 'grab';
-    canvas.setAttribute('touch-action', 'none');
+    canvas.style.touchAction = 'none';
     mount.appendChild(canvas);
     ctx = canvas.getContext('2d');
 

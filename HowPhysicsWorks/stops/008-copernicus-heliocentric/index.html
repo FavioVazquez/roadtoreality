@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Copernicus proposed the Sun sits at the center. Toggle between geocentric and heliocentric models and see how planetary paths simplify.">
+  <meta name="description" content="Copernicus proposed the Sun sits at the center. Toggle between geocentric and heliocentric views and see why the planets loop backwards.">
   <meta property="og:title" content="Copernicus and the Heliocentric Model — How Physics Works">
-  <meta property="og:description" content="Copernicus proposed the Sun, not the Earth, sits at the center. Toggle between models and watch how the planetary paths simplify.">
+  <meta property="og:description" content="Copernicus proposed the Sun, not the Earth, sits at the center. Toggle between views and watch why the planets loop backwards.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/008-copernicus-heliocentric/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -61,13 +61,13 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      Copernicus spent decades working out a heretical idea: what if the apparent complexity of planetary motion — those looping epicycles — was an artifact of observing from a moving Earth? He found that placing the Sun at the center dramatically simplified the mathematics.
+      Copernicus spent decades working out a radical idea: what if the apparent complexity of planetary motion — those looping epicycles — was an artifact of observing from a moving Earth? He found that placing the Sun at the centre explained three things at once: why planets loop backwards, why Mercury and Venus never stray far from the Sun, and how far each planet is, on a single scale.
     </p>
     <p>
-      He finished his great work, <em>De revolutionibus orbium coelestium</em>, by 1532 but held back publication for over a decade, fearing ridicule. He finally published in 1543, and reportedly received the first printed copy on his deathbed.
+      He circulated a sketch, the <em>Commentariolus</em>, around 1514, and had the full <em>De revolutionibus orbium coelestium</em> largely written by the early 1530s. He hesitated to print it, wary of ridicule, until a young mathematician, Rheticus, pushed it to press in 1543. His friend Tiedemann Giese wrote that a copy reached him on the day he died.
     </p>
     <p>
-      Click the toggle below to switch between geocentric and heliocentric views of the same solar system. Notice how the looping paths seen from Earth — which required epicycles to explain — become simple ellipses when you watch from above.
+      Use the view slider below to switch between geocentric and heliocentric views of the same solar system. Notice how the looping paths seen from Earth — which required epicycles to explain — become simple, nearly circular paths around the Sun when you watch from above. (The outer orbits are drawn closer in than they really are, so that all five fit on screen.)
     </p>
   </div>
   <div class="sim-wrapper content-column">
@@ -102,16 +102,26 @@
   <div class="stop-body content-column">
     <h3>What Changed — and What Didn't</h3>
     <p>Copernicus's model was a huge conceptual leap, but it had a serious limitation: he still assumed circular orbits. Circular orbits don't quite match observations, so he still needed some epicycles. It wasn't until Kepler (1609) that the correct shape — the ellipse — replaced the circle.</p>
-    <p>Copernicus also moved Earth from the unique "center" position it had held since Aristotle. This had deep philosophical implications: if Earth is just another planet, why should humans be the purpose of creation? The heliocentric model, combined with Galileo's later telescopic evidence and the Reformation's challenge to Church authority, made the 17th century the most intellectually explosive era in history.</p>
+    <p>Copernicus also moved Earth from the unique "center" position it had held since Aristotle. This had deep philosophical implications: if Earth is just another planet, why should humans be the purpose of creation? The heliocentric model, combined with Galileo's later telescopic evidence and the Reformation's challenge to Church authority, helped make the 17th century what we now call the Scientific Revolution.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
       <li>The heliocentric model explains planetary retrograde motion without epicycles: it is simply what happens when a faster inner planet overtakes a slower outer one.</li>
-      <li>Copernicus still used circular orbits, so his model still needed epicycles — just fewer.</li>
+      <li>Copernicus still used circles, so he still needed small epicycles (in place of Ptolemy's equant), about as many circles in all. The gain was one coherent system, not fewer parts.</li>
       <li>The deeper revolution was philosophical: Earth was demoted from the center of creation to one planet among others.</li>
     </ul>
-    <p>$$T^2 \propto a^3$$</p>
+    <p>$$a = \sin \varepsilon_{\max}$$</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">For an inner planet, its distance (in Earth-orbit units) is the sine of its greatest angle from the Sun: Venus, 46°, gives 0.72.</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">N. Copernicus, <em>De revolutionibus orbium coelestium</em> (1543), Book I.</li>
+      <li id="src-2">N. Copernicus, <em>Commentariolus</em> (c. 1514).</li>
+      <li id="src-3">O. Gingerich, <em>The Book Nobody Read</em> (2004).</li>
+      <li id="src-4">N. M. Swerdlow and O. Neugebauer, <em>Mathematical Astronomy in Copernicus's De Revolutionibus</em> (1984).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the Nobel Prize and proved light comes in photons.">
+  <meta name="description" content="Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the 1921 Nobel Prize and was the strongest early argument that light comes in quanta.">
   <meta property="og:title" content="Einstein and the Photoelectric Effect — How Physics Works">
-  <meta property="og:description" content="Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the Nobel Prize and proved light comes in photons.">
+  <meta property="og:description" content="Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the 1921 Nobel Prize and was the strongest early argument that light comes in quanta.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/028-einstein-photoelectric/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -52,7 +55,7 @@
   <header class="stop-header">
     <div class="stop-header__era">The Modern Revolution · 1905</div>
     <h1 class="stop-header__title">Einstein and the Photoelectric Effect</h1>
-    <p class="stop-header__subtitle">Light is both a wave and a particle</p>
+    <p class="stop-header__subtitle">Light comes in quanta</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1905</span>
       <span>·</span>
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the Nobel Prize and proved light comes in photons.</p>
+    <p>Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the 1921 Nobel Prize and was the strongest early argument that light comes in quanta.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Einstein and the Photoelectric Effect — interactive simulation">
@@ -70,12 +73,12 @@
     <div class="sim-controls">
       <div class="sim-control-row">
         <label class="sim-label" for="frequency-slider">Light Frequency</label>
-        <input type="range" id="frequency-slider" min="1" max="100" step="1" value="40" class="sim-slider">
+        <input type="range" id="frequency-slider" min="1" max="100" step="1" value="15" class="sim-slider" aria-label="Light frequency">
         <span id="frequency-readout" class="sim-readout">Below threshold</span>
       </div>
       <div class="sim-control-row">
         <label class="sim-label" for="intensity-slider">Intensity</label>
-        <input type="range" id="intensity-slider" min="1" max="100" step="1" value="50" class="sim-slider">
+        <input type="range" id="intensity-slider" min="1" max="100" step="1" value="50" class="sim-slider" aria-label="Light intensity">
         <span id="intensity-readout" class="sim-readout">50%</span>
       </div>
       <div class="sim-actions" style="margin-left:auto;">
@@ -90,11 +93,21 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Classical Prediction (Wrong)</h3>
-    <p>Classical wave theory predicted that if you shone bright enough light on metal, eventually enough energy would accumulate to eject electrons. The brighter the light, the more energy deposited — so crank up the intensity long enough and electrons would eventually escape. Try it: drag the intensity slider to maximum while the frequency slider is below the threshold. Nothing happens. No electrons, no matter how bright the light.</p>
+    <p>Classical wave theory predicted that if you shone bright enough light on metal, eventually enough energy would accumulate to eject electrons. The brighter the light, the more energy deposited — so crank up the intensity long enough and electrons would eventually escape. Try it: drag the intensity slider to maximum while the frequency slider is below the threshold. Nothing happens. No electrons, no matter how bright the light. Philipp Lenard had already found, in 1902, that brighter light gives more electrons but not faster ones, and that their maximum energy depends only on the light's colour. Classical theory had no answer.<sup><a href="#src-2">[2]</a></sup></p>
     <h3>Einstein's Insight: Photons</h3>
-    <p>In 1905 Einstein proposed that light comes in discrete packets — photons — each carrying energy E&nbsp;=&nbsp;hf. Only a photon with enough frequency (enough energy per packet) can knock an electron loose. More photons means more intensity, but each photon still carries the same energy. Intensity controls the <em>rate</em> of ejection; frequency controls whether ejection is possible at all.</p>
+    <p>In 1905 Einstein proposed that light comes in discrete packets — photons — each carrying energy E&nbsp;=&nbsp;hf. Only a photon of high enough frequency (enough energy per packet) can knock an electron loose. More photons means more intensity, but each photon still carries the same energy. Intensity controls the <em>rate</em> of ejection; frequency controls whether ejection is possible at all. Einstein's picture also explains why the electrons leave at once, even in faint light: one photon is absorbed whole, so there is nothing to accumulate.<sup><a href="#src-1">[1]</a></sup></p>
     <h3>The Work Function</h3>
-    <p>Each metal has a characteristic work function &phi; — the minimum energy needed to free an electron from the surface. Any energy beyond &phi; becomes kinetic energy of the ejected electron: KE&nbsp;=&nbsp;hf&nbsp;&minus;&nbsp;&phi;. This linear relationship between KE and frequency (not intensity) was Einstein's key prediction, verified experimentally by Millikan in 1916.</p>
+    <p>Each metal has a characteristic work function &phi; — the minimum energy needed to free an electron from the surface. Any energy beyond &phi; becomes kinetic energy of the ejected electron: KE&nbsp;=&nbsp;hf&nbsp;&minus;&nbsp;&phi;. This linear relationship between KE and frequency (not intensity) was Einstein's key prediction, verified experimentally by Millikan in 1916, who measured h = 6.57 × 10<sup>−34</sup> J·s from the slope.<sup><a href="#src-3">[3]</a></sup> In the simulation, the metal is sodium with &phi; &asymp; 2.3 eV, so the threshold photon energy is 2.3 eV.</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 132 (1905).</li>
+      <li id="src-2">P. Lenard, <em>Annalen der Physik</em> 8, 149 (1902).</li>
+      <li id="src-3">R. A. Millikan, <em>Physical Review</em> 7, 355 (1916).</li>
+      <li>Work functions: <em>CRC Handbook of Chemistry and Physics</em>.</li>
+      <li>The Nobel Prize in Physics 1921: citation "for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect".</li>
+    </ol>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>

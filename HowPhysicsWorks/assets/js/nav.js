@@ -10,7 +10,7 @@
 
   var ERA_META = {
     ancient: {
-      label: 'Ancient & Classical',
+      label: 'Antiquity & the Middle Ages',
       tagline: 'When Philosophy Became Physics',
       dates: '600 BCE – 1500 CE',
       description: 'The first attempts to explain nature through reason, geometry, and observation — before the Scientific Method existed.'
@@ -24,13 +24,13 @@
     classical: {
       label: 'Classical Physics',
       tagline: 'The Clockwork Cosmos',
-      dates: '1700 – 1880',
+      dates: '1700 – 1890',
       description: 'Thermodynamics, electricity, magnetism. Physicists thought they were almost done. They were wrong.'
     },
     modern: {
       label: 'The Modern Revolution',
       tagline: 'Everything Breaks',
-      dates: '1880 – 1945',
+      dates: '1900 – 1938',
       description: 'Relativity, quantum mechanics, and the demolition of every classical certainty.'
     },
     contemporary: {

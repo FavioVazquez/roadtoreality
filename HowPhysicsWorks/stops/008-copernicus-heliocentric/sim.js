@@ -125,6 +125,28 @@
       ctx.fillText('Sun', cx, cy + 17);
       ctx.restore();
     } else {
+      /* The Sun circles the Earth once a year: the epicycle of every outer planet made visible */
+      var sunGX = cx + (cx - earthPos.x), sunGY = cy + (cy - earthPos.y);
+      ctx.save();
+      ctx.strokeStyle = 'oklch(0.90 0.20 82 / 0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 6]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, PLANETS[2].r * scale, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.shadowColor = 'oklch(0.90 0.20 82)';
+      ctx.shadowBlur = 30;
+      ctx.fillStyle = 'oklch(0.90 0.20 82)';
+      ctx.beginPath();
+      ctx.arc(sunGX, sunGY, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.font = '700 10px "DM Sans", system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('Sun', sunGX, sunGY + 15);
+      ctx.restore();
       /* Earth at center */
       ctx.save();
       ctx.shadowColor = 'oklch(0.55 0.18 220)';
@@ -174,6 +196,8 @@
         : 'Heliocentric view — true orbits around the Sun',
       W / 2, 10
     );
+    ctx.font = '10px "DM Sans", system-ui, sans-serif';
+    ctx.fillText('outer orbits not to scale', W / 2, H - 10);
     ctx.restore();
   }
 

@@ -51,6 +51,8 @@
   var raf     = null;
   var running = false;
   var carX    = 0;    /* horizontal position offset for animation */
+  var sweepT  = 0;    /* auto-sweep clock while playing */
+  var userSet = false; /* true once the visitor drags the slider: sweep stops */
 
   /* Slider wiring */
   var slider  = document.getElementById('velocity-slider');
@@ -73,7 +75,7 @@
   }
 
   if (slider) {
-    slider.addEventListener('input', updateFromSlider);
+    slider.addEventListener('input', function () { userSet = true; updateFromSlider(); });
     updateFromSlider();
   }
 
@@ -291,7 +293,7 @@
     ctx.font = Math.max(9, Math.round(W * 0.018)) + 'px monospace';
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgba(160,92,200,0.6)';
-    ctx.fillText('L\u2080 = ' + L0 + ' m  (rest length)', ghostCX, ghostCY - carH / 2 - 10);
+    ctx.fillText('rest frame of the car: L\u2080 = ' + L0 + ' m', ghostCX, ghostCY - carH / 2 - 10);
 
     /* Ghost outline — rest length car (does NOT move) */
     drawCar(ghostCX, ghostCY, bw, carH, true);
@@ -306,7 +308,7 @@
     ctx.font = Math.max(9, Math.round(W * 0.018)) + 'px monospace';
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgba(220,180,255,0.9)';
-    ctx.fillText('L = ' + L.toFixed(1) + ' m', carCX, labelY);
+    ctx.fillText('platform view: L = ' + L.toFixed(1) + ' m', carCX, labelY);
 
     /* L readout panel */
     var ratioStr = (L / L0).toFixed(3);
@@ -338,6 +340,13 @@
   function drawFrame() {
     /* Advance animation offset */
     if (running) {
+      /* Until the visitor takes the slider, sweep v between 0 and 0.99c and back
+         (about 5 s per cycle) so the contraction is seen to change. */
+      if (!userSet && slider) {
+        sweepT += 1;
+        slider.value = String(Math.round(495 - 495 * Math.cos(sweepT * 0.02)));
+        updateFromSlider();
+      }
       var speed = beta * 4;   /* px/frame proportional to beta */
       carX += speed;
       if (carX > W * 0.5) { carX = -W * 0.5; }
@@ -358,6 +367,9 @@
     start: function () {
       if (running) return;
       running = true;
+      /* keep the shell's Play/Pause button in step when the sim autostarts */
+      var pb = document.getElementById('sim-play-btn');
+      if (pb) { pb.dataset.state = 'playing'; pb.textContent = '\u23f8 Pause'; }
       if (reduced) { drawStatic(); return; }
       raf = requestAnimationFrame(drawFrame);
     },
@@ -371,6 +383,8 @@
       gamma = 1.0;
       L     = L0;
       carX  = 0;
+      sweepT = 0;
+      userSet = false;
       if (slider) { slider.value = 0; }
       if (readout) { readout.textContent = 'v\u00a0=\u00a00.000c\u00a0\u00a0\u00a0L\u00a0=\u00a0100.0\u00a0m'; }
       drawStatic();

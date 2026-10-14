@@ -16,8 +16,14 @@
   /* Earth parameters (exact) */
   var R   = 6371;          /* km */
   var GM  = 398600;        /* km³/s² */
-  var V_ORBITAL = Math.sqrt(GM / R);          /* ~7.905 km/s */
-  var V_ESCAPE  = Math.sqrt(2 * GM / R);      /* ~11.18 km/s */
+  var MOUNTAIN_H = 300;   /* km: the cannon sits on a mountain this high */
+  var R_CANNON   = R + MOUNTAIN_H;
+  var V_ORBITAL = Math.sqrt(GM / R_CANNON);       /* circular speed at 300 km: ~7.73 km/s */
+  var V_ESCAPE  = Math.sqrt(2 * GM / R_CANNON);   /* escape speed at 300 km: ~10.93 km/s */
+  /* Smallest tangential speed whose perigee stays above the landing radius (R + 5 km):
+     vis-viva with the cannon at apogee, r_p = r0 q / (2 - q), q = v^2 r0 / GM  */
+  var R_LAND  = R + 5;
+  var V_CLEAR = Math.sqrt(GM / R_CANNON * (2 * R_LAND / (R_CANNON + R_LAND)));  /* ~7.64 km/s */
 
   var launchSpeedKms = 5.0;
   var simSpeedMult   = 1;  /* wall-time multiplier */
@@ -25,13 +31,14 @@
   /* Simulation state */
   var x, y, vx, vy, simT;
   var trail   = [];
+  var lastTrailT = 0;
+  var TRAIL_DT = 15;   /* s between trail points */
   var fired   = false;
   var done    = false;
   var outcome = '';   /* 'orbit' | 'escape' | 'landed' */
 
   /* Cannon is at upper-right, mountain 300 km high */
   var CANNON_ANGLE = -Math.PI * 0.28;
-  var MOUNTAIN_H   = 300; /* km */
 
   /* ── Geometry helpers ─────────────────────────────────── */
   function ep()  { return Math.min(W, H) * 0.30; }
@@ -41,7 +48,7 @@
   function toC(kx, ky) { return { x: cx() + k2p(kx), y: cy() - k2p(ky) }; }
 
   function cannonKm() {
-    var r = R + MOUNTAIN_H;
+    var r = R_CANNON;
     return { x: Math.cos(CANNON_ANGLE) * r, y: Math.sin(CANNON_ANGLE) * r };
   }
 
@@ -61,6 +68,7 @@
     vx = Math.cos(perp) * launchSpeedKms;
     vy = Math.sin(perp) * launchSpeedKms;
     trail   = [];
+    lastTrailT = 0;
     simT    = 0;
     fired   = true;
     done    = false;
@@ -121,7 +129,7 @@
     if (outcome === 'landed') return 'oklch(0.68 0.22 20)';
     /* In-flight: color by speed vs orbital */
     return launchSpeedKms >= V_ESCAPE  ? 'oklch(0.80 0.17 82)'
-         : launchSpeedKms >= V_ORBITAL ? 'oklch(0.72 0.15 145)'
+         : launchSpeedKms >= V_CLEAR ? 'oklch(0.72 0.15 145)'
          : 'oklch(0.68 0.22 20)';
   }
 
@@ -214,16 +222,16 @@
     if (outcome) {
       var bannerColors = { orbit: 'oklch(0.72 0.15 145)', escape: 'oklch(0.80 0.17 82)', landed: 'oklch(0.68 0.22 20)' };
       var bannerMsgs   = {
-        orbit:  '↻ Orbiting Earth!  v ≈ ' + V_ORBITAL.toFixed(1) + ' km/s needed',
+        orbit:  '↻ Orbiting Earth!  circular speed here is ' + V_ORBITAL.toFixed(1) + ' km/s',
         escape: '↗ Escaped Earth gravity!  v > ' + V_ESCAPE.toFixed(1) + ' km/s',
-        landed: '↓ Landed back on Earth.  Increase speed to orbit.'
+        landed: '↓ Landed back on Earth.  Above ' + V_CLEAR.toFixed(1) + ' km/s it clears the surface.'
       };
       ctx.save();
       ctx.font = '700 13px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = bannerColors[outcome];
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillText(bannerMsgs[outcome], W/2, 94);
+      ctx.fillText(bannerMsgs[outcome], W/2, 112);
       ctx.restore();
     }
 
@@ -231,22 +239,23 @@
     ctx.save();
     ctx.fillStyle = 'oklch(0.12 0.03 285 / 0.88)';
     ctx.beginPath();
-    ctx.roundRect(10, 12, 210, 72, 8);
+    ctx.roundRect(10, 12, 210, 90, 8);
     ctx.fill();
     ctx.font = '12px "DM Sans", system-ui, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
 
     var col = launchSpeedKms >= V_ESCAPE  ? 'oklch(0.80 0.17 82)'
-            : launchSpeedKms >= V_ORBITAL ? 'oklch(0.72 0.15 145)'
+            : launchSpeedKms >= V_CLEAR ? 'oklch(0.72 0.15 145)'
             : 'oklch(0.68 0.22 20)';
     ctx.fillStyle = col;
     ctx.fillText('Launch: ' + launchSpeedKms.toFixed(1) + ' km/s', 18, 18);
 
-    ctx.fillStyle = launchSpeedKms >= V_ORBITAL ? 'oklch(0.72 0.15 145)' : 'oklch(0.45 0.04 285)';
-    ctx.fillText('Orbital: ~' + V_ORBITAL.toFixed(1) + ' km/s', 18, 36);
+    ctx.fillStyle = launchSpeedKms >= V_CLEAR ? 'oklch(0.72 0.15 145)' : 'oklch(0.45 0.04 285)';
+    ctx.fillText('Clears surface: > ' + V_CLEAR.toFixed(1) + ' km/s', 18, 36);
+    ctx.fillText('Circular at 300 km: ' + V_ORBITAL.toFixed(1) + ' km/s', 18, 54);
     ctx.fillStyle = launchSpeedKms >= V_ESCAPE ? 'oklch(0.80 0.17 82)' : 'oklch(0.45 0.04 285)';
-    ctx.fillText('Escape: ~' + V_ESCAPE.toFixed(1) + ' km/s', 18, 54);
+    ctx.fillText('Escape at 300 km: ' + V_ESCAPE.toFixed(1) + ' km/s', 18, 72);
     ctx.restore();
   }
 
@@ -318,15 +327,16 @@
       vy += (stepDt/6)*(k1vy + 2*k2vy + 2*k3vy + k4vy);
       simT += stepDt;
 
-      /* Record trail — limit to 1200 pts */
-      if (i % 2 === 0) {
+      /* Record trail: one point per 15 simulated seconds, so a whole orbit fits */
+      if (simT - lastTrailT >= TRAIL_DT) {
+        lastTrailT = simT;
         trail.push({ x: x, y: y });
-        if (trail.length > 1200) trail.shift();
+        if (trail.length > 6000) trail.shift();
       }
 
       var rr = Math.sqrt(x*x + y*y);
 
-      if (rr <= R + 5) {
+      if (rr <= R_LAND) {
         done = true; outcome = 'landed'; running = false;
         var dot = document.querySelector('.sim-caption__dot');
         if (dot) dot.classList.remove('is-running');
@@ -339,7 +349,9 @@
         break;
       }
       /* Orbit detected: completed ~1 orbit period (T ≈ 2π√(r³/GM)) */
-      var T_orbit = 2 * Math.PI * Math.sqrt(rr*rr*rr / GM);
+      var T_orbit = Infinity;
+      var invA = 2 / rr - (vx*vx + vy*vy) / GM;   /* 1 / semi-major axis, positive when bound */
+      if (invA > 0) { var sa = 1 / invA; T_orbit = 2 * Math.PI * Math.sqrt(sa*sa*sa / GM); }
       if (simT > T_orbit * 0.9 && !outcome) {
         outcome = 'orbit';
       }

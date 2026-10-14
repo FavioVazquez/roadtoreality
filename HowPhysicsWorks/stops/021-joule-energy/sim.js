@@ -12,6 +12,7 @@
   var ctx = canvas.getContext('2d');
 
   var W, H;
+  var dpr = window.devicePixelRatio || 1;
   var raf = null;
   var t = 0;
   var running = false;
@@ -52,12 +53,13 @@
   }
 
   // Physics: paddle is coupled to the rope — it spins as weight falls.
-  // PE drops linearly. KE is a small transient hump (weight in motion).
-  // Heat = PE lost − KE in system (friction from paddle through water).
+  // PE drops linearly. KE is the real kinetic energy of the slowly falling
+  // weight, 1/2 m v^2 at the constant fall speed (tiny: Joule braked the
+  // weights with the paddles). Heat = PE lost − KE (paddle friction in water).
   function energies(f) {
     var E = E_total();
-    // KE of falling weight: small bell-curve peak (real but transient)
-    var ke   = E * 0.10 * Math.sin(f * Math.PI);
+    var vFall = dropHeight / STAGES[1].dur;
+    var ke   = (f > 0 && f < 1) ? 0.5 * mass * vFall * vFall : 0;
     var pe   = E * (1 - f);
     var heat = E - pe - ke;  // conservation: always sums to E
     return { pe: pe, ke: ke, heat: heat, total: E };
@@ -66,8 +68,10 @@
   function resize() {
     W = mount.clientWidth  || 640;
     H = mount.clientHeight || 360;
-    canvas.width  = W;
-    canvas.height = H;
+    dpr = window.devicePixelRatio || 1;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   // Colors
@@ -127,10 +131,10 @@
     ctx.lineTo(bX, bY + bH * 0.35);
     ctx.stroke();
 
-    // Weight color: shifts from blue (top) to orange (bottom) as heat builds
-    ctx.fillStyle = f < 0.5 ? 'rgba(82,133,200,0.75)' : 'rgba(200,112,64,0.75)';
+    // Weight stays blue; the water, not the weight, carries the heat
+    ctx.fillStyle = 'rgba(82,133,200,0.75)';
     ctx.fillRect(weightX - wHalf, weightY, wHalf * 2, wH);
-    ctx.strokeStyle = f < 0.5 ? C_PE : C_HEAT;
+    ctx.strokeStyle = C_PE;
     ctx.lineWidth = 2;
     ctx.strokeRect(weightX - wHalf, weightY, wHalf * 2, wH);
     ctx.fillStyle = '#ffffff';
@@ -164,7 +168,7 @@
       ctx.fillStyle = C_KE;
       ctx.font = '11px sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText('KE ' + en.ke.toFixed(1) + ' J', weightX + wHalf + 6, weightY + wH / 2);
+      ctx.fillText('KE ' + en.ke.toFixed(2) + ' J', weightX + wHalf + 6, weightY + wH / 2);
     }
 
     // Water box — heats up as paddle spins (throughout the fall)
@@ -234,7 +238,7 @@
     var E = en.total;
     var bars = [
       { label: 'Potential (PE)',  val: en.pe,   color: C_PE   },
-      { label: 'Kinetic (KE)',    val: en.ke,   color: C_KE   },
+      { label: 'Kinetic (tiny)',  val: en.ke,   color: C_KE   },
       { label: 'Heat (Q)',        val: en.heat, color: C_HEAT }
     ];
     var barH    = Math.floor((H - 60) / 4);
@@ -268,7 +272,7 @@
       ctx.fillStyle = b.color;
       ctx.font = 'bold 11px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText(b.val.toFixed(1) + ' J', gx + labelW + maxBarW + 6, by + barH * 0.75);
+      ctx.fillText(b.val.toFixed(b.val < 1 && b.val > 0 ? 2 : 1) + ' J', gx + labelW + maxBarW + 6, by + barH * 0.75);
     });
 
     // Total line
@@ -283,6 +287,11 @@
     ctx.font = 'bold 11px monospace';
     ctx.textAlign = 'left';
     ctx.fillText('Total: ' + E.toFixed(1) + ' J  (conserved)', gx, totY + 16);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('KE is tiny: the weight falls slowly', gx, totY + 30);
 
     // Equation
     ctx.fillStyle = 'rgba(255,255,255,0.35)';

@@ -61,13 +61,13 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      Ptolemy's model placed Earth at the center of the universe, with the Sun, Moon, and planets orbiting around it on perfect circular paths. But planets don't move uniformly — they sometimes seem to slow down, stop, and move backwards in the sky (retrograde motion). Ptolemy's fix: epicycles. Each planet rode on a small circle (epicycle) whose center traveled on the larger circle (deferent).
+      Ptolemy's model placed Earth at the center of the universe, with the Sun, Moon, and planets orbiting around it on circles, and circles carried on circles. But planets don't move uniformly — they sometimes seem to slow down, stop, and move backwards in the sky (retrograde motion). The fix, due to Apollonius of Perga and Hipparchus two and three centuries before Ptolemy, and perfected by him: epicycles. Each planet rode on a small circle (epicycle) whose center traveled on the larger circle (deferent).
     </p>
     <p>
-      This was wrong. But it worked. Ptolemy's <em>Almagest</em> could predict where Mars would be years in advance, accurately enough for navigation and calendars. A wrong model with good predictions is more useful than a correct model with no predictions at all.
+      This was wrong. But it worked. Ptolemy's <em>Almagest</em> could predict where Mars would be years in advance, accurately enough for calendars, horoscopes and eclipse tables. A wrong model with good predictions is more useful than a correct model with no predictions at all.
     </p>
     <p>
-      Watch the geocentric model run. Notice the looping "retrograde" paths the planets trace. Then compare: how much simpler does it get in the next stop, when we put the Sun at the center?
+      Watch the geocentric model run. Notice the looping "retrograde" paths the planets trace. Then compare with the next stop, where the Sun is at the center and the yearly rhythm of every loop gets a reason.
     </p>
   </div>
   <div class="sim-wrapper content-column">
@@ -78,7 +78,7 @@
       <div class="sim-control">
         <label class="sim-control__label" for="speed-slider">
           Speed
-          <span class="sim-control__value" id="speed-val">1×</span>
+          <span class="sim-control__value" id="speed-val">2×</span>
         </label>
         <input type="range" id="speed-slider" min="1" max="5" step="1" value="2" aria-label="Simulation speed">
       </div>
@@ -101,9 +101,9 @@
   </div>
   <div class="stop-body content-column">
     <h3>Why Ptolemy Was Taken Seriously</h3>
-    <p>The geocentric model wasn't just religious dogma — it was genuinely good science by the standards of the time. Ptolemy's <em>Almagest</em> (compiled ~150 CE) was the most sophisticated astronomical work of antiquity, synthesizing centuries of Babylonian and Greek observations into a predictive mathematical system.</p>
-    <p>By adding more epicycles on top of epicycles, Ptolemy's successors could match any observed planetary motion. This is an important lesson: a sufficiently flexible mathematical model can fit almost any data — without being correct. The question is not just "does it fit?" but "is it the simplest model that fits?"</p>
-    <p>The heliocentric model required far fewer epicycles to achieve the same predictive accuracy. Simplicity was the key clue that something better was possible.</p>
+    <p>The geocentric model wasn't just religious dogma — it was genuinely good science by the standards of the time. Ptolemy's <em>Almagest</em> (compiled ~150 CE; the planets are in Books IX–XIII) was the most sophisticated astronomical work of antiquity, synthesizing centuries of Babylonian and Greek observations into a predictive mathematical system.</p>
+    <p>Ptolemy's model already fit the planets to within the accuracy of naked-eye observation, and no later astronomer piled epicycles on epicycles to fix it; that picture is a modern invention (Owen Gingerich showed in 1975 that no such tables ever existed). The lesson is subtler: a model built from the wrong parts can fit the data for fourteen centuries. Fit alone does not make a model true.</p>
+    <p>Copernicus' model used about as many circles as Ptolemy's; what it removed was the coincidence. In Ptolemy's system every planet's loop turns once a year in step with the Sun, for no stated reason. Put the Sun at the centre and that yearly rhythm is simply the Earth's own orbit. One explanation for six coincidences was the clue.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -113,10 +113,20 @@
       <li>The retrograde loops that required epicycles in geocentric astronomy are simply explained by relative orbital speeds in heliocentric astronomy.</li>
     </ul>
     <p>$$\lambda(t) = \lambda_0 + \omega_1 t + r \sin(\omega_2 t + \phi)$$</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Longitude of a planet, to first order in the epicycle size: the deferent carries it round at rate \(\omega_1\), and the epicycle adds a small oscillation of amplitude \(r\) (relative to the deferent radius) at rate \(\omega_2\).</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">Ptolemy, <em>Almagest</em> (c. 150 CE), Books IX–XIII (planetary theory); translation by G. J. Toomer, <em>Ptolemy's Almagest</em> (Springer, 1984).</li>
+      <li id="src-2">O. Gingerich, "Crisis versus Aesthetic in the Copernican Revolution", <em>Vistas in Astronomy</em> 17 (1975), 85–95.</li>
+      <li id="src-3">O. Gingerich, <em>The Book Nobody Read: Chasing the Revolutions of Nicolaus Copernicus</em> (Walker, 2004).</li>
+      <li id="src-4">N. M. Swerdlow and O. Neugebauer, <em>Mathematical Astronomy in Copernicus's De Revolutionibus</em> (Springer, 1984).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>For 1,400 years the Earth sat at the center of all maps of the cosmos. Then a Polish canon named Copernicus quietly worked out that everything became simpler if you moved the Earth out of the center — and feared to publish it for decades.</span>
+    <span>For 1,400 years the Earth sat at the center of all maps of the cosmos. Then a Polish canon named Copernicus worked out that moving the Earth out of the center explained the loops, and why the Sun rules every planet's year — and hesitated to publish it for decades.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

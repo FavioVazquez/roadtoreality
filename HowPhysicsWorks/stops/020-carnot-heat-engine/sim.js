@@ -30,7 +30,7 @@
   /* ── Physics constants ────────────────────────────────────── */
   var R     = 8.314;
   var n     = 1.0;
-  var GAMMA = 1.4;
+  var GAMMA = 5 / 3;   /* monatomic ideal gas */
   var STEPS = 40;   /* points per curve segment */
 
   /* ── Temperature state ────────────────────────────────────── */
@@ -90,6 +90,7 @@
   /* ── Build screen-coordinate mapping ─────────────────────── */
   function buildMapper(cyc) {
     var V1 = cyc.V1, V2 = cyc.V2, V3 = cyc.V3, V4 = cyc.V4;
+    var Vmin = V1 * 0.85;
     var Vmax = V3 * 1.10;
     var Pmin = P_iso(V3, tC) * 0.70;
     var Pmax = P_iso(V1, tH) * 1.15;
@@ -100,8 +101,9 @@
     var gBot   = H * 0.86;
     var gTop   = H * 0.10;
 
+    /* log-V axis keeps the four corners apart at any temperature ratio */
     function toX(V) {
-      return gLeft + (V / Vmax) * (gRight - gLeft);
+      return gLeft + (Math.log(V / Vmin) / Math.log(Vmax / Vmin)) * (gRight - gLeft);
     }
     function toY(P) {
       return gBot - ((P - Pmin) / (Pmax - Pmin)) * (gBot - gTop);
@@ -110,7 +112,7 @@
     return {
       toX: toX, toY: toY,
       gLeft: gLeft, gRight: gRight, gBot: gBot, gTop: gTop,
-      Vmax: Vmax, Pmin: Pmin, Pmax: Pmax,
+      Vmin: Vmin, Vmax: Vmax, Pmin: Pmin, Pmax: Pmax,
       V1: V1, V2: V2, V3: V3, V4: V4
     };
   }
@@ -203,7 +205,7 @@
     ctx.font = Math.round(H * 0.038) + 'px monospace';
     ctx.textAlign = 'center';
     ctx.fillText('P', m.gLeft, m.gTop - 15);
-    ctx.fillText('V', m.gRight + 20, m.gBot + 4);
+    ctx.fillText('V (log)', m.gRight + 2, m.gBot + 34);
     ctx.textAlign = 'left';
 
     /* Corner V labels on x-axis */
@@ -256,22 +258,36 @@
     ctx.font = 'bold ' + Math.round(H * 0.032) + 'px sans-serif';
     ctx.fillStyle = 'rgba(220,80,80,0.85)';
     ctx.textAlign = 'center';
-    ctx.fillText('T\u1D34 = ' + tH + ' K', midS1.x, midS1.y - 12);
+    ctx.fillText('T_H = ' + tH + ' K', midS1.x, midS1.y - 12);
     ctx.fillStyle = 'rgba(82,133,200,0.85)';
-    ctx.fillText('T\u1D9C = ' + tC + ' K', midS3.x, midS3.y + 18);
+    ctx.fillText('T_C = ' + tC + ' K', midS3.x, midS3.y + 18);
 
     /* Efficiency readout */
     ctx.font = 'bold ' + Math.round(H * 0.040) + 'px sans-serif';
     ctx.fillStyle = 'rgba(255,220,80,0.90)';
     ctx.textAlign = 'right';
     ctx.fillText('\u03B7 = ' + (eta * 100).toFixed(1) + '%', splitX - 12, m.gTop + 4);
+
+    /* Work and heats for n = 1 mol, V2/V1 = 2: the numbers behind the area */
+    var qH = n * R * tH * Math.LN2;
+    var qC = n * R * tC * Math.LN2;
+    var wNet = qH - qC;
+    ctx.font = Math.round(H * 0.030) + 'px monospace';
+    ctx.fillStyle = 'rgba(255,220,80,0.80)';
+    ctx.fillText('W = ' + Math.round(wNet) + ' J', splitX - 12, m.gTop + 4 + H * 0.05);
+    ctx.fillStyle = 'rgba(220,80,80,0.85)';
+    ctx.fillText('Q_H = ' + Math.round(qH) + ' J', splitX - 12, m.gTop + 4 + H * 0.09);
+    ctx.fillStyle = 'rgba(82,133,200,0.90)';
+    ctx.fillText('Q_C = ' + Math.round(qC) + ' J', splitX - 12, m.gTop + 4 + H * 0.13);
+    ctx.fillStyle = 'rgba(255,220,80,0.80)';
+    ctx.fillText('\u03B7 = W / Q_H', splitX - 12, m.gTop + 4 + H * 0.17);
     ctx.textAlign = 'left';
 
     /* Work area label */
     ctx.fillStyle = 'rgba(82,133,200,0.60)';
     ctx.font = Math.round(H * 0.028) + 'px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('W = enclosed area', (m.gLeft + m.gRight) / 2, m.gTop + 20);
+    ctx.fillText('W = enclosed area (1 mol)', (m.gLeft + m.gRight) / 2 - W * 0.06, m.gTop + 20);
     ctx.textAlign = 'left';
 
     /* Animated tracing dot */
@@ -311,25 +327,17 @@
     ctx.lineTo(cylLeft + cylW, cylBot);
     ctx.stroke();
 
-    /* Map cycle phase to volume fraction */
-    var vFrac = 0;  /* 0 = compressed, 1 = expanded */
+    /* Volume at this phase (linear in V along each stroke, as the dot is),
+       shown on the same log scale as the PV diagram */
     var phNorm = (cyclePhase % 1.0) * 4.0;
-    if (phNorm < 1.0) {
-      /* Stage 1: isothermal expansion — piston moves down */
-      vFrac = phNorm * 0.5;
-    } else if (phNorm < 2.0) {
-      /* Stage 2: adiabatic expansion */
-      vFrac = 0.5 + (phNorm - 1.0) * 0.3;
-    } else if (phNorm < 3.0) {
-      /* Stage 3: isothermal compression */
-      vFrac = 0.80 - (phNorm - 2.0) * 0.3;
-    } else {
-      /* Stage 4: adiabatic compression */
-      vFrac = 0.50 - (phNorm - 3.0) * 0.5;
-    }
-    vFrac = clamp(vFrac, 0, 1);
+    var stage = Math.min(3, Math.floor(phNorm));
+    var sf = phNorm - stage;
+    var corners = [cyc.V1, cyc.V2, cyc.V3, cyc.V4, cyc.V1];
+    var Vnow = corners[stage] + (corners[stage + 1] - corners[stage]) * sf;
+    var vFrac = clamp(Math.log(Vnow / cyc.V1) / Math.log(cyc.V3 / cyc.V1), 0, 1);
 
-    var pistonY = cylTop + vFrac * cylH * 0.85;
+    /* Gas sits under the piston: more volume, higher piston */
+    var pistonY = cylBot - 12 - vFrac * (cylH - 40);
 
     /* Gas fill */
     ctx.fillStyle = 'rgba(82,133,200,0.12)';
@@ -350,18 +358,27 @@
     ctx.lineWidth = 4;
     ctx.stroke();
 
-    /* Hot/cold indicator */
+    /* Reservoir contact: only the two isothermal strokes touch a reservoir */
     var phStage = Math.floor((cyclePhase % 1.0) * 4);
-    var isHot = (phStage === 0 || phStage === 1);
-
-    var indicatorLabel = isHot ? 'Hot Source  T\u1D34' : 'Cold Sink  T\u1D9C';
-    var indicatorColor = isHot ? 'rgba(220,80,80,0.70)' : 'rgba(82,133,200,0.70)';
+    var indicatorLabel = ['Hot source  T_H', 'Insulated (adiabatic)', 'Cold sink  T_C', 'Insulated (adiabatic)'][phStage];
+    var indicatorColor = ['rgba(220,80,80,0.70)', 'rgba(150,150,150,0.45)', 'rgba(82,133,200,0.70)', 'rgba(150,150,150,0.45)'][phStage];
     var indH = H * 0.055;
-    var indY = isHot ? cylBot + H * 0.02 : cylTop - indH - H * 0.02;
+    var indY = cylBot + H * 0.02;
 
-    ctx.fillStyle = indicatorColor;
-    ctx.fillRect(cylLeft, indY, cylW, indH);
-    ctx.fillStyle = '#fff';
+    if (phStage === 0 || phStage === 2) {
+      ctx.fillStyle = indicatorColor;
+      ctx.fillRect(cylLeft, indY, cylW, indH);
+      ctx.fillStyle = '#fff';
+    } else {
+      /* grey outline around the cylinder: no heat flows */
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = 'rgba(170,170,170,0.80)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(cylLeft - 6, cylTop - 6, cylW + 12, cylH + 12);
+      ctx.restore();
+      ctx.fillStyle = 'rgba(170,170,170,0.95)';
+    }
     ctx.font = Math.round(H * 0.030) + 'px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(indicatorLabel, cylLeft + cylW / 2, indY + indH / 2 + 5);

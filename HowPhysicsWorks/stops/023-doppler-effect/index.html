@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>In 1842 Christian Doppler noticed that stars emitting the same wavelength of light would appear bluer when approaching and redder when receding. The same mathematics applies to sound: when a source moves, the wavefronts it emits bunch up in front and spread apart behind. That bunching is a frequency shift — and it became the ruler astronomers use to measure the expansion of the universe.</p>
+    <p>In 1842 Christian Doppler proposed, in a lecture in Prague, that a moving source of waves is heard or seen at a shifted frequency, and he applied it, wrongly, to the colours of double stars. The effect itself was right. For sound it was confirmed in 1845 by Buys Ballot with musicians on a moving train: when a source moves, the wavefronts it emits bunch up in front and spread apart behind. That bunching is a frequency shift — and it became the ruler astronomers use to measure the expansion of the universe.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="The Doppler Effect — interactive simulation">
@@ -72,10 +75,15 @@
         <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">&#9654; Play</button>
         <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;">
-        <label for="source-frequency-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;">Source Frequency</label>
-        <input type="range" id="source-frequency-slider" min="0.5" max="3.0" step="0.1" value="1.0" style="flex:1;accent-color:#5285c8;cursor:pointer;">
-        <span id="source-frequency-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:5em;text-align:right;">f = 1.0 Hz</span>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;flex-wrap:wrap;min-width:0;">
+        <label for="source-speed-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);">Source speed (fraction of v<sub>w</sub>)</label>
+        <input type="range" id="source-speed-slider" min="0" max="95" step="1" value="35" aria-label="Source speed, as a fraction of the wave speed" style="flex:1;accent-color:#5285c8;cursor:pointer;">
+        <span id="source-speed-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:5em;text-align:right;">0.35 v_w</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:6px;flex-wrap:wrap;min-width:0;">
+        <label for="source-frequency-slider" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);">Source Frequency</label>
+        <input type="range" id="source-frequency-slider" aria-label="Source frequency, relative to f0" min="0.5" max="3.0" step="0.1" value="1.0" style="flex:1;accent-color:#5285c8;cursor:pointer;">
+        <span id="source-frequency-readout" style="font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:5em;text-align:right;">f&#8320; &times; 1.0</span>
       </div>
     </div>
     <div class="sim-caption">
@@ -98,14 +106,22 @@
       $$\frac{\Delta f}{f_0} \approx \frac{v_s}{c}$$
     </div>
     <p style="color:var(--color-text-secondary);line-height:1.8;">
-      This redshift formula is how Edwin Hubble, using data from Vesto Slipher, discovered in 1929 that almost every galaxy is receding — and the further away it is, the faster it moves. The Doppler effect, worked out for sound in a Czech lecture hall, turned out to measure the size and fate of the cosmos.
+      This is the formula Hubble used in 1929 with Slipher's velocities to show that almost every galaxy is receding — and the further away it is, the faster it moves. The Doppler effect, proposed for starlight in a Prague lecture hall and first checked with trumpets on a train, turned out to measure the size and fate of the cosmos.
     </p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>A source moving toward you compresses its wavefronts — observed frequency rises. Moving away stretches them — frequency drops. The formula is \(f = f_0 \, v_w/(v_w \mp v_s)\). Redshift of distant galaxies is the Doppler effect applied to light.</li>
+      <li>A source moving toward you compresses its wavefronts — observed frequency rises. Moving away stretches them — frequency drops. The formula is \(f = f_0 \, v_w/(v_w \mp v_s)\). For nearby galaxies the redshift reads as a Doppler shift, cz ≈ v; for distant ones it is better described as the stretching of light by the expansion of space, 1 + z = a_now/a_then, which is not a speed.</li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>C. Doppler, "Über das farbige Licht der Doppelsterne und einiger anderer Gestirne des Himmels", <em>Abhandlungen der Königl. Böhmischen Gesellschaft der Wissenschaften</em> ser. 5, 2, 465–482 (1842; read 25 May 1842).</li>
+      <li>C. H. D. Buys Ballot, "Akustische Versuche auf der Niederländischen Eisenbahn, nebst gelegentlichen Bemerkungen zur Theorie des Hrn. Prof. Doppler", <em>Annalen der Physik und Chemie</em> 66, 321–351 (1845).</li>
+      <li>E. Hubble, "A relation between distance and radial velocity among extra-galactic nebulae", <em>PNAS</em> 15, 168–173 (1929).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
