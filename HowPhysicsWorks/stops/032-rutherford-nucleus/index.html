@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +63,10 @@
       <span class="stop-header__scientist">Ernest Rutherford</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why do most alpha particles pass a gold nucleus almost undeflected while a few turn back, and how does the angle depend on the aim?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Rutherford fired alpha particles at gold foil. Most passed straight through — but a few bounced directly back. The atom has a tiny, dense nucleus at its center.</p>
   </div>
@@ -101,6 +106,14 @@
       <span>Interactive — watch statistical scattering in stream mode, or aim manually.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>In stream mode, compare <strong>Au (Z=79)</strong> with <strong>H (Z=1)</strong>: with gold most tracks bend only slightly at the foil and now and then one turns back; with hydrogen nearly every alpha goes straight through.</li>
+      <li>Press <strong>Switch to Manual Aim</strong> and drag <strong>b</strong>: with gold the readout shows b = 14.2 D (θ = 8°) at the right end, b = 3.6 D (θ = 31°) at the halfway mark (slider value 50), and θ = 180° for a head-on hit at 0.</li>
+      <li>With <strong>b</strong> at its right end, press <strong>Fe (Z=26)</strong> and then <strong>H (Z=1)</strong>: the θ label beside the foil falls from 8° to 3° to 0°, because the deflection scale D grows in proportion to Z.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Plum Pudding Model (Wrong)</h3>
     <p>In 1909, the prevailing model of the atom — Thomson's "plum pudding" (his own 1910 calculation gave only small-angle multiple scattering, which is why the large angles mattered) — had positive charge spread uniformly throughout the atom, with electrons embedded like raisins in dough. Under this model, alpha particles should barely deflect when passing through gold foil. The positive charge would be too diffuse to cause significant scattering.</p>
@@ -109,15 +122,19 @@
     <p>The simulation draws the nucleus thousands of times too large relative to the atom, so that a backscatter happens every few seconds instead of once in eight thousand; the angle for a given aim follows Rutherford's formula exactly.</p>
     <h3>The Nuclear Model</h3>
     <p>The only way to explain the backscattering was if all the positive charge — and nearly all the mass — was concentrated in an impossibly tiny region at the center. Rutherford called it the "central charge" in 1911 and the nucleus from 1912. It is tens of thousands of times smaller than the atom: for gold, about 7 femtometres against an atomic radius of 0.14 nanometres. Rutherford's own 1911 estimate from the fastest alphas available was that the central charge sits inside about 3 × 10⁻¹⁴ m. The electrons orbit this nucleus in the vast empty space around it.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <ul class="sim-limits__list"><li>Each alpha meets one nucleus and is deflected once, at one fixed alpha energy, so the unit D (half the head-on distance of closest approach) changes only with Z; there is no multiple scattering and no recoil.</li><li>The path is drawn as two straight lines meeting at the foil, not the smooth hyperbola the alpha follows, and the nucleus is drawn the same size for every Z.</li><li>The sim is flat: aims are spread evenly across a line, not over an area, which makes large-angle scatters more frequent than in a real foil, on top of the enlarged nucleus the text describes.</li><li>The <strong>b</strong> slider is not linear: b grows as the square of the slider position.</li></ul>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Rutherford Scattering Formula</div>
     <p>$$\cot\!\left(\frac{\theta}{2}\right) = \frac{2b \, E_k}{k Z_1 Z_2 e^2}$$</p>
     <p>Larger $b$ (impact parameter) = smaller deflection angle $\theta$. A head-on collision ($b = 0$) gives backscatter ($\theta = 180°$). Here $k = 1/(4\pi\varepsilon_0)$, $E_k$ is the alpha's kinetic energy, $Z_1 = 2$ and $Z_2 = Z$.</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">H. Geiger and E. Marsden, "On a Diffuse Reflection of the &alpha;-Particles", <em>Proceedings of the Royal Society A</em> 82, 495 (1909). Cited: about 1 in 8,000 alphas reflected from a platinum plate.</li>
       <li id="src-2">H. Geiger and E. Marsden, "The Laws of Deflexion of &alpha; Particles through Large Angles", <em>Philosophical Magazine</em> 25, 604 (1913). Cited: the gold-foil angular distribution.</li>
       <li id="src-3">E. Rutherford, "The Scattering of &alpha; and &beta; Particles by Matter and the Structure of the Atom", <em>Philosophical Magazine</em> 21, 669 (1911). Cited: the "central charge" and the closest-approach estimate of about 3 &times; 10<sup>&minus;14</sup> m.</li>

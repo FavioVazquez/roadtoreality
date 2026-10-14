@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +60,10 @@
       <span class="stop-header__scientist">Werner Heisenberg</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does squeezing an electron wave packet in position widen its spread in momentum, and can the product of the two spreads fall below ħ/2?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1927 Werner Heisenberg argued that a particle's position and momentum cannot both be pinned down at once<sup><a href="#src-1">[1]</a></sup>. The same year Earle Kennard proved the sharp form used today: the spreads of position and momentum in any quantum state obey $\sigma_x\,\sigma_p \ge \hbar/2$<sup><a href="#src-2">[2]</a></sup>.
@@ -108,6 +113,15 @@
       <span id="sim-status">Gaussian packet: σx·σp = 1.00 × ħ/2, exactly the minimum.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Move <strong>Starting width</strong> from 0.50 to 0.25 nm: the 2σx bracket shrinks from 1.00 to 0.50 nm, 2σp grows from 2.00 to 4.00 ħ/nm, and σx·σp stays at 1.00 × ħ/2.</li>
+      <li>At 0.50 nm press <strong>Play</strong>: the momentum panel does not change while the packet spreads. By about t = 7.5 fs the bracket reads 2σx = 2.00 nm and the product 2.00 × ħ/2.</li>
+      <li>Press <strong>Two-peak packet</strong>: σx·σp reads 2.27 × ħ/2 at t = 0, well above the limit, at every starting width.</li>
+      <li>Press <strong>Single slit</strong> and lower <strong>Slit width a</strong> from 100 to 50 nm: the first dark bands move from ±53.6 to ±107.1 µm and Δp<sub>y</sub> ≈ h/a doubles. Press <strong>Play</strong> to watch electrons land one by one.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Waves Cannot Be Sharp Twice</h3>
     <p>De Broglie's relation ties momentum to wavelength, $p = h/\lambda = \hbar k$, where $k = 2\pi/\lambda$ is the wavenumber. A wave with a single wavelength goes on forever; it has a definite momentum and no position at all. To make a wave that is confined to a small region you have to add many wavelengths, and the smaller the region, the wider the range you need. That trade-off is a property of all waves: sound, water and light have it too<sup><a href="#src-6">[6]</a></sup>.</p>
@@ -125,8 +139,10 @@
     <h3>Through a Narrow Slit</h3>
     <p>The same trade-off shows up when electrons pass a single slit of width $a$. Squeezing the wave through the slit confines it sideways to about $a$, so its sideways momentum must spread by about $\Delta p_y \approx h/a$<sup><a href="#src-8">[8]</a></sup>. On a screen a distance $D$ away the pattern's first dark bands sit at $\pm\lambda D/a$<sup><a href="#src-8">[8]</a></sup>. Narrow the slit in the <em>Single slit</em> view and the pattern widens.</p>
     <p>This is not the observer effect. Nothing looks at the electron at the slit and nothing kicks it. The spread comes from the wave passing a narrow opening, the same reason light spreads after a pinhole. It is a property of the state the slit prepares.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The electron is free, non-relativistic and moves along one line. The momentum distribution is set by formula, and the position wavefunction at each time is summed numerically from it; $\sigma_x$, $\sigma_p$ and their product are calculated from those grids, not measured. The packet's average wavenumber, 3 per nm, is chosen so it drifts across the view. Time runs at 1.5 fs per second and the run restarts after 12 fs. In the single-slit view the electrons have 50 keV, the screen is 1 m away and the view is 600 µm wide; this geometry is illustrative, and the landing points are random draws from the textbook single-slit pattern, not data.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -138,9 +154,9 @@
     </ul>
     <p style="overflow-x:auto;">$$\sigma_x\,\sigma_p \ge \frac{\hbar}{2}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">W. Heisenberg, "Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik", <em>Zeitschrift für Physik</em> 43, 172–198 (1927).</li>
       <li id="src-2">E. H. Kennard, "Zur Quantenmechanik einfacher Bewegungstypen", <em>Zeitschrift für Physik</em> 44, 326–352 (1927). Cited: $\sigma_x\sigma_p \ge \hbar/2$, with equality for Gaussian states.</li>
       <li id="src-3">H. P. Robertson, "The Uncertainty Principle", <em>Physical Review</em> 34, 163–164 (1929).</li>

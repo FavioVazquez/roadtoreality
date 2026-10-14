@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +63,10 @@
       <span class="stop-header__scientist">Albert Einstein</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does brighter light below a threshold frequency free no electrons from sodium, and what sets the energy of the electrons it does free?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Einstein explained why shining light on metal ejects electrons — but only if the light frequency is high enough. This won him the 1921 Nobel Prize and was the strongest early argument that light comes in quanta.</p>
   </div>
@@ -91,6 +96,14 @@
       <span>Interactive &mdash; adjust frequency and intensity to test the quantum prediction.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Keep <strong>Light Frequency</strong> below threshold and drag <strong>Intensity</strong> to 100%: up to nine photons are in flight, every hit leaves a red ✕, a red HIGH INTENSITY banner appears above 70%, and KE stays at 0.00 eV.</li>
+      <li>Raise <strong>Light Frequency</strong> one step at a time (arrow keys): the readout switches to Above threshold (0.02 eV KE) as soon as hf passes φ = 2.30 eV, and electrons leave the plate at once.</li>
+      <li>Push <strong>Light Frequency</strong> to the top: the readout shows Above threshold (2.30 eV KE) with hf = 4.60 eV, so KE = hf − φ. Now move <strong>Intensity</strong>: more or fewer electrons leave, but KE does not change.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Classical Prediction (Wrong)</h3>
     <p>Classical wave theory predicted that if you shone bright enough light on metal, eventually enough energy would accumulate to eject electrons. The brighter the light, the more energy deposited — so crank up the intensity long enough and electrons would eventually escape. Try it: drag the intensity slider to maximum while the frequency slider is below the threshold. Nothing happens. No electrons, no matter how bright the light. Philipp Lenard had already found, in 1902, that brighter light gives more electrons but not faster ones, and that their maximum energy depends only on the light's colour. Classical theory had no answer.<sup><a href="#src-2">[2]</a></sup></p>
@@ -99,15 +112,19 @@
     <h3>The Work Function</h3>
     <p>Each metal has a characteristic work function &phi; — the minimum energy needed to free an electron from the surface. Any energy beyond &phi; becomes kinetic energy of the ejected electron: KE&nbsp;=&nbsp;hf&nbsp;&minus;&nbsp;&phi;. This linear relationship between KE and frequency (not intensity) was Einstein's key prediction, verified experimentally by Millikan in 1916, who measured h = 6.57 × 10<sup>−34</sup> J·s from the slope.<sup><a href="#src-3">[3]</a></sup> In the simulation, the metal is sodium with &phi; &asymp; 2.3 eV, so the threshold photon energy is 2.3 eV.</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 132 (1905).</li>
       <li id="src-2">P. Lenard, <em>Annalen der Physik</em> 8, 149 (1902).</li>
       <li id="src-3">R. A. Millikan, <em>Physical Review</em> 7, 355 (1916).</li>
       <li>Work functions: <em>CRC Handbook of Chemistry and Physics</em>.</li>
       <li>The Nobel Prize in Physics 1921: citation "for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect".</li>
     </ol>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The frequency slider has no units: across its range the photon energy hf runs from 1.38 to 4.60 eV against a fixed φ = 2.30 eV, and the photon colour shades from red to violet as a cue, not the true colour of each energy. Intensity sets how many photons are in flight at once, from 1 to 9, and above threshold every photon that reaches the plate frees one electron, with at most 20 shown. Every electron leaves with the same, maximum kinetic energy hf − φ; in a real metal most leave with less. Electron speeds and their slight downward curve are drawn for display, and there is no collector or stopping voltage.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>

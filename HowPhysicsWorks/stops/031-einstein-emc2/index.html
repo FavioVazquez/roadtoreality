@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +63,10 @@
       <span class="stop-header__scientist">Albert Einstein</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How much energy is a gram of mass equivalent to, and how does the total energy grow as that mass approaches light speed?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Einstein's most famous equation says that mass is concentrated energy. A paperclip's gram of matter holds about 9 × 10¹³ joules, enough to run a one-gigawatt city for a day, if it could all be released.</p>
   </div>
@@ -91,6 +96,15 @@
       <span>Interactive — slide mass to see energy scale; slide velocity to see the full SR energy equation.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>At the default <strong>Mass</strong> of 1.0000 g, read the panel: E₀ = mc² = 89.880 TJ, ≈ 21.48 kt TNT and 25.0 city-hours of power, the paperclip of the text.</li>
+      <li>Drag <strong>Mass</strong> to the right end, 1.0000 kg: E₀ = 89.880 PJ, a thousand times more, and the sphere passes the City (1 yr) line at 2.85 city-years of power. Its radius is on a log scale, so it looks only a little larger.</li>
+      <li>Set <strong>Velocity (for SR energy)</strong> to 0.600c with 1 g: γ = 1.250 and the teal bar adds KE = (γ−1)mc² = 22.470 TJ, a quarter of the rest energy, while E₀ stays 89.880 TJ.</li>
+      <li>Raise <strong>Velocity (for SR energy)</strong> to 0.990c: γ = 7.089 and KE = 547.263 TJ, about six times E₀, for a Total E = γmc² of 637.143 TJ.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Mass Is Frozen Energy</h3>
     <p>A single gram of matter — a paperclip — holds the explosive energy of about 21 kilotons of TNT. The conversion factor is c², and c² is enormous: about 9 × 10¹⁶ joules per kilogram. This is why nuclear reactions release so much energy: even tiny amounts of mass convert to colossal amounts of energy. The equivalence is not a slogan: in 2005 the energy released when a nucleus captures a neutron was measured two ways, as the wavelength of the emitted gamma rays and as the mass difference of the nuclei in a trap, and the two agreed to four parts in ten million.</p>
@@ -98,6 +112,10 @@
     <p>E = mc² is famous, but it is actually a special case. The full equation of Special Relativity is E² = (pc)² + (mc²)², where p is relativistic momentum p = γmv. When an object is at rest, p = 0, and the equation reduces to E = mc². When moving, the total energy is larger — the extra part is kinetic energy. Here m is the rest mass, the same in every frame; the old habit of a speed-dependent "relativistic mass" is not used on this page.</p>
     <h3>What the Velocity Slider Shows</h3>
     <p>The lower slider lets you give your mass a velocity. Watch how the total energy grows: the rest energy (mc²) stays fixed, while relativistic kinetic energy (γ−1)mc² adds on top. As v→c, kinetic energy grows without bound — which is why you can never accelerate a massive object to the speed of light.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The sphere's radius follows a log scale from 1 kJ to about 9 × 10¹⁶ J, so a thousandfold rise in energy looks like modest growth, and the expanding rings are decoration. The energy bars are scaled to the total energy at 0.99c for whatever mass is set, so their proportions depend only on v. The comparisons use 1 t TNT = 4.184 × 10⁹ J and a city using 3.15 × 10¹⁶ J a year, about 1 GW. The readouts give the full rest energy, as if all of it could be released; the sim models no actual reaction.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equations</div>
@@ -108,9 +126,9 @@
       <p>where $p = \gamma m v$ is relativistic momentum. $E = mc^2$ is the special case $p = 0$ — an object at rest.</p>
     </div>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">A. Einstein, "Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?", <em>Annalen der Physik</em> 18, 639 (1905). Cited: a body's mass is a measure of its energy content.</li>
       <li id="src-2">S. Rainville et al., "A direct test of E = mc²", <em>Nature</em> 438, 1096 (2005). Cited: equivalence tested to 4 × 10⁻⁷ by comparing gamma-ray wavelengths with Penning-trap mass differences.</li>
       <li id="src-3">J. S. Malik, "The Yields of the Hiroshima and Nagasaki Nuclear Explosions", Los Alamos National Laboratory report LA-8819 (1985). Cited: Hiroshima yield 15 ± 3 kt.</li>

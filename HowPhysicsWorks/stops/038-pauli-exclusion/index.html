@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -59,6 +60,10 @@
       <span class="stop-header__scientist">Wolfgang Pauli</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How does allowing one electron per state build the shells that close at helium, neon, argon and krypton, and make squeezed matter push back?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1925 Wolfgang Pauli proposed that no two electrons in an atom can have the same set of quantum numbers<sup><a href="#src-1">[1]</a></sup>. That one rule fixes how electrons stack up in atoms, which shapes the periodic table, and it is why ordinary matter does not collapse.
@@ -107,6 +112,15 @@
       <span id="sim-status">Press play to add electrons one at a time.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Move <strong>Number of electrons Z</strong> to 10, 18 and 36: each time the outer s and p boxes are full and the plot reads “Outer s and p full”, with Ne, Ar and Kr named as noble gases.</li>
+      <li>Go from Z = 18 to 19: the newest electron reads n = 4, l = 0, so 4s fills before 3d. At Z = 24 the plot notes that real Cr is [Ar] 3d⁵ 4s¹, an exception to this simple order.</li>
+      <li>Press <strong>Switch off exclusion</strong>: every arrow drops into the 1s box and the shells disappear.</li>
+      <li>Press <strong>Squeeze a white dwarf</strong> and move <strong>Density</strong> from 10^3.0 to 10^10.0 g/cm³: the local slope reads 1.67 (non-relativistic, 5/3) at the low end and 1.34 (relativistic, 4/3) at the high end, while the Fermi energy rises from 1.6 keV to 8.32 MeV.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>One Electron per State</h3>
     <p>By 1925 the electron states of an atom were labelled with quantum numbers, but the labels did not explain why the shells close where they do. Pauli's answer had two parts<sup><a href="#src-1">[1]</a></sup>. Each electron needs a fourth quantum number, one that takes only two values. And no two electrons in an atom may have all four the same. Later in 1925 George Uhlenbeck and Samuel Goudsmit identified the two-valued number as the electron's spin<sup><a href="#src-2">[2]</a></sup>.</p>
@@ -126,8 +140,10 @@
     <p>A white dwarf is a star held up against gravity by electron degeneracy pressure. Squeeze harder and the electrons approach the speed of light. The pressure then grows only as $n_e^{4/3}$, and above a certain mass gravity wins<sup><a href="#src-6">[6]</a></sup>. The star view of the simulation plots the full formula for a cold electron gas and marks the two limits. In 1931 Subrahmanyan Chandrasekhar computed the maximum mass, in a paper titled "The Maximum Mass of Ideal White Dwarfs"<sup><a href="#src-4">[4]</a></sup>; he assumed 2.5 nucleons per electron, the composition then believed likely<sup><a href="#src-4">[4]</a></sup>. The textbook result is</p>
     <p style="overflow-x:auto;">$$M_{\text{Ch}} = \frac{\sqrt{3\pi}}{2}\,\omega_3\left(\frac{\hbar c}{G}\right)^{3/2}\frac{1}{(\mu_e m_u)^2}$$</p>
     <p>with $\omega_3 \approx 2.018$ from the solution of the Lane–Emden equation<sup><a href="#src-6">[6]</a></sup>. With the CODATA constants<sup><a href="#src-7">[7]</a></sup> it gives 1.46 solar masses for $\mu_e = 2$ (carbon and oxygen) and 0.93 for $\mu_e = 2.5$. These are calculated values for an ideal cold gas.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The atom view uses the Madelung filling order with Hund's rule inside each subshell, and stops at krypton. The star view is an ideal electron gas at zero temperature with two nucleons per electron, the piston and moving dots are only an illustration, and the pressure curve is the formula, not data.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -138,9 +154,9 @@
     </ul>
     <p style="overflow-x:auto;">$$\psi(\dots, x_i, \dots, x_j, \dots) = -\,\psi(\dots, x_j, \dots, x_i, \dots)$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">W. Pauli, <em>Zeitschrift für Physik</em> 31, 765–783 (1925).</li>
       <li id="src-2">G. E. Uhlenbeck and S. Goudsmit, <em>Die Naturwissenschaften</em> 13, 953–954 (1925).</li>
       <li id="src-3">F. J. Dyson and A. Lenard, "Stability of Matter. I", <em>Journal of Mathematical Physics</em> 8, 423–434 (1967).</li>
