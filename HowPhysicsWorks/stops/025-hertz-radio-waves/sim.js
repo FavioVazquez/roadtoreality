@@ -19,6 +19,7 @@
   var v_wave = 100;             /* px/s — wavefront expansion speed */
   var emitInterval = 0.5 / dipoleFreq; /* seconds per half-cycle */
   var timeSinceEmit = 0;        /* seconds since last wavefront emitted */
+  var emitPhase = 0;            /* colour bit, toggled at every emission so colours always alternate */
   var wavefronts = [];          /* array of {age, phase} objects */
   var N_SEGS = 72;              /* number of arc segments per ring */
   var MAX_WAVEFRONTS = 30;
@@ -148,7 +149,7 @@
     ctx.fillStyle = 'rgba(180,180,180,0.6)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillText('Hz dipole', cx, Math.max(botY, topY) + 10);
+    ctx.fillText('Hertzian dipole (+q / \u2212q at the two ends)', cx, Math.max(botY, topY) + 10);
     ctx.restore();
   }
 
@@ -182,6 +183,7 @@
     ctx.textAlign = 'right';
     ctx.textBaseline = 'top';
     ctx.fillText('f = ' + dipoleFreq.toFixed(1) + ' Hz  |  v = ' + v_wave + ' px/s', W - 10, 8);
+    ctx.fillText('\u03BB = ' + (v_wave / dipoleFreq).toFixed(0) + ' px', W - 10, 22);
     ctx.restore();
   }
 
@@ -218,8 +220,8 @@
     /* Emit wavefront every half-cycle */
     if (timeSinceEmit >= emitInterval) {
       timeSinceEmit -= emitInterval;
-      var halfCycleIndex = Math.floor(t * 2 * dipoleFreq);
-      wavefronts.push({ age: 0, phase: halfCycleIndex % 2 });
+      wavefronts.push({ age: 0, phase: emitPhase });
+      emitPhase = 1 - emitPhase;
       if (wavefronts.length > MAX_WAVEFRONTS) {
         wavefronts.shift();
       }
@@ -264,6 +266,7 @@
       wavefronts = [];
       t = 0;
       timeSinceEmit = 0;
+      emitPhase = 0;
       dipoleFreq = 1.2;
       v_wave = 100;
       emitInterval = 0.5 / dipoleFreq;

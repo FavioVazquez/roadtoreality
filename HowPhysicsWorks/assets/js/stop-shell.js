@@ -155,7 +155,7 @@
       if (btn.dataset.state === 'playing') {
         if (typeof api.pause === 'function') api.pause();
         btn.dataset.state = 'paused';
-        btn.textContent = '▶ Play';
+        btn.textContent = btn.dataset.idleLabel || '▶ Play';
         var dot = document.querySelector('.sim-caption__dot');
         if (dot) dot.classList.remove('is-running');
       } else {
@@ -177,7 +177,7 @@
       var playBtn = document.getElementById('sim-play-btn');
       if (playBtn) {
         playBtn.dataset.state = 'paused';
-        playBtn.textContent = '▶ Play';
+        playBtn.textContent = playBtn.dataset.idleLabel || '▶ Play';
       }
       var dot = document.querySelector('.sim-caption__dot');
       if (dot) dot.classList.remove('is-running');

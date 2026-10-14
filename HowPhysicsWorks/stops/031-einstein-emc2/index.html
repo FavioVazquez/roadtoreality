@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Einstein's most famous equation says that mass is concentrated energy. A paperclip contains enough energy to power a city — if you could release it all.">
+  <meta name="description" content="Einstein's most famous equation says that mass is concentrated energy. A paperclip's gram of matter holds about 9 × 10¹³ joules, enough to run a one-gigawatt city for a day, if it could all be released.">
   <meta property="og:title" content="E = mc² — How Physics Works">
-  <meta property="og:description" content="Einstein's most famous equation says that mass is concentrated energy. A paperclip contains enough energy to power a city — if you could release it all.">
+  <meta property="og:description" content="Einstein's most famous equation says that mass is concentrated energy. A paperclip's gram of matter holds about 9 × 10¹³ joules, enough to run a one-gigawatt city for a day, if it could all be released.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/031-einstein-emc2/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Einstein's most famous equation says that mass is concentrated energy. A paperclip contains enough energy to power a city — if you could release it all.</p>
+    <p>Einstein's most famous equation says that mass is concentrated energy. A paperclip's gram of matter holds about 9 × 10¹³ joules, enough to run a one-gigawatt city for a day, if it could all be released.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="E = mc² — interactive simulation">
@@ -90,9 +93,9 @@
   </div>
   <div class="stop-body content-column">
     <h3>Mass Is Frozen Energy</h3>
-    <p>A single gram of matter — a paperclip — contains as much energy as a 21-kiloton nuclear bomb. The conversion factor is c², and c² is enormous: about 9 × 10¹⁶ joules per kilogram. This is why nuclear reactions release so much energy: even tiny amounts of mass convert to colossal amounts of energy.</p>
+    <p>A single gram of matter — a paperclip — holds the explosive energy of about 21 kilotons of TNT. The conversion factor is c², and c² is enormous: about 9 × 10¹⁶ joules per kilogram. This is why nuclear reactions release so much energy: even tiny amounts of mass convert to colossal amounts of energy. The equivalence is not a slogan: in 2005 the energy released when a nucleus captures a neutron was measured two ways, as the wavelength of the emitted gamma rays and as the mass difference of the nuclei in a trap, and the two agreed to four parts in ten million.</p>
     <h3>The Complete Equation</h3>
-    <p>E = mc² is famous, but it is actually a special case. The full equation of Special Relativity is E² = (pc)² + (mc²)², where p is relativistic momentum p = γmv. When an object is at rest, p = 0, and the equation reduces to E = mc². When moving, the total energy is larger — the extra part is kinetic energy.</p>
+    <p>E = mc² is famous, but it is actually a special case. The full equation of Special Relativity is E² = (pc)² + (mc²)², where p is relativistic momentum p = γmv. When an object is at rest, p = 0, and the equation reduces to E = mc². When moving, the total energy is larger — the extra part is kinetic energy. Here m is the rest mass, the same in every frame; the old habit of a speed-dependent "relativistic mass" is not used on this page.</p>
     <h3>What the Velocity Slider Shows</h3>
     <p>The lower slider lets you give your mass a velocity. Watch how the total energy grows: the rest energy (mc²) stays fixed, while relativistic kinetic energy (γ−1)mc² adds on top. As v→c, kinetic energy grows without bound — which is why you can never accelerate a massive object to the speed of light.</p>
   </div>
@@ -104,6 +107,15 @@
       <p>$$E^2 = (pc)^2 + (mc^2)^2$$</p>
       <p>where $p = \gamma m v$ is relativistic momentum. $E = mc^2$ is the special case $p = 0$ — an object at rest.</p>
     </div>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. Einstein, "Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?", <em>Annalen der Physik</em> 18, 639 (1905). Cited: a body's mass is a measure of its energy content.</li>
+      <li id="src-2">S. Rainville et al., "A direct test of E = mc²", <em>Nature</em> 438, 1096 (2005). Cited: equivalence tested to 4 × 10⁻⁷ by comparing gamma-ray wavelengths with Penning-trap mass differences.</li>
+      <li id="src-3">J. S. Malik, "The Yields of the Hiroshima and Nagasaki Nuclear Explosions", Los Alamos National Laboratory report LA-8819 (1985). Cited: Hiroshima yield 15 ± 3 kt.</li>
+      <li id="src-4">CODATA 2018 recommended values of the fundamental physical constants (NIST). Cited: the speed of light c.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

@@ -226,6 +226,7 @@ code, pre {
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
+  gap: 0.28em;
   min-height: 44px;
 }
 

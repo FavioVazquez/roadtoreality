@@ -197,7 +197,7 @@
       W / 2, 10
     );
     ctx.font = '10px "DM Sans", system-ui, sans-serif';
-    ctx.fillText('outer orbits not to scale', W / 2, 27);
+    ctx.fillText('outer orbits not to scale', W / 2, H - 10);
     ctx.restore();
   }
 

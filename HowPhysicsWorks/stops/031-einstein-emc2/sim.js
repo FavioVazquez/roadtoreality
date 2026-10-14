@@ -8,9 +8,6 @@
   /* ── Physics constants (pre-computed, not recalculated at runtime) ── */
   var C_MS               = 2.998e8;          /* m/s */
   var C2                 = C_MS * C_MS;      /* m²/s² */
-  var J_PER_KILOTON_TNT  = 4.184e12;         /* joules per kiloton TNT */
-  var J_PER_HIROSHIMA    = 6.276e13;         /* 15 kt * 4.184e12 */
-  var J_PER_CITY_HOUR    = 3.6e12;           /* 1 GW city for 1 hour */
 
   /* ── Canvas setup (DPR pattern) ── */
   var canvas = document.createElement('canvas');
@@ -83,14 +80,6 @@
     if (tnt >= 1)    return tnt.toFixed(2) + ' t TNT';
     if (tnt >= 1e-3) return (tnt * 1e3).toFixed(2) + ' kg TNT';
     return joules.toFixed(2) + ' J';
-  }
-
-  function bombLabel(joules) {
-    var HIROSHIMA = 6.3e13;
-    var n = joules / HIROSHIMA;
-    if (n >= 1000) return Math.round(n / 1000) + 'k Hiroshima bombs';
-    if (n >= 1)    return n.toFixed(1) + ' Hiroshima bombs';
-    return (n * 100).toFixed(1) + '% of Hiroshima bomb';
   }
 
   function cityPowerLabel(joules) {
@@ -232,7 +221,7 @@
   var LANDMARKS = [
     { j: 4.184e9,  label: '1 t TNT',      color: 'rgba(240,192,64,0.70)' },
     { j: 4.184e12, label: '1 kt TNT',     color: 'rgba(240,192,64,0.85)' },
-    { j: 6.3e13,   label: 'Hiroshima',    color: 'rgba(255,120,120,0.85)' },
+    { j: 6.3e13,   label: 'Hiroshima (15 kt)',    color: 'rgba(255,120,120,0.85)' },
     { j: 4.184e15, label: '1 Mt TNT',     color: 'rgba(255,80,80,0.90)' },
     { j: 3.15e16,  label: 'City (1 yr)',  color: 'rgba(60,184,178,0.90)' }
   ];
@@ -330,11 +319,11 @@
     ctx.fillText('\u2248 ' + stableEnergyLabel(restEnergyJ), cx, labelY);
 
     ctx.font = '11px monospace';
-    ctx.fillStyle = 'rgba(255,120,120,0.90)';
-    ctx.fillText(bombLabel(restEnergyJ), cx, labelY + 16);
-
     ctx.fillStyle = C_TEAL;
-    ctx.fillText(cityPowerLabel(restEnergyJ), cx, labelY + 30);
+    ctx.fillText(cityPowerLabel(restEnergyJ), cx, labelY + 16);
+
+    ctx.fillStyle = C_MUTED;
+    ctx.fillText('radius: log scale', cx, labelY + 30);
 
     ctx.textAlign = 'left';
   }

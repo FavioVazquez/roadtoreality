@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls.">
+  <meta name="description" content="As a fluid speeds up along a streamline, its pressure drops. The equation behind venturi meters, carburettors and half of the story of a wing.">
   <meta property="og:title" content="Bernoulli's Principle — How Physics Works">
-  <meta property="og:description" content="As fluid speeds up, pressure drops. This single insight explains flight, carburetors, and the Magnus effect in spinning balls.">
+  <meta property="og:description" content="As a fluid speeds up along a streamline, its pressure drops. The equation behind venturi meters, carburettors and half of the story of a wing.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/015-bernoulli-fluids/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+    .sim-controls__row { min-width: 0; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -61,7 +65,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>In 1738, Daniel Bernoulli published <em>Hydrodynamica</em> and made a startling observation: when a fluid is forced through a narrow section of pipe, it speeds up — and as it speeds up, its pressure drops. The two effects are inseparable. Energy is conserved, but it trades between kinetic and pressure form.</p>
-    <p>The venturi tube below makes this visible. Watch the manometer columns fall at the throat. Adjust the throat width to squeeze the flow harder. The pressure graph on the right traces the full profile from inlet to outlet.</p>
+    <p>The venturi tube below makes this visible. Watch the manometer columns fall at the throat and recover downstream. Adjust the throat width to squeeze the flow harder. The pressure graph on the right traces the full profile from inlet to outlet.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Bernoulli's Principle — venturi tube simulation">
@@ -86,7 +90,7 @@
     </div>
     <div class="sim-caption">
       <div class="sim-caption__dot"></div>
-      <span>Left: venturi tube with particle flow and pressure columns. Right: pressure vs. position graph.</span>
+      <span>Left: a two-dimensional channel with particle flow and pressure taps. Right: pressure vs. position graph.</span>
     </div>
   </div>
   <div class="stop-body content-column">
@@ -95,21 +99,29 @@
     <p class="katex-block">$$A_1 v_1 = A_2 v_2$$</p>
     <p>A narrower throat means a higher velocity. That is the continuity equation — purely geometric, no energy required.</p>
     <h3>Where pressure enters</h3>
-    <p>Bernoulli's insight was to apply conservation of energy to a fluid element moving along a streamline. The total energy per unit volume — pressure energy, kinetic energy, and gravitational potential — stays constant:</p>
+    <p>Bernoulli's insight (1738) was that a fluid's pressure falls where it speeds up, which he derived from the conservation of <em>vis viva</em>; the equation in its modern form is Euler's, from his 1755 memoir on fluid motion. The total per unit volume — the pressure term, kinetic energy and gravitational potential — stays constant:</p>
     <p class="katex-block">$$P + \tfrac{1}{2}\rho v^2 + \rho g h = \text{const}$$</p>
-    <p>At constant height this simplifies to \(P + \tfrac{1}{2}\rho v^2 = \text{const}\). If \(v\) rises at the throat (continuity demands it), \(P\) must fall by exactly \(\tfrac{1}{2}\rho(v_2^2 - v_1^2)\). That pressure difference is what holds aircraft aloft.</p>
+    <p>At constant height this simplifies to \(P + \tfrac{1}{2}\rho v^2 = \text{const}\). If \(v\) rises at the throat (continuity demands it), \(P\) must fall by exactly \(\tfrac{1}{2}\rho(v_2^2 - v_1^2)\). That pressure difference is what a venturi meter reads, and it is half of the story of a wing: the wing turns the air downward, the flow over the top is faster, and Bernoulli links that speed to the lower pressure that holds the aircraft up.</p>
     <h3>Real applications</h3>
-    <p>Airfoil lift, the curveball's break, carburetors, atomizers, venturi flowmeters — all follow the same exchange. Faster fluid, lower pressure. The principle is deceptively simple and extraordinarily useful.</p>
+    <p>Carburetors, atomizers, venturi flowmeters, the pressure side of a wing's lift — all follow the same exchange. Faster fluid, lower pressure. The principle is deceptively simple and extraordinarily useful.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>
     <ul class="takeaway-box__list">
-      <li>\(P + \tfrac{1}{2}\rho v^2 = \text{const}\) — along a streamline at constant height. Where fluid speeds up, pressure drops by \(\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)\). This pressure difference is what lifts every aircraft in the sky.</li>
+      <li><span>\(P + \tfrac{1}{2}\rho v^2 = \text{const}\) — along a streamline at constant height. Where fluid speeds up, pressure drops by \(\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)\). Along a streamline, for steady flow of an incompressible fluid with no friction.</span></li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">D. Bernoulli, <em>Hydrodynamica, sive de viribus et motibus fluidorum commentarii</em> (Strasbourg, 1738).</li>
+      <li id="src-2">L. Euler, "Principes généraux du mouvement des fluides", <em>Mémoires de l'Académie des Sciences de Berlin</em> 11 (1757; presented 1755).</li>
+      <li id="src-3">D. Anderson and S. Eberhardt, <em>Understanding Flight</em>, 2nd ed. (McGraw-Hill, 2009). On lift, circulation and why Bernoulli alone does not explain a wing.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Bernoulli handled fluids in motion. Euler next formalized how solid rigid bodies rotate — the mathematics that keeps gyroscopes upright and satellites stable.</span>
+    <span>Bernoulli handled fluids in motion. Euler next formalized how solid rigid bodies rotate — the mathematics of how a body's shape sets the way it spins.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
