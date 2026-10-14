@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="You cannot know a particle's position and momentum simultaneously with arbitrary precision. This is not a measurement problem — it is built into nature.">
-  <meta property="og:title" content="Heisenberg's Uncertainty Principle — How Physics Works">
-  <meta property="og:description" content="You cannot know a particle's position and momentum simultaneously with arbitrary precision. This is not a measurement problem — it is built into nature.">
+  <meta name="description" content="Squeeze an electron wave packet in position and its spread in momentum grows. The product of the two spreads never falls below ħ/2, and a Gaussian packet reaches that limit exactly.">
+  <meta property="og:title" content="Heisenberg&#x27;s Uncertainty Principle — How Physics Works">
+  <meta property="og:description" content="Squeeze an electron wave packet in position and its spread in momentum grows. The product of the two spreads never falls below ħ/2, and a Gaussian packet reaches that limit exactly.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/037-heisenberg-uncertainty/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Heisenberg's Uncertainty Principle — How Physics Works</title>
+  <title>Heisenberg&#x27;s Uncertainty Principle — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
@@ -48,10 +48,10 @@
   }());
 </script>
 <main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Modern Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · 1927</div>
-    <h1 class="stop-header__title">Heisenberg's Uncertainty Principle</h1>
+    <div class="stop-header__era">Modern Physics · 1927</div>
+    <h1 class="stop-header__title">Heisenberg&#x27;s Uncertainty Principle</h1>
     <p class="stop-header__subtitle">The universe has a fundamental limit on what you can know</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1927</span>
@@ -60,44 +60,100 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>You cannot know a particle's position and momentum simultaneously with arbitrary precision. This is not a measurement problem — it is built into nature.</p>
+    <p>
+      In 1927 Werner Heisenberg argued that a particle's position and momentum cannot both be pinned down at once<sup><a href="#src-1">[1]</a></sup>. The same year Earle Kennard proved the sharp form used today: the spreads of position and momentum in any quantum state obey $\sigma_x\,\sigma_p \ge \hbar/2$<sup><a href="#src-2">[2]</a></sup>.
+    </p>
+    <p>
+      The simulation shows why for an electron wave packet. Narrow it in position and watch its momentum spread out, then let it move freely and see the product of the spreads grow. A second view sends electrons through a single slit: the narrower the slit, the wider the pattern.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Heisenberg's Uncertainty Principle — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: an electron wave packet in position and momentum, and the product of their spreads">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-packet" type="button" aria-pressed="true">Wave packet</button>
+        <button class="sim-btn" id="mode-slit" type="button" aria-pressed="false">Single slit</button>
+      </div>
+      <div id="packet-controls" style="display:contents">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="width-slider">
+            Starting width
+            <span class="sim-control__value" style="text-transform:none" id="width-val">0.50 nm</span>
+          </label>
+          <input type="range" id="width-slider" min="0.2" max="2" step="0.05" value="0.5" aria-label="Starting position spread of the wave packet in nanometres" aria-valuetext="0.50 nanometres">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="Packet shape">
+          <button class="sim-btn" id="shape-gauss" type="button" aria-pressed="true">Gaussian packet</button>
+          <button class="sim-btn" id="shape-double" type="button" aria-pressed="false">Two-peak packet</button>
+        </div>
+      </div>
+      <div id="slit-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="slit-slider">
+            Slit width a
+            <span class="sim-control__value" style="text-transform:none" id="slit-val">100 nm</span>
+          </label>
+          <input type="range" id="slit-slider" min="20" max="500" step="10" value="100" aria-label="Width of the single slit in nanometres" aria-valuetext="100 nanometres">
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span id="sim-status">Gaussian packet: σx·σp = 1.00 × ħ/2, exactly the minimum.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Narrow a particle's position and watch its momentum spread grow</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Visualize wave packets and their Fourier transforms</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Measure the product Δx·Δp and confirm it is always ≥ ℏ/2</li>
-    </ul>
+    <h3>Waves Cannot Be Sharp Twice</h3>
+    <p>De Broglie's relation ties momentum to wavelength, $p = h/\lambda = \hbar k$, where $k = 2\pi/\lambda$ is the wavenumber. A wave with a single wavelength goes on forever; it has a definite momentum and no position at all. To make a wave that is confined to a small region you have to add many wavelengths, and the smaller the region, the wider the range you need. That trade-off is a property of all waves: sound, water and light have it too<sup><a href="#src-6">[6]</a></sup>.</p>
+    <p>For a quantum particle the range of wavenumbers is a range of momenta. Measured by standard deviations, the trade-off becomes Kennard's inequality<sup><a href="#src-2">[2]</a></sup>:</p>
+    <p style="overflow-x:auto;">$$\sigma_x\,\sigma_p \ge \frac{\hbar}{2}$$</p>
+    <p>Equality holds only for a Gaussian packet with no internal "chirp"<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-6">[6]</a></sup>. Howard Robertson extended the result in 1929 to any two quantities whose operators do not commute<sup><a href="#src-3">[3]</a></sup>.</p>
+    <h3>Heisenberg's Argument</h3>
+    <p>Heisenberg's 1927 paper reasoned with a thought experiment: to see where an electron is you scatter light off it, and the shorter the wavelength, the sharper the position but the harder the kick the light gives the electron<sup><a href="#src-1">[1]</a></sup>. He wrote the result as an order-of-magnitude relation, roughly $\Delta x\,\Delta p \sim h$. Kennard's inequality is a different and sharper statement. It is about the state itself: prepare many electrons in the same state, measure position on some and momentum on others, and the two sets of results have spreads whose product is at least $\hbar/2$<sup><a href="#src-2">[2]</a></sup>. It holds whatever instruments are used.</p>
+    <p>How much one measurement must disturb another is a related but separate question. Precise versions of it were worked out much later and are still discussed<sup><a href="#src-4">[4]</a></sup><sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>What the Simulation Shows</h3>
+    <p>The top panel is the packet in position, the middle one the same packet in momentum. Move the width slider: a narrower packet has a wider momentum distribution, and the product stays at $\hbar/2$ for the Gaussian. The two-peak packet has the same momentum envelope crossed by interference fringes, but its position spread is much larger, so the product sits well above the limit.</p>
+    <p>Press play and the electron moves freely. Its momentum distribution cannot change, because no force acts. Its position spread grows, because the faster and slower parts drift apart. For a Gaussian that starts at the minimum<sup><a href="#src-6">[6]</a></sup></p>
+    <p style="overflow-x:auto;">$$\sigma_x(t) = \sigma_0\sqrt{1 + \left(\frac{\hbar t}{2 m \sigma_0^2}\right)^2}$$</p>
+    <p>so the product rises above $\hbar/2$. With the CODATA values of $\hbar$ and $m_e$<sup><a href="#src-7">[7]</a></sup>, a packet that starts 0.5 nm wide doubles in width in about 7.5 fs.</p>
+    <h3>Through a Narrow Slit</h3>
+    <p>The same trade-off shows up when electrons pass a single slit of width $a$. Squeezing the wave through the slit confines it sideways to about $a$, so its sideways momentum must spread by about $\Delta p_y \approx h/a$<sup><a href="#src-8">[8]</a></sup>. On a screen a distance $D$ away the pattern's first dark bands sit at $\pm\lambda D/a$<sup><a href="#src-8">[8]</a></sup>. Narrow the slit in the <em>Single slit</em> view and the pattern widens.</p>
+    <p>This is not the observer effect. Nothing looks at the electron at the slit and nothing kicks it. The spread comes from the wave passing a narrow opening, the same reason light spreads after a pinhole. It is a property of the state the slit prepares.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The electron is free, non-relativistic and moves along one line. The momentum distribution is set by formula, and the position wavefunction at each time is summed numerically from it; $\sigma_x$, $\sigma_p$ and their product are calculated from those grids, not measured. The packet's average wavenumber, 3 per nm, is chosen so it drifts across the view. Time runs at 1.5 fs per second and the run restarts after 12 fs. In the single-slit view the electrons have 50 keV, the screen is 1 m away and the view is 600 µm wide; this geometry is illustrative, and the landing points are random draws from the textbook single-slit pattern, not data.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>Δx·Δp ≥ ℏ/2. Position and momentum cannot both be known precisely — simultaneously. This is not a limitation of instruments but a fundamental feature of quantum reality.</li>
+      <li>A packet narrow in position needs a wide range of wavelengths, which for a particle means a wide range of momenta.</li>
+      <li>Kennard (1927): $\sigma_x\,\sigma_p \ge \hbar/2$ for any state, with equality only for an unchirped Gaussian.</li>
+      <li>A slit of width $a$ gives a sideways momentum spread of about $h/a$: narrow the slit and the pattern widens. That is the wave, not the observer effect.</li>
+      <li>The limit is about the spreads in the state itself; the separate question of measurement disturbance has its own, later results.</li>
     </ul>
+    <p style="overflow-x:auto;">$$\sigma_x\,\sigma_p \ge \frac{\hbar}{2}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">W. Heisenberg, "Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik", <em>Zeitschrift für Physik</em> 43, 172–198 (1927).</li>
+      <li id="src-2">E. H. Kennard, "Zur Quantenmechanik einfacher Bewegungstypen", <em>Zeitschrift für Physik</em> 44, 326–352 (1927). Cited: $\sigma_x\sigma_p \ge \hbar/2$, with equality for Gaussian states.</li>
+      <li id="src-3">H. P. Robertson, "The Uncertainty Principle", <em>Physical Review</em> 34, 163–164 (1929).</li>
+      <li id="src-4">M. Ozawa, "Universally valid reformulation of the Heisenberg uncertainty principle on noise and disturbance in measurement", <em>Physical Review A</em> 67, 042105 (2003).</li>
+      <li id="src-5">P. Busch, P. Lahti and R. F. Werner, "Proof of Heisenberg's Error-Disturbance Relation", <em>Physical Review Letters</em> 111, 160405 (2013).</li>
+      <li id="src-6">D. J. Griffiths and D. F. Schroeter, <em>Introduction to Quantum Mechanics</em>, 3rd ed., ch. 2–3 (2018). Fourier picture of wave packets, minimum-uncertainty Gaussian, free spreading formula.</li>
+      <li id="src-7">E. Tiesinga, P. J. Mohr, D. B. Newell and B. N. Taylor, "CODATA recommended values of the fundamental physical constants: 2018", <em>Reviews of Modern Physics</em> 93, 025010 (2021). Cited: $\hbar$, $m_e$; used to calculate the 7.5 fs doubling time.</li>
+      <li id="src-8">R. P. Feynman, R. B. Leighton and M. Sands, <em>The Feynman Lectures on Physics</em>, Vol. III, ch. 2 (1965). Single-slit diffraction and $\Delta p_y \approx h/a$.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Uncertainty is fundamental. Pauli added another constraint: two identical fermions cannot be in the same state. This rule — not a force — is why matter is solid.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>The wavefunction's rules also limit how electrons can share an atom. Pauli found that no two can be in the same state.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +179,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
