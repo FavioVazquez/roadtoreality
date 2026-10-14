@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Galileo discovered that a pendulum's period depends only on its length, not its mass. Change both and see for yourself.">
   <meta property="og:title" content="Galileo's Pendulum — How Physics Works">
-  <meta property="og:description" content="Galileo noticed the cathedral chandelier swinging — and timed it with his own pulse. Change the mass; the period stays the same. Change the length; it changes.">
+  <meta property="og:description" content="A swinging lamp, as the story goes, led Galileo to the pendulum. Change the mass; the period stays the same. Change the length; it changes.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/010-galileo-pendulum/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -61,7 +61,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      Galileo was sitting in the Pisa cathedral, bored during a long service, when he noticed a chandelier swinging in a draft. He timed it with his pulse and made a startling observation: no matter how wide or narrow the swing, it took the same amount of time.
+      The story, told by his pupil Viviani after his death: a young Galileo in Pisa cathedral timed a swinging lamp with his pulse and saw that wide and narrow swings took the same time. The lamp now in the cathedral was hung in 1587, after the supposed date, and Galileo never told the story himself. What is documented is a letter of 29 November 1602 in which he claims that swings of any width take equal times (true to about 1% for swings under 15°, and the reason for this stop's date).
     </p>
     <p>
       Try it below. Drag the length slider and watch the period change. Then drag the mass slider — the period stays exactly the same. Mass doesn't matter. Only length does. This single discovery made accurate clocks possible.
@@ -105,18 +105,26 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Physics</h3>
-    <p>For small angles, the period of a pendulum is T = 2π√(L/g), where L is the length and g is gravitational acceleration. Notice what's missing from that formula: mass. Galileo's observation was correct — mass has no effect on the period whatsoever.</p>
-    <p>This property — isochronism — makes pendulums ideal for timekeeping. Christiaan Huygens built the first pendulum clock in 1656, and for two centuries, pendulum clocks were the most accurate timekeepers ever made. Navigation, astronomy, and the Industrial Revolution all depended on them.</p>
-    <p>The formula breaks down at large angles (above ~15°), where the period gets slightly longer. This is a real-world effect — try setting the angle to 80° and watching the period increase slightly compared to a 15° swing.</p>
+    <p>For small angles, the period of a pendulum is T = 2π√(L/g), where L is the length and g is gravitational acceleration. Notice what's missing from that formula: mass. Galileo's observation was correct — mass has no effect on the period whatsoever (in a vacuum).</p>
+    <p>This property — isochronism — makes pendulums ideal for timekeeping. Christiaan Huygens built a working pendulum clock in 1656 (patented 1657); Galileo had sketched one in 1641 that was never finished, and for two centuries, pendulum clocks were the most accurate timekeepers ever made. Navigation, astronomy, and the Industrial Revolution all depended on them.</p>
+    <p>The formula drifts at large angles: at 15° the true period is 0.4% longer than 2π√(L/g), at 45° 4%, at 80° 14%. Try 80° and compare the sim's period with the formula in the panel (2.28 s against 2.01 s for a 1 m pendulum).</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
       <li>A pendulum's period depends only on its length: T = 2π√(L/g). Mass has no effect.</li>
       <li>This property (isochronism) made pendulum clocks possible — the most precise timekeepers for two centuries.</li>
-      <li>The formula is approximate; at large angles the period increases slightly. Galileo noticed this too.</li>
+      <li>The formula is approximate; at large angles the period increases (by 14% at 80°). Galileo believed the swing was isochronous at every amplitude and was wrong; Huygens showed it in 1673 and designed a pendulum that is.</li>
     </ul>
     <p>$$T = 2\pi\sqrt{\frac{L}{g}}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>V. Viviani, <em>Racconto istorico della vita di Galileo</em> (written 1654, published 1717). Source of the cathedral-lamp story.</li>
+      <li>Galileo Galilei to Guidobaldo del Monte, 29 November 1602. Documented claim that swings of any width take equal times.</li>
+      <li>C. Huygens, <em>Horologium Oscillatorium</em> (1673). Amplitude dependence of the period and the cycloidal pendulum.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

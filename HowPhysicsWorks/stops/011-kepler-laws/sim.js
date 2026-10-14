@@ -14,7 +14,7 @@
   var lastTs = null;
 
   /* Orbital parameters */
-  var ecc = 0.4;          /* eccentricity 0..0.9 */
+  var ecc = 0.2;          /* eccentricity 0..0.9 */
   var highlightLaw = 2;   /* 1, 2, or 3 */
 
   /* Canonical semi-major axis in "simulation units" */
@@ -92,7 +92,7 @@
     /* Sun is at focus: shift center so Sun appears at focus */
     var focusDx = A * ecc * scale(); /* distance from center to focus in px */
     return {
-      x: cx() - focusDx + sx * scale(),
+      x: cx() + focusDx + sx * scale(),
       y: cy() - sy * scale()
     };
   }
@@ -102,7 +102,7 @@
     var a  = A * S;
     var b  = A * Math.sqrt(1 - ecc*ecc) * S;
     var focusDx = A * ecc * S;
-    var ox = cx() - focusDx; /* ellipse center x */
+    var ox = cx(); /* ellipse centre; the Sun sits focusDx to its right */
     var oy = cy();
 
     ctx.save();
@@ -330,9 +330,32 @@
     ctx.font = '9px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'oklch(0.45 0.04 285)';
     ctx.textAlign = 'center';
-    ctx.fillText('Perihelion\n(fastest)', perC.x, perC.y - 14);
-    ctx.fillText('Aphelion\n(slowest)', aphC.x, aphC.y - 14);
+    ctx.fillText('Perihelion (fastest)', perC.x, perC.y - 14);
+    ctx.fillText('Aphelion (slowest)', aphC.x, aphC.y - 14);
     ctx.restore();
+
+    /* Both foci and the centre: the Sun sits at one focus, not the centre */
+    if (ecc > 0.04) {
+      var emptyC = toCanvas(-2 * A * ecc, 0);
+      var midC = toCanvas(-A * ecc, 0);
+      ctx.save();
+      ctx.strokeStyle = 'oklch(0.60 0.04 285)';
+      ctx.fillStyle = 'oklch(0.60 0.04 285)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(emptyC.x, emptyC.y, 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(midC.x - 3, midC.y); ctx.lineTo(midC.x + 3, midC.y);
+      ctx.moveTo(midC.x, midC.y - 3); ctx.lineTo(midC.x, midC.y + 3);
+      ctx.stroke();
+      ctx.font = '9px "DM Sans", system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('empty focus', emptyC.x, emptyC.y + 8);
+      ctx.fillText('centre', midC.x, midC.y + 6);
+      ctx.restore();
+    }
 
     /* Planet */
     var pC = toCanvas(x, y);
@@ -370,9 +393,11 @@
   }
 
   function update(dt) {
-    var substeps = 8;
-    var subDt = dt / substeps;
-    for (var i = 0; i < substeps; i++) rk4Step(subDt);
+    /* Fixed substep (years): the step size, not the frame time, sets the accuracy */
+    var SUB = 0.0004;
+    var n = Math.min(Math.max(Math.ceil(dt / SUB), 1), 200);
+    var subDt = dt / n;
+    for (var i = 0; i < n; i++) rk4Step(subDt);
 
     /* Accumulate area segment */
     segDuration += dt;
@@ -457,7 +482,7 @@
 
     var eccSlider = document.getElementById('ecc-slider');
     var eccVal    = document.getElementById('ecc-val');
-    var eccLabels = { 0.0:'0.0 (circular)', 0.2:'0.2 (Earth-like)', 0.4:'0.4 (like Mercury)', 0.6:'0.6 (like comet)', 0.9:'0.9 (extreme)' };
+    var eccLabels = { 0.0:'0.0 (circle)', 0.05:'0.05 (Jupiter)', 0.1:'0.1 (Mars)', 0.2:'0.2 (Mercury)', 0.25:'0.25 (Pluto)', 0.4:'0.4 (some asteroids)', 0.6:'0.6 (comet-like)', 0.9:'0.9 (Halley)' };
     if (eccSlider) {
       eccSlider.addEventListener('input', function () {
         ecc = parseFloat(this.value);

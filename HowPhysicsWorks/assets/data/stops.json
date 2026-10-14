@@ -174,7 +174,7 @@
       "yearLabel": "1602",
       "scientist": "Galileo Galilei",
       "isStub": false,
-      "description": "Galileo noticed the cathedral chandelier swinging \u2014 and timed it with his own pulse. Change the mass; the period stays the same. Change the length; it changes.",
+      "description": "A swinging lamp, as the story goes, led Galileo to the pendulum. Change the mass; the period stays the same. Change the length; it changes.",
       "path": "stops/010-galileo-pendulum/",
       "prev": "009-galileo-inclined-plane",
       "prevTitle": "Galileo's Inclined Plane",

@@ -73,6 +73,7 @@
   }
 
   function draw() {
+    if (!W || !H || !isFinite(W) || !isFinite(H)) return;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = 'oklch(0.09 0.025 285)';
     ctx.fillRect(0, 0, W, H);
@@ -138,10 +139,6 @@
     ctx.save();
     ctx.shadowColor = 'oklch(0.72 0.15 145)';
     ctx.shadowBlur = 12;
-    var grad = ctx.createRadialGradient(bx - br*0.3, by - br*0.3, 2, bx, by, br);
-    grad.addColorStop(0, 'oklch(0.88 0.08 145)');
-    grad.addColorStop(0.5, 'oklch(0.72 0.15 145)');
-    grad.addColorStop(1, 'oklch(0.35 0.10 145)');
     ctx.beginPath();
     ctx.arc(Math.round(bx), Math.round(by), br, 0, Math.PI * 2);
     ctx.fillStyle = 'oklch(0.72 0.15 145)';
@@ -175,7 +172,7 @@
 
     if (measuredPeriod) {
       ctx.fillStyle = 'oklch(0.80 0.17 82)';
-      ctx.fillText('T (measured) = ' + measuredPeriod.toFixed(3) + ' s', infoX, infoY + 60);
+      ctx.fillText('T (from the sim) = ' + measuredPeriod.toFixed(3) + ' s', infoX, infoY + 60);
     }
     ctx.fillStyle = 'oklch(0.45 0.04 285)';
     ctx.fillText('t = ' + elapsed.toFixed(2) + ' s', infoX, infoY + 80);
