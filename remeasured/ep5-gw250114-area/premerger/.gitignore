@@ -1,0 +1,5 @@
+# bilby run directories (result files, resume pickles) stay local; committed products live in results/, samples/, figures/, logs/
+out/
+__pycache__/
+# bilby distance-marginalisation lookup table, regenerated on first run
+.distance_marginalization_lookup.npz

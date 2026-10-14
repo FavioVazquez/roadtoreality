@@ -1,0 +1,16 @@
+03:56 bilby INFO    : No prior given, using default BBH priors in /home/ubuntu/venvs/bilby/lib/python3.10/site-packages/bilby/gw/prior_files/precessing_spins_bbh.prior.
+03:56 bilby INFO    : Waveform generator instantiated: WaveformGenerator(duration=8.0, sampling_frequency=1024.0, start_time=1126259456.3999023, frequency_domain_source_model=bilby.gw.source.lal_binary_black_hole_relative_binning, time_domain_source_model=None, parameter_conversion=bilby.gw.conversion.convert_to_lal_binary_black_hole_parameters, waveform_arguments={'waveform_approximant': 'IMRPhenomXPHM', 'reference_frequency': 20.0, 'minimum_frequency': 20.0, 'maximum_frequency': 132.0})
+03:56 bilby INFO    : Loaded distance marginalisation lookup table from .distance_marginalization_lookup.npz.
+03:56 bilby INFO    : Initial fiducial waveforms set up
+03:56 bilby INFO    : Summary Data Obtained
+03:56 bilby INFO    : Fiducial likelihood: 68.16
+ 5.12000e+02], psd_array=[4.94343572e-42 5.14772136e-40 2.70193516e-40 ... 1.88324137e-47
+ 2.21491380e-47 2.38869549e-48], asd_array=[2.22338384e-21 2.26885904e-20 1.64375642e-20 ... 4.33963290e-24
+ 4.70628708e-24 1.54554052e-24]), minimum_frequency=20.0, maximum_frequency=132.0, length=4.0, latitude=46.45514666666667, longitude=-119.4076571388889, elevation=142.554, xarm_azimuth=125.9994, yarm_azimuth=215.9994, xarm_tilt=-0.0006195, yarm_tilt=1.25e-05), Interferometer(name='L1', power_spectral_density=PowerSpectralDensity(frequency_array=[0.00000e+00 1.25000e-01 2.50000e-01 ... 5.11750e+02 5.11875e+02
+ 5.12000e+02], psd_array=[4.75769724e-42 1.55532414e-43 1.95682027e-43 ... 7.33392427e-44
+ 4.28648951e-44 1.96699168e-44], asd_array=[2.18121463e-21 3.94375980e-22 4.42359613e-22 ... 2.70812191e-22
+ 2.07038390e-22 1.40249481e-22]), minimum_frequency=20.0, maximum_frequency=132.0, length=4.0, latitude=30.562894333333332, longitude=-90.77424038888887, elevation=-6.574, xarm_azimuth=197.7165, yarm_azimuth=287.7165, xarm_tilt=-0.0003121, yarm_tilt=-0.0006107)],
+	waveform_generator=WaveformGenerator(duration=8.0, sampling_frequency=1024.0, start_time=1126259456.3999023, frequency_domain_source_model=bilby.gw.source.lal_binary_black_hole_relative_binning, time_domain_source_model=None, parameter_conversion=bilby.gw.conversion.convert_to_lal_binary_black_hole_parameters, waveform_arguments={'waveform_approximant': 'IMRPhenomXPHM', 'reference_frequency': 20.0, 'minimum_frequency': 20.0, 'maximum_frequency': 132.0, 'fiducial': 0, 'frequency_bin_edges': array([ 20.   ,  20.125,  20.25 , ..., 131.75 , 131.875,
+       132.   ], shape=(890,))}),
+iducial_parameters={'dec': -0.5719883397076018, 'ra': 1.1717397965944596, 'theta_jn': 1.0735133573473208, 'psi': 3.04339004237123, 'phase': 1.3706873278858709, 'a_1': 0.13625066114931286, 'a_2': 0.43055037316520683, 'tilt_1': 1.1808104893397033, 'tilt_2': 1.748122067453226, 'phi_12': 3.264255130782536, 'phi_jl': 2.512664299331326, 'chirp_mass': 81.81131709524004, 'mass_ratio': 0.5167570484712218, 'luminosity_distance': 2132.103469957127, 'geocent_time': 1126259462.3915274},. This is deprecated behaviour  and will be removed in Bilby version 3. See https://bilby-dev.github.io/bilby/parameters for more details.
+{"likelihood": "relbin", "approximant": "IMRPhenomXPHM", "seconds_per_call": 0.0032510876933323136}

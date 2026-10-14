@@ -1,0 +1,9 @@
+event,source,parameter,q05,median,q95,minus,plus
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),mass_1,35.71,38.92,43.94,3.212,5.018
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),mass_2,28.55,33.46,36.64,4.907,3.183
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),chirp_mass,29.66,31.23,32.97,1.575,1.743
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),mass_1_source,32.55,35.65,40.31,3.099,4.661
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),mass_2_source,26.21,30.6,33.62,4.393,3.017
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),chirp_mass_source,27.14,28.59,30.26,1.456,1.665
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),a_1,0.0274,0.2721,0.8292,0.2447,0.5571
+GW150914,cited: GWTC-1 PE release P1800370 (full IMR),a_2,0.0331,0.3336,0.852,0.3005,0.5184
