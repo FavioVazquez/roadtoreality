@@ -295,7 +295,7 @@
       parts.push('Escapes; closest approach ' + (r0 / R_S).toFixed(3) + ' r_s.');
       parts.push('Deflection of the integrated ray: ' + fmtDeg(defl) + '.');
       parts.push('Weak-field formula 4GM/(c²b): ' + fmtDeg(weakField(b)) + ' (ray / formula = ' + (defl / weakField(b)).toFixed(4) + ').');
-      if (defl > 2 * Math.PI) parts.push('The ray wraps ' + Math.floor(defl / (2 * Math.PI)) + ' full time(s) around the hole before leaving.');
+      if (defl > 2 * Math.PI) { var nw = Math.floor(defl / (2 * Math.PI)); parts.push('The ray wraps ' + (nw === 1 ? 'once' : nw + ' full times') + ' around the hole before leaving.'); }
     }
     return parts.join(' ');
   }
