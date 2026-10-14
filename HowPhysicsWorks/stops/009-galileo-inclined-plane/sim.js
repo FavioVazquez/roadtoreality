@@ -1,7 +1,7 @@
 /* ============================================================
    sim.js — Stop 009: Galileo's Inclined Plane
    Ball rolls down a tilted plane. Shows distance ∝ t² graph.
-   Physics: a = g·sin(θ), integrated with Euler.
+   Physics: a = k·g·sin(θ), k = 5/7 (rolling solid ball) or 1 (sliding block); Euler.
    ============================================================ */
 (function () {
   'use strict';
@@ -13,6 +13,7 @@
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var angleDeg = 20;
   var mass = 1;
+  var rolling = true;
   var dropped = false;
   var elapsed = 0;
   var lastTs = null;
@@ -26,7 +27,7 @@
   var distHistory = [];
 
   function acceleration() {
-    return G * Math.sin(angleDeg * Math.PI / 180);
+    return (rolling ? 5 / 7 : 1) * G * Math.sin(angleDeg * Math.PI / 180);
   }
 
   function planeLengthMetres() {
@@ -34,6 +35,7 @@
   }
 
   function draw() {
+    if (!W || !H || !isFinite(W) || !isFinite(H)) return;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = 'oklch(0.09 0.025 285)';
     ctx.fillRect(0, 0, W, H);
@@ -101,10 +103,6 @@
     ctx.save();
     ctx.shadowColor = 'oklch(0.72 0.12 60)';
     ctx.shadowBlur = 14;
-    var ballGrad = ctx.createRadialGradient(bx - ballR*0.3, by - ballR*0.3, 2, bx, by, ballR);
-    ballGrad.addColorStop(0, 'oklch(0.90 0.05 60)');
-    ballGrad.addColorStop(0.5, 'oklch(0.72 0.12 60)');
-    ballGrad.addColorStop(1, 'oklch(0.40 0.08 60)');
     ctx.beginPath();
     ctx.arc(Math.round(bx), Math.round(by), ballR, 0, Math.PI * 2);
     ctx.fillStyle = 'oklch(0.72 0.12 60)';
@@ -145,7 +143,7 @@
     var infoY = H * 0.12;
 
     ctx.fillStyle = 'oklch(0.50 0.04 285)';
-    ctx.fillText('a = g·sin(' + angleDeg + '°) = ' + acceleration().toFixed(2) + ' m/s²', infoX, infoY);
+    ctx.fillText('a = ' + (rolling ? '(5/7)·' : '') + 'g·sin(' + angleDeg + '°) = ' + acceleration().toFixed(2) + ' m/s²', infoX, infoY);
     ctx.fillText('t = ' + elapsed.toFixed(2) + ' s', infoX, infoY + 20);
     ctx.fillText('d = ' + ballPos.toFixed(2) + ' m', infoX, infoY + 40);
     ctx.fillText('v = ' + ballVel.toFixed(2) + ' m/s', infoX, infoY + 60);
@@ -323,6 +321,16 @@
         angleDeg = parseInt(this.value, 10);
         if (angleVal) angleVal.textContent = angleDeg + '°';
         if (!dropped) { ballPos = 0; ballVel = 0; draw(); }
+      });
+    }
+
+    var rollBtn = document.getElementById('roll-toggle');
+    if (rollBtn) {
+      rollBtn.addEventListener('click', function () {
+        rolling = !rolling;
+        this.setAttribute('aria-pressed', rolling ? 'true' : 'false');
+        this.textContent = rolling ? 'Rolling ball (5/7 g sin θ)' : 'Sliding block (g sin θ)';
+        if (running || dropped) reset(); else { ballPos = 0; ballVel = 0; draw(); }
       });
     }
 

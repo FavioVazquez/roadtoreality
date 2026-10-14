@@ -89,6 +89,9 @@
         </label>
         <input type="range" id="mass-slider" min="1" max="10" step="1" value="1" aria-label="Ball mass in kg">
       </div>
+      <div class="sim-control">
+        <button class="sim-btn" id="roll-toggle" type="button" aria-pressed="true" style="min-height:44px;">Rolling ball (5/7 g sin θ)</button>
+      </div>
       <div class="sim-actions">
         <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Release!</button>
         <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
@@ -101,18 +104,28 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Discovery</h3>
-    <p>Galileo's inclined plane experiments led him to the law of uniform acceleration: distance = ½at². He used a water clock (measuring water flow as a proxy for time) and a grooved plank with bells at measured intervals. He could hear whether the ball hit each bell at equally spaced time intervals — confirming uniform acceleration.</p>
-    <p>The acceleration along the incline is g·sin(θ), where θ is the angle and g = 9.8 m/s². At 30° this is about 4.9 m/s². At 90° (free fall) it is the full 9.8 m/s². Crucially, at every angle, the result is identical for all masses — the 1 kg ball and the 10 kg ball reach the bottom at the same moment.</p>
-    <p>This was the birth of modern kinematics. Before Galileo, "natural philosophy" described motion in qualitative terms. After Galileo, physics measured it in equations.</p>
+    <p>Galileo's inclined plane experiments led him to the law of uniform acceleration: distance = ½at². In the <em>Discorsi</em> (1638) he describes timing the ball with a water clock: weigh the water that ran out during the roll. His working notes (Galileo MS 72, folio 107v) show distances at equal beats; Stillman Drake reconstructed the method as a plank with movable gut frets the ball clicked over, adjusted until the clicks fell on a steady rhythm. The notes give 33, 130, 298, 526, 824, 1192, 1600, 2104 units for beats 1 to 8: divide each by the square of the beat and you get 33 every time.</p>
+    <p>For a block sliding without friction the acceleration along the incline is g·sin θ: 4.9 m/s² at 30°, the full 9.8 m/s² at 90°. Galileo's balls rolled, and a rolling ball must also spin up, so it accelerates at only 5/7 of that, 3.5 m/s² at 30°. He could not have known: the distance still grows as t², and the ratio between two angles is unchanged. At every angle the result is the same for all masses; the 1 kg ball and the 10 kg ball reach the bottom together.</p>
+    <p>Medieval scholars had the mathematics of uniform acceleration (the Oxford Calculators' mean-speed theorem, Oresme's proof of it in the 1350s; Domingo de Soto said in 1551 that falling bodies accelerate uniformly). What they lacked was the measurement. Galileo supplied it, and after him physics argued with numbers.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>On an inclined plane, acceleration = g·sin(θ) — independent of the object's mass.</li>
+      <li>On an inclined plane the acceleration is g·sin θ for a sliding block and (5/7) g·sin θ for a rolling ball; neither depends on the mass.</li>
       <li>Distance traveled grows as the square of elapsed time: d = ½at². This is Galileo's law of uniform acceleration.</li>
-      <li>Galileo invented the experimental method: use a controlled setup to isolate one variable at a time.</li>
+      <li>Galileo made the controlled experiment the arbiter: slow the motion down, vary one thing, measure, repeat.</li>
     </ul>
     <p>$$d = \frac{1}{2} a t^2$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li>Galileo Galilei, <em>Discorsi e dimostrazioni matematiche intorno a due nuove scienze</em> (1638), Third Day.</li>
+      <li>Galileo to Paolo Sarpi, 16 October 1604 (the times-squared law, this stop's date).</li>
+      <li>S. Drake, "Galileo's Discovery of the Law of Free Fall", <em>Scientific American</em> 228 (May 1973).</li>
+      <li>S. Drake, "The Role of Music in Galileo's Experiments", <em>Scientific American</em> 232 (June 1975).</li>
+      <li>Galileo, MS 72, folio 107v (Biblioteca Nazionale Centrale, Florence).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

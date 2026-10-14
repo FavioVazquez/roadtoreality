@@ -1,7 +1,7 @@
 /* ============================================================
    sim.js — Stop 014: Hooke's Law and Elasticity
    Split canvas: left = coil spring visual, right = F vs. x graph
-   Three material presets: Steel, Rubber, Glass
+   Three material presets: ductile (steel wire), brittle (glass fibre), elastomer (rubber band)
    Elastic / Plastic / Rupture zones
    ============================================================ */
 (function () {
@@ -17,16 +17,25 @@
   var splitX;           /* W * 0.5 — divides spring panel from graph panel */
   var ruptured = false; /* boolean — false until spring snaps */
   var snapTimer = 0;    /* integer frames remaining in snap animation (0 = none) */
-  var weightFrac = 0.3; /* 0–1 fraction of ruptureX, driven by slider */
+  var weightFrac = 0.15; /* 0–1 fraction of ruptureX, driven by slider */
   var currentMaterial = 0; /* index into MATERIALS array */
   var weightY = 0;      /* Y position of weight block (for fall animation) */
 
   /* ── Material presets ─────────────────────────────────────── */
   var MATERIALS = [
-    { name: 'Steel',  k: 500, yieldX: 0.04, ruptureX: 0.06  },
-    { name: 'Rubber', k: 50,  yieldX: 0.40, ruptureX: 1.20  },
-    { name: 'Glass',  k: 800, yieldX: 0.01, ruptureX: 0.015 }
+    { name: 'Ductile (steel wire)',     k: 500, yieldX: 0.02,  ruptureX: 0.10,  elastomer: false },
+    { name: 'Brittle (glass fibre)',    k: 800, yieldX: 0.015, ruptureX: 0.015, elastomer: false },
+    { name: 'Elastomer (rubber band)',  k: 50,  yieldX: 1.20,  ruptureX: 1.20,  elastomer: true  }
   ];
+  var DEFAULT_FRAC = 0.15; /* starts in the elastic zone for every preset */
+
+  /* Force at extension x. Elastomer: elastic and stiffening, F = kx(1 + (x/0.8)^2).
+     Others: Hooke's line up to yield, then a gently rising plastic branch. */
+  function forceAt(m, x) {
+    if (m.elastomer) return m.k * x * (1 + (x / 0.8) * (x / 0.8));
+    if (x <= m.yieldX) return m.k * x;
+    return m.k * m.yieldX + m.k * 0.1 * (x - m.yieldX);
+  }
 
   function getMaterial() {
     return MATERIALS[currentMaterial];
@@ -37,19 +46,20 @@
     var m = getMaterial();
     var yieldFrac = m.yieldX / m.ruptureX;
     var x, F, zone;
-    if (frac <= yieldFrac) {
+    /* Rupture is tested first: for a brittle material yieldX === ruptureX */
+    if (frac >= 1.0) {
+      x = m.ruptureX;
+      F = forceAt(m, x);
+      zone = 'ruptured';
+    } else if (frac <= yieldFrac) {
       x = frac * m.ruptureX;
-      F = m.k * x;
+      F = forceAt(m, x);
       zone = 'elastic';
-    } else if (frac < 1.0) {
+    } else {
       var t_p = (frac - yieldFrac) / (1.0 - yieldFrac);
       x = m.yieldX + Math.pow(t_p, 0.4) * (m.ruptureX - m.yieldX);
-      F = m.k * m.yieldX + m.k * 0.1 * (x - m.yieldX);
+      F = forceAt(m, x);
       zone = 'plastic';
-    } else {
-      x = m.ruptureX;
-      F = m.k * m.yieldX;
-      zone = 'ruptured';
     }
     return { x: x, F: F, zone: zone };
   }
@@ -118,7 +128,7 @@
     var gx1 = W * 0.95;
     var gy1 = H * 0.88;
 
-    var maxF = m.k * m.ruptureX;
+    var maxF = forceAt(m, m.ruptureX) * 1.1;
 
     function px(x) {
       return gx0 + (x / m.ruptureX) * (gx1 - gx0);
@@ -157,34 +167,40 @@
     ctx.fillText('F (N)', gx0 + 3, gy0);
     ctx.restore();
 
-    /* Elastic segment: green (#61bd67) from (0,0) to (yieldX, k*yieldX) */
+    /* Elastic segment: green from (0,0) to (yieldX, F(yieldX)); a curve for the elastomer */
+    var F_yield = forceAt(m, m.yieldX);
     ctx.save();
     ctx.strokeStyle = '#61bd67';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(px(0), py(0));
-    ctx.lineTo(px(m.yieldX), py(m.k * m.yieldX));
-    ctx.stroke();
-    ctx.restore();
-
-    /* Plastic segment: muted gray from yield to rupture */
-    var F_yield = m.k * m.yieldX;
-    var yieldFrac = m.yieldX / m.ruptureX;
-    ctx.save();
-    ctx.strokeStyle = '#7a7a7a';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(px(m.yieldX), py(F_yield));
-    for (var i = 1; i <= 20; i++) {
-      var frac_p = yieldFrac + (i / 20.0) * (1.0 - yieldFrac);
-      var st = getState(frac_p);
-      ctx.lineTo(px(st.x), py(st.F));
+    var nEl = m.elastomer ? 60 : 1;
+    for (var j = 1; j <= nEl; j++) {
+      var xe = m.yieldX * j / nEl;
+      ctx.lineTo(px(xe), py(forceAt(m, xe)));
     }
     ctx.stroke();
     ctx.restore();
 
-    /* Rupture dot: red at (ruptureX, F_yield — note: F at rupture = k*yieldX) */
-    var F_rupture = m.k * m.yieldX;
+    /* Plastic segment: muted gray from yield to rupture (none for brittle and elastomer) */
+    var yieldFrac = m.yieldX / m.ruptureX;
+    if (yieldFrac < 1.0) {
+      ctx.save();
+      ctx.strokeStyle = '#7a7a7a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(px(m.yieldX), py(F_yield));
+      for (var i = 1; i <= 20; i++) {
+        var frac_p = yieldFrac + (i / 20.0) * (1.0 - yieldFrac);
+        var xp = m.yieldX + Math.pow((frac_p - yieldFrac) / (1.0 - yieldFrac), 0.4) * (m.ruptureX - m.yieldX);
+        ctx.lineTo(px(xp), py(forceAt(m, xp)));
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    /* Rupture dot: red at the end of the curve, (ruptureX, F(ruptureX)) */
+    var F_rupture = forceAt(m, m.ruptureX);
     ctx.save();
     ctx.fillStyle = '#e05252';
     ctx.beginPath();
@@ -223,10 +239,12 @@
     var anchorY = H * 0.08;
     var anchorX = splitX * 0.5;
     var naturalH = H * 0.35;
-    var maxVisualExt = H * 0.80 - anchorY - naturalH;
+    var maxVisualExt = H * 0.70 - anchorY - naturalH;
     var visualExt = Math.min(state.x / m.ruptureX * maxVisualExt * 2, maxVisualExt);
-    /* Gentle oscillation when running — spring bobs at ±2% of canvas height */
-    var oscOffset = (running && !ruptured) ? Math.sin(t * 5) * (H * 0.02) : 0;
+    /* Bob oscillates at omega = sqrt(k/m), m = F/g; drawn rate capped so it stays visible at 60 fps */
+    var mKg = state.F / 9.81;
+    var omega = mKg > 0 ? Math.sqrt(m.k / mKg) : 0;
+    var oscOffset = (running && !ruptured) ? Math.sin(Math.min(omega, 40) * t) * (H * 0.02) : 0;
     var springEndY = anchorY + naturalH + visualExt + oscOffset;
 
     /* Handle rupture trigger */
@@ -336,7 +354,7 @@
       ctx.restore();
 
       /* Mass label */
-      var massKg = (state.F / 9.81).toFixed(1);
+      var massKg = mKg.toFixed(1);
       ctx.save();
       ctx.font = '10px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(200,200,200,0.8)';
@@ -352,8 +370,19 @@
       ctx.fillStyle = zoneColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(state.zone, anchorX, H * 0.88);
+      ctx.fillText(state.zone, anchorX, H * 0.86);
       ctx.restore();
+
+      /* Period of the bob: T = 2 pi sqrt(m/k) */
+      if (mKg > 0) {
+        ctx.save();
+        ctx.font = '11px "DM Sans", system-ui, sans-serif';
+        ctx.fillStyle = 'rgba(200,200,200,0.7)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('T = 2\u03c0\u221a(m/k) = ' + (2 * Math.PI * Math.sqrt(mKg / m.k)).toFixed(2) + ' s', anchorX, H * 0.915);
+        ctx.restore();
+      }
 
       /* Force readout */
       ctx.save();
@@ -420,10 +449,10 @@
     reset: function () {
       ruptured = false;
       snapTimer = 0;
-      weightFrac = 0.3;
+      weightFrac = DEFAULT_FRAC;
       weightY = 0;
       var slider = document.getElementById('weight-slider');
-      if (slider) { slider.value = 0.3; slider.disabled = false; }
+      if (slider) { slider.value = DEFAULT_FRAC; slider.disabled = false; }
       var labelEl = document.getElementById('weight-label');
       if (labelEl) { labelEl.textContent = 'elastic'; }
       draw();
@@ -464,7 +493,7 @@
     /* Weight slider */
     var slider = document.getElementById('weight-slider');
     if (slider) {
-      slider.value = 0.3;
+      slider.value = DEFAULT_FRAC;
       slider.addEventListener('input', function () {
         if (ruptured) return;
         weightFrac = parseFloat(slider.value);
@@ -490,7 +519,7 @@
     }
 
     /* Initial draw */
-    weightFrac = 0.3;
+    weightFrac = DEFAULT_FRAC;
     draw();
   }
 
