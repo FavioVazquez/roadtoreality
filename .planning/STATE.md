@@ -3,10 +3,10 @@
 ## Current Position
 
 Milestone: v2.0 — Full Spectrum
-Phase: 10 — Era 4: Modern Physics Part A ✓ COMPLETE
-Plan: —
-Status: Phase 10 UAT complete — all 7 stops (027–033) pass. Ready for Phase 11.
-Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout finalized (scaled orbits, repositioned bar, separated title/tick labels).
+Phase: 11 — Era 4: Modern Physics Part B (in progress) · Phase 13 plan 13-02 done out of order
+Plan: 11-01 (stop 034 done, 035 pending) · 13-02 (stop 048) complete
+Status: Stops 034 (General Relativity, Mercury perihelion) and 048 (Gravitational Waves, BBH chirp) built on branch stops-034-048; headless-browser checks at 1440 px and 390 px pass. Remaining Phase 11: 035–039.
+Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cited sources, re-measured placeholder blocks (#remeasured-mercury-transits, #remeasured-ligo-public-data).
 
 ### Quick Tasks Completed
 
@@ -36,7 +36,7 @@ Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout 
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (32)
+## Full Simulations Built (34)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
@@ -70,6 +70,8 @@ Last activity: 2026-03-25 — Phase 10 UAT closed: 033 Bohr spectrum bar layout 
 - 031 E = mc²: glowing energy sphere scaled logarithmically to mass, landmark lines (TNT/Hiroshima/city), shockwave ring animation, velocity + SR energy bars
 - 032 Rutherford: gold foil scattering stream (8-particle pool, Coulomb deflection) + manual aim mode, nuclear charge slider, H/C/Fe/Au presets, element label
 - 033 Bohr: classical spiral collapse (3.5 s) → quantized orbits toggle, orbit ring click → Balmer emission, spectrum bar with glow + white flash + dedup
+- 034 General Relativity: Mercury RK4 orbit, planets' pull (ring model, scaled to cited 532.3″/cy) + 1PN Schwarzschild toggle, perihelion advance readout in ″/century (model + measured in sim), planets-vs-leftover split with ghost orbit, exaggeration slider
+- 048 Gravitational Waves: leading-order BBH inspiral + ringdown, two mass sliders, live strain chirp (face-on, 410 Mpc), expanding ripples, Web Audio chirp (pitch ×4, stretched to 4 s, labelled scaled)
 
 ## Milestone
 
@@ -127,6 +129,12 @@ All site code lives in: `Episodio4/`
 - 10-07-FIX: Stop 031 E=mc² redesign — complete (2026-03-25): replaced sigfig3 flickering labels with stable threshold formatters; replaced bar panel with glowing energy sphere + landmark lines
 - 10-08-FIX: Stop 030 train car silhouette — complete (2026-03-25): drawCar() helper with body gradient, roof panel, squashing windows, fixed-size wheels, ghost dashed outline; drawTicks() removed
 - 10-09-FIX: Stops 031/032/033 UAT round-2 fixes — complete (2026-03-25): 031 expanding shockwave rings; 032 aim slider max-width; 033 Balmer glow+flash+dedup
+
+### Phase 11 Plans Progress
+- 11-01: Stop 034 (General Relativity) — complete (2026-10-14): Mercury perihelion sim, GR 1PN toggle, planets vs leftover split, ″/century readout, cited essay + Sources, placeholder #remeasured-mercury-transits. Stop 035 pending.
+
+### Phase 13 Plans Progress
+- 13-02: Stop 048 (Gravitational Waves) — complete (2026-10-14): BBH inspiral + ringdown, mass sliders, live chirp, scaled Web Audio, cited essay + Sources, placeholder #remeasured-ligo-public-data
 
 ### Constraints
 - No backend, no build step required — must serve from file system or GitHub Pages
