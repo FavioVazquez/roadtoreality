@@ -1,0 +1,4 @@
+  File "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/scripts/area_task4_lvk_compare.py", line 16
+    PRE = os.path.join(OUT, "..", "premerger-box", "GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_posterior.csv.gz"   # S10: committed CSV export of the bilby result (sha256 7a3d4816...))
+                      ^
+SyntaxError: '(' was never closed

@@ -13,7 +13,7 @@ from combine_area import area, load_table, sha256
 OUT = os.path.abspath(os.path.join(HERE, "..")); RL = os.path.join(OUT, "..", "data", "zenodo_16877102", "release", "data")
 import lal
 U = (lal.MSUN_SI * lal.G_SI / lal.C_SI**2) ** 2          # their area unit -> m^2
-PRE = os.path.join(OUT, "..", "premerger-box", "GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000", "GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_result.json")
+PRE = os.path.join(OUT, "..", "premerger-box", "GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_posterior.csv.gz"   # S10: committed CSV export of the bilby result (sha256 7a3d4816...))
 gs = lambda f, i: float((f.mean() - i.mean()) / np.sqrt(f.std() ** 2 + i.std() ** 2))
 def Pex(Ai, Af): return float((np.searchsorted(np.sort(Ai), Af) / len(Ai)).mean())
 def row(name, Ai, Af, rng):

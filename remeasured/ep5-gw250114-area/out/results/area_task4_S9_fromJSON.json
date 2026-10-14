@@ -1,0 +1,180 @@
+{
+ "premerger": {
+  "lane1_XPHM_fmax131": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/premerger-box/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_result.json",
+   "sha256": "b45ccfdf62dd5ef9255fcb9ef6ebdf56e1df66d5663f3d330e5a05e32bde3151",
+   "n": 4772,
+   "frame_check_max_abs": 3.3306690738754696e-16,
+   "Ai_det_m2_q05_q50_q95": [
+    253990798840.50595,
+    299164649404.52344,
+    367959904486.1774
+   ],
+   "Ai_src_m2_q05_q50_q95": [
+    208693977709.4503,
+    245508052118.06226,
+    298347106457.0641
+   ],
+   "m1_det_q50": 42.783489078019514,
+   "m2_det_q50": 30.449528710770164,
+   "a1_q50": 0.20685542732676673,
+   "a2_q50": 0.2675746337285926
+  },
+  "lane2_XPHM_fmax131": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/premerger/samples/GW250114_082203_premerger_posterior.csv.gz",
+   "sha256": "df4748f41a5099b807c5edfec5006f5d2dca1d2fc2dbb3965040d689cd370569",
+   "n": 5046,
+   "frame_check_max_abs": 5.489202624386902e-08,
+   "Ai_det_m2_q05_q50_q95": [
+    261497437553.6648,
+    302381160951.95667,
+    373035408581.95465
+   ],
+   "Ai_src_m2_q05_q50_q95": [
+    214744214815.77563,
+    247587808289.1511,
+    302472266960.22485
+   ],
+   "m1_det_q50": 43.215654,
+   "m2_det_q50": 30.32572,
+   "a1_q50": 0.16017068499999998,
+   "a2_q50": 0.279996845
+  }
+ },
+ "ringdown": {
+  "GW250114_220_8M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_8M_posterior.npz",
+   "sha256": "6d35fc4efff9aed99a9fe29c748ebaabdd212cb90f31688da2dc0aa8a96bc234"
+  },
+  "GW250114_220_8M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_8M_nohp_posterior.npz",
+   "sha256": "2f20e195fdf126eb37650039a38fba670687c2e6078c3183f9b8ed67b32e6d12"
+  },
+  "GW250114_220_10p5M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_posterior.npz",
+   "sha256": "596bba9b6c6010a6bfd390a2b9077d3882a7f1b06d1e68a0feec847e397759c9"
+  },
+  "GW250114_220_10p5M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_nohp_posterior.npz",
+   "sha256": "7996bac78c0f11047a9e67452b212beff1ee05e1f3a65c4da8afceed3b159e30"
+  },
+  "GW250114_220_10p5M_pePSD": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_pePSD_posterior.npz",
+   "sha256": "db20dda528de2eac6b1d5c36dc03092ed9a782efa4b008dc0bd57bb6d43ca964"
+  },
+  "GW250114_220_12M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_12M_posterior.npz",
+   "sha256": "b079ce3a250aa74e387136d6c060af0f8c925479ef5375e350c1de99c237d572"
+  },
+  "GW250114_220_12M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_12M_nohp_posterior.npz",
+   "sha256": "ca20dc0c68b8269ff33366a8c4e708b1ef6e65c378c004d9cc38da29028c9d11"
+  },
+  "GW250114_220_12M_pePSD": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_12M_pePSD_posterior.npz",
+   "sha256": "98bb987625437a3f47d7969dd9432a0f2b5392d67b47505295041e8eae8f76b4"
+  },
+  "GW250114_220_13M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_13M_posterior.npz",
+   "sha256": "e3dc54e614de05708dd610cd6b7cb1fc6b6b46f315da07e3d8e90f191af6ddaf"
+  },
+  "GW250114_220_13M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_13M_nohp_posterior.npz",
+   "sha256": "d17ae2e4e6b117cc4c76e4101011c18cbe63ebb3fcc34b43c148a4e39cd3eccf"
+  },
+  "GW250114_220_13M_pePSD": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_13M_pePSD_posterior.npz",
+   "sha256": "19287a858fbafa76a4df613f1937b2fd8eb7f75527573f54181718da3ea547f1"
+  },
+  "GW250114_220_15M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_15M_posterior.npz",
+   "sha256": "4366ca347fa9ac21730fe88358b39e2cf5669e39e1009ac579beb1640457f055"
+  },
+  "GW250114_220_15M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_15M_nohp_posterior.npz",
+   "sha256": "42dd84f4d16ff4a09463a48cc8011562c4cce3615d699cea0f603127b82bfe39"
+  },
+  "GW250114_220_18M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_18M_posterior.npz",
+   "sha256": "762fdcd5c2015f700fb5e2e51cee50b83bf65b23f8187d38012aafe0ddf62943"
+  },
+  "GW250114_220_18M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_18M_nohp_posterior.npz",
+   "sha256": "23d649d0509d933b1815bb84fc07a3ed2ec17e316ee3fef54dccc868cf9086ae"
+  },
+  "GW250114_220_20M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_20M_posterior.npz",
+   "sha256": "3d9dc5286e0a165bc750cc7437d51bf4984d40b662235422c3cb50bac13d0fbf"
+  },
+  "GW250114_220_20M_nohp": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_20M_nohp_posterior.npz",
+   "sha256": "a6ac09e4b0ea188db6c00238cf976c84c706ce39e01a71ae344af73907f126de"
+  },
+  "GW250114_220_10p5M_acf64s": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_acf64s_posterior.npz",
+   "sha256": "814cbb40752b35c2e4013d45d64bf50384964a00bcaad48acd346e9b0a387b4f"
+  },
+  "GW250114_220_10p5M_ds1_4096Hz": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_ds1_4096Hz_posterior.npz",
+   "sha256": "ca040d4351320fb5fb1cd2ea05ed6522331c39e17694955fe41ac9dc03b4b421"
+  },
+  "GW250114_220_10p5M_dur0p1s": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_dur0p1s_posterior.npz",
+   "sha256": "20f97a09176b9cf0b5d034e285f9d197560dd4681b3e846ae27057615b20e93a"
+  },
+  "GW250114_220_10p5M_seed99": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220_10p5M_seed99_posterior.npz",
+   "sha256": "af15919b75a79010aa646eba807c72934c449f12e2724f42a525d920e16f844f"
+  },
+  "GW250114_220221_10p5M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220221_10p5M_posterior.npz",
+   "sha256": "d8a368131ab2167f6028ded4f1300a8a97f2a293dc95467c8e64814576c6268c"
+  },
+  "GW250114_220330_10p5M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220330_10p5M_posterior.npz",
+   "sha256": "2230ae5aa3244657d0885444615a062fe27e9b3804327aa139d8578f9c9b6d52"
+  },
+  "GW250114_220221_12M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220221_12M_posterior.npz",
+   "sha256": "5bf6b774236596633e690bd26927b78b6fed8362184c10ea997395d23bcba445"
+  },
+  "GW250114_220330_12M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220330_12M_posterior.npz",
+   "sha256": "4b7fd6ff2c17586d5c941ce597ebb4ebbc666bc8f19250cd37cc6dbbed8c10b7"
+  },
+  "GW250114_220221_13M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220221_13M_posterior.npz",
+   "sha256": "d5a3bb14e48712a3a07371b648a0b250a498ca0fcf3b3604487fb0d9f391ceb7"
+  },
+  "GW250114_220330_13M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220330_13M_posterior.npz",
+   "sha256": "a9df18e6ad7b4dfb13c955d3751caf75b1338f8977cf470b8c4ad38fac1709b4"
+  },
+  "GW250114_220221_15M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220221_15M_posterior.npz",
+   "sha256": "b34681dc1a37dd994a708a1126d5257f5db83e7ecbd9b2a83ae1df6450ff34bd"
+  },
+  "GW250114_220330_15M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220330_15M_posterior.npz",
+   "sha256": "83cef92029958c0f88f21da2058b6df2614751e78db08dae0ac5823f359e8945"
+  },
+  "GW250114_220221_18M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220221_18M_posterior.npz",
+   "sha256": "0990de15467b4b584a4956dc8caf3e5ca9e6d406d2ab0f4df29833f60d3d39e3"
+  },
+  "GW250114_220330_18M": {
+   "file": "/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep5-gw250114-area/out/results/ringdown/GW250114_220330_18M_posterior.npz",
+   "sha256": "3d692c8375b5b803beb362b93b15958d333a385f404a2f8d6b0d15419c7c74c1"
+  }
+ },
+ "script_sha256": "2887fdb1fcfd7cdbc2d8a139693f7796da88a35e5911024b3429c39f01ad3b00",
+ "combine_area_sha256": "70093543a01849a5cfdcfde7054dc2c031e4bf8ded064f94dd2aa6f687b30cf5",
+ "constants": {
+  "G": 6.6743e-11,
+  "c": 299792458.0,
+  "M_sun_kg": 1.98840987e+30
+ },
+ "seed": 20250114,
+ "run_utc": "2026-10-14T15:17:13.858453+00:00",
+ "runtime_s": 16.449985027313232
+}

@@ -1,0 +1,5 @@
+combo,Ai_med_1e11m2,Af_med_1e11m2,frac_med,frac_q05,frac_q95,P_exact,sigma_exact,gauss_sigma
+"LVK A_i(t<=-40 t_M) x LVK A_f(10.5 M_f, ringdown+pyRing)  [their headline combination]",2.81993,4.85124,0.726402,0.414452,1.16016,0.999913,3.75528,4.44721
+"ours A_i(20-131 Hz) x ours A_f(10.5 M_f, V0 baseline)  [our reference cell]",2.99165,5.17697,0.726207,0.37722,1.08747,0.999307,3.19746,4.62484
+"LVK A_i(-40 t_M) x ours A_f(10.5 M_f, V0)  [swap 'after']",2.81993,5.17697,0.842718,0.544513,1.28777,0.999998,4.60948,5.69602
+"ours A_i(131 Hz) x LVK A_f(10.5 M_f, ringdown+pyRing)  [swap 'before']",2.99165,4.85124,0.614462,0.269784,0.976368,0.998123,2.89819,3.60871

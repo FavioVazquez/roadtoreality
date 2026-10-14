@@ -33,7 +33,7 @@ def sha256(p):
         for ch in iter(lambda: f.read(1 << 20), b""): h.update(ch)
     return h.hexdigest()
 def load_table(path, fmt, h5path):
-    fmt = fmt if fmt != "auto" else os.path.splitext(path)[1].lstrip(".").lower()
+    fmt = fmt if fmt != "auto" else os.path.splitext(path[:-3] if path.endswith(".gz") else path)[1].lstrip(".").lower()   # .csv.gz -> csv (pandas decompresses)
     if fmt == "npz":
         z = np.load(path); return {k: z[k] for k in z.files}
     if fmt in ("csv", "dat", "txt"):

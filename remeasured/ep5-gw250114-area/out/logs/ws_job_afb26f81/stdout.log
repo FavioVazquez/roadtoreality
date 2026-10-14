@@ -1,0 +1,74 @@
++ set -o pipefail
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ grep GW250114
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ']'
++ echo 'db0b394ff10573f0e86b484adc59f176307c53fdc5f5ba5109a898f712674889  /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./H-H1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ']'
++ echo 'd95a6ebf274800f48fd966caf9198d6e2f91928d50d339c0c592defee06e82c1  /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5 ./L-L1_GWOSC_O4b_4KHZ_R1-1420877824-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ export XLA_FLAGS=--xla_cpu_multi_thread_eigen=false
++ XLA_FLAGS=--xla_cpu_multi_thread_eigen=false
++ export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4 NUMEXPR_NUM_THREADS=4
++ OMP_NUM_THREADS=4
++ OPENBLAS_NUM_THREADS=4
++ MKL_NUM_THREADS=4
++ NUMEXPR_NUM_THREADS=4
++ date -u
++ nproc
++ uptime
++ free -g
++ printf '%s\n' GW250114_220221_10p5M GW250114_220221_12M GW250114_220221_13M GW250114_220221_15M GW250114_220221_18M GW250114_220330_10p5M GW250114_220330_12M GW250114_220330_13M GW250114_220330_15M GW250114_220330_18M
++ xargs -P 3 '-I{}' sh -c 'date -u +"%s start {}" >> fit_times.txt; /usr/bin/time -v python ringdown_fit.py {} cfg_{}.json > {}.log 2>&1; rc=$?; echo "$(date -u +%s) end {} rc=$rc" >> fit_times.txt'
++ date -u +%s
++ date -u
++ uptime
++ free -g
++ grep -h '^DONE' GW250114_220221_10p5M.log GW250114_220221_12M.log GW250114_220221_13M.log GW250114_220221_15M.log GW250114_220221_18M.log GW250114_220330_10p5M.log GW250114_220330_12M.log GW250114_220330_13M.log GW250114_220330_15M.log GW250114_220330_18M.log
++ cut -c1-240
+DONE GW250114_220221_10p5M {"m_det_Msun_q05_q50_q95": [55.64805111937309, 64.4095157943892, 74.33572281600658], "chi_q05_q50_q95": [0.35553463611751174, 0.6181429172126494, 0.7872613185493402], "rhat_m": 1.0, "ess_bulk_m": 2982.0, "wall_s":
+DONE GW250114_220221_12M {"m_det_Msun_q05_q50_q95": [53.621748412717345, 62.642487395513115, 72.52284142634203], "chi_q05_q50_q95": [0.30240845189589566, 0.5903140249994601, 0.770095705663694], "rhat_m": 1.0, "ess_bulk_m": 3175.0, "wall_s":
+DONE GW250114_220221_13M {"m_det_Msun_q05_q50_q95": [52.65994248542588, 61.33297011401069, 71.3268152004826], "chi_q05_q50_q95": [0.23739699037916243, 0.5578942040224009, 0.7591132288863239], "rhat_m": 1.0, "ess_bulk_m": 2723.0, "wall_s": 8
+DONE GW250114_220221_15M {"m_det_Msun_q05_q50_q95": [53.07297161058355, 65.03944697954768, 81.94819174175935], "chi_q05_q50_q95": [0.2506417540457174, 0.6403034878923658, 0.8820609324985305], "rhat_m": 1.0, "ess_bulk_m": 2144.0, "wall_s": 7
+DONE GW250114_220221_18M {"m_det_Msun_q05_q50_q95": [52.032040179035754, 65.54990184909582, 90.03955573521336], "chi_q05_q50_q95": [0.20825588629785274, 0.660408303077483, 0.9327200148096827], "rhat_m": 1.0, "ess_bulk_m": 1780.0, "wall_s": 
+DONE GW250114_220330_10p5M {"m_det_Msun_q05_q50_q95": [66.80397666644652, 75.3870815887766, 95.44272105825725], "chi_q05_q50_q95": [0.1835310181464318, 0.7145452610387923, 0.8227118303280008], "rhat_m": 1.49, "ess_bulk_m": 7.0, "wall_s": 92
+DONE GW250114_220330_12M {"m_det_Msun_q05_q50_q95": [62.90336124003902, 79.24099322502293, 97.78476698414879], "chi_q05_q50_q95": [0.11043469931342763, 0.5376647643536058, 0.8202017717069313], "rhat_m": 1.64, "ess_bulk_m": 7.0, "wall_s": 92
+DONE GW250114_220330_13M {"m_det_Msun_q05_q50_q95": [58.96167148077333, 77.9450884130492, 98.68632437908182], "chi_q05_q50_q95": [0.12056602398563128, 0.5075233595465662, 0.7877979084754758], "rhat_m": 1.68, "ess_bulk_m": 6.0, "wall_s": 91.
+DONE GW250114_220330_15M {"m_det_Msun_q05_q50_q95": [55.80359433258075, 75.94526207555877, 92.83374156128794], "chi_q05_q50_q95": [0.04441027226260883, 0.40868956027066966, 0.7284592404715888], "rhat_m": 1.72, "ess_bulk_m": 6.0, "wall_s": 1
+DONE GW250114_220330_18M {"m_det_Msun_q05_q50_q95": [57.31965856179508, 75.75967987632657, 93.13486758090438], "chi_q05_q50_q95": [0.05855883316985198, 0.467948669436548, 0.8097367746885418], "rhat_m": 1.67, "ess_bulk_m": 6.0, "wall_s": 95.

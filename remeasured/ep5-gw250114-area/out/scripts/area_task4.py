@@ -17,6 +17,7 @@ DECISION_STARTS = [10.5, 12.0, 13.0, 15.0, 18.0, 20.0]
 def tag(t): return (f"{t:g}".replace(".", "p")) + "M"
 VARIANTS = {"V0_baseline": "", "V1_nohp": "_nohp", "V2_pePSD": "_pePSD"}
 ROBUST_10p5 = {"R_acf64s": "_acf64s", "R_4096Hz": "_ds1_4096Hz", "R_dur0p1s": "_dur0p1s", "R_seed99": "_seed99"}
+EXTRA_MODES = {"V4_220221": "220221", "X_220330": "220330"}   # S9 pre-registered
 S5_FILTER_SHIFT = 3.2 / 78.5     # S5 GW150914 decimation-filter shift of the M_f median (indicative scale only)
 
 def P_gt(Ai_sorted, Af):
@@ -60,17 +61,20 @@ def main():
                                    "Ai_src_m2_q05_q50_q95": np.quantile(Ai_src, [0.05, .5, .95]).tolist(),
                                    "m1_det_q50": float(np.median(m1)), "m2_det_q50": float(np.median(m2)), "a1_q50": float(np.median(x1)), "a2_q50": float(np.median(x2))}
         cells = [(t, v, f"GW250114_220_{tag(t)}{sfx}") for t in STARTS for v, sfx in VARIANTS.items()] + \
-                [(10.5, v, f"GW250114_220_10p5M{sfx}") for v, sfx in ROBUST_10p5.items()]
+                [(10.5, v, f"GW250114_220_10p5M{sfx}") for v, sfx in ROBUST_10p5.items()] + \
+                [(t, v, f"GW250114_{modes}_{tag(t)}") for t in STARTS for v, modes in EXTRA_MODES.items()]   # S9: V4 (220+221, decision set); X (220+330, report only)
         mix = {}
         for t, v, lab in cells:
             p = os.path.join(RD, lab + "_posterior.npz")
             if not os.path.exists(p):
                 continue
             R = np.load(p); Af = area(R["m"], R["chi"]); prov["ringdown"][lab] = {"file": p, "sha256": sha256(p)}
-            dec = (t in DECISION_STARTS) and v in VARIANTS
+            dec = (t in DECISION_STARTS) and (v in VARIANTS or v == "V4_220221")
             if v in VARIANTS: mix.setdefault(t, []).append(Af)
+            S = json.load(open(p.replace("_posterior.npz", "_summary.json")))
             rows.append(dict(premerger=plab, start_Mf=t, variant=v, label=lab, decision_set=dec, n_ringdown=len(Af), n_premerger=len(Ai),
-                             Mf_med=float(np.median(R["m"])), chif_med=float(np.median(R["chi"])), Ai_med_m2=float(np.median(Ai)), **stats(Ai, Af, rng)))
+                             Mf_med=float(np.median(R["m"])), chif_med=float(np.median(R["chi"])), Ai_med_m2=float(np.median(Ai)),
+                             rhat_m=S.get("rhat_m"), ess_bulk_m=S.get("ess_bulk_m"), **stats(Ai, Af, rng)))
         for t, L in mix.items():
             Af = np.concatenate(L)
             rows.append(dict(premerger=plab, start_Mf=t, variant=f"MIX_equal({len(L)})", label="mixture", decision_set=False, n_ringdown=len(Af), n_premerger=len(Ai),

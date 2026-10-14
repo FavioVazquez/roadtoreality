@@ -1,0 +1,9 @@
+{
+ "inputs": {
+  "lane1_XPHM_fmax131": "7a3d4816ddb36e93989cb9895993c23ff0b195fea3b64c87af2ae3f0a6981c7b",
+  "lane2_XPHM_fmax131": "df4748f41a5099b807c5edfec5006f5d2dca1d2fc2dbb3965040d689cd370569"
+ },
+ "script_sha256": "b1fe4bad6224fbcbcb70a31111626c1cb3067edd3f2baf579ea62c4dd26a002e",
+ "block": 100,
+ "nboot": 400
+}

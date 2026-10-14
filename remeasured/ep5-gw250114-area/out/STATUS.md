@@ -497,19 +497,211 @@ Source: arXiv:2012.04486v2 (PRL 127, 011103; refs.bib key Isi2021area), the PDF 
 - One caveat goes into S6: this is a single event, and its "before" posterior comes from a different method than Isi 2021's. An agreement at the 0.05σ level in P can therefore partly be a coincidence of compensating differences. The calibration constrains the method to about ±0.3σ in P at P ≈ 0.95, not better.
 - GW150914 also gives the size of the S5 settings systematic in P: about 0.7σ across all 19 N = 1 runs. The decimation filter alone contributes about 0.1σ (0.963 → 0.971).
 
-## Open issues (updated in S7)
+## S8 — Paper section for episode 5 (09:14 UTC; writing only, no fits, no box, no downloads)
+- **File:** out/PAPER-SECTION-ep5.md, sha256 75d0e1bd3463c1f517fa4ea4c292409750ce8e2615ac595ae3768f8d90582eb0.
+- **Length:** 1195 words by `wc -w`, or 1112 words not counting markdown and math symbols. The limit is 1,200.
+- **Content:** the question; the method (20–131 Hz inspiral-only posterior × our 220-mode ringdown fits, exact P(ΔA > 0), start-time scan, conditioning variants); the pre-registered S6 headline (sentence 4) and its numbers; the LVK comparison (same +73% growth at their reference point; Gaussian vs exact-tail significance); the S7 GW150914 calibration against Isi et al. 2021 (reproduces qualitatively, with what it does and does not establish); the open issues (13 → 15 M_f drop, empty decimation-filter slot, second GW250114 pre-merger lane still running); and a "What this does not show" paragraph.
+- **Sources:** every number carries a source tag ([S5 results], [S6 pre-registration], [S6 results], [S6 LVK comparison], [S7 pre-registration], [S7 results], [S7 table], [S7 comparison], [Open issue 4]). A script check confirmed that every decimal number in the section appears verbatim in this file.
+- **Citations:** refs.bib keys LVK2025GW250114area, Isi2021area, IsiFarr2021ringdown, IsiFarr2023comment, Cabero2018area, Kastha2022systematics and Zenodo16877102, all present in refs.bib.
+  - **Missing from refs.bib (to add):** bilby, dynesty, IMRPhenomXPHM, NRSur7dq4 and Hawking's 1971 area theorem. The section names these without a citation key.
+  - The companion paper LVK2025GW250114tgr is not cited in the section, because it gives no area number we use (S6).
+- **Style:** the analysis is described generically ("the analysis agent"). No software or AI product names appear except the scientific packages and waveform models. The words "first" and "never" do not appear.
+
+## S9 — Task 7: finish episode 5 (PRE-REGISTERED 2026-10-14 15:02 UTC, before any fit or area was computed)
+Inputs:
+- Lane-2 GW250114 pre-merger posterior: ../premerger/samples/GW250114_082203_premerger_posterior.csv.gz, sha256 df4748f41a5099b807c5edfec5006f5d2dca1d2fc2dbb3965040d689cd370569, 5,046 samples. It was frozen before it saw lane 1 (owner's statement).
+- The lane-2 cutoff rule: ../premerger/results/fc_rule.json gives f_c = 131.23 Hz for GW250114 and 133.74 Hz for GW150914 (published 132 Hz).
+- Only the checksum, header and row count were read before this section was written.
+
+**(1) Box: is single-mode bias the cause of the 13 → 15 M_f drop?**
+- **Fits:** GW250114, 220+221 at 10.5, 12, 13, 15 and 18 M_f (5 fits); then, as a lower priority, 220+330 at the same times (5 fits).
+  - Every other setting is identical to the S6 V0 baseline: 4 kHz, ds 2, 20 Hz high-pass, ±128 s, data ACF, m 35–150, a_scale_max 5e-21, generic polarization, NUTS 4 × (1000 + 2000), seed 1234.
+  - Configs: configs/task7/. At most 3 fits run at once, with threads capped.
+- **Expectation (cited, Kastha2022systematics, arXiv:2111.13664):** on GW150914, a single-mode damped sinusoid at merger "overestimates the final mass" and so overstates confidence in the area theorem; adding the overtone lowers it.
+- **Pass rule.** The test passes, meaning single-mode bias is a sufficient explanation, if all three hold:
+  - (i) the 220+221 median M_f at 10.5–13 M_f is below the 220-only median at the same time by ≥ 3 M_sun at each time;
+  - (ii) the 220+221 drop from 13 to 15 M_f is less than half the 220-only drop (< 4.65 M_sun, half of 9.3);
+  - (iii) at 15–18 M_f, 220+221 and 220-only agree within 2 M_sun in median.
+- **Partial:** (i) holds at ≥ 1 time but (ii) fails. **Fail:** neither.
+- 220+330 is reported with the same numbers but does not enter the rule.
+- **Effect on the headline.** The S6 rule and decision set are unchanged; the 220+221 cells are added as variant V4 (in the decision set). P_min is set by the 20 M_f 220-only cell, so the test cannot change which sentence is chosen. If the test passes, the sentence's 10.5–13 M_f range is quoted from the 220+221 cells instead of the 220-only cells, and S6's "strong only at early starts" reading is withdrawn as a single-mode artefact.
+
+**(2) Local: both pre-merger lanes.** Rerun scripts/area_task4.py with --premerger lane1_XPHM_fmax131=<lane 1> --premerger lane2_XPHM_fmax131=<lane 2>; the CSV loader is extended to read .csv.gz.
+- S6 rule, applied as written: if the two A_i medians differ by more than the larger 1σ width (half the 16–84% range), report both and apply the decision rule to the union of cells. Otherwise the headline stays tied to lane 1, with lane 2 reported beside it.
+- Each lane also gets its own rule outcome (sentence number) in the table.
+
+**(3) Local: why is our A_i 6% above LVK's at −40 t_M?** Hypotheses, each tested only with data on disk, with the outcome reported whichever way it goes:
+- H1, frame: are LVK's release inspiral samples (data/pre_-40M_with_lnL_cut.dat) detector-frame? Compare their total mass with our detector- and source-frame totals.
+- H2, masses vs spins: split the difference by computing A_i from our masses with their spin distribution, and the reverse (median-matched swaps).
+- H3, truncation: find the LVK truncation time whose A_i median equals ours (release scan from −250 to 0 t_M), and convert −40 t_M to an instantaneous GW frequency using the release median waveform (signal_median_time_domain_waveform_H1.dat). If −40 t_M corresponds to well above 131 Hz, the two cuts do not keep the same signal.
+- H4, priors: compare the bilby prior in our result file with any prior information in the release (spin_priors.py, area_change_prior.dat). Reweight our samples to theirs where the Jacobian is analytic.
+- H5, waveform (XPHM vs their time-domain model): not testable without a rerun; stated as such.
+
+**(4) Local: the 131 Hz cutoff.**
+- Run ../premerger/scripts/fc_rule.py, or read its code, to confirm 131.23 Hz from the LVK XPHM medians.
+- Sensitivity of P(ΔA > 0) to f_c ± 10%. Rerunning the pre-merger PE at 118 and 144 Hz is not part of this task; its cost is given (lane 1 took 7,770 s wall on 32 cores per run).
+- As a **proxy (not a rerun)**, map f_c ± 10% to inspiral truncation times via the release median waveform's instantaneous frequency, take the fractional change of LVK's A_i median between those times from the release scan, scale our A_i by that factor, and recompute P_min.
+- Rule: if the proxy moves P_min across 0.90 or across 0.99, the headline gets the qualifier "sensitive to the inspiral cutoff". Otherwise it is unchanged.
+
+**Final headline.** Sentence chosen by the S6 rule on the final decision set (S6 cells + V4 cells, lane choice from (2)), plus any qualifiers triggered by (1) and (4).
+
+### S9 results (written 15:20 UTC; pre-registration saved first as STATUS.md v17, sha256 d9473dea…, copy in prereg/STATUS_S9_preregistered.md)
+**Box.** At about 15:04 UTC ws was unreachable (SSH timed out during the banner exchange), so the first submit failed with nothing staged; the owner was told. ws then came up, and job **afb26f81** ran 15:10:25–15:16:19 UTC (5.9 min wall): 10 fits, at most 3 at once, threads capped, 5,166 CPU-s. The data were re-verified by sha256 on ws. Logs: logs/ws_job_afb26f81/. Posteriors: results/ringdown/GW250114_220221_* and _220330_*. The owner was told at about 15:17 UTC that the box could be shut down.
+
+**(1) Single-mode bias test** (M_f detector frame, median [5%, 95%]; same settings as S6 V0):
+
+| start [M_f] | 220-only (S6) M_f | 220+221 M_f | 220+221 chi_f | difference | 220+221 R-hat / ESS |
+|---|---|---|---|---|---|
+| 10.5 | 76.4 | 64.4 [55.6, 74.3] | 0.62 | −12.0 | 1.00 / 2982 |
+| 12 | 76.5 | 62.6 [53.6, 72.5] | 0.59 | −13.9 | 1.00 / 3175 |
+| 13 | 74.0 | 61.3 [52.7, 71.3] | 0.56 | −12.7 | 1.00 / 2723 |
+| 15 | 64.7 | 65.0 [53.1, 81.9] | 0.64 | +0.3 | 1.00 / 2144 |
+| 18 | 65.4 | 65.5 [52.0, 90.0] | 0.66 | +0.2 | 1.00 / 1780 |
+
+- **Pre-registered rule: PASS.**
+  - (i) At 10.5/12/13 M_f the overtone lowers M_f by 12.0, 13.9 and 12.7 M_sun (rule: ≥ 3).
+  - (ii) With the overtone, the 13 → 15 M_f change is +3.7 M_sun, a small rise rather than a drop (rule: |drop| < 4.65).
+  - (iii) At 15 and 18 M_f, 220+221 and 220-only agree within 0.3 M_sun (rule: ≤ 2).
+- **So the 13 → 15 M_f drop of Open issue 4 is accounted for by single-mode bias in the early 220-only fits**, as expected from Kastha2022systematics.
+- With the overtone, M_f is 61–66 M_sun at every start time. Each 90% interval contains the IMR detector-frame remnant, 68.06 M_sun (Part B).
+- **220+330 did not converge**: R-hat 1.49–1.72 and bulk ESS 6–7 for all five start times. These fits cannot be interpreted. They are listed in results/area_task4.csv as X_220330 (not in the decision set), and nothing is concluded from them. A rerun would need more warm-up or tighter amplitude priors; that is not done here.
+- LVK's reference fit (220-only at 10.5 M_f, M_f 72.4; S2.1) is also above the IMR remnant. Our test does not establish whether that fit carries the same bias.
+
+**(2) Both lanes** (results/area_task4.csv, now with a `premerger` column and the V4 220+221 cells; log logs/area_task7_final.log). The S6-cell values are unchanged from S6 (max |ΔP| = 0).
+- **Lane rule:** A_i medians are 2.992 (lane 1) and 3.024 (lane 2) × 10¹¹ m². The difference, 0.032, is far below the larger 1σ width, 0.308 (both × 10¹¹ m²). **So the headline stays tied to lane 1, with lane 2 reported beside it.** These medians match lane 2's REPORT.md (29.92 and 30.24 × 10⁴ km²).
+- **Rule outcome:** P_min is 0.863 for lane 1 and 0.847 for lane 2, both at 20 M_f with no high-pass. **Both give sentence 4.**
+- **V4 (220+221) cells, P(ΔA > 0):**
+
+| start [M_f] | lane 1 | lane 2 | ΔA/A_i median, lane 1 [5%, 95%] |
+|---|---|---|---|
+| 10.5 | 0.956 | 0.948 | 0.35 [0.01, 0.75] |
+| 12 | 0.920 | 0.908 | 0.29 [−0.05, 0.69] |
+| 13 | 0.892 | 0.877 | 0.25 [−0.07, 0.65] |
+| 15 | 0.926 | 0.916 | 0.36 [−0.04, 0.92] |
+| 18 | 0.911 | 0.900 | 0.37 [−0.07, 1.07] |
+
+**(3) Why our A_i is 6% above LVK's −40 t_M A_i** (results/area_task7_local.json; scripts/area_task7_local.py; log logs/area_task7_local.log):
+- **H1, frame: rejected.** The LVK release inspiral samples have a median total mass of 73.29 M_sun, against our detector-frame 73.59. Both are detector frame.
+- **H2: the difference is in the q and spin posteriors.**
+  - Ours (lane 1) has q = 0.713 and a1, a2 = 0.21, 0.27. LVK's −40 t_M posterior has q = 0.879 and a1, a2 = 0.34, 0.38. Lane 2 is like ours (q = 0.705; 0.16, 0.28), so this is not an implementation artefact.
+  - More unequal masses raise m1² + m2² at fixed total mass, and lower spins raise each area.
+  - With independent-draw medians the gap is 2.977 vs 2.793 (+6.6%). Our masses with LVK's spins give 2.871, so the spins carry about 57% of the gap. LVK's masses with our spins give 2.890, so the masses carry about 47%. Together the two account for it.
+- **H3, truncation: rejected as the cause.**
+  - On the release median H1 waveform, −40 t_M corresponds to an instantaneous GW frequency of about 81 Hz, and 131 Hz to about −9.7 t_M. Our frequency cut keeps more of the late inspiral.
+  - But LVK's A_i at −10 t_M is 2.65, lower, and no truncation time in their scan (−250 to 0 t_M) reaches 2.99 (maximum 2.83 at −50 t_M). Keeping more signal moves their A_i the opposite way.
+  - Caveat: a frequency-domain cut and a time-domain truncation are not equivalent, so the time–frequency mapping is approximate.
+- **H4, priors: partial, not verified.**
+  - Ours is uniform in the component masses (bilby UniformInComponentsChirpMass/MassRatio) and uniform in spin magnitude on [0, 0.99].
+  - LVK's prior could not be recovered from the release: its ln_prior column does not fit a simple form (regression residual 2.7 against a column SD of 3.1).
+  - If LVK used a prior uniform in (M_tot, q), as Isi 2021 did, reweighting ours to that prior gives A_i = 2.944 (−1.6%, about a quarter of the gap; ESS 4,606).
+- **H5, waveform and likelihood** (XPHM with a frequency cut vs their time-domain analysis): not testable without new PE runs. It remains the leading candidate for the different q and spin posteriors.
+- **Conclusion:** the 6% comes from our more unequal-mass, lower-spin inspiral posterior, not from the frame or the truncation point. The mass prior may explain about a quarter of it; the rest is unexplained.
+
+**(4) The 131 Hz cutoff.**
+- Lane 2's fc_rule.py, re-run here, gives **131.23 Hz** both from the medians in fc_rule.json and from medians recomputed directly from the LVK XPHM posterior file on disk (Zenodo 16877102, posterior_samples_PhenomXPHM.h5). On GW150914 it gives 133.7 Hz against the published 132 Hz.
+- **Proxy for f_c ± 10%** (not a rerun):
+  - 118 Hz maps to about −16.6 t_M and 144 Hz to about −6.9 t_M. Interpolating LVK's A_i scan gives factors of ×1.048 (−10%) and ×1.008 (+10%) on our A_i.
+  - P_min becomes 0.806 (−10%) and 0.854 (+10%), against 0.863 nominal (results/area_task7_fc_proxy.csv).
+  - It does not cross 0.90 or 0.99, so by the rule **no "cutoff-sensitive" qualifier** is added.
+  - Caveat: neighbouring points in LVK's scan scatter by about ±2%, which is comparable to the proxy factors.
+- **A real rerun** would need one PE run per f_c value per lane. Lane 1 took 7,770 s wall on 32 cores, so two cutoffs for one lane is about 4.3 h of ws (roughly $7 at the ~$1.6/h on-demand estimate; not a bill).
+
+**Final headline** (S6 rule; decision set = 15 S6 cells + 5 V4 cells = 20; lane 1; qualifiers from (1) and (4) as pre-registered). This is **sentence 4**, with the 10.5–13 M_f range now quoted from the 220+221 cells:
+> "Whether the total horizon area of GW250114 grew depends on analysis choices: combining an inspiral-only (20–131 Hz) posterior with our own ringdown fits, P(ΔA > 0) is 0.89–0.96 for fits that include the 221 overtone and start 10.5–13 M_f after the peak, 0.91–0.98 at 15–18 M_f, and 0.86 at 20 M_f, so with our ringdown fits we cannot claim it."
+- As pre-registered, S6's reading that "the evidence is strong at early start times" (P = 0.998–0.999 from 220-only fits) is **withdrawn as a single-mode artefact**.
+- Every cell still favours an increase: P ≥ 0.846 in all 40 cells across both lanes, and every ΔA/A_i median is positive.
+
+**Paper section updated (S9).** out/PAPER-SECTION-ep5.md now has the S9 headline, the overtone test, both lanes, the A_i-offset finding, the f_c check, and updated open issues. sha256 ab4847b7c738de7db7566bcfe6e43d8287731995f4561078ea4572be03dc29c0; 1126 words by `wc -w`. Same rules as S8: every decimal number appears verbatim in this file (script check), citations are refs.bib keys (now also Kastha2022systematics for the expectation), and no software or AI product names appear apart from the scientific packages. The previous version (sha256 75d0e1bd…) is superseded.
+
+## S10 — Task 8: answers to the independent checker (PRE-REGISTERED 2026-10-14 15:40 UTC, before the checks were run)
+Source: CHECKER-EP5.md (owner's folder showtime-local/…/2026-10-14/paper/, read in full). It reviewed S1–S8 and paper version 75d0e1bd, before S9. Its re-derivation script (rederive_ep5.py, in a temporary directory) could not be opened from here, so every check below is our own implementation.
+
+**Planned checks** (diagnostics of existing numbers; no new fits):
+1. **Lane-1 input switch.** Use the committed ../premerger-box/GW250114_082203_IMRPhenomXPHM_fmax131_full_nlive1000_posterior.csv.gz (sha256 7a3d4816ddb36e93989cb9895993c23ff0b195fea3b64c87af2ae3f0a6981c7b) in place of the git-ignored result JSON.
+   - Required: mass_1, mass_2, a_1, a_2, redshift and the source masses equal the JSON values exactly.
+   - Required: every P, quantile and δ* in results/area_task4.csv is unchanged (seeded reruns).
+   - Any difference is reported as a discrepancy.
+2. **Fragility** of each S9 decision cell (both lanes). Count the failing pairs (A_f ≤ A_i) and the fraction contributed by the 5 A_i samples that contribute most. Recompute P and the one-sided σ with those 5 samples removed. This is a diagnostic, not a new estimate.
+3. **Autocorrelation-aware standard error of P.** The ringdown samples are 4 MCMC chains × 2,000 draws; the pre-merger samples are nested-sampling posterior draws, treated as independent. Two estimators:
+   - (a) a chain-block bootstrap: ringdown resampled in contiguous blocks of 100 draws within chains, A_i resampled i.i.d., 400 draws;
+   - (b) an ESS-based s.e.: g_j = ECDF_Ai(A_f,j), giving var(g)/ESS(g) with an initial-positive-sequence ESS over the chains, combined in quadrature with the A_i bootstrap term.
+   - The larger of the two is reported.
+4. **Decision effect, fixed now.** Sentence 4 is unchanged if P_min + 2 × s.e. < 0.90 with the new s.e. Otherwise the headline gets the qualifier "P_min is within 2 s.e. of 0.90". Nothing else in the rule changes.
+5. **Wording changes in the paper**, as requested by the owner and the checker; no number changes.
+
+### S10 results (written 15:45 UTC; pre-registration saved first as STATUS.md v19, sha256 2bc6e1b2…, copy in prereg/STATUS_S10_preregistered.md)
+**1. Lane-1 input switch.** The committed CSV gives the same mass_1, mass_2, a_1, a_2, redshift and source masses as the result JSON, to within text-export rounding (maximum relative difference 5e-13).
+- scripts/area_task7_local.py and scripts/area_task4_lvk_compare.py now read the CSV; the earlier versions are archived in scripts/archive/.
+- Rerunning area_task4.py (both lanes), area_task7_local.py and area_task4_lvk_compare.py reproduces every stored value in results/area_task4.csv (90 rows), results/area_task7_fc_proxy.csv, results/area_task4_vs_LVK.csv and results/area_task7_local.json exactly at stored precision. **The S6 and S9 numbers are unchanged.** The pre-switch copies are kept as *_fromJSON.*. Logs: logs/area_task8_*_rerun.log.
+
+**2. Fragility** (results/area_task8_checks.csv; scripts/area_task8_checks.py; log logs/area_task8_checks.log; all 40 S9 decision cells):
+- **Early 220-only cells (10.5–13 M_f, V0/V1/V2), the ones S9 withdrew:**
+  - 37–87% of the failing pairs (A_f ≤ A_i) come from just 5 of the ~5,000 A_i samples.
+  - Removing those 5 raises the one-sided σ by 0.14–0.55.
+  - At 10.5 M_f V0, lane 1: 87% of the failing pairs come from 5 samples (A_i = 5.591, 5.446, 5.358, 4.968 and 4.886 × 10¹¹ m², far in the upper tail; the median is 2.99), and σ goes from 3.20 to 3.75 when they are dropped. This reproduces the checker's number.
+  - These significances therefore rest on a handful of extreme pre-merger samples.
+- **220+221 cells:** at most 2.3% of failing pairs come from the top 5, and σ changes by ≤ 0.011.
+- **Late 220-only cells (15–20 M_f):** at most 5.6%, and σ changes by ≤ 0.023.
+- **The cells that set the headline are therefore not fragile in this sense.**
+- **Consequence for the LVK comparison (S6):** at 10.5 M_f with the 220-only fit, the difference between our exact one-sided 3.2σ and LVK's 3.8σ is the same size as the effect of five tail samples, so it is **not a meaningful difference**; we no longer contrast them. The LVK samples were not tested for the same fragility.
+
+**3. Autocorrelation-aware standard error of P** (same files):
+- The naive i.i.d. s.e. used in S6/S9 understates the uncertainty by up to a factor of 2.67 (the ratio of the reported s.e. to the i.i.d. s.e.).
+- With a 100-draw chain-block bootstrap and an ESS-based estimator (taking the larger), the s.e. is 0.0003–0.0005 for the early 220-only cells, 0.0033–0.0052 for the 220+221 cells and 0.0013–0.0090 for the late 220-only cells.
+- **At 20 M_f it is 0.0065–0.0090 across both lanes and variants** (ESS of the per-sample CDF: 786–1,248 out of 8,000 draws).
+- Block lengths from 100 to 2,000 draws give 0.0043–0.0093 at 20 M_f (results/area_task8_blocklen.csv).
+- The checker reports 0.011 at 20 M_f with its own chain-block estimate, which we could not open. We quote **P = 0.86 ± 0.01 at 20 M_f**, using the checker's larger value rounded.
+
+**4. Decision effect (pre-registered rule):**
+- P_min + 2 × s.e.: lane 1, 0.863 + 2 × 0.011 = 0.885; lane 2, 0.847 + 2 × 0.011 = 0.869. Both are below 0.90.
+- **Sentence 4 is unchanged, with no qualifier.**
+
+**5. Wording and other checker points:**
+- **Independence.** The inspiral posteriors use the 20–131 Hz band of an 8 s segment (2 s after the trigger; run_meta.json of both lanes). The ringdown fit uses 0.2 s after the peak, above 20 Hz, inside that same segment. The two analyses are therefore disjoint in frequency for the signal they model, not in time. The content of the ringdown window below 131 Hz enters both likelihoods, so treating them as independent is an approximation.
+- **Inputs taken from LVK.** The sky position (ra, dec), the polarization angle and the reference peak time (geocent_time) from which the ringdown start times are measured come from LVK's NRSur7dq4 maximum-likelihood sample (data/analysis_settings_maxL_sample.txt in Zenodo 16877102; cited), as recorded in every GW250114 config. The M_f unit for start times uses that sample's final mass, 68.41 M_sun.
+- **"σ"** in this project is always one-sided, Φ⁻¹(P).
+- **A_i** is 6.6% larger than LVK's −40 t_M value (independent-draw medians, S9), from more unequal masses and lower spins. About a quarter of that may come from the mass prior; the rest is unexplained.
+- **Prasad 2026** (Prasad2026multisegment, arXiv:2603.05835; RELATED-WORK.md): an independent area analysis of GW250114 that also splits the signal into pre-merger and ringdown segments. It keeps some extrinsic parameters common across segments, models both with NRSur7dq4, and reports a 4.61σ increase when more than four pre-merger cycles are excluded (cited).
+- **Citations added to refs.bib:** Hawking1971area, Ashton2019bilby, Speagle2020dynesty and Pratten2021xphm, copied from the paper build's paper.bib (DOIs checked against Crossref in the owner's BIB-CHECK.md).
+- **Checker items answered:**
+  - "Strong cells sit where single-mode bias is expected": tested and confirmed in S9; those cells are withdrawn.
+  - "Both lanes final" and "the 6% excess": S9.
+  - "f_c ± 10%": S9 proxy; a real rerun is not done.
+- **Checker items still open:**
+  - the overtone fit at 8 M_f (S9 ran 10.5–18 M_f; 8 M_f is outside the decision set);
+  - the V3 decimation-filter fit;
+  - a real f_c ± 10% rerun;
+  - the cause of the q and spin difference;
+  - the unconverged 220+330 fits;
+  - the difference between our s.e. (0.0065–0.0090) and the checker's 0.011 at 20 M_f.
+- **Not independently checked by the checker:** the ringdown fits themselves and the f_c derivation. We checked the f_c derivation in S9.
+
+**Paper section updated (S10).** out/PAPER-SECTION-ep5.md, sha256 057afad9743111bbcfb3932de207815b6b8635fa2b70310832aefb5aa1215a36, 1193 words by `wc -w`. Changes:
+- a fragility paragraph;
+- P = 0.86 ± 0.01 at 20 M_f, with the P_min + 2 s.e. check;
+- "one-sided" throughout;
+- the exact-σ contrast with LVK removed as not meaningful;
+- A_i described as "6.6% larger … about a quarter possibly from the mass prior; the rest unexplained";
+- "disjoint in frequency, not in time";
+- LVK maximum-likelihood inputs stated;
+- Prasad 2026 cited;
+- Hawking/bilby/dynesty/XPHM cited by key;
+- no "lane still running".
+Every decimal number appears verbatim in this file (script check), and all citation keys are in refs.bib (72 entries). The phrase "the analysis agent" no longer appears. Supersedes ab4847b7….
+
+## Open issues (updated in S10)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
-2. [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
+2. [S10: the remaining checker items are listed in S10 §5] [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
    - which choice is right, to be settled by an injection with a known answer (rule 3);
    - why a filter acting above ~800 Hz moves M_f by 3 M_sun;
    - the valid B1 rerun on the R1 file (about 1 min);
    - our settings at 16384 Hz without decimation.
-3. [S6: done for lane 1] Area-law combination with the owner's 20–131 Hz pre-merger run: the pre-registered rule gives sentence 4 (P_min = 0.863 at 20 M_f). Still open:
+3. [S9: both lanes done; lane 2 agrees, A_i 3.024 vs 2.992 × 10¹¹ m²; A_i offset traced to q and spin posteriors; f_c = 131.23 Hz confirmed; 220+330 fits unconverged] [S6: done for lane 1] Area-law combination with the owner's 20–131 Hz pre-merger run: the pre-registered rule gives sentence 4 (P_min = 0.863 at 20 M_f). Still open:
    - the second lane's pre-merger run, which plugs into scripts/area_task4.py with a second --premerger;
    - why our A_i is 6% above LVK's −40 t_M value;
    - the GW250114 decimation-filter fit (V3 slot, empty);
    - the 13 → 15 M_f remnant drop, also present in the LVK samples.
-4. [S6: also in LVK's own 220 posteriors, 70.2 → 64.3 M_sun] The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
+4. [S9: explained by single-mode bias; 220+221 removes it] [S6: also in LVK's own 220 posteriors, 70.2 → 64.3 M_sun] The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
 5. Not supported by the package: calibration marginalisation (bound given in S2.1).
 6. Two ws submits failed on script bugs on my side (exit 127: an env-var prefix inside /usr/bin/time; exit 2: a text-substitution placeholder that also matched inside "GW250114"). No fits ran in either; both were resubmitted. Records are in logs/ws_job_*_FAILED/.
 7. [S5] GW250114 220-only fits all used FFT-cut decimation, the 1.1.0 default. Testing digital_filter = False at 10.5 M_f is a single fit, not yet run.
@@ -534,6 +726,12 @@ Source: arXiv:2012.04486v2 (PRL 127, 011103; refs.bib key Isi2021area), the PDF 
 - **Session 6 (Task 4):** local only, no ws: from the Task 4 brief to 08:28 UTC. Area combination 12 s and LVK comparison about 10 s of CPU on the Intel Mac; arXiv PDF download (16.5 MB).
 
 - **Session 7 (Task 5):** local only, from the Task 5 brief to 08:51 UTC. Area combination 17 s; Isi 2021 PDF (arXiv) download; no ws.
+
+- **Session 8 (Task 6):** writing only, from the Task 6 brief to 09:14 UTC; local scripts for word count and number checks only.
+
+- **Session 9 (Task 7):** from the Task 7 brief to 15:20 UTC. ws job afb26f81: 15:10:25–15:16:19 UTC, 10 fits, 5,166 CPU-s (1.4 core-hours; under $0.5 on-demand estimate). One failed submit (ws unreachable, nothing ran). Local analysis about 2 min CPU.
+
+- **Session 10 (Task 8):** local only, from the Task 8 brief to 15:45 UTC; checks about 1 min of CPU in total.
 
 ## File checksums of outputs
 See CHECKSUMS_outputs.tsv (sha256 of every file in out/ at the time of writing).

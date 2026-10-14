@@ -1,0 +1,6 @@
+lane1_XPHM_fmax131 decision cells 20 P_min 0.8631441219614416 at GW250114_220_20M_nohp P_max 0.999306789606035 frac_med range 0.2474 0.7262 delta*_090 min -0.0207 max P_se 0.00332 any saturated False
+lane2_XPHM_fmax131 decision cells 20 P_min 0.8466493757431629 at GW250114_220_20M_nohp P_max 0.9992917905271501 frac_med range 0.2276 0.7023 delta*_090 min -0.0284 max P_se 0.00341 any saturated False
+
+real	0m17.964s
+user	0m12.823s
+sys	0m4.497s
