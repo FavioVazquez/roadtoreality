@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="No two identical fermions can occupy the same quantum state. This rule explains why matter resists compression and why the periodic table has the structure it does.">
+  <meta name="description" content="No two electrons can share the same quantum state. Fill an atom one electron at a time to see shells close at He, Ne, Ar and Kr, then squeeze an electron gas to see why matter resists compression.">
   <meta property="og:title" content="The Pauli Exclusion Principle — How Physics Works">
-  <meta property="og:description" content="No two identical fermions can occupy the same quantum state. This rule explains why matter resists compression and why the periodic table has the structure it does.">
+  <meta property="og:description" content="No two electrons can share the same quantum state. Fill an atom one electron at a time to see shells close at He, Ne, Ar and Kr, then squeeze an electron gas to see why matter resists compression.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/038-pauli-exclusion/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -60,44 +60,100 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>No two identical fermions can occupy the same quantum state. This rule explains why matter resists compression and why the periodic table has the structure it does.</p>
+    <p>
+      In 1925 Wolfgang Pauli proposed that no two electrons in an atom can have the same set of quantum numbers<sup><a href="#src-1">[1]</a></sup>. That one rule fixes how electrons stack up in atoms, which shapes the periodic table, and it is why ordinary matter does not collapse.
+    </p>
+    <p>
+      The simulation fills an atom one electron at a time. A second view squeezes a gas of electrons, as in a white dwarf star.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Pauli Exclusion Principle — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: atomic electron states filled one at a time, and the pressure of a squeezed electron gas">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-atom" type="button" aria-pressed="true">Fill an atom</button>
+        <button class="sim-btn" id="mode-star" type="button" aria-pressed="false">Squeeze a white dwarf</button>
+      </div>
+      <div id="atom-controls" style="display:contents">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="z-slider">
+            Number of electrons Z
+            <span class="sim-control__value" style="text-transform:none" id="z-val">1 (H)</span>
+          </label>
+          <input type="range" id="z-slider" min="1" max="36" step="1" value="1" aria-label="Number of electrons, from hydrogen to krypton" aria-valuetext="Z = 1, H">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="pauli-toggle" type="button" aria-pressed="false">Switch off exclusion</button>
+        </div>
+      </div>
+      <div id="star-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="rho-slider">
+            Density
+            <span class="sim-control__value" style="text-transform:none" id="rho-val">10^6.0 g/cm³</span>
+          </label>
+          <input type="range" id="rho-slider" min="3" max="10" step="0.1" value="6" aria-label="Density of the electron gas, as a power of ten in grams per cubic centimetre" aria-valuetext="10 to the 6.0 grams per cubic centimetre">
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span id="sim-status">Press play to add electrons one at a time.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Fill electron shells one by one and observe spin-up/spin-down pairing</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See why the third electron must go to a new shell — the first is full</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore how the exclusion principle explains the periodic table structure</li>
-    </ul>
+    <h3>One Electron per State</h3>
+    <p>By 1925 the electron states of an atom were labelled with quantum numbers, but the labels did not explain why the shells close where they do. Pauli's answer had two parts<sup><a href="#src-1">[1]</a></sup>. Each electron needs a fourth quantum number, one that takes only two values. And no two electrons in an atom may have all four the same. Later in 1925 George Uhlenbeck and Samuel Goudsmit identified the two-valued number as the electron's spin<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>.</p>
+    <p>The four numbers are the shell $n = 1, 2, 3, \dots$; the orbital shape $l = 0, \dots, n-1$ (written s, p, d, f); its orientation $m_l = -l, \dots, +l$; and the spin $m_s = \pm\tfrac12$. Counting them gives the capacity of each shell<sup><a href="#src-8">[8]</a></sup>:</p>
+    <p style="overflow-x:auto;">$$\sum_{l=0}^{n-1} 2(2l+1) = 2n^2$$</p>
+    <p>That is 2, 8, 18 and 32 for the first four shells. In the simulation each box is one $(n, l, m_l)$ state with room for one spin-up and one spin-down electron.</p>
+    <h3>Building the Periodic Table</h3>
+    <p>Add electrons one at a time to the lowest free state and the periodic table appears. The order of the subshells, 1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p, is the empirical rule for many-electron atoms named after Erwin Madelung; 4s fills before 3d because in these atoms it lies slightly lower<sup><a href="#src-8">[8]</a></sup>. A subshell is complete at 2, 10, 18 and 36 electrons: helium, neon, argon and krypton, the noble gases. The rule is not exact. Chromium and copper move one 4s electron into 3d, and the simulation says so when you reach them.</p>
+    <p>Switch the exclusion off and every electron drops into 1s. There would be no shells, no chemistry of the kind we know, and no periodic table.</p>
+    <h3>Why the Rule Holds</h3>
+    <p>Electrons are identical, and quantum mechanics requires the wavefunction of identical electrons to change sign when any two are swapped. Put two in the same state and swapping them changes nothing, so the wavefunction must equal its own negative: it is zero. Particles that obey this are called fermions; Pauli's later spin–statistics theorem of 1940 ties the rule to half-integer spin<sup><a href="#src-5">[5]</a></sup><sup><a href="#src-8">[8]</a></sup>.</p>
+    <h3>Why Matter Is Solid</h3>
+    <p>Squeeze electrons into a smaller space and the exclusion principle forces them into states of higher momentum, because the low ones are already taken. The result is a pressure that does not need heat, called degeneracy pressure. For electrons that are slow compared with light it grows as the density to the power 5/3<sup><a href="#src-6">[6]</a></sup>:</p>
+    <p style="overflow-x:auto;">$$P = \frac{(3\pi^2)^{2/3}}{5}\,\frac{\hbar^2}{m_e}\,n_e^{5/3}$$</p>
+    <p>In 1967 Freeman Dyson and Andrew Lenard gave a rigorous proof that bulk matter is stable, and showed that without the exclusion principle it would collapse<sup><a href="#src-3">[3]</a></sup><sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>The Limit of a White Dwarf</h3>
+    <p>A white dwarf is a star held up against gravity by electron degeneracy pressure. Squeeze harder and the electrons approach the speed of light. The pressure then grows only as $n_e^{4/3}$, and above a certain mass gravity wins<sup><a href="#src-6">[6]</a></sup>. The star view of the simulation plots the full formula for a cold electron gas and marks the two limits. In 1931 Subrahmanyan Chandrasekhar computed the maximum mass, in a paper titled "The Maximum Mass of Ideal White Dwarfs"<sup><a href="#src-4">[4]</a></sup>; he assumed 2.5 nucleons per electron, the composition then believed likely<sup><a href="#src-5">[5]</a></sup>. The textbook result is</p>
+    <p style="overflow-x:auto;">$$M_{\text{Ch}} = \frac{\sqrt{3\pi}}{2}\,\omega_3\left(\frac{\hbar c}{G}\right)^{3/2}\frac{1}{(\mu_e m_u)^2}$$</p>
+    <p>with $\omega_3 \approx 2.018$ from the solution of the Lane–Emden equation<sup><a href="#src-6">[6]</a></sup>. With the CODATA constants<sup><a href="#src-7">[7]</a></sup> it gives 1.46 solar masses for $\mu_e = 2$ (carbon and oxygen) and 0.93 for $\mu_e = 2.5$. These are calculated values for an ideal cold gas.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The atom view uses the Madelung filling order with Hund's rule inside each subshell, and stops at krypton. The star view is an ideal electron gas at zero temperature with two nucleons per electron, the piston and moving dots are only an illustration, and the pressure curve is the formula, not data.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>No two identical fermions (electrons, protons, neutrons) can occupy the same quantum state. This rule determines atomic structure, explains chemical bonds, and makes solid matter solid.</li>
+      <li>No two electrons can share all four quantum numbers $n, l, m_l, m_s$ (Pauli, 1925), so each shell holds $2n^2$ electrons.</li>
+      <li>Filling states in order closes subshells at He, Ne, Ar and Kr, which gives the periodic table its rows.</li>
+      <li>Squeezed electrons resist through degeneracy pressure, $P \propto n^{5/3}$; when they become relativistic it softens to $n^{4/3}$, which sets the white-dwarf mass limit.</li>
     </ul>
+    <p style="overflow-x:auto;">$$\psi(\dots, x_i, \dots, x_j, \dots) = -\,\psi(\dots, x_j, \dots, x_i, \dots)$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">W. Pauli, <em>Zeitschrift für Physik</em> 31, 765–783 (1925).</li>
+      <li id="src-2">G. E. Uhlenbeck and S. Goudsmit, <em>Die Naturwissenschaften</em> 13, 953–954 (1925).</li>
+      <li id="src-3">F. J. Dyson and A. Lenard, "Stability of Matter. I", <em>Journal of Mathematical Physics</em> 8, 423–434 (1967).</li>
+      <li id="src-4">S. Chandrasekhar, "The Maximum Mass of Ideal White Dwarfs", <em>Astrophysical Journal</em> 74, 81–82 (1931).</li>
+      <li id="src-5">Wikipedia, "Pauli exclusion principle" and "White dwarf" (accessed October 2026). Used for: the spin identification in 1925, the 1940 spin–statistics theorem, the 1967 stability proof, and the composition assumed in 1931.</li>
+      <li id="src-6">S. L. Shapiro and S. A. Teukolsky, <em>Black Holes, White Dwarfs, and Neutron Stars</em>, ch. 2–3 (1983). Degenerate electron gas pressure, Lane–Emden polytropes, the Chandrasekhar mass.</li>
+      <li id="src-7">NIST, CODATA 2022 recommended values of the fundamental physical constants. Cited: $\hbar$, $m_e$, $c$, $G$, $m_u$.</li>
+      <li id="src-8">D. J. Griffiths and D. F. Schroeter, <em>Introduction to Quantum Mechanics</em>, 3rd ed., ch. 5 (2018). Identical particles, shell capacity, filling order.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>No two electrons can share a state. Dirac unified quantum mechanics with special relativity — and his equation's solution predicted that antimatter must exist.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Pauli's spin was added by hand. In 1928 Dirac wrote a relativistic equation for the electron in which spin appears on its own, and which hid a surprise: solutions with negative energy.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +179,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
