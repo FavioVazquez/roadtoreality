@@ -43,3 +43,5 @@ remeasured/**/scans/
 remeasured/**/*.nc
 remeasured/**/*_posterior.npz
 remeasured/**/partA_area_samples.npz
+remeasured/**/*.mp4
+remeasured/**/showtime-out/
