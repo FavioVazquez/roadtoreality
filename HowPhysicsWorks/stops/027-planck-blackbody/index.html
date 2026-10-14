@@ -84,7 +84,7 @@
     <div class="sim-controls">
       <div class="sim-control-row">
         <label class="sim-label" for="temperature-slider">Temperature</label>
-        <input type="range" id="temperature-slider" min="1000" max="10000" step="100" value="4000" class="sim-slider" aria-label="Temperature in kelvin">
+        <input type="range" id="temperature-slider" min="1000" max="10000" step="1" value="4000" class="sim-slider" aria-label="Temperature in kelvin">
         <span id="temperature-readout" class="sim-readout">4000 K</span>
       </div>
       <div class="sim-control-row">
@@ -131,7 +131,7 @@
     </ol>
     <section class="sim-limits" aria-labelledby="sim-limits-title">
     <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
-    <p>The vertical axis is radiance per unit wavelength on a fixed log scale, relative to the peak at 10,000 K, with the common factor 2hc² dropped, so the values are ratios, not radiances in physical units. The wavelength window runs from 40 nm to 3 µm, and the curve colour switches between three fixed tints (below 3,000 K, 3,000 to 6,000 K, above 6,000 K) rather than showing the true colour of the glow. While playing, the temperature swings up to 1,500 K either side of the slider setting, within 1,000 to 10,000 K, and the Sun button sets 5,772 K while the slider, which moves in 100 K steps, sits at 5,800. Shrinking h to a hundredth of its value is a thought experiment: h is a fixed constant of nature.</p>
+    <p>The vertical axis is radiance per unit wavelength on a fixed log scale, relative to the peak at 10,000 K, with the common factor 2hc² dropped, so the values are ratios, not radiances in physical units. The wavelength window runs from 40 nm to 3 µm, and the curve colour switches between three fixed tints (below 3,000 K, 3,000 to 6,000 K, above 6,000 K) rather than showing the true colour of the glow. While playing, the temperature swings up to 1,500 K either side of the slider setting, within 1,000 to 10,000 K, except for about three seconds after you move the slider or press the Sun button, when it holds the setting so you can read the peak; the Sun button sets 5,772 K and the slider follows it exactly. Shrinking h to a hundredth of its value is a thought experiment: h is a fixed constant of nature.</p>
     </section>
   </div>
   <div class="takeaway-box content-column">

@@ -383,13 +383,20 @@
     btn.textContent = running ? '\u23F8 Pause' : '\u25B6 Play';
   }
 
+  var settleTimer = null;
+
   /* ── Control wiring ───────────────────────────────────────── */
   if (sliderEl) {
     sliderEl.addEventListener('input', function () {
       setOscillate(false);
       var val = parseFloat(sliderEl.value);
       magnetX = W * 0.05 + val * (W * 0.90 - W * 0.05);
-      if (!running) drawFrame();
+      if (!running) {
+        drawFrame();
+        /* A still magnet induces no current: once the drag stops, redraw with a zero rate */
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(function () { if (!running) drawFrame(); }, 120);
+      }
     });
   }
 

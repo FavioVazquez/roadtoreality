@@ -290,7 +290,7 @@
     var dot = document.querySelector('.sim-caption__dot');
     if (dot) dot.classList.add('is-running');
     if (!reducedMotion) rafId = requestAnimationFrame(loop);
-    else draw();
+    else { showResult = true; draw(); }
   }
 
   function pause() {

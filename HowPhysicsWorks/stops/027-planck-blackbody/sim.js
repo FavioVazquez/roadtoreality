@@ -246,9 +246,12 @@
   }
 
   /* ── Animation loop: auto temperature sweep ── */
+  var holdUntil = 0;
   function drawFrame() {
     /* Oscillate temperature between 1000–10000 K at ~200 K/s (60fps → Δ~3.3 K/frame) */
-    var T = Math.min(10000, Math.max(1000, temperature + 1500 * Math.sin(animT * 0.018)));
+    /* Hold the slider value while the reader is dragging, so the readout matches the setting */
+    var held = performance.now() < holdUntil;
+    var T = held ? temperature : Math.min(10000, Math.max(1000, temperature + 1500 * Math.sin(animT * 0.018)));
     drawScene(T, hFactor);
     animT += 1;
     if (running && !reduced) {
@@ -283,6 +286,7 @@
   if (tempSlider) {
     tempSlider.addEventListener('input', function () {
       temperature = parseInt(tempSlider.value, 10);
+      holdUntil = performance.now() + 3000;
       if (tempReadout) tempReadout.textContent = temperature + ' K';
       drawStatic();
     });
@@ -291,7 +295,8 @@
   if (sunBtn) {
     sunBtn.addEventListener('click', function () {
       temperature = 5772;
-      if (tempSlider) tempSlider.value = '5800';
+      holdUntil = performance.now() + 3000;
+      if (tempSlider) tempSlider.value = '5772';
       if (tempReadout) tempReadout.textContent = '5772 K';
       drawStatic();
     });

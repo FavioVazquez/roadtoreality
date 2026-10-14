@@ -54,6 +54,7 @@
     slider.addEventListener('input', function () {
       sourceSpeed = parseInt(slider.value, 10) / 100;
       if (speedVal) speedVal.textContent = sourceSpeed.toFixed(2) + ' v_w';
+      updateReadout();
     });
   }
 
@@ -64,6 +65,7 @@
     freqSlider.addEventListener('input', function () {
       emitFreq = parseFloat(freqSlider.value);
       if (freqReadout) freqReadout.textContent = 'f\u2080 \u00D7 ' + emitFreq.toFixed(1);
+      updateReadout();
     });
   }
 
@@ -109,11 +111,10 @@
   function updateReadout() {
     var vw = WAVE_SPEED;
     var vs = sourceSpeed * vw;
-    var f0 = 1.0;
     var ff = dopplerFront(vs, vw);
     var fb = dopplerBehind(vs, vw);
 
-    fEmittedEl.innerHTML  = 'f\u2080 = 1.00';
+    fEmittedEl.innerHTML  = 'f\u2080 = ' + emitFreq.toFixed(2) + ' (relative)';
     fFrontEl.innerHTML    = '<span style="color:' + FRONT_COL + '">f\u2009(ahead) = ' + ff.toFixed(2) + 'f\u2080</span>';
     fBehindEl.innerHTML   = '<span style="color:' + BACK_COL  + '">f\u2009(behind) = ' + fb.toFixed(2) + 'f\u2080</span>';
   }

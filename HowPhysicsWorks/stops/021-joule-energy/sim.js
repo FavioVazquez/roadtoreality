@@ -1,4 +1,4 @@
-/* sim.js — 021 Joule: PE→KE→Heat conversion with 3-bar energy display */
+/* sim.js — 021 Joule: PE→Heat conversion (KE stays tiny) with 3-bar energy display */
 (function () {
   'use strict';
   var mount = document.getElementById('sim-mount');
@@ -24,9 +24,6 @@
 
   function E_total() { return mass * G * dropHeight; }
 
-  // Cycle is split into two equal phases:
-  //   Phase A (0–0.5): weight falls   → PE converts to KE
-  //   Phase B (0.5–1): paddle spins   → KE converts to Heat
   // Three stages: pause at top → fall (paddle spins simultaneously) → pause at bottom
   var STAGES = [
     { id: 'hold-start', dur: 1.5 },  // weight at top, full PE shown

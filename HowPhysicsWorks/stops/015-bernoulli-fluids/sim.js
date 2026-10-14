@@ -87,11 +87,8 @@
   var PARTICLE_COUNT = 36;
   var particles = [];
 
-  /* Pressure axis floor: the throat dip fills 40 % of the scale at every setting. */
-  function pFloorNow() {
-    var pThroat = pressureAt((tubeGeo.t1 + tubeGeo.t2) / 2);
-    return Math.max(0, P0 - 2.5 * (P0 - pThroat));
-  }
+  /* Pressure axis floor: fixed at 0 so a narrower throat visibly deepens the dip. */
+  function pFloorNow() { return 0; }
   function pFrac(P) { var f = pFloorNow(); return (P - f) / (P0 - f); }
 
   function initParticles() {
