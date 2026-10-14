@@ -1,0 +1,30 @@
+{
+ "1000yr": {
+  "all": 529.138,
+  "none": -0.0,
+  "Venus": 275.942,
+  "Earth-Moon": 90.213,
+  "Mars": 2.469,
+  "Jupiter": 153.128,
+  "Saturn": 7.183,
+  "Uranus": 0.141,
+  "Neptune": 0.042,
+  "Pluto": 0.0,
+  "sum_of_single_planet_runs": 529.118
+ },
+ "1677-1881": {
+  "all": 529.095,
+  "none": -0.0,
+  "Venus": 275.863,
+  "Earth-Moon": 90.229,
+  "Mars": 2.469,
+  "Jupiter": 153.154,
+  "Saturn": 7.172,
+  "Uranus": 0.149,
+  "Neptune": 0.042,
+  "Pluto": 0.0,
+  "sum_of_single_planet_runs": 529.078
+ },
+ "frame": "J2000 ecliptic, inertial (no precession of the equinoxes); arcsec per Julian century",
+ "wall_s": 18.3
+}

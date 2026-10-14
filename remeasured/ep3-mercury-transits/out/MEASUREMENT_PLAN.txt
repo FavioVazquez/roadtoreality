@@ -1,0 +1,10 @@
+Pre-registered before any fit to the historical contacts (2026-10-13 21:17 CST).
+Headline variant: Newcomb's 58 concluded geocentric contacts (pp. 451-452), Newcomb's weights
+(sigma_i proportional to 1/sqrt(w_i)), Delta T = Espenak & Meeus (2006), Earth and Sun positions from
+Horizons, Mercury from the Newtonian N-body model (epoch 1780-01-01 TDB), parameters: Mercury's six
+heliocentric osculating elements, one time offset per contact type (II, III, IV), and D, an extra
+uniform advance of Mercury's longitude of perihelion (arcsec per Julian century, ecliptic J2000).
+Uncertainty: formal covariance scaled by chi2/dof, checked by Monte Carlo and leave-one-transit-out.
+Variants reported alongside, not substituted: unweighted; Delta T from Horizons; without the
+weight-0.1 contacts; leave-one-transit-out. Control: the same pipeline on Horizons' own contact
+instants at the same 58 contacts.

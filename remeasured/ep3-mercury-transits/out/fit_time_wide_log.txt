@@ -1,0 +1,25 @@
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  historical/time/wide it0: weighted rms 8.1892 s, D +43.5137, damping 1.0
+  historical/time/wide it1: weighted rms 8.1925 s, D +43.4791, damping 0.125
+  historical/time/wide it2: weighted rms 8.1905 s, D +43.5417, damping 0.5
+  historical/time/wide it3: weighted rms 8.1918 s, D +43.4896, damping 0.125
+  historical/time/wide it4: weighted rms 8.1856 s, D +43.6507, damping 1.0
+  historical/time/wide it5: weighted rms 8.1821 s, D +43.7101, damping 1.0
+  historical/time/wide it6: weighted rms 8.1815 s, D +43.7040, damping 0.125
+  historical/time/wide it7: weighted rms 8.1827 s, D +43.7047, damping 0.125
+  historical/time/wide it8: weighted rms 8.1817 s, D +43.6966, damping 1.0
+  historical/time/wide it9: weighted rms 8.1833 s, D +43.7221, damping 0.125
+  historical/time/wide it10: weighted rms 8.1814 s, D +43.6869, damping 0.5
+/usr/local/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:324: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown: {'/mp-v2knrxat', '/mp-i4moxjww', '/mp-qdxqvg1x', '/mp-o8dqvlhz', '/mp-6kqnprkk'}
+  warnings.warn(

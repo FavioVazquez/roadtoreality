@@ -1,0 +1,23 @@
+{
+ "time_form_wrms_at_time_solution_s": NaN,
+ "jac_halving_time": {
+  "a": NaN,
+  "e": NaN,
+  "inc": NaN,
+  "Omega": NaN,
+  "pomega": NaN,
+  "l": NaN,
+  "D": NaN
+ },
+ "time_form_wrms_at_radial_solution_s": 9.424699689300166,
+ "jac_halving_radial": {
+  "a": 9.628231646917444e-06,
+  "e": 0.002036221204676415,
+  "inc": 0.035491739823824975,
+  "Omega": 0.014352984624040385,
+  "pomega": 0.006968552523261834,
+  "l": 0.0022286595027889346,
+  "D": 4.4495967262910286e-06
+ },
+ "l_difference_arcsec": -316.84295725744056
+}

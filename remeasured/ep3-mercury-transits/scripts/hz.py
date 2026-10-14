@@ -78,3 +78,25 @@ def observer(target, jd_start, jd_stop, nsteps, center="500@399", site=None,
         out["lha"] = np.array([float(r[col["L_Ap_Hour_Ang"]]) for r in rows])
     out["source"] = [ln.strip() for ln in txt.splitlines() if ln.startswith("Target body name")][0]
     return out
+
+
+def vectors(target, jd_tdb_list, center="500@0", ref_plane="ECLIPTIC"):
+    """State vectors (AU, AU/day) on the TDB scale at the listed Julian dates (ICRF axes,
+    ecliptic-J2000 plane by default). Returns array (n, 6) and the raw text.
+    Lists longer than 50 instants are split into chunks (Horizons rejects very long TLISTs)."""
+    jd_tdb_list = list(jd_tdb_list)
+    if len(jd_tdb_list) > 50:
+        parts = [vectors(target, jd_tdb_list[i:i + 50], center, ref_plane) for i in range(0, len(jd_tdb_list), 50)]
+        return np.vstack([q[0] for q in parts]), "\n".join(q[1] for q in parts)
+    p = {
+        "format": "text", "COMMAND": _q(target), "OBJ_DATA": _q("YES"), "MAKE_EPHEM": _q("YES"),
+        "EPHEM_TYPE": _q("VECTORS"), "CENTER": _q(center), "REF_PLANE": _q(ref_plane),
+        "REF_SYSTEM": _q("ICRF"), "OUT_UNITS": _q("AU-D"), "VEC_TABLE": _q("2"), "CSV_FORMAT": _q("YES"),
+        "VEC_LABELS": _q("NO"), "TIME_TYPE": _q("TDB"),
+        "TLIST": " ".join(f"'{j:.9f}'" for j in jd_tdb_list), "TLIST_TYPE": _q("JD"),
+    }
+    txt = raw(p)
+    body = txt.split("$$SOE")[1].split("$$EOE")[0].strip().splitlines()
+    rows = [[c.strip() for c in ln.split(",")] for ln in body]
+    arr = np.array([[float(v) for v in r[2:8]] for r in rows])
+    return arr, txt

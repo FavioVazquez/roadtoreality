@@ -1,0 +1,240 @@
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  closure_D0_time it0: weighted rms 0.0007 s, D +0.0001, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  closure_D0_time it1: weighted rms 0.0001 s, D -0.0000, damping 1.0
+closure_D0_time -8.928116415815198e-06 +- 1.3810167820206746e-05 offsets [0.18853252 0.18864328 0.18859307]
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  closure_D5_radial it0: weighted rms 0.0049 s, D +5.0008, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  closure_D5_radial it1: weighted rms 0.0001 s, D +5.0000, damping 1.0
+  closure_D5_radial it2: weighted rms 0.0000 s, D +5.0000, damping 1.0
+closure_D5_radial 5.000000972868836 +- 2.023474378793021e-06 offsets [ 1.00000104  0.49999912 -1.50000015]
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  control/radial it0: weighted rms 0.0561 s, D +43.0212, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  control/radial it1: weighted rms 0.0118 s, D +43.0075, damping 1.0
+  control/radial it2: weighted rms 0.0118 s, D +43.0076, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  historical/radial it0: weighted rms 6.6408 s, D +43.5371, damping 1.0
+  historical/radial it1: weighted rms 6.6402 s, D +43.5366, damping 1.0
+radial control D 43.007592593509884 historical D 43.5313486508116 +- 0.8379240931243281
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  control/time it0: weighted rms 0.0325 s, D +43.0194, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  control/time it1: weighted rms 0.0122 s, D +43.0070, damping 1.0
+  control/time it2: weighted rms 0.0121 s, D +43.0077, damping 1.0
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+/Users/faviovazquez/Projects/ClaudeCode/roadtoreality/remeasured/ep3-mercury-transits/.venv/lib/python3.13/site-packages/rebound/simulation.py:192: RuntimeWarning: You have to reset function pointers after creating a reb_simulation struct with a binary file.
+  warnings.warn(message, RuntimeWarning)
+  historical/time it0: weighted rms 8.1971 s, D +43.8497, damping 1.0
+  historical/time it1: weighted rms 8.1863 s, D +43.6652, damping 1.0
+  historical/time it2: weighted rms 8.1864 s, D +43.6717, damping 0.125
+time control D 43.007408623702794 historical D 43.77505412216371 +- 1.0193110223805455
+{
+ "variants_radial": {
+  "Newcomb weights": {
+   "D": 43.5313486508116,
+   "sigma_D": 0.8379240931243281,
+   "n": 58,
+   "sigma0_s": 9.267467302321112
+  },
+  "unweighted": {
+   "D": 44.0233536761576,
+   "sigma_D": 1.8187270968325506,
+   "n": 58,
+   "sigma0_s": 16.418811601290358
+  },
+  "Delta T from Horizons (SMH 2016)": {
+   "D": 43.53319413520607,
+   "sigma_D": 0.840700659359494,
+   "n": 58,
+   "sigma0_s": 9.298176213794445
+  },
+  "without weight-0.1 contacts": {
+   "D": 43.211803960759696,
+   "sigma_D": 0.7591911920338729,
+   "n": 54,
+   "sigma0_s": 8.262963081555595
+  },
+  "interior contacts only (II, III)": {
+   "D": 43.44696862477713,
+   "sigma_D": 1.1136450396493136,
+   "n": 37,
+   "sigma0_s": 10.67786038172562
+  },
+  "leave_one_transit_out": {
+   "min": 43.194179939997554,
+   "max": 43.947877320479044,
+   "values": {
+    "1677": 43.55032131937239,
+    "1690": 43.51065627418136,
+    "1697": 43.45264569309361,
+    "1723": 43.54883062346812,
+    "1736": 43.535568348434246,
+    "1740": 43.194179939997554,
+    "1743": 43.55971988275556,
+    "1753": 43.47643233838589,
+    "1756": 43.45944671045282,
+    "1769": 43.58438301763477,
+    "1782": 43.48309424718699,
+    "1786": 43.947877320479044,
+    "1789": 43.56659917385168,
+    "1799": 43.51852643724926,
+    "1802": 43.518065636385515,
+    "1822": 43.53354492725759,
+    "1832": 43.5102227140237,
+    "1845": 43.475577162379686,
+    "1848": 43.621764033488915,
+    "1861": 43.521662992053976,
+    "1868": 43.65133015352719,
+    "1878": 43.590249624370635,
+    "1881": 43.432971841897896
+   },
+   "jackknife_sigma_D": 0.5782325172335925
+  },
+  "monte_carlo_sigma_D": 0.8270802968762706
+ },
+ "variants_control_radial": {
+  "unweighted": {
+   "D": 43.00659217612485,
+   "sigma_D": 0.0016978048214407791,
+   "n": 58,
+   "sigma0_s": 0.015313210237424461
+  }
+ },
+ "variants_time": {
+  "Newcomb weights": {
+   "D": 43.775054122163716,
+   "sigma_D": 1.0193110223805455,
+   "n": 58,
+   "sigma0_s": 11.27800630009185
+  },
+  "unweighted": {
+   "D": 43.71078163229439,
+   "sigma_D": 1.8531416682655508,
+   "n": 58,
+   "sigma0_s": 16.90753912588977
+  },
+  "Delta T from Horizons (SMH 2016)": {
+   "D": 43.77038746417731,
+   "sigma_D": 1.012002881829669,
+   "n": 58,
+   "sigma0_s": 11.197146529751832
+  },
+  "without weight-0.1 contacts": {
+   "D": 43.55929910762076,
+   "sigma_D": 0.995132637678387,
+   "n": 54,
+   "sigma0_s": 10.84188024075113
+  },
+  "interior contacts only (II, III)": {
+   "D": 43.900149426756286,
+   "sigma_D": 1.215603454886553,
+   "n": 37,
+   "sigma0_s": 11.470511823452851
+  },
+  "leave_one_transit_out": {
+   "min": 43.474513567808444,
+   "max": 44.25133722486321,
+   "values": {
+    "1677": 43.83639324461342,
+    "1690": 43.76266616865097,
+    "1697": 43.70239987628581,
+    "1723": 43.886277505543795,
+    "1736": 43.79386270607301,
+    "1740": 43.495947442390495,
+    "1743": 43.92561429325136,
+    "1753": 43.75570789722826,
+    "1756": 43.73765885399412,
+    "1769": 43.85767925545714,
+    "1782": 43.63650118223973,
+    "1786": 44.016220817205856,
+    "1789": 43.87568226213882,
+    "1799": 43.8064868240801,
+    "1802": 43.84018732586648,
+    "1822": 43.723488948635286,
+    "1832": 43.703148833733906,
+    "1845": 43.474513567808444,
+    "1848": 43.66261198951754,
+    "1861": 43.54941551115652,
+    "1868": 43.95939470266459,
+    "1878": 44.25133722486321,
+    "1881": 43.54828555779896
+   },
+   "jackknife_sigma_D": 0.8169456093110818
+  },
+  "monte_carlo_sigma_D": 1.011796299544983
+ },
+ "variants_control_time": {
+  "unweighted": {
+   "D": 43.0058121410385,
+   "sigma_D": 0.0016689953958851191,
+   "n": 58,
+   "sigma0_s": 0.015199409706158818
+  }
+ }
+}
+wall 623.2676322460175
+EXIT 0
