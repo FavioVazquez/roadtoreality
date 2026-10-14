@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Galaxies are receding from us — faster the farther away they are. Run the movie backwards: everything began from a hot, dense singularity about 13.8 billion years ago.">
+  <meta name="description" content="Fit Hubble's 1929 galaxies and 150 modern supernovae with your own line, then match the 2.725 K microwave background. Run the movie backwards: 13.8 billion years ago everything was far hotter and denser.">
   <meta property="og:title" content="The Big Bang — How Physics Works">
-  <meta property="og:description" content="Galaxies are receding from us — faster the farther away they are. Run the movie backwards: everything began from a hot, dense singularity about 13.8 billion years ago.">
+  <meta property="og:description" content="Fit Hubble's 1929 galaxies and 150 modern supernovae with your own line, then match the 2.725 K microwave background. Run the movie backwards: 13.8 billion years ago everything was far hotter and denser.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/042-big-bang/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,15 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    .view-tabs { display:flex; flex-wrap:wrap; gap:0.5rem; width:100%; }
+    .view-tabs .sim-btn[aria-pressed="true"] { border-color: var(--era-stop-color); color: var(--color-text); background: oklch(0.68 0.22 20 / 0.14); }
+    .sim-control[hidden] { display:none; }
+    .data-table { width:100%; border-collapse:collapse; font-size:var(--text-xs); font-family:var(--font-mono); color:var(--color-text-secondary); }
+    .data-table th, .data-table td { padding:0.2rem 0.4rem; text-align:right; border-bottom:1px solid oklch(1 0 0 / 0.06); }
+    .data-table th:first-child, .data-table td:first-child { text-align:left; }
+    .table-scroll { overflow-x:auto; margin-block:var(--space-4); }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -52,7 +61,7 @@
   <header class="stop-header">
     <div class="stop-header__era">Contemporary Physics · 1927–1964</div>
     <h1 class="stop-header__title">The Big Bang</h1>
-    <p class="stop-header__subtitle">The universe had a beginning</p>
+    <p class="stop-header__subtitle">The universe was once hot and dense, and it is still expanding</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1927–1964</span>
       <span>·</span>
@@ -60,44 +69,160 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Galaxies are receding from us — faster the farther away they are. Run the movie backwards: everything began from a hot, dense singularity about 13.8 billion years ago.</p>
+    <p>
+      In 1927 Georges Lemaître found a solution of Einstein's equations for a universe that expands, and pointed out that it explains why distant galaxies are seen moving away from us<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-3">[3]</a></sup>. Two years later Edwin Hubble published distances and velocities for 24 galaxies and found that the velocity grows in proportion to the distance<sup><a href="#src-1">[1]</a></sup>. In 2018 the members of the International Astronomical Union voted, 78 % in favour, to recommend calling this the Hubble–Lemaître law<sup><a href="#src-4">[4]</a></sup>.
+    </p>
+    <p>
+      Run the movie backwards: 13.8 billion years ago everything was far hotter and denser than anything we can see today<sup><a href="#src-10">[10]</a></sup>, and the microwave background is the light left over from that time. Below you fit Hubble's own 24 points with a line, do the same with 150 modern supernovae, and then match the spectrum of that leftover light with a blackbody curve.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Big Bang — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: Hubble diagrams you fit with a line, and the cosmic microwave background spectrum">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div class="view-tabs" role="group" aria-label="Choose the data set">
+        <button class="sim-btn" id="view-1929" type="button" aria-pressed="true">Hubble 1929</button>
+        <button class="sim-btn" id="view-today" type="button" aria-pressed="false">Supernovae today</button>
+        <button class="sim-btn" id="view-cmb" type="button" aria-pressed="false">Afterglow (CMB)</button>
+      </div>
+      <div class="sim-control" id="ctl-h0" style="flex:1.4">
+        <label class="sim-control__label" for="h0-slider">
+          Your slope H₀
+          <span class="sim-control__value" id="h0-val">500 km/s/Mpc</span>
+        </label>
+        <input type="range" id="h0-slider" min="100" max="1000" step="1" value="500" aria-label="Slope of your line, the Hubble constant, in kilometres per second per megaparsec" aria-valuetext="500 kilometres per second per megaparsec">
+        <span class="sim-control__hint">1/H₀ = <span id="age-val">1.96 billion years</span></span>
+      </div>
+      <div class="sim-control" id="ctl-fit" style="flex:1">
+        <span class="sim-control__label">Least squares <span class="sim-control__value" id="fit-val">—</span></span>
+        <button class="sim-btn" id="fit-btn" type="button" aria-pressed="false">Show least-squares line</button>
+      </div>
+      <div class="sim-control" id="ctl-corr" style="flex:1.4">
+        <label class="sim-control__label" for="corr-slider">
+          Distance-scale correction
+          <span class="sim-control__value" id="corr-val">0.0 mag (× 1.00)</span>
+        </label>
+        <input type="range" id="corr-slider" min="0" max="5" step="0.1" value="0" aria-label="Correction applied to all of Hubble's distances, in magnitudes" aria-valuetext="0.0 magnitudes, distances times 1.00">
+      </div>
+      <div class="sim-control" id="ctl-mb" style="flex:1.4" hidden>
+        <label class="sim-control__label" for="mb-slider">
+          Supernova calibration shift
+          <span class="sim-control__value" id="mb-val">+0.00 mag</span>
+        </label>
+        <input type="range" id="mb-slider" min="-0.5" max="0.5" step="0.01" value="0" aria-label="Shift of the type Ia supernova absolute magnitude from the SH0ES value, in magnitudes" aria-valuetext="plus 0.00 magnitudes">
+      </div>
+      <div class="sim-control" id="ctl-temp" style="flex:1.4" hidden>
+        <label class="sim-control__label" for="temp-slider">
+          Blackbody temperature
+          <span class="sim-control__value" id="temp-val">2.725 K</span>
+        </label>
+        <input type="range" id="temp-slider" min="2" max="3.5" step="0.001" value="2.725" aria-label="Temperature of the blackbody curve in kelvin" aria-valuetext="2.725 kelvin">
+        <button class="sim-btn" id="temp-fit-btn" type="button" style="margin-top:0.25rem;align-self:flex-start;">Fit to FIRAS</button>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play: run the expansion backwards">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the rewind">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Drag on the plot or use the slider to set the slope. Press play to run the galaxies backwards.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Rewind the expansion of the universe from today back to the first second</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Observe cosmic microwave background radiation forming at recombination</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Explore nucleosynthesis — how hydrogen and helium formed in the first 3 minutes</li>
+    <h3>Fitting Hubble's Line</h3>
+    <p>If space expands uniformly, every distance grows by the same fraction per unit time. A galaxy twice as far away then recedes twice as fast, from any vantage point, so there is no centre. Written as a formula, this is the Hubble–Lemaître law</p>
+    <p style="overflow-x:auto;">$$v = H_0\,d$$</p>
+    <p>where $H_0$, the Hubble constant, is the slope of the line. Hubble's 1929 table lists 24 galaxies (he called them nebulae) with distances up to 2 million parsecs (Mpc; one parsec is 3.26 light-years) and velocities from Doppler shifts of their spectra<sup><a href="#src-1">[1]</a></sup>. The first view of the simulation plots those 24 numbers exactly as printed. Set your own slope, or switch on the least-squares line.</p>
+    <p>A straight line through the origin, fitted to the printed velocities, gives 424 km/s/Mpc, with the galaxies scattered by about 224 km/s around it (both computed here). Hubble's own numbers were higher: his fit also solved for the Sun's motion through the galaxy, which shifts every velocity by an amount that depends on direction, and gave $K = 465 \pm 50$ km/s per million parsecs for the 24 galaxies taken one by one and $513 \pm 60$ for 9 groups. He then adopted the round value of 500<sup><a href="#src-1">[1]</a></sup>. So 424 is not Hubble's answer; it is what these 24 printed velocities give without the solar-motion terms.</p>
+    <p>The inverse of the slope has units of time. If every galaxy had always moved at its present speed, all of them would have been on top of each other a time $1/H_0$ ago. Press play to see this: each point slides back at its own constant speed, and the points on the line all reach zero distance together. For a slope of 500 that time is 1.96 billion years.</p>
+
+    <h3>Why 500 Was Wrong</h3>
+    <p>Hubble's velocities were good. His distances were not. The nearest galaxies were measured with Cepheid variable stars, whose period gives their luminosity, and the more distant ones by assuming that the brightest stars in every galaxy have the same luminosity<sup><a href="#src-5">[5]</a></sup>. Both steps were too faint.</p>
+    <p>In 1952 Walter Baade reported that work on the Andromeda galaxy showed that either the Cepheid scale or the scale of the RR Lyrae stars was off. The stars of the old population (Population II, which includes the RR Lyrae stars) and of the young population (Population I, which includes the classical Cepheids) could not both be right. The RR Lyrae scale was confirmed, so the Cepheids had to be brighter than assumed, and extragalactic distances had been too small by as much as a factor of 2. That brought the Hubble constant to about 250<sup><a href="#src-6">[6]</a></sup>. In 1958 Allan Sandage showed that many of Hubble's "brightest stars" were in fact clouds of glowing hydrogen (H II regions), which are much brighter than any star, and with that and a corrected magnitude scale he arrived at $H_0 = 75$<sup><a href="#src-6">[6]</a></sup><sup><a href="#src-7">[7]</a></sup>.</p>
+    <p>The distance-scale slider stretches all of Hubble's distances by one factor. Astronomers measure brightness in magnitudes, and a calibration error of $\Delta m$ magnitudes multiplies every distance by $10^{\Delta m/5}$: Baade's factor of 2 is 1.5 magnitudes. Bringing the least-squares slope from 424 down to 70 needs 3.9 magnitudes, a factor of 6 (computed here). One factor for all galaxies is a simplification; the real corrections differed from galaxy to galaxy<sup><a href="#src-6">[6]</a></sup>.</p>
+
+    <h3>The Same Law Today</h3>
+    <p>The second view uses type Ia supernovae, exploding white dwarfs whose peak brightness can be standardized to a few per cent. The 150 shown are the nearby supernovae from the Pantheon+ compilation that the SH0ES team uses to measure the expansion (redshift $z$ between 0.023 and 0.05, 75 to 215 Mpc away)<sup><a href="#src-8">[8]</a></sup><sup><a href="#src-9">[9]</a></sup>. Their distances are tied to Cepheids in nearby galaxies through one number, the supernova absolute magnitude $M_B = -19.253$<sup><a href="#src-9">[9]</a></sup>. Every distance here is computed from that calibration, so the slope you fit is the SH0ES calibration by construction. The least-squares line gives 73.4 km/s/Mpc (computed here); the full SH0ES analysis gives $73.04 \pm 1.04$<sup><a href="#src-9">[9]</a></sup>.</p>
+    <p>Move the calibration slider. Making the supernovae intrinsically 0.18 magnitudes brighter than SH0ES finds, which moves every distance out by about 9 %, lowers the slope to 67.5, essentially the value the Planck satellite infers from the microwave background (computed here; Planck value from <sup><a href="#src-10">[10]</a></sup>). That 0.18 magnitudes is the "Hubble tension" in one number; stop 50 shows how significant it is. Note also that $1/H_0$ is 13.3 billion years for the SH0ES slope and 14.5 for the Planck one, both close to the age the Planck data give, 13.797 ± 0.023 billion years<sup><a href="#src-10">[10]</a></sup>. The closeness is partly a coincidence: the expansion slowed down for most of cosmic history and has been speeding up recently. Stop 47 computes the real expansion history.</p>
+
+    <h3>The Afterglow</h3>
+    <p>If the universe was once much hotter, it was once filled with hot, dense gas glowing like the inside of a furnace. Expansion stretches the wavelength of that light, so today it should arrive from every direction as faint microwaves. At Princeton, P. J. E. Peebles, following a suggestion of Robert Dicke, calculated that such radiation should be there at a temperature of at least 10 K, and Dicke, Roll and Wilkinson were setting up an experiment to measure it<sup><a href="#src-12">[12]</a></sup>. At the same time, at Bell Laboratories, Arno Penzias and Robert Wilson could not get rid of an excess noise in their radio antenna at 7.35 cm wavelength, the same in every direction and in every season: 3.4 ± 1 K after every known source had been subtracted (about 3.5 K in their published letter)<sup><a href="#src-12">[12]</a></sup>. The two groups published side by side in 1965, the measurement and its cosmological interpretation<sup><a href="#src-11">[11]</a></sup>.</p>
+    <p>A body in thermal equilibrium emits the Planck spectrum, which depends only on its temperature (stop 27). The third view shows the spectrum measured by the FIRAS instrument on the COBE satellite: 43 frequencies, with error bars so small that they are drawn 400 times larger to be visible<sup><a href="#src-13">[13]</a></sup>. The deviations from a pure blackbody are less than 50 parts per million of the peak<sup><a href="#src-13">[13]</a></sup>. Move the temperature and watch the strip below the plot: even 0.01 K moves the curve far outside the error bars. A least-squares fit to these 43 points returns 2.7250 K (computed here), but that is a consistency check, not a measurement: the public file is built as a 2.725 K blackbody plus the published residuals, so the fit can only give back the temperature it was built on. The temperature on an absolute scale comes from the instrument's calibration, which these error bars do not include; FIRAS's own value was $2.728 \pm 0.004$ K<sup><a href="#src-13">[13]</a></sup>, and the best current value, combining many measurements, is $2.72548 \pm 0.00057$ K<sup><a href="#src-14">[14]</a></sup>.</p>
+    <p>Press play in this view to run the spectrum backwards. As the universe expands every wavelength stretches by the same factor $1+z$, and the number of photons per volume drops by $(1+z)^3$. A blackbody spectrum then stays a blackbody, with temperature</p>
+    <p style="overflow-x:auto;">$$T(z) = T_0\,(1+z)$$</p>
+    <p>The axes rescale with $1+z$ and the curve never changes shape. The rewind stops at $z = 1090$, when the gas was about 3,000 K (computed: $2.725 \times 1090.92$) and became transparent; Planck puts this "last scattering" at $z_* = 1089.92 \pm 0.25$<sup><a href="#src-10">[10]</a></sup>. With the Planck parameters the universe was then about 371,000 years old (computed here). The microwave background is that light.</p>
+
+    <h3>The First Minutes</h3>
+    <p>Run the movie back further and the temperature reaches billions of kelvin, hot enough for nuclear reactions. In the first few minutes protons and neutrons fused into helium and a few other light nuclei. The theory predicts that about a quarter of the ordinary mass ended up as helium-4. The Planck analysis uses the predicted helium fraction, 0.2454<sup><a href="#src-10">[10]</a></sup>, and measurements in gas clouds of distant, little-processed galaxies give $Y_p = 0.245 \pm 0.003$<sup><a href="#src-15">[15]</a></sup>. The agreement between the expansion, the microwave background and the helium abundance is why the hot Big Bang is the standard account of the early universe. What happened at the very start, before any of these processes, is not known: the equations are being extrapolated beyond anything measured.</p>
+
+    <h3>What the Simulation Leaves Out</h3>
+    <p>Nothing on this page is a new measurement. The data are transcribed from the sources below; the straight-line fits, temperatures and ages labelled "computed here" are calculated from those data or from the cited formulas.</p>
+    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+      <li>The rewind in the two Hubble views keeps every galaxy at its present velocity. The real expansion slowed down and then sped up, so $1/H_0$ is only a rough age.</li>
+      <li>Hubble's velocities are plotted as printed, without the correction for the Sun's motion that he included in his own fit.</li>
+      <li>For the supernovae the horizontal axis is the distance now, the luminosity distance from the supernova's brightness divided by $1+z$, and the vertical axis is $cz$. At these redshifts $cz$ is about 1 % larger than the true recession speed, which is why the least-squares slope here is a little above the SH0ES value. Supernovae observed by more than one survey are listed several times in the data file; their distances are averaged here (28 of the 150). The SH0ES Hubble-flow sample extends to $z = 0.15$; the cut at $z = 0.05$ is made here to keep the plot close to a straight line.</li>
+      <li>The supernova calibration slider shifts every supernova by the same amount, which is exactly how a change in the calibration acts.</li>
+      <li>The Penzias–Wilson point is drawn as the intensity that their excess antenna temperature corresponds to at 4.08 GHz (the Rayleigh–Jeans formula, valid at such low frequencies).</li>
+      <li>The age at last scattering uses the Planck 2018 values $H_0 = 67.36$ and $\Omega_m = 0.3153$<sup><a href="#src-10">[10]</a></sup>, a flat universe, and radiation from photons at 2.7255 K plus three massless neutrino species.</li>
     </ul>
+    <details style="margin-top:var(--space-4);">
+      <summary style="cursor:pointer;color:var(--color-text-secondary);font-size:var(--text-sm);min-height:44px;display:flex;align-items:center;">Hubble's Table 1, as plotted</summary>
+      <div class="table-scroll">
+        <table class="data-table">
+          <caption style="caption-side:bottom;text-align:left;padding-top:0.5rem;">Hubble (1929), Table 1, p. 169<sup><a href="#src-1">[1]</a></sup>. r in millions of parsecs, v in km/s as printed.</caption>
+          <thead><tr><th scope="col">Object</th><th scope="col">r</th><th scope="col">v</th><th scope="col">Object</th><th scope="col">r</th><th scope="col">v</th></tr></thead>
+          <tbody>
+            <tr><td>S. Mag.</td><td>0.032</td><td>+170</td><td>NGC 3627</td><td>0.9</td><td>+650</td></tr>
+            <tr><td>L. Mag.</td><td>0.034</td><td>+290</td><td>NGC 4826</td><td>0.9</td><td>+150</td></tr>
+            <tr><td>NGC 6822</td><td>0.214</td><td>−130</td><td>NGC 5236</td><td>0.9</td><td>+500</td></tr>
+            <tr><td>NGC 598</td><td>0.263</td><td>−70</td><td>NGC 1068</td><td>1.0</td><td>+920</td></tr>
+            <tr><td>NGC 221</td><td>0.275</td><td>−185</td><td>NGC 5055</td><td>1.1</td><td>+450</td></tr>
+            <tr><td>NGC 224</td><td>0.275</td><td>−220</td><td>NGC 7331</td><td>1.1</td><td>+500</td></tr>
+            <tr><td>NGC 5457</td><td>0.45</td><td>+200</td><td>NGC 4258</td><td>1.4</td><td>+500</td></tr>
+            <tr><td>NGC 4736</td><td>0.5</td><td>+290</td><td>NGC 4151</td><td>1.7</td><td>+960</td></tr>
+            <tr><td>NGC 5194</td><td>0.5</td><td>+270</td><td>NGC 4382</td><td>2.0</td><td>+500</td></tr>
+            <tr><td>NGC 4449</td><td>0.63</td><td>+200</td><td>NGC 4472</td><td>2.0</td><td>+850</td></tr>
+            <tr><td>NGC 4214</td><td>0.8</td><td>+300</td><td>NGC 4486</td><td>2.0</td><td>+800</td></tr>
+            <tr><td>NGC 3031</td><td>0.9</td><td>−30</td><td>NGC 4649</td><td>2.0</td><td>+1090</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>The universe began from an extremely hot, dense state about 13.8 billion years ago and has been expanding and cooling ever since. The CMB radiation we detect today is the afterglow of that hot early universe.</li>
+      <li>Galaxies recede at speeds proportional to their distance, $v = H_0 d$: predicted by Lemaître in 1927 and found in Hubble's 1929 data.</li>
+      <li>Hubble's slope of about 500 km/s/Mpc was too large because his distances were too small; the corrected and modern values are near 70, and the two main routes to it, the microwave background and the distance ladder, disagree at the level of 67 versus 73.</li>
+      <li>The microwave background is a near-perfect 2.725 K blackbody: the cooled light of a universe that was once hot, dense and opaque.</li>
     </ul>
+    <p style="overflow-x:auto;">$$v = H_0\,d, \qquad T(z) = T_0\,(1+z)$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">E. Hubble, "A Relation between Distance and Radial Velocity among Extra-Galactic Nebulae", <em>Proceedings of the National Academy of Sciences</em> 15, 168–173 (1929). Cited: Table 1 (p. 169), the 24 distances and velocities; solutions $K = +465 \pm 50$ (24 objects) and $+513 \pm 60$ km/s per $10^6$ parsecs (9 groups) and the round value 500 (p. 170).</li>
+      <li id="src-2">G. Lemaître, <em>Annales de la Société Scientifique de Bruxelles</em> A47, 49 (1927). Not opened for this page; its content is described in [3] (p. 3) and [5].</li>
+      <li id="src-3">W. L. Freedman and B. F. Madore, "The Hubble Constant", <em>Annual Review of Astronomy and Astrophysics</em> 48, 673–710 (2010). Cited: Lemaître's 1927 solution and its explanation of the recession of galaxies (p. 3 of the arXiv version, 1004.1856).</li>
+      <li id="src-4">International Astronomical Union, press release iau1812, "IAU members vote to recommend renaming the Hubble law as the Hubble–Lemaître law" (29 October 2018). Cited: 4060 votes cast, 78 % in favour, 20 % against, 2 % abstaining.</li>
+      <li id="src-5">H. Kragh, "Hubble Law or Hubble–Lemaître Law? The IAU Resolution", arXiv:1809.02557 (2018). Background on Lemaître's prediction and the IAU resolution.</li>
+      <li id="src-6">G. A. Tammann and B. Reindl, "Cosmic Expansion and H0: A Retro- and Pro-Spective Note", arXiv:astro-ph/0208176 (2002), proceedings of the XXXVIIth Moriond Astrophysics Meeting. Cited: Baade (1952, <em>Transactions of the IAU</em> VIII, 397) and distances "too small by as much as a factor of 2", $H_0 \sim 250$ (p. 3); Sandage (1958), H II regions mistaken for brightest stars, $H_0 = 75$ (p. 4); galaxy-by-galaxy distance corrections (Table 1).</li>
+      <li id="src-7">A. Sandage, "Current Problems in the Extragalactic Distance Scale", <em>The Astrophysical Journal</em> 127, 513 (1958).</li>
+      <li id="src-8">D. Scolnic et al., "The Pantheon+ Analysis: The Full Data Set and Light-curve Release", <em>The Astrophysical Journal</em> 938, 113 (2022); D. Brout et al., "The Pantheon+ Analysis: Cosmological Constraints", <em>The Astrophysical Journal</em> 938, 110 (2022). Data: file <code>Pantheon+SH0ES.dat</code> of the public data release, rows with <code>USED_IN_SH0ES_HF</code> = 1 and <code>zHD</code> &lt; 0.05, columns <code>zHD</code> and <code>MU_SH0ES</code>.</li>
+      <li id="src-9">A. G. Riess et al., "A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km/s/Mpc Uncertainty from the Hubble Space Telescope and the SH0ES Team", <em>The Astrophysical Journal Letters</em> 934, L7 (2022). Cited: $H_0 = 73.04 \pm 1.04$ km/s/Mpc (abstract); $M_B^0 = -19.253 \pm 0.027$ (Table 5 and Section 6).</li>
+      <li id="src-10">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited from Table 2 (TT,TE,EE+lowE+lensing): age $13.797 \pm 0.023$ Gyr, $H_0 = 67.36 \pm 0.54$ km/s/Mpc (abstract: $67.4 \pm 0.5$), $\Omega_m = 0.3153 \pm 0.0073$, $z_* = 1089.92 \pm 0.25$; helium fraction from BBN $Y_P \approx 0.2454$ (table caption).</li>
+      <li id="src-11">A. A. Penzias and R. W. Wilson, "A Measurement of Excess Antenna Temperature at 4080 Mc/s", <em>The Astrophysical Journal</em> 142, 419 (1965); R. H. Dicke, P. J. E. Peebles, P. G. Roll and D. T. Wilkinson, "Cosmic Black-Body Radiation", <em>The Astrophysical Journal</em> 142, 414 (1965). Not opened for this page; the numbers are taken from [12].</li>
+      <li id="src-12">R. W. Wilson, "The Cosmic Microwave Background Radiation", Nobel Lecture, 8 December 1978. Cited: Peebles' estimate of at least 10 K (p. 476); background 3.4 ± 1 K with the original receiver at 7.35 cm (Fig. 10, p. 477); "our value of 3.5 K" (p. 478).</li>
+      <li id="src-13">D. J. Fixsen et al., "The Cosmic Microwave Background Spectrum from the Full COBE FIRAS Data Set", <em>The Astrophysical Journal</em> 473, 576 (1996). Data: Table 4, via the NASA LAMBDA file <code>firas_monopole_spec_v1.txt</code> (intensity = 2.725 K blackbody plus the Table 4 residual). Cited: deviations below 50 parts per million of the peak; $2.728 \pm 0.004$ K (95 %).</li>
+      <li id="src-14">D. J. Fixsen, "The Temperature of the Cosmic Microwave Background", <em>The Astrophysical Journal</em> 707, 916 (2009). Cited: $2.72548 \pm 0.00057$ K.</li>
+      <li id="src-15">B. D. Fields, P. Molaro and S. Sarkar, "Big Bang Nucleosynthesis", in Particle Data Group, Review of Particle Physics (2024). Cited: $Y_p = 0.245 \pm 0.003$ (Eq. 24.3).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>The universe had a beginning. The Standard Model catalogs all the known fundamental particles and forces — our best current map of reality at its deepest level.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>In the first minutes the universe was a reactor of particles. The Standard Model catalogs the particles and forces that were in it, our best current map of matter at its deepest level.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +248,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
