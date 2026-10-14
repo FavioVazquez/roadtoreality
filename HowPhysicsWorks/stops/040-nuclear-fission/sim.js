@@ -121,9 +121,9 @@
     var q2 = (m('U235') + m('n1') - m('Pr141') - m('Zr92') - 3 * m('n1')) * U_MEV;
     var qf = (m('H2') + m('H3') - m('He4') - m('n1')) * U_MEV;
     var eKg = 1000 / m('U235') * 6.02214076e23 * 200 * 1.602176634e-13;
-    var ty = y0 + gh + 50, sz = narrow ? 11 : 12, dy = narrow ? 17 : 19;
-    txt('U-235 + n → Ba-141 + Kr-92 + 3n: mass lost → ' + q1.toFixed(1) + ' MeV (calculated)', 16, ty, COL.fis, sz);
-    txt('…after the fragments decay to stable Pr-141 + Zr-92: ' + q2.toFixed(1) + ' MeV in all', 16, ty + dy, COL.text, sz);
+    var ty = y0 + gh + 50, sz = narrow ? 10 : 12, dy = narrow ? 17 : 19;
+    txt((narrow ? 'U-235 + n → Ba-141 + Kr-92 + 3n: ' : 'U-235 + n → Ba-141 + Kr-92 + 3n: mass lost → ') + q1.toFixed(1) + ' MeV (calculated)', 16, ty, COL.fis, sz);
+    txt((narrow ? '…after decay to Pr-141 + Zr-92: ' : '…after the fragments decay to stable Pr-141 + Zr-92: ') + q2.toFixed(1) + ' MeV in all', 16, ty + dy, COL.text, sz);
     txt('H-2 + H-3 → He-4 + n: ' + qf.toFixed(2) + ' MeV (calculated)', 16, ty + 2 * dy, COL.fus, sz);
     txt('1 kg of U-235 at 200 MeV per fission: ' + (eKg / 1e13).toFixed(1) + '×10¹³ J ≈ ' + (eKg / 4.184e12).toFixed(0) + ' kt of TNT', 16, ty + 3 * dy, COL.muted, sz);
   }
