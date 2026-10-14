@@ -5,7 +5,7 @@
    damped ball rolls to the ring of minima at |phi| = sqrt(-mu^2 / 2).
    View 2: a diphoton mass histogram filled one event at a time.
    Background: exponential, slope 25 GeV, 100-160 GeV. Signal: Gaussian
-   at 125.20 GeV, width 1.6 GeV (display choice). The signal fraction is
+   at 125.20 GeV, standard deviation 1.6 GeV (display choice). The signal fraction is
    set so the expected window significance S/sqrt(B) reaches 5 at the end
    of the run; it is an illustration, not the 2012 data.
    ============================================================ */
@@ -136,7 +136,7 @@
       var sub = 8, h = dt / sub;
       for (var i = 0; i < sub; i++) {
         var r2 = bx * bx + by * by, f = -(2 * m2 + 4 * r2);
-        if (r2 < 1e-8 && m2 < 0) { bx += (rnd() - 0.5) * 2e-3; by += (rnd() - 0.5) * 2e-3; }
+        if (r2 < 1e-8 && m2 < 0) { bx += (rnd() - 0.5) * 2e-2; by += (rnd() - 0.5) * 2e-2; }
         vx += (f * bx - 1.4 * vx) * h * 3; vy += (f * by - 1.4 * vy) * h * 3;
         bx += vx * h * 3; by += vy * h * 3;
       }

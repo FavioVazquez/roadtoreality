@@ -22,7 +22,7 @@
 {
   "id": "049-quantum-computing",
   "order": 49,
-  "era": "modern",
+  "era": "contemporary",
   "title": "Quantum Computing",
   "prev": "048-gravitational-waves",
   "prevTitle": "Gravitational Waves",
@@ -47,10 +47,10 @@
     if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
   }());
 </script>
-<main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+<main class="stop-page container" data-era="contemporary">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Contemporary Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · 1985–present</div>
+    <div class="stop-header__era">Contemporary Physics · 1985–present</div>
     <h1 class="stop-header__title">Quantum Computing</h1>
     <p class="stop-header__subtitle">Using quantum mechanics to compute</p>
     <div class="stop-header__meta">
@@ -61,7 +61,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      In 1982 Richard Feynman asked how a computer could simulate physics when physics is quantum mechanical<sup><a href="#src-1">[1]</a></sup>. In 1985 David Deutsch described a universal quantum computer and gave the first problem it could solve with fewer steps than any classical computer<sup><a href="#src-2">[2]</a></sup>.
+      In 1982 Richard Feynman asked how a computer could simulate physics when physics is quantum mechanical<sup><a href="#src-1">[1]</a></sup>. In 1985 David Deutsch described a universal quantum computer and posed a problem it could answer with one evaluation of a function where a classical computer needs two<sup><a href="#src-2">[2]</a></sup>; the one-query, always-correct form shown below is the later textbook version<sup><a href="#src-5">[5]</a></sup>.
     </p>
     <p>
       A quantum computer is not a classical computer that tries every answer at once. Its advantage, where it has one, comes from amplitudes that can cancel. The simulation shows one qubit, two entangled qubits, and Deutsch's algorithm, computed exactly.
@@ -122,15 +122,15 @@
     <h3>Two Qubits That Agree</h3>
     <p>Two qubits have four amplitudes, one each for 00, 01, 10 and 11. Start both at 0, apply H to qubit a, then a CNOT gate, which flips b when a is 1. The result is the Bell state<sup><a href="#src-5">[5]</a></sup></p>
     <p style="overflow-x:auto;">$$|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt2}.$$</p>
-    <p>Press play in the second view. Each shot gives 00 or 11, about half the time each, and never 01 or 10. Each qubit on its own is a fair coin; together they always agree. Switch to measuring in the X basis (an H on each qubit just before measuring) and they still always agree, now as ++ or −−. A pair of classical coins secretly set to the same side can match in one basis, but quantum mechanics predicts correlations in several bases at once that no such preset values can give; that is what Bell's theorem says<sup><a href="#src-5">[5]</a></sup>.</p>
+    <p>Press play in the second view. Each shot gives 00 or 11, about half the time each, and never 01 or 10. Each qubit on its own is a fair coin; together they always agree. Switch to measuring in the X basis (an H on each qubit just before measuring) and they still always agree, now as ++ or −−. Could a pair of classical coins, secretly set to agree in both bases, explain this? For these two tests, yes. Bell's theorem concerns measurements at angles in between: quantum mechanics predicts correlations there that no preset values, fixed when the pair was made, can reproduce, and experiments confirm it<sup><a href="#src-5">[5]</a></sup>. The view here shows the entanglement; the proof that nothing is preset needs the intermediate angles, which it does not draw.</p>
     <p>Switch the CNOT off and the state is $|+\rangle|0\rangle$: a is random, b is always 0, and in the X basis a is always + while b is random. Nothing is entangled. The agreement in the Bell state cannot be used to send a message: whoever holds one qubit sees only a fair coin, whatever is done to the other<sup><a href="#src-5">[5]</a></sup>.</p>
     <h3>The Smallest Honest Speed-Up</h3>
     <p>Deutsch's problem: a box computes a function $f$ from one bit to one bit. Is $f$ constant (the same output for both inputs) or balanced (different outputs)? A classical computer must evaluate $f(0)$ and $f(1)$: two queries. A quantum computer needs one<sup><a href="#src-2">[2]</a>,<a href="#src-5">[5]</a></sup>.</p>
-    <p>The third view steps through the circuit. After the two Hadamards, all four amplitudes are $\pm 1/2$. One query of $f$ multiplies the amplitude for each input $x$ by $(-1)^{f(x)}$. The last Hadamard adds and subtracts the amplitudes: if $f$ is constant the two paths to a = 1 cancel and a = 0 is certain; if $f$ is balanced the paths to a = 0 cancel instead. One measurement then answers the question. The quantum computer did not evaluate $f$ twice in parallel; it never learns $f(0)$ or $f(1)$, only the one fact the interference picks out. The version shown is the deterministic form of the algorithm given in the textbook<sup><a href="#src-5">[5]</a></sup>.</p>
+    <p>The third view steps through the circuit, with a started in $|0\rangle$ and b in $|1\rangle$. After the two Hadamards, all four amplitudes are $\pm 1/2$. One query of $f$ multiplies the amplitude for each input $x$ by $(-1)^{f(x)}$. The last Hadamard adds and subtracts the amplitudes: if $f$ is constant the two paths to a = 1 cancel and a = 0 is certain; if $f$ is balanced the paths to a = 0 cancel instead. One measurement then answers the question. The quantum computer did not evaluate $f$ twice in parallel; it never learns $f(0)$ or $f(1)$, only the one fact the interference picks out. The version shown is the deterministic form of the algorithm given in the textbook<sup><a href="#src-5">[5]</a></sup>.</p>
     <h3>What Speed-Ups Are Known</h3>
     <p>Deutsch's problem saves one query and has no practical use. Two later algorithms matter more, under stated conditions.</p>
-    <p>Peter Shor gave quantum algorithms (as a preprint in 1995, published in 1997) for factoring integers and for discrete logarithms that take a number of steps polynomial in the number of digits<sup><a href="#src-3">[3]</a></sup>. Both problems are generally thought to be hard for classical computers and are used in cryptography<sup><a href="#src-3">[3]</a></sup>. For factoring, the best known classical methods take longer than any polynomial in the number of digits; nobody has proved that no fast classical method exists<sup><a href="#src-5">[5]</a></sup>. Shor's algorithm also needs a large quantum computer whose errors are corrected faster than they build up; it was written for what Shor called a hypothetical quantum computer<sup><a href="#src-3">[3]</a></sup>.</p>
-    <p>In 1996 Lov Grover gave an algorithm for searching $N$ unsorted items. A classical search must look at $N/2$ items to succeed half the time; Grover's needs about $\sqrt N$ steps, and no quantum algorithm can do better than that by more than a constant factor<sup><a href="#src-4">[4]</a></sup>. This speed-up is quadratic, not exponential, and it works by amplitude interference: the phases are arranged so that the right answer's amplitude grows while the others cancel<sup><a href="#src-4">[4]</a></sup>.</p>
+    <p>Peter Shor gave quantum algorithms (announced at a 1994 conference, with the full version published in 1997) for factoring integers and for discrete logarithms that take a number of steps polynomial in the number of digits<sup><a href="#src-3">[3]</a></sup>. Both problems are generally thought to be hard for classical computers and are used in cryptography<sup><a href="#src-3">[3]</a></sup>. For factoring, the best known classical methods take longer than any polynomial in the number of digits; nobody has proved that no fast classical method exists<sup><a href="#src-5">[5]</a></sup>. Shor's algorithm also needs a large quantum computer whose errors are corrected faster than they build up; it was written for what Shor called a hypothetical quantum computer<sup><a href="#src-3">[3]</a></sup>.</p>
+    <p>In 1996 Lov Grover gave an algorithm for searching $N$ unsorted items. A classical search must look at $N/2$ items to succeed half the time; Grover's needs about $\sqrt N$ steps, and no quantum algorithm can do better than that by more than a constant factor<sup><a href="#src-4">[4]</a></sup>. This speed-up is quadratic, not exponential, and it works by amplitude interference: the phases are arranged so that the right answer's amplitude grows while the others shrink<sup><a href="#src-4">[4]</a></sup>.</p>
     <p>For most everyday tasks no quantum speed-up is known.</p>
     <h3>What the Simulation Assumes</h3>
     <p>The qubits are perfect: no noise and no loss of coherence, which in real devices limits how many gates can be applied. The amplitudes are computed exactly; the measurement results are drawn at random with those probabilities.</p>
@@ -150,7 +150,7 @@
     <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
       <li id="src-1">R. P. Feynman, "Simulating physics with computers", <em>International Journal of Theoretical Physics</em> 21, 467 (1982).</li>
       <li id="src-2">D. Deutsch, "Quantum theory, the Church–Turing principle and the universal quantum computer", <em>Proceedings of the Royal Society of London A</em> 400, 97 (1985).</li>
-      <li id="src-3">P. W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer", <em>SIAM Journal on Computing</em> 26, 1484 (1997); arXiv:quant-ph/9508027. Cited: polynomial number of steps in the input size; factoring and discrete logarithms generally thought hard classically and used in cryptosystems; a hypothetical quantum computer.</li>
+      <li id="src-3">P. W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer", <em>SIAM Journal on Computing</em> 26, 1484 (1997); arXiv:quant-ph/9508027. First presented in Proc. 35th IEEE Symp. on Foundations of Computer Science (1994), p. 124. Cited: polynomial number of steps in the input size; factoring and discrete logarithms generally thought hard classically and used in cryptosystems; a hypothetical quantum computer.</li>
       <li id="src-4">L. K. Grover, "A fast quantum mechanical algorithm for database search", <em>Proceedings of the 28th Annual ACM Symposium on Theory of Computing</em> (STOC 1996), p. 212; arXiv:quant-ph/9605043. Cited: N/2 classical looks for a 50 % chance; $O(\sqrt N)$ steps; within a constant factor of the fastest possible quantum algorithm.</li>
       <li id="src-5">M. A. Nielsen and I. L. Chuang, <em>Quantum Computation and Quantum Information</em>, 10th anniversary ed., Cambridge University Press (2010). Qubits, the Bloch sphere, gates, Bell states, Bell's theorem, no-signalling, Deutsch's algorithm and classical factoring methods.</li>
     </ol>

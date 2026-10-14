@@ -22,7 +22,7 @@
 {
   "id": "044-higgs-boson",
   "order": 44,
-  "era": "modern",
+  "era": "contemporary",
   "title": "The Higgs Boson",
   "prev": "043-standard-model",
   "prevTitle": "The Standard Model",
@@ -47,12 +47,12 @@
     if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
   }());
 </script>
-<main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+<main class="stop-page container" data-era="contemporary">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Contemporary Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · Predicted 1964, found 2012</div>
+    <div class="stop-header__era">Contemporary Physics · Predicted 1964, found 2012</div>
     <h1 class="stop-header__title">The Higgs Boson</h1>
-    <p class="stop-header__subtitle">The particle that gives others mass</p>
+    <p class="stop-header__subtitle">The field behind the masses of elementary particles</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">Predicted 1964, found 2012</span>
       <span>·</span>
@@ -61,7 +61,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      In 1964 three papers showed how a force-carrying particle can have mass without breaking the symmetry of the theory that describes it: one by François Englert and Robert Brout, one by Peter Higgs, and one by Gerald Guralnik, Carl Hagen and Tom Kibble<sup><a href="#src-1">[1]</a>–<a href="#src-3">[3]</a></sup>. In 1967 Steven Weinberg used the idea to build the electroweak theory<sup><a href="#src-4">[4]</a></sup>. It predicts one new particle, the Higgs boson. In 2012 the ATLAS and CMS experiments at CERN's Large Hadron Collider both reported it<sup><a href="#src-6">[6]</a>,<a href="#src-7">[7]</a></sup>. Its mass is now known to be 125.20 ± 0.11 GeV<sup><a href="#src-8">[8]</a></sup>.
+      In 1964 three papers showed how a force-carrying particle can have mass without a mass term being put into the equations by hand, which would spoil their symmetry: one by François Englert and Robert Brout, one by Peter Higgs, and one by Gerald Guralnik, Carl Hagen and Tom Kibble<sup><a href="#src-1">[1]</a>–<a href="#src-3">[3]</a></sup>. In 1967 Steven Weinberg used the idea to build the electroweak theory<sup><a href="#src-4">[4]</a></sup>. It predicts one new particle, the Higgs boson. In 2012 the ATLAS and CMS experiments at CERN's Large Hadron Collider both reported it<sup><a href="#src-6">[6]</a>,<a href="#src-7">[7]</a></sup>. The 2024 Review of Particle Physics gives its mass as 125.20 ± 0.11 GeV<sup><a href="#src-8">[8]</a></sup>.
     </p>
     <p>
       The simulation has two views: the shape of the Higgs potential, and a histogram like the ones in which the particle was found.
@@ -115,7 +115,7 @@
     <p>The Higgs field $\phi$ has a potential energy that depends on its size. In the electroweak theory it is<sup><a href="#src-5">[5]</a></sup>
     </p>
     <p style="overflow-x:auto;">$$V(\phi) = \mu^2\,|\phi|^2 + \lambda\,|\phi|^4 .$$</p>
-    <p>If $\mu^2$ is positive the lowest point is $\phi = 0$ and nothing is broken. If $\mu^2$ is negative, $\phi = 0$ becomes a hilltop and the lowest points form a ring around it: the shape of a Mexican hat. (The same potential is often written $-\mu^2|\phi|^2 + \lambda|\phi|^4$ with $\mu^2$ positive.) Every point on the ring is equally low, so the potential is symmetric, but the field has to settle at one of them. That is spontaneous symmetry breaking: the laws keep the symmetry, the state does not.</p>
+    <p>If $\mu^2$ is positive the lowest point is $\phi = 0$ and nothing is broken. If $\mu^2$ is negative, $\phi = 0$ becomes a hilltop ($\lambda$ is positive, so the potential still rises far from the centre) and the lowest points form a ring around it: the shape of a Mexican hat. (The same potential is often written $-\mu^2|\phi|^2 + \lambda|\phi|^4$ with $\mu^2$ positive.) Every point on the ring is equally low, so the potential is symmetric, but the field has to settle at one of them. That is spontaneous symmetry breaking: the laws keep the symmetry, the state does not.</p>
     <p>Move the slider below zero and press play. The ball leaves the top, rolls down and settles somewhere on the ring. The hat turns slowly to show that no direction is special. In nature the field's value at the bottom is $v = 246.22$ GeV<sup><a href="#src-5">[5]</a></sup>.</p>
     <h3>Mass in Proportion to the Coupling</h3>
     <p>Because the field is not zero in empty space, particles that couple to it carry an energy even at rest, which is a mass. The W and Z get their masses this way. Each quark and charged lepton gets its mass from its own coupling to the field, and the Higgs boson's coupling to a fermion of mass $m_f$ is $g\,m_f/2M_W = m_f/v$: proportional to the mass<sup><a href="#src-5">[5]</a></sup>. The bars in the simulation show this for six fermions with the 2024 masses<sup><a href="#src-8">[8]</a></sup>. The top quark's coupling is 0.70, the electron's about 2 × 10<sup>−6</sup>. The theory does not predict the couplings themselves; they are measured.</p>
@@ -125,11 +125,11 @@
     <p>A Higgs boson lives far too briefly to be seen directly. One way to find it is to collect collisions that produce two photons and compute the invariant mass of the pair. Most such pairs come from other processes and give a smooth, falling background. A Higgs boson decaying to two photons always gives the same mass, so the signal is a small bump on top.</p>
     <p>Switch to the histogram and press play. Events arrive one at a time. Early on the bump is invisible among random fluctuations; with more data it grows in proportion to the number of events, while the fluctuations grow only as the square root. With background $B$ expected in a window and $N$ events observed, the excess in units of the fluctuation size is roughly</p>
     <p style="overflow-x:auto;">$$Z \approx \frac{N - B}{\sqrt{B}} .$$</p>
-    <p>A claim of discovery needs $Z \geq 5$: a chance of about 3 in 10 million that background alone would fluctuate that high or higher. Try "Background only": the histogram still has bumps, but they come and go. The simulation's numbers are chosen so that the expected excess reaches 5σ at the end of the run; each run is random, so a given run ends a little above or below 5σ.</p>
+    <p>A claim of discovery needs $Z \geq 5$: a chance of about 3 in 10 million that background alone would fluctuate that high or higher. Try "Background only": the histogram still has bumps, but they come and go. The simulation's numbers are chosen so that the expected excess reaches 5σ at the end of the run; each run is random, and the final value scatters by about one σ around 5: roughly half of all runs end below the 5σ line, and one run in ten ends below 3.7σ. That is why real analyses quote an expected significance as well as the observed one.</p>
     <h3>What ATLAS and CMS Saw</h3>
     <p>ATLAS used about 4.8 fb<sup>−1</sup> of collisions at 7 TeV recorded in 2011 and 5.8 fb<sup>−1</sup> at 8 TeV recorded in 2012, and combined searches including the two-photon, four-lepton and WW channels. It found a neutral boson with a mass of 126.0 ± 0.4 (stat) ± 0.4 (sys) GeV and a significance of 5.9σ, a background fluctuation probability of 1.7 × 10<sup>−9</sup><sup><a href="#src-6">[6]</a></sup>. CMS used up to 5.1 fb<sup>−1</sup> at 7 TeV and 5.3 fb<sup>−1</sup> at 8 TeV in five decay modes and saw an excess near 125 GeV with a local significance of 5.0σ, where 5.8σ was expected for a Standard Model Higgs boson<sup><a href="#src-7">[7]</a></sup>. Both needed the data of both years.</p>
     <h3>What the Simulation Assumes</h3>
-    <p>The potential is in model units with $\lambda = 1$, and the ball's friction is a display choice. The histogram is not the 2012 data: the background is a falling exponential, the peak is a Gaussian 1.6 GeV wide at 125.20 GeV, the number of events is arbitrary, and the expected background is taken as known. Real analyses fit the background and combine many categories. The significance shown is local: it is for one window chosen in advance.</p>
+    <p>The potential is in model units with $\lambda = 1$, and the ball's friction is a display choice. The histogram is not the 2012 data: the background is a falling exponential, the peak is a Gaussian centred at 125.20 GeV with a standard deviation of 1.6 GeV (<code>SIG</code> in sim.js), the number of events is arbitrary, and the expected background is taken as known. Real analyses fit the background and combine many categories. The significance shown is local: it is for one window chosen in advance.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -137,7 +137,7 @@
       <li>When $\mu^2 < 0$ the Higgs potential has a ring of minima; the field settles on it at $v = 246.22$ GeV, breaking the electroweak symmetry.</li>
       <li>The W, Z, quarks and charged leptons get their masses from the field, and the Higgs boson couples to each fermion in proportion to its mass.</li>
       <li>Most of a proton's mass is strong-interaction energy, not Higgs mass.</li>
-      <li>ATLAS and CMS found the boson in 2011–2012 data; its mass is 125.20 ± 0.11 GeV.</li>
+      <li>ATLAS and CMS found the boson in 2011–2012 data; the 2024 world average of its mass is 125.20 ± 0.11 GeV.</li>
     </ul>
     <p style="overflow-x:auto;">$$V = \mu^2|\phi|^2 + \lambda|\phi|^4,\quad \mu^2 < 0 \qquad Z \approx \frac{N-B}{\sqrt{B}}$$</p>
   </div>
@@ -148,7 +148,7 @@
       <li id="src-2">P. W. Higgs, "Broken Symmetries and the Masses of Gauge Bosons", <em>Physical Review Letters</em> 13, 508 (1964).</li>
       <li id="src-3">G. S. Guralnik, C. R. Hagen and T. W. B. Kibble, "Global Conservation Laws and Massless Particles", <em>Physical Review Letters</em> 13, 585 (1964).</li>
       <li id="src-4">S. Weinberg, "A Model of Leptons", <em>Physical Review Letters</em> 19, 1264 (1967).</li>
-      <li id="src-5">J. Erler and A. Freitas, "Electroweak Model and Constraints on New Physics", ch. 10 of the Review of Particle Physics, ref. 8 (revised April 2024). Cited: the potential and the condition $\mu^2 &lt; 0$; $v = 246.22$ GeV; Higgs–fermion coupling $g\,m_i/2M_W$.</li>
+      <li id="src-5">J. Erler and A. Freitas, "Electroweak Model and Constraints on New Physics", ch. 10 of the Review of Particle Physics, ref. 8 (revised April 2024). Cited: the potential (written there as $\mu^2\phi^\dagger\phi + \lambda^2(\phi^\dagger\phi)^2$) and the condition $\mu^2 &lt; 0$; $v = 246.22$ GeV; Higgs–fermion coupling $g\,m_i/2M_W$.</li>
       <li id="src-6">ATLAS Collaboration, "Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC", <em>Physics Letters B</em> 716, 1 (2012); arXiv:1207.7214. Cited: data sets, channels, mass, 5.9σ, 1.7 × 10<sup>−9</sup>.</li>
       <li id="src-7">CMS Collaboration, "Observation of a new boson at a mass of 125 GeV with the CMS experiment at the LHC", <em>Physics Letters B</em> 716, 30 (2012); arXiv:1207.7235. Cited: data sets, five decay modes, 5.0σ local, 5.8σ expected.</li>
       <li id="src-8">Particle Data Group, S. Navas et al., "Review of Particle Physics", <em>Physical Review D</em> 110, 030001 (2024), Summary Tables (pdg.lbl.gov). Cited: $m_H = 125.20 \pm 0.11$ GeV; fermion masses.</li>
