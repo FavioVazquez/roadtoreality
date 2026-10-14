@@ -611,7 +611,11 @@
     els.scroller.addEventListener('scroll', function () {
       if (!activeNode) return;
       var x = activeNode.cx - els.scroller.scrollLeft;
-      if (x < 0 || x > els.scroller.clientWidth) { hideCard(true); return; }
+      if (x < 0 || x > els.scroller.clientWidth) {
+        /* a touch preview closes; a keyboard focus waits for the scroll to arrive */
+        if (pinned || document.activeElement !== activeNode.a) hideCard(true);
+        return;
+      }
       positionCard();
     }, { passive: true });
 
