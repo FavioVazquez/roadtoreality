@@ -243,7 +243,8 @@
     var visualExt = Math.min(state.x / m.ruptureX * maxVisualExt * 2, maxVisualExt);
     /* Bob oscillates at omega = sqrt(k/m), m = F/g; drawn rate capped so it stays visible at 60 fps */
     var mKg = state.F / 9.81;
-    var omega = mKg > 0 ? Math.sqrt(m.k / mKg) : 0;
+    var kEff = m.elastomer ? m.k * (1 + 3 * (state.x / 0.8) * (state.x / 0.8)) : m.k;
+    var omega = mKg > 0 ? Math.sqrt(kEff / mKg) : 0;
     var oscOffset = (running && !ruptured) ? Math.sin(Math.min(omega, 40) * t) * (H * 0.02) : 0;
     var springEndY = anchorY + naturalH + visualExt + oscOffset;
 
@@ -380,7 +381,7 @@
         ctx.fillStyle = 'rgba(200,200,200,0.7)';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.fillText('T = 2\u03c0\u221a(m/k) = ' + (2 * Math.PI * Math.sqrt(mKg / m.k)).toFixed(2) + ' s', anchorX, H * 0.915);
+        ctx.fillText((m.elastomer ? 'T = 2\u03c0\u221a(m/k\u2032) = ' : 'T = 2\u03c0\u221a(m/k) = ') + (2 * Math.PI * Math.sqrt(mKg / kEff)).toFixed(2) + ' s', anchorX, H * 0.915);
         ctx.restore();
       }
 

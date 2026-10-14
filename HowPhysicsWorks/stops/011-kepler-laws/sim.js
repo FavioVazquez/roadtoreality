@@ -92,7 +92,7 @@
     /* Sun is at focus: shift center so Sun appears at focus */
     var focusDx = A * ecc * scale(); /* distance from center to focus in px */
     return {
-      x: cx() - focusDx + sx * scale(),
+      x: cx() + focusDx + sx * scale(),
       y: cy() - sy * scale()
     };
   }
@@ -102,7 +102,7 @@
     var a  = A * S;
     var b  = A * Math.sqrt(1 - ecc*ecc) * S;
     var focusDx = A * ecc * S;
-    var ox = cx() - focusDx; /* ellipse center x */
+    var ox = cx(); /* ellipse centre; the Sun sits focusDx to its right */
     var oy = cy();
 
     ctx.save();
@@ -482,7 +482,7 @@
 
     var eccSlider = document.getElementById('ecc-slider');
     var eccVal    = document.getElementById('ecc-val');
-    var eccLabels = { 0.0:'0.0 (circle)', 0.05:'0.05 (Jupiter 0.05; Earth is 0.017)', 0.1:'0.1 (Mars 0.09)', 0.2:'0.2 (Mercury 0.21)', 0.25:'0.25 (Pluto 0.25)', 0.4:'0.4 (some asteroids)', 0.6:'0.6 (comet-like)', 0.9:'0.9 (Halley 0.97)' };
+    var eccLabels = { 0.0:'0.0 (circle)', 0.05:'0.05 (Jupiter)', 0.1:'0.1 (Mars)', 0.2:'0.2 (Mercury)', 0.25:'0.25 (Pluto)', 0.4:'0.4 (some asteroids)', 0.6:'0.6 (comet-like)', 0.9:'0.9 (Halley)' };
     if (eccSlider) {
       eccSlider.addEventListener('input', function () {
         ecc = parseFloat(this.value);

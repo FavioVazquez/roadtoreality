@@ -232,8 +232,8 @@
       var circ = circumference();
 
       ctx.save();
-      var panW = narrow ? 195 : 215, panH = 124;
-      var panX = narrow ? 8 : W - panW - 16, panY = narrow ? 8 : H * 0.08;
+      var panW = narrow ? 225 : 240, panH = 138;
+      var panX = narrow ? 8 : W - panW - 16, panY = narrow ? H - panH - 8 : H * 0.08;
       ctx.fillStyle = 'oklch(0.12 0.03 285 / 0.92)';
       ctx.beginPath();
       ctx.roundRect(panX, panY, panW, panH, 10);
@@ -265,7 +265,8 @@
       ctx.fillText('5,000 stadia = 250,000 stadia', panX + 12, panY + 98);
       ctx.fillStyle = 'oklch(0.72 0.15 145)';
       ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
-      ctx.fillText('(actual, pole to pole: 40,008 km)', panX + 12, panY + 112);
+      ctx.fillText('(distance taken from the real Earth, so the', panX + 12, panY + 112);
+      ctx.fillText('division must return its 40,008 km)', panX + 12, panY + 126);
       ctx.restore();
     }
 
