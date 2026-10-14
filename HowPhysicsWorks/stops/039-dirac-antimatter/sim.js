@@ -80,15 +80,33 @@
   function drawPair() {
     var cy = H * 0.36, nx = W * 0.5, T = 4, ph = t % T, thr = 2 * MEC2, ok = eGamma >= thr && nucleus;
     txt('A photon of ' + eGamma.toFixed(2) + ' MeV ' + (nucleus ? 'passes a nucleus' : 'in empty space'), 16, 22, COL.text, 14);
-    if (nucleus) { dot(nx, cy + 26, 9, 'rgba(255,255,255,0.5)'); txt('nucleus', nx, cy + 52, COL.muted, 11, 'center'); }
-    var x0 = 16, f = ph / T;
+    var f = ph / T, ny0 = cy + 14, recoil = eGamma >= thr ? eGamma - Math.sqrt(eGamma * eGamma - thr * thr) : 0, made = ok && f >= 0.45, gm = made ? Math.min(1, (f - 0.45) / 0.15) : 0;
+    if (nucleus) {
+      /* the nucleus's Coulomb field: faint rings, with the vertex inside it */
+      ctx.lineWidth = 1;
+      [30, 52, 74].forEach(function (rr, i) { ctx.strokeStyle = 'rgba(255,255,255,' + (0.14 - i * 0.03).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(nx, ny0, rr, 0, 2 * Math.PI); ctx.stroke(); });
+      var ny1 = ny0 + 3 * gm;
+      dot(nx, ny1, 9, 'rgba(255,255,255,0.5)');
+      txt('nucleus', nx - 16, ny1 + 4, COL.muted, 11, 'right');
+      if (made) {
+        var al = 14 + 26 * Math.min(1, recoil / 1.5), ay0 = ny1 + 12, ay1 = ay0 + al * gm;
+        ctx.strokeStyle = COL.ph; ctx.fillStyle = COL.ph; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(nx, ay0); ctx.lineTo(nx, ay1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(nx, ay1 + 6); ctx.lineTo(nx - 4, ay1 - 2); ctx.lineTo(nx + 4, ay1 - 2); ctx.closePath(); ctx.fill();
+        if (gm >= 1) txt('recoil ≥ ' + recoil.toFixed(3) + ' MeV/c', nx, ay1 + 20, COL.ph, W < 560 ? 10 : 11, 'center');
+      }
+    }
+    var x0 = 16;
     if (!ok || f < 0.45) {
       var xe = ok ? x0 + (nx - x0) * (f / 0.45) : x0 + (W - 32) * f;
       wave(x0, cy, xe, cy, COL.ph, t * 10);
     } else {
       var g = (f - 0.45) / 0.55, L = (W - nx - 30) * g, ang = 0.35 + 0.25 / (1 + eGamma);
-      dot(nx + L * Math.cos(ang), cy - L * Math.sin(ang), 6, COL.em, 'e⁻');
-      dot(nx + L * Math.cos(ang), cy + L * Math.sin(ang), 6, COL.ep, 'e⁺');
+      var ex = nx + L * Math.cos(ang), ey = L * Math.sin(ang), sa = Math.sin(ang), ca = Math.cos(ang);
+      dot(ex, cy - ey, 6, COL.em); dot(ex, cy + ey, 6, COL.ep);
+      /* labels sit off the tracks, perpendicular to them and away from each other */
+      txt('e⁻', ex - sa * 18, cy - ey - ca * 18 + 4, COL.em, 12, 'center');
+      txt('e⁺', ex - sa * 18, cy + ey + ca * 18 + 4, COL.ep, 12, 'center');
       ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(nx, cy); ctx.lineTo(nx + L * Math.cos(ang), cy - L * Math.sin(ang)); ctx.moveTo(nx, cy); ctx.lineTo(nx + L * Math.cos(ang), cy + L * Math.sin(ang)); ctx.stroke();
     }
