@@ -73,36 +73,77 @@
       Thales made one move that changed everything: he asked whether nature has <em>patterns</em> that repeat regardless of what any god wants. He proposed that earthquakes happen because the Earth floats on water, and water disturbs it. He was wrong about the mechanism. But the question itself — "what natural process causes this?" — is the founding question of all science.
     </p>
     <p>
-      Below, compare two ways of explaining the same event. One closes the question. The other opens it.
+      Below is the measurement later writers credit to him, and you can repeat it. The Sun's rays arrive parallel, so a stick and a pyramid standing in the same sunlight cast shadows in the same proportion as their heights. Measure both shadows and you know a height you cannot climb.
     </p>
   </div>
 
   <!-- Simulation -->
   <div class="sim-wrapper content-column">
-    <div class="sim-container" id="sim-mount" aria-label="Interactive: Natural vs supernatural explanation comparison">
-      <noscript>
-        <div class="sim-placeholder">
-          <div class="sim-placeholder__text">Simulation requires JavaScript</div>
+    <div role="tablist" aria-label="Simulation views" style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.75rem;border-bottom:1px solid oklch(1 0 0 / 0.07);background:var(--color-deep);">
+      <button class="sim-btn sim-btn-play" type="button" role="tab" id="tab-shadow" aria-selected="true" aria-controls="panel-shadow" tabindex="0">Pyramid shadow</button>
+      <button class="sim-btn" type="button" role="tab" id="tab-saros" aria-selected="false" aria-controls="panel-saros" tabindex="-1">Eclipse cycle (saros)</button>
+    </div>
+    <div id="panel-shadow" role="tabpanel" aria-labelledby="tab-shadow">
+      <div class="sim-container" id="sim-mount" style="min-height:470px;" aria-label="Interactive: measure the Great Pyramid's height from its shadow and a stick's shadow">
+        <noscript>
+          <div class="sim-placeholder">
+            <div class="sim-placeholder__text">Simulation requires JavaScript</div>
+          </div>
+        </noscript>
+      </div>
+      <div class="sim-controls">
+        <div class="sim-control" style="flex:1 1 100%">
+          <label class="sim-control__label" for="alt-slider">
+            Sun's altitude
+            <span class="sim-control__value" id="alt-val">45°</span>
+          </label>
+          <input type="range" id="alt-slider" min="20" max="60" step="1" value="45"
+                 aria-label="Sun's altitude above the horizon, in degrees" aria-valuetext="45 degrees">
         </div>
-      </noscript>
-    </div>
-    <div class="sim-controls">
-      <div class="sim-control" style="flex:1">
-        <label class="sim-control__label" for="perspective-slider">
-          Perspective
-          <span class="sim-control__value" id="perspective-label">50</span>
-        </label>
-        <input type="range" id="perspective-slider" min="0" max="100" step="1" value="50"
-               aria-label="Shift between supernatural and natural worldview">
+        <div class="sim-control" style="flex:1 1 12rem">
+          <label class="sim-control__label" for="stick-ruler">Stick’s shadow, your reading (m)</label>
+          <input type="number" id="stick-ruler" min="0" max="6" step="0.01" value="1.00" inputmode="decimal"
+                 aria-label="Your reading of the stick's shadow, in metres. Also set by dragging the lower ruler."
+                 style="min-height:44px;padding:0.5rem 0.75rem;border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);border:1px solid oklch(1 0 0 / 0.16);font-family:var(--font-mono);font-size:var(--text-sm);width:100%;">
+        </div>
+        <div class="sim-control" style="flex:1 1 12rem">
+          <label class="sim-control__label" for="pyr-ruler">Pyramid’s shadow from the centre (m)</label>
+          <input type="number" id="pyr-ruler" min="0" max="420" step="0.1" value="100.0" inputmode="decimal"
+                 aria-label="Your reading of the pyramid's shadow measured from the centre of its base, in metres. Also set by dragging the upper ruler."
+                 style="min-height:44px;padding:0.5rem 0.75rem;border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);border:1px solid oklch(1 0 0 / 0.16);font-family:var(--font-mono);font-size:var(--text-sm);width:100%;">
+        </div>
+        <div class="sim-control" style="flex:1 1 100%">
+          <span class="sim-control__label">Your estimate of the height</span>
+          <output id="height-estimate" for="stick-ruler pyr-ruler" aria-live="polite" style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-primary);overflow-wrap:anywhere;"></output>
+        </div>
+        <div class="sim-control" style="flex:1 1 100%">
+          <button class="sim-btn" type="button" id="reveal-btn" aria-pressed="false" aria-describedby="reveal-result">Reveal the true height</button>
+          <span id="reveal-result" aria-live="polite" style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.5;"></span>
+        </div>
+        <div class="sim-actions">
+          <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play: raise the Sun to the chosen altitude">▶ Play</button>
+          <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset the Sun, the rulers and the reveal">↺ Reset</button>
+        </div>
       </div>
-      <div class="sim-actions">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation">▶ Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">↺ Reset</button>
+      <div class="sim-caption" aria-live="polite">
+        <div class="sim-caption__dot" id="sim-dot"></div>
+        <span id="sim-status">Drag the yellow ruler ends to the shadow tips, then compare your estimate with the true height.</span>
       </div>
     </div>
-    <div class="sim-caption" aria-live="polite">
-      <div class="sim-caption__dot" id="sim-dot"></div>
-      <span>Toggle between a supernatural and natural explanation for the same event.</span>
+    <div id="panel-saros" role="tabpanel" aria-labelledby="tab-saros" hidden>
+      <div id="saros-mount" style="width:100%;background:oklch(0.09 0 0);"></div>
+      <div style="padding:var(--space-4) var(--space-5);background:var(--color-deep);">
+        <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.6;margin:0 0 0.75rem;">
+          Two saros series of total solar eclipses. Each eclipse in a series comes 6,585 or 6,586 calendar days after the one before (18 years and 10, 11 or 12 days, depending on leap years), because 223 lunar months last 6,585.32 days. That repeat is the kind of pattern a careful record of dates can reveal. The extra third of a day matters: the Earth has turned about a third of a turn further (0.32 × 360° ≈ 115°), so in these two series each eclipse is greatest between 106° and 127° of longitude further west than the one before. A cycle like this can say that an eclipse may occur; it cannot say where it will be seen.
+        </p>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:var(--text-xs);font-family:var(--font-mono);color:var(--color-text-secondary);">
+            <caption style="text-align:left;padding-bottom:0.4rem;color:var(--color-text-muted);">Greatest-eclipse points, NASA Five Millennium Catalog [6]</caption>
+            <thead><tr style="text-align:left;color:var(--color-text-muted);"><th scope="col" style="padding:0.3rem 0.6rem 0.3rem 0;">Saros</th><th scope="col" style="padding:0.3rem 0.6rem 0.3rem 0;">Date</th><th scope="col" style="padding:0.3rem 0.6rem 0.3rem 0;">Greatest eclipse</th><th scope="col" style="padding:0.3rem 0.6rem 0.3rem 0;">After previous</th></tr></thead>
+            <tbody id="saros-rows"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -117,25 +158,45 @@
     <p>
       His specific theories about what things are made of (he thought water was the fundamental substance) turned out to be wrong. But the <em>method</em> — look for a natural cause, form a prediction, check it against reality — became the engine of 2,500 years of discovery.
     </p>
+
+    <h3>How the Shadow Measurement Works</h3>
+    <p>
+      Two later writers tell the story. Diogenes Laertius quotes Hieronymus: Thales measured the pyramids by their shadow, waiting for the hour when a person's shadow is as long as the person is tall<sup><a href="#src-4">[4]</a></sup>. At that moment the Sun stands 45° high and every shadow equals its object's height, which is why the simulation starts at 45°. Plutarch gives the general version: Thales set a staff upright at the end of the pyramid's shadow, and the two triangles made by the Sun's rays showed that the pyramid is to the staff as shadow is to shadow<sup><a href="#src-4">[4]</a></sup>. That proportion works at any altitude:
+    </p>
+    <p style="overflow-x:auto;">$$S_\text{stick} = \frac{h}{\tan\alpha}, \quad S_\text{pyramid} = \frac{H}{\tan\alpha} \quad\Rightarrow\quad \frac{H}{h} = \frac{S_\text{pyramid}}{S_\text{stick}}$$</p>
+    <p>
+      Both shadows are a height divided by \(\tan\alpha\), where \(\alpha\) is the Sun's altitude, so \(\alpha\) cancels and you never need to know it. There is a catch the stick does not have. The pyramid's height is measured at its apex, which stands above the centre of the base, so its shadow must be measured from that centre too. Half the base, 115.2 m (the base side is 230.3 m<sup><a href="#src-5">[5]</a></sup>), lies hidden under the pyramid; you add it to the visible shadow. Forget it and your estimate comes out far too low.
+    </p>
+    <p>
+      The simulation draws the pyramid at its original height, 146.6 m<sup><a href="#src-5">[5]</a></sup>, and the stick at 2.00 m, an illustrative choice; the sources do not give the staff's length. The stick is drawn magnified in its own panel so you can read its shadow. Above 51.8°, the slope of the faces<sup><a href="#src-5">[5]</a></sup>, the whole shadow falls on the pyramid itself and nothing reaches past the base: try it with the slider.
+    </p>
+
+    <h3>What the Simulation Leaves Out</h3>
+    <p>
+      The side view assumes the Sun is square to one face, as at noon, when the shadow points due north. At Giza's latitude (30° N) the noon Sun is low enough for a shadow to reach past the base only from about mid-October to the end of February (worked out here from the Sun's yearly path, not taken from a source); at other times of day the method still works, but the distance from the centre has to be measured along a slanting shadow. The simulation also draws a sharp shadow. The real Sun is a disc half a degree wide, so the tip of the pyramid's shadow is blurred over two to three metres at 45° (the half-degree spread over the 207 m from apex to tip), which limits how well anyone could have read it.
+    </p>
   </div>
 
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
       <li>Thales is the earliest Greek thinker we know of who explained natural events (earthquakes, the Nile flood, the nature of matter) by natural causes. Our knowledge of him is second-hand: Aristotle, Herodotus and later writers; nothing he wrote survives.</li>
+      <li>The pyramid measurement attributed to him uses a natural regularity, that sunlight travels in parallel straight lines, to find a height nobody could reach directly.</li>
       <li>He was wrong about the specifics (water as the fundamental substance) but right about the approach: nature has patterns that repeat and can be predicted.</li>
       <li>Herodotus says he foretold the year of the eclipse of 28 May 585 BCE. Historians doubt he could have: no method known in his time predicts a solar eclipse for a given place, and the story may be a later attribution. It is a legend worth telling as a legend.</li>
     </ul>
-    <p style="overflow-x:auto;">$$\text{Natural event} \xrightarrow{\text{natural cause}} \text{Testable prediction}$$</p>
+    <p style="overflow-x:auto;">$$H = h \times \frac{S_\text{pyramid}}{S_\text{stick}}, \qquad S_\text{pyramid} = \tfrac{1}{2}\,\text{base} + \text{visible shadow}$$</p>
   </div>
 
   <div class="stop-body content-column" id="sources">
     <h3>Sources</h3>
     <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
-      <li>Aristotle, <em>Metaphysics</em> A.3, 983b20: water as the first principle.</li>
-      <li>Aristotle, <em>De Caelo</em> II.13, 294a28, and Seneca, <em>Naturales Quaestiones</em> VI.6: the Earth resting on water, and earthquakes.</li>
-      <li>Herodotus, <em>Histories</em> I.74: the battle, the eclipse and the peace.</li>
-      <li>Diogenes Laertius, <em>Lives of the Eminent Philosophers</em> I.27, and Plutarch, <em>Dinner of the Seven Wise Men</em> 147a: the height of a pyramid from its shadow.</li>
+      <li id="src-1">Aristotle, <em>Metaphysics</em> A.3, 983b20: water as the first principle.</li>
+      <li id="src-2">Aristotle, <em>De Caelo</em> II.13, 294a28, and Seneca, <em>Naturales Quaestiones</em> VI.6: the Earth resting on water, and earthquakes.</li>
+      <li id="src-3">Herodotus, <em>Histories</em> I.74: the battle, the eclipse and the peace.</li>
+      <li id="src-4">Diogenes Laertius, <em>Lives of the Eminent Philosophers</em> I.27 (citing Hieronymus: the hour when a shadow equals its object's height), and Plutarch, <em>Dinner of the Seven Wise Men</em>, Moralia 147a (the staff at the end of the shadow and the proportion of the two triangles).</li>
+      <li id="src-5">M. Lehner, <em>The Complete Pyramids</em> (Thames &amp; Hudson, 1997): Great Pyramid original height 146.6 m, base side 230.3 m, face slope about 51.8°. Used for the pyramid drawn in the simulation.</li>
+      <li id="src-6">F. Espenak and J. Meeus, <em>Five Millennium Canon of Solar Eclipses: −1999 to +3000</em>, NASA/TP-2006-214141 (2006), and the NASA Eclipse Web Site catalogue pages for saros 139 and 145 (eclipse.gsfc.nasa.gov): dates and greatest-eclipse coordinates in the saros tab; saros length 6,585.32 days.</li>
     </ol>
   </div>
 
