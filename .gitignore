@@ -46,3 +46,4 @@ remeasured/**/partA_area_samples.npz
 remeasured/**/*.mp4
 remeasured/**/showtime-out/
 remeasured/**/premerger-box/**/*_result.json
+remeasured/ep5-gw250114-area/out/literature/isi2021_methods_masked.txt

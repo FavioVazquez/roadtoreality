@@ -381,7 +381,123 @@ Sources (cited):
 
 **Headline unchanged.** The S6 rule gives sentence 4, and the comparison does not change the pre-registered decision. One line for the article is supported by both analyses: at the LVK reference point we find the same fractional growth, about +73% (90% intervals +38% to +109% in ours, +41% to +116% in LVK's). A Gaussian approximation gives 4.4–4.6σ in both analyses. The exact tail gives 3.2–3.8σ. The evidence weakens to about 2σ or less for ringdown fits that start ≥ 15 M_f after the peak.
 
-## Open issues (updated in S6)
+**[Added in S7] Calibration of the S6 method on GW150914:** the same construction (220-only ringdown at +3 ms with project settings × a frequency-cut pre-merger posterior × exact P) gives P = 0.946 against Isi et al. 2021's 95% (−0.04σ). The S6 headline stands, with a calibration uncertainty of about ±0.3σ in P. See S7.
+
+## S7 — Task 5: calibrate the area method on GW150914 against Isi et al. 2021 (PRE-REGISTERED 2026-10-14 08:48 UTC, before any area was computed)
+**Inputs.**
+- "Before": the other lane's GW150914 pre-merger posterior, ../premerger-lane2/GW150914_premerger_posterior.csv.gz.
+  - sha256 b8dad648e84a74628cbd6b67ccd19421798d258c4ff01c96a1dcfa34c1eee527, verified locally; 5,142 samples (all of them).
+  - Setup: IMRPhenomXPHM, 20–132 Hz (the GWTC-1 cutoff, cited by that lane), dynesty nlive 1000, 1024 Hz, bilby 2.8.2 (GW150914_run_meta.json).
+  - The file also has the lane's own area columns (area_*_km2). We do not use them, except as a check of our A_i at the end.
+  - Only the checksum, run meta, column names and row count were read before this section was written.
+- **Reproducibility note (from the owner): bilby ignored --seed in both pre-merger runs (dynesty's rstate took precedence).** Neither this run nor the GW250114 run of S6 is bit-reproducible. Rerunning them gives a statistically equivalent posterior, not the same samples. Their sha256 identify the exact samples we used.
+- "After": our existing GW150914 ringdown posteriors (results/ringdown/), all detector frame; no new fits (local compute only).
+
+**Isi et al. 2021** (arXiv:2012.04486v2, PRL 127, 011103; PDF sha256 291d187b…). To choose matching settings I read only their method sentences. They were extracted by a keyword filter that masked any percentage or σ value and dropped sentences about the area probability (literature/isi2021_methods_masked.txt). Their table of remnant (m_f, χ_f) posteriors was visible in that extract.
+- **Caveat on blindness:** the published probabilities may also be in my training data. This pre-registration fixes the choices and the rule before any computation, but it cannot guarantee that I have no prior knowledge of their numbers.
+- **Their method, as read:**
+  - Before: a time-domain inspiral analysis with NRSur7dq4, truncated at the inferred peak (t = 1126259462.423 s GPS), 2048 Hz.
+  - After: their own ringdown remnant posteriors from Isi et al. 2019 (arXiv:1905.00869), in two versions, N = 1 (220+221 at Δt0 = 0) and N = 0 (220 only at Δt0 = 3 ms).
+  - Their combination: A_0 = A(m1, χ1) + A(m2, χ2) and A_f = A(m_f, χ_f), as in ours.
+- **What we cannot match.**
+  - Our "before" uses a frequency cut (20–132 Hz, XPHM), not a time-domain truncation at the peak with NRSur7dq4. This is the largest known difference, and it is fixed by the inputs.
+  - Our "after" has no N = 0 run with their 2019/2023 settings, only our project settings.
+
+**"After" posteriors used** (exactly these; results/ringdown/<label>_posterior.npz):
+- N = 1, 220+221 at the peak (geocentre 1126259462.4083147):
+  1. **N1-primary = T3_A0_theirs_ds1**: Isi & Farr's own published configuration for this measurement (arXiv:2310.13869, Zenodo 7597043 config-ds1.ini, 16384 Hz). It is chosen because it is the authors' own setup, which S5 showed reproduces their posterior. It was not chosen for its numbers.
+  2. T3_A0_theirs_ds8 (same at 2048 Hz).
+  3. S5 chain A, A1a … A4c, and chain B, B2–B4. B1 is invalid (S5) and excluded.
+  4. Our P base: GW150914_220221_peak (4 kHz), _16k, _dur0p05.
+  5. Our docs base: _docs, _docs_nohp, _docs_nohp_16k, _docs_nohp_dur0p05.
+- N = 0, 220 only at +3 ms:
+  1. **N0-primary = GW150914_220_dt3ms**: project settings, the only N = 0 run.
+  2. GW150914_220_dt3ms_nohp.
+- There is no GW150914 220-only scan over start times in our results beyond the +3 ms point, so none is used.
+
+**Frame and formula.** As in S6: detector frame on both sides (mass_1, mass_2, a_1, a_2 against our detector-frame M_f, χ_f), A = 8π(GM/c²)²(1 + sqrt(1 − χ²)) in m². Check: mass/mass_source − 1 = redshift to < 1e-6.
+
+**Statistic.** P(ΔA > 0), exact over all sample pairs with bootstrap s.e.; ΔA/A_0 median and 90% interval; one-sided σ = Φ⁻¹(P). The Gaussian σ is given for information only. Driver: scripts/area_task5.py, which reuses stats() from area_task4.py.
+
+**Decision rule: "reproduces Isi 2021".** P_theirs are their reported probabilities for N = 1 (Δt0 = 0) and N = 0 (Δt0 = 3 ms) at their reference truncation, read from the paper only after our table is written.
+- **Reproduces:** |Φ⁻¹(P_ours) − Φ⁻¹(P_theirs)| ≤ 0.3σ for both N1-primary and N0-primary. 0.3σ covers their rounding and our Monte Carlo error.
+- **Reproduces qualitatively:** both differences ≤ 0.6σ and on the same side of P = 0.90.
+- **Does not reproduce:** otherwise.
+- As a second check, if they quote a fractional area change, our median ΔA/A_0 should be within 0.1 of theirs.
+- The spread over all the other "after" variants is reported, but it does not enter the rule.
+
+**What it implies for S6, fixed now.**
+- Reproduces: the combination method (frequency-cut "before" × our ringdown "after", exact P) is calibrated against a published result on a known case, and S6 stands as written.
+- Our P is lower by > 0.3σ: our pipeline is conservative relative to Isi 2021. The S6 "cannot claim" may partly reflect that, and S6 must say so. The suspected cause is the different "before" method.
+- Our P is higher by > 0.3σ: our pipeline may overstate the evidence, and the S6 numbers at 10.5–13 M_f must carry that caveat.
+
+### S7 results (computed 08:50 UTC, after the pre-registration was saved as STATUS.md v13, sha256 7ebcfdc0…; copy in prereg/STATUS_S7_preregistered.md)
+Run: scripts/area_task5.py. Log: logs/area_task5_run.log. Table: results/area_task5.csv; provenance in results/area_task5.json. Figure: figures/area_task5.png. Local, 17 s wall.
+
+**Checks.**
+- Frame check passed (max |m/m_source − 1 − z| = 6e-8; the CSV stores masses to about 7 digits).
+- Lane 2's own area_initial_km2 column equals **our source-frame** A_0 to 5e-8. So that column is source frame and is not comparable to our detector-frame ringdown areas. We do not use it.
+- Pre-merger medians (detector frame): m1 = 44.8 and m2 = 31.2 M_sun, a1 = 0.39, a2 = 0.40.
+- A_0 (detector frame) = 3.11 [2.47, 4.47] × 10¹¹ m². Source frame, for information: 2.54 [2.05, 3.63] × 10¹¹ m².
+
+| group | run | M_f det | chi_f | ΔA/A_0 median [5%, 95%] | P(ΔA>0) ± s.e. | σ (one-sided) | σ_gauss |
+|---|---|---|---|---|---|---|---|
+| N=1 | **N1-primary: Isi & Farr 2023 config, 16384 Hz** (`T3_A0_theirs_ds1`) | 68.5 | 0.67 | 0.42 [-0.10, 1.01] | 0.9105 ± 0.0030 | 1.34 | 1.22 |
+| N=1 | Isi & Farr 2023 config, 2048 Hz (`T3_A0_theirs_ds8`) | 72.0 | 0.72 | 0.53 [-0.01, 1.09] | 0.9481 ± 0.0026 | 1.63 | 1.62 |
+| N=1 | S5 A1a (`T3_A1a_acf_fd`) | 71.8 | 0.71 | 0.53 [-0.01, 1.08] | 0.9472 ± 0.0024 | 1.62 | 1.60 |
+| N=1 | S5 A1b (`T3_A1b_acf_slice128`) | 72.5 | 0.73 | 0.54 [0.00, 1.09] | 0.9504 ± 0.0025 | 1.65 | 1.67 |
+| N=1 | S5 A2 (`T3_A2_amp_marg`) | 73.3 | 0.74 | 0.57 [0.02, 1.13] | 0.9560 ± 0.0023 | 1.71 | 1.76 |
+| N=1 | S5 A3 (`T3_A3_pol_generic`) | 75.3 | 0.76 | 0.63 [0.06, 1.24] | 0.9629 ± 0.0020 | 1.79 | 1.86 |
+| N=1 | S5 A4a (`T3_A4a_digfilt`) | 78.4 | 0.79 | 0.73 [0.12, 1.42] | 0.9711 ± 0.0018 | 1.90 | 2.01 |
+| N=1 | S5 A4b (`T3_A4b_mmax150`) | 78.5 | 0.79 | 0.73 [0.11, 1.42] | 0.9707 ± 0.0017 | 1.89 | 2.01 |
+| N=1 | S5 A4c (= our P, 16 kHz) (`T3_A4c_dataV1`) | 78.5 | 0.79 | 0.73 [0.11, 1.42] | 0.9707 ± 0.0017 | 1.89 | 2.01 |
+| N=1 | S5 B2 (`T3_B2_amp_theirs`) | 76.2 | 0.77 | 0.66 [0.05, 1.30] | 0.9604 ± 0.0021 | 1.76 | 1.85 |
+| N=1 | S5 B3 (`T3_B3_pol_theirs`) | 74.7 | 0.75 | 0.61 [0.04, 1.26] | 0.9580 ± 0.0022 | 1.73 | 1.72 |
+| N=1 | S5 B4 (`T3_B4_digfilt_off`) | 75.3 | 0.76 | 0.63 [0.06, 1.23] | 0.9623 ± 0.0021 | 1.78 | 1.87 |
+| N=1 | our P base, 4 kHz (`GW150914_220221_peak`) | 79.1 | 0.80 | 0.75 [0.12, 1.46] | 0.9719 ± 0.0017 | 1.91 | 2.02 |
+| N=1 | our P base, 16 kHz (`GW150914_220221_peak_16k`) | 78.5 | 0.79 | 0.73 [0.12, 1.40] | 0.9710 ± 0.0019 | 1.90 | 2.05 |
+| N=1 | our P base, 0.05 s (`GW150914_220221_peak_dur0p05`) | 78.7 | 0.78 | 0.75 [0.09, 1.53] | 0.9686 ± 0.0017 | 1.86 | 1.89 |
+| N=1 | docs base (`GW150914_220221_peak_docs`) | 82.8 | 0.83 | 0.87 [0.22, 1.60] | 0.9803 ± 0.0016 | 2.06 | 2.38 |
+| N=1 | docs base, no high-pass (`GW150914_220221_peak_docs_nohp`) | 82.1 | 0.82 | 0.84 [0.20, 1.56] | 0.9791 ± 0.0017 | 2.04 | 2.33 |
+| N=1 | docs base, no high-pass, 16 kHz (`GW150914_220221_peak_docs_nohp_16k`) | 81.1 | 0.82 | 0.81 [0.19, 1.54] | 0.9779 ± 0.0016 | 2.01 | 2.24 |
+| N=1 | docs base, no high-pass, 0.05 s (`GW150914_220221_peak_docs_nohp_dur0p05`) | 81.9 | 0.81 | 0.86 [0.19, 1.65] | 0.9787 ± 0.0015 | 2.03 | 2.21 |
+| N=0 | **N0-primary: project settings** (`GW150914_220_dt3ms`) | 76.8 | 0.80 | 0.63 [-0.02, 1.32] | 0.9455 ± 0.0022 | 1.60 | 1.63 |
+| N=0 | project settings, no high-pass (`GW150914_220_dt3ms_nohp`) | 75.8 | 0.79 | 0.60 [-0.05, 1.30] | 0.9341 ± 0.0023 | 1.51 | 1.51 |
+
+**Numbers, before reading Isi 2021's probabilities.**
+- N1-primary (Isi & Farr's own 16384 Hz configuration): **P(ΔA > 0) = 0.911 ± 0.003 (1.34σ)**, ΔA/A_0 = 0.42 [−0.10, 1.01].
+- N0-primary (220 only at +3 ms, project settings): **P = 0.946 ± 0.002 (1.60σ)**, ΔA/A_0 = 0.63 [−0.02, 1.32].
+- Across all 19 N = 1 runs, P runs from 0.911 to 0.980. It rises with the remnant mass, from the authors' configuration (lowest) through the S5 chain to our settings and the docs settings (highest).
+- The S5 settings spread is therefore about 0.7σ in P for GW150914. The decimation-filter step (A3 → A4a) alone moves P from 0.963 to 0.971.
+
+### S7 comparison with Isi et al. 2021 (read at 08:51 UTC, after our numbers were saved as STATUS.md v14, sha256 4fe72778…)
+Source: arXiv:2012.04486v2 (PRL 127, 011103; refs.bib key Isi2021area), the PDF text itself (sha256 291d187b…). Cited values:
+- **N = 1** (220+221 at the peak): ΔA/A_0 = 0.52 (+0.71, −0.47), 90% credibility, with "agreement with Hawking's area theorem with 97% … probability".
+- **N = 0** (220 at +3 ms): ΔA/A_0 = 0.60 (+0.82, −0.60), with 95% probability (Fig. 2 caption; abstract: "97% (95%) probability").
+- Truncating the inspiral earlier gives probabilities "within 88−97%" (Fig. 3).
+
+| | Isi 2021 P | our P (primary) | Δσ = Φ⁻¹(ours) − Φ⁻¹(theirs) | Δσ allowing for their rounding (±0.5%) | ΔA/A_0 median, theirs vs ours |
+|---|---|---|---|---|---|
+| N = 1 | 0.97 | 0.911 | **−0.54** | −0.62 to −0.47 | 0.52 vs 0.42 (diff 0.10) |
+| N = 0 | 0.95 | 0.946 | **−0.04** | −0.09 to +0.00 | 0.60 vs 0.63 (diff 0.03) |
+
+**Pre-registered verdict: "reproduces qualitatively", not "reproduces".**
+- N = 0 is within 0.3σ. N = 1 is 0.54σ low: outside 0.3σ but inside 0.6σ, and on the same side of 0.90. If their 97% was really ≥ 97.4%, N = 1 would fall outside 0.6σ.
+- The secondary check (fractional change within 0.1) passes for N = 0 and is exactly at the limit for N = 1 (0.097).
+
+**For information only (not part of the rule):**
+- Across our N = 1 variants, P = 0.911–0.980, which brackets their 97%. The authors' 2048 Hz configuration gives 0.948 (−0.25σ). Our project-settings P base gives 0.972 (+0.03σ).
+- So the N = 1 shortfall comes mostly from the 16384 Hz configuration, whose remnant is lighter (68.5 against 72–79 M_sun).
+- Their "before" differs from ours: a time-domain NRSur7dq4 analysis truncated at the peak, against our 20–132 Hz XPHM cut. They do not quote A_0 itself in a form we can compare, so that difference cannot be separated here.
+
+**What this implies for S6 (by the pre-registered rule).**
+- The rule's "lower by > 0.3σ" branch applies to N = 1: with the overtone configuration, our pipeline is conservative relative to Isi 2021 by about 0.5σ.
+- For N = 0 the method reproduces Isi 2021 (−0.04σ). N = 0 is the same construction S6 uses for GW250114: 220-only ringdown with project settings, × a frequency-cut pre-merger posterior, × exact P.
+- So the S6 calibration case passes, and S6 stands as written. Sentence 4 is not an artefact of a pipeline that understates the evidence on a known case.
+- One caveat goes into S6: this is a single event, and its "before" posterior comes from a different method than Isi 2021's. An agreement at the 0.05σ level in P can therefore partly be a coincidence of compensating differences. The calibration constrains the method to about ±0.3σ in P at P ≈ 0.95, not better.
+- GW150914 also gives the size of the S5 settings systematic in P: about 0.7σ across all 19 N = 1 runs. The decimation filter alone contributes about 0.1σ (0.963 → 0.971).
+
+## Open issues (updated in S7)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
 2. [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
    - which choice is right, to be settled by an injection with a known answer (rule 3);
@@ -397,6 +513,7 @@ Sources (cited):
 5. Not supported by the package: calibration marginalisation (bound given in S2.1).
 6. Two ws submits failed on script bugs on my side (exit 127: an env-var prefix inside /usr/bin/time; exit 2: a text-substitution placeholder that also matched inside "GW250114"). No fits ran in either; both were resubmitted. Records are in logs/ws_job_*_FAILED/.
 7. [S5] GW250114 220-only fits all used FFT-cut decimation, the 1.1.0 default. Testing digital_filter = False at 10.5 M_f is a single fit, not yet run.
+8. [S7] GW150914 calibration against Isi 2021: reproduced qualitatively. N = 0 matches (−0.04σ); N = 1 with Isi & Farr's 16 kHz configuration is 0.54σ low. The 'before' methods differ (time-domain NRSur7dq4 truncated at the peak vs 20–132 Hz XPHM), and we have no time-domain pre-merger run to test that difference. Neither pre-merger run is bit-reproducible: bilby ignored --seed because dynesty's rstate took precedence.
 
 ## Time and compute used
 - **Day 1, Part A:** 02:35–02:58 UTC (about 25 min wall, including the figure at about 03:17). About 12 min of that was the Zenodo download (262 MB, 6 files). Analysis compute was 2.2 s on the local Intel Mac (6 cores), plus a few seconds for the figure.
@@ -415,6 +532,8 @@ Sources (cited):
 - **Session 5 (Task 3):** from the Task 3 brief (after 05:31 UTC) to 07:21 UTC, mostly local work (source reading, configs, pre-registration, analysis). The R1 16 kHz download took 10.3 min locally. ws job 52094c2c ran 06:48:23–07:16:35 UTC (28.2 min) on the shared box, with at most 2 fits at once and threads capped: 13 fits, 8,836 CPU-s (2.45 core-hours). A rough cost share is under $1 (on-demand estimate, not a bill). The owner stops the box.
 
 - **Session 6 (Task 4):** local only, no ws: from the Task 4 brief to 08:28 UTC. Area combination 12 s and LVK comparison about 10 s of CPU on the Intel Mac; arXiv PDF download (16.5 MB).
+
+- **Session 7 (Task 5):** local only, from the Task 5 brief to 08:51 UTC. Area combination 17 s; Isi 2021 PDF (arXiv) download; no ws.
 
 ## File checksums of outputs
 See CHECKSUMS_outputs.tsv (sha256 of every file in out/ at the time of writing).
