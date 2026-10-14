@@ -396,17 +396,7 @@
 .journey.is-compact .journey__stage { margin-inline: calc(-1 * var(--page-padding)); }
 .journey__hint { display: none; color: var(--color-text-secondary); }
 .journey.is-scroll .journey__hint { display: inline; }
-.journey__snap {
-  position: absolute;
-  top: 0;
-  width: 1px;
-  height: 1px;
-  scroll-snap-align: start;
-  pointer-events: none;
-}
 .journey.is-scroll .journey__scroller {
-  position: relative;
-  scroll-snap-type: x proximity;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 28px), transparent 100%);
           mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 28px), transparent 100%);
 }

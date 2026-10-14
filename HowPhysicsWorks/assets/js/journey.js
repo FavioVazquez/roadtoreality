@@ -45,9 +45,6 @@
     { from: 1941, to: 2031, era: 'contemporary', ticks: [1950, 1975, 2000, 2025] }
   ];
 
-  var reduceMotion = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   var stops = [];
   var nodes = [];          /* laid-out nodes, in stop order */
   var geo = null;          /* current geometry */
@@ -415,17 +412,6 @@
       el('circle', { class: 'jm-node__focus', cx: n.cx, cy: n.cy, r: g.r + 5 }, a);
     });
 
-    /* snap points at the start of each era on the scrolling road */
-    Array.prototype.slice.call(els.scroller.querySelectorAll('.journey__snap')).forEach(function (n) { n.remove(); });
-    if (g.width > width + 1) {
-      g.scale.bounds.forEach(function (B) {
-        if (B.seg.gap) return;
-        var sp = h('span', 'journey__snap', els.scroller);
-        sp.style.left = Math.max(0, B.a - 18) + 'px';
-        sp.setAttribute('aria-hidden', 'true');
-      });
-    }
-
     updateHead(visited, nextNode);
     hideCard(true);
 
@@ -647,7 +633,7 @@
     if (n.cx < left + margin) target = n.cx - margin;
     else if (n.cx > right - margin) target = n.cx - sc.clientWidth + margin;
     if (target !== null) {
-      sc.scrollTo({ left: Math.max(0, target), behavior: reduceMotion ? 'auto' : 'smooth' });
+      sc.scrollLeft = Math.max(0, target);
     }
   }
 
