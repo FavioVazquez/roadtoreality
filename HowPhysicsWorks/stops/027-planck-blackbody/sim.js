@@ -46,33 +46,34 @@
   }
 
   /* ── Physics ── */
-  /* Planck spectral radiance (dimensionless): x = hFactor * freq / T_norm */
-  /* B_planck(x) = x^3 / (exp(x) - 1), clamped to avoid overflow */
-  function planckVal(normFreq) {
-    var T_norm = temperature / 4000;
-    var x = hFactor * normFreq / T_norm;
-    if (x < 1e-6) return 0;
-    if (x > 30) return 0;
-    return (x * x * x) / (Math.exp(x) - 1);
+  /* Fixed physical axes: wavelength 0.04-3 um (linear), radiance on a fixed
+     log scale relative to the 10,000 K Planck peak (h x 1). Nothing is
+     renormalised per curve, so the peak moves and the T^5 growth shows.
+     Units: B_rel = hF / (lam^5 (e^x - 1)), x = hF * C2 / (lam T),
+     C2 = hc/k_B = 14387.77 um K. The common prefactor 2 h c^2 is dropped. */
+  var C2 = 14387.77;          /* um K */
+  var WIEN_B = 2897.77;       /* um K, Wien displacement constant */
+  var LAM_MIN = 0.04, LAM_MAX = 3.0;   /* um */
+  var LOG_MIN = -6.0, LOG_MAX = 0.7;   /* log10 of B_rel / B_ref */
+
+  function planckRaw(lam, T, hF) {
+    var x = hF * C2 / (lam * T);
+    if (x > 700) return 0;
+    return hF / (Math.pow(lam, 5) * (Math.exp(x) - 1));
   }
 
-  /* Rayleigh-Jeans (classical): same normalization axis */
-  /* B_rj(x) = x^2 (limit of Planck as x->0), same x = hFactor * freq / T_norm */
-  function rayleighVal(normFreq) {
-    var T_norm = temperature / 4000;
-    var x = hFactor * normFreq / T_norm;
-    if (x < 1e-6) return 0;
-    return x * x;
+  /* Rayleigh-Jeans limit (h -> 0): 2 c k T / lam^4, in the same units */
+  function rayleighRaw(lam, T) {
+    return T / (C2 * Math.pow(lam, 4));
   }
 
-  /* Find peak of Planck curve across 200 sample points */
-  function findPlanckPeak() {
-    var peak = 0;
-    for (var i = 1; i <= 200; i++) {
-      var v = planckVal(i / 200);
-      if (v > peak) peak = v;
-    }
-    return peak;
+  /* Reference: Planck peak at 10,000 K, h x 1 (lam = 2897.77 / 10000 um) */
+  var B_REF = planckRaw(WIEN_B / 10000, 10000, 1);
+
+  function yFrac(B) {
+    if (!(B > 0)) return 0;
+    var f = (Math.log(B / B_REF) / Math.LN10 - LOG_MIN) / (LOG_MAX - LOG_MIN);
+    return Math.max(0, Math.min(1.02, f));
   }
 
   /* ── Background color lerp by temperature ── */
@@ -87,37 +88,54 @@
 
   /* ── Draw ── */
   function drawScene(T, hF) {
-    /* Temporarily override globals for animation sweep */
-    var savedT = temperature;
-    var savedH = hFactor;
-    temperature = T;
-    hFactor     = hF;
-
     ctx.clearRect(0, 0, W, H);
-
-    /* Background */
     ctx.fillStyle = bgColor(T);
     ctx.fillRect(0, 0, W, H);
 
     var b = graphBounds();
     var ox = b.ox, oy = b.oy, gW = b.gW, gH = b.gH;
+    function xOf(lam) { return ox + (lam - 0) / LAM_MAX * gW; }
 
-    /* Peak normalization: scale both curves so Planck peak is at ~80% of gH */
-    var peakP = findPlanckPeak();
-    var scale = (peakP > 0) ? (gH * 0.80 / peakP) : 1;
+    /* Visible band 380-750 nm as a rainbow strip along the axis */
+    var grad = ctx.createLinearGradient(xOf(0.38), 0, xOf(0.75), 0);
+    grad.addColorStop(0.00, 'rgba(140,60,255,0.55)');
+    grad.addColorStop(0.20, 'rgba(60,90,255,0.55)');
+    grad.addColorStop(0.40, 'rgba(60,220,255,0.55)');
+    grad.addColorStop(0.55, 'rgba(80,230,80,0.55)');
+    grad.addColorStop(0.72, 'rgba(255,230,60,0.55)');
+    grad.addColorStop(0.86, 'rgba(255,140,40,0.55)');
+    grad.addColorStop(1.00, 'rgba(255,50,40,0.55)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(xOf(0.38), oy - gH - 6, xOf(0.75) - xOf(0.38), gH + 6);
+
+    /* Gridlines: decades (y) and 0.5 um steps (x) */
+    ctx.font = '10px monospace';
+    ctx.lineWidth = 1;
+    for (var d = 0; d >= -6; d -= 2) {
+      var gy = oy - ((d - LOG_MIN) / (LOG_MAX - LOG_MIN)) * gH;
+      ctx.strokeStyle = 'rgba(160,92,200,0.18)';
+      ctx.beginPath(); ctx.moveTo(ox, gy); ctx.lineTo(ox + gW, gy); ctx.stroke();
+      ctx.fillStyle = 'rgba(180,140,230,0.65)';
+      ctx.textAlign = 'right';
+      ctx.fillText(d === 0 ? '1' : '1e' + d, ox - 4, gy + 3);
+    }
+    ctx.textAlign = 'center';
+    for (var xl = 0.5; xl <= 3.001; xl += 0.5) {
+      ctx.fillStyle = 'rgba(180,140,230,0.65)';
+      ctx.fillText(xl.toFixed(1), xOf(xl), oy + 12);
+    }
+    ctx.textAlign = 'left';
 
     /* ── Rayleigh-Jeans curve (dashed, amber) ── */
+    var N = 160;
     ctx.save();
     ctx.beginPath();
-    var N = 120;
-    var firstRJ = true;
-    for (var i = 1; i <= N; i++) {
-      var freq = i / N;
-      var rjRaw = rayleighVal(freq);
-      var rjY   = oy - Math.min(rjRaw * scale, gH * 1.05);
-      var px    = ox + freq * gW;
-      if (firstRJ) { ctx.moveTo(px, rjY); firstRJ = false; }
-      else         { ctx.lineTo(px, rjY); }
+    var i, lam, px, py;
+    for (i = 0; i <= N; i++) {
+      lam = LAM_MIN + (LAM_MAX - LAM_MIN) * i / N;
+      px = xOf(lam);
+      py = oy - Math.min(yFrac(rayleighRaw(lam, T)), 1.02) * gH;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     }
     ctx.strokeStyle = 'rgba(255,180,60,0.80)';
     ctx.lineWidth   = 2;
@@ -132,18 +150,14 @@
                                : 'rgba(160,200,255,0.95)';
     ctx.save();
     ctx.beginPath();
-    var firstP = true;
-    var peakX  = ox;
-    var peakY  = oy;
-    var peakRaw = 0;
-    for (var j = 1; j <= N; j++) {
-      var f   = j / N;
-      var pRaw = planckVal(f);
-      var pY   = oy - Math.min(pRaw * scale, gH * 1.05);
-      var qx   = ox + f * gW;
-      if (pRaw > peakRaw) { peakRaw = pRaw; peakX = qx; peakY = pY; }
-      if (firstP) { ctx.moveTo(qx, pY); firstP = false; }
-      else        { ctx.lineTo(qx, pY); }
+    var peakRaw = 0, peakX = ox, peakY = oy;
+    for (i = 0; i <= N * 2; i++) {
+      lam = LAM_MIN + (LAM_MAX - LAM_MIN) * i / (N * 2);
+      var pr = planckRaw(lam, T, hF);
+      px = xOf(lam);
+      py = oy - yFrac(pr) * gH;
+      if (pr > peakRaw) { peakRaw = pr; peakX = px; peakY = py; }
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     }
     ctx.strokeStyle = planckColor;
     ctx.lineWidth   = 2.5;
@@ -159,34 +173,45 @@
     ctx.lineTo(ox + gW + 10, oy);
     ctx.stroke();
 
-    /* Axis labels */
     ctx.fillStyle = 'rgba(180,140,230,0.75)';
     ctx.font      = '11px monospace';
-    ctx.fillText('Frequency \u2192', ox + gW * 0.55, oy + 14);
+    ctx.fillText('Wavelength (µm) →', ox + gW * 0.50, oy + 26);
     ctx.save();
-    ctx.translate(ox - 10, oy - gH * 0.45);
+    ctx.translate(ox - 28, oy - gH * 0.15);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Radiance', 0, 0);
+    ctx.fillText('Radiance (log, fixed scale)', 0, 0);
     ctx.restore();
 
-    /* ── Wien's peak marker ── */
-    if (peakRaw > 0) {
+    /* ── Wien's peak marker: lambda_max = hF * 2897.77 um K / T ── */
+    var lamMax = hF * WIEN_B / T;
+    if (peakRaw > 0 && lamMax >= LAM_MIN && lamMax <= LAM_MAX) {
+      var mx = xOf(lamMax);
       ctx.save();
-      ctx.strokeStyle = 'rgba(160,92,200,0.4)';
+      ctx.strokeStyle = 'rgba(200,160,255,0.7)';
       ctx.lineWidth   = 1;
-      ctx.setLineDash([3, 5]);
+      ctx.setLineDash([3, 4]);
       ctx.beginPath();
-      ctx.moveTo(peakX, peakY - 4);
-      ctx.lineTo(peakX, oy);
+      ctx.moveTo(mx, peakY - 4);
+      ctx.lineTo(mx, oy);
       ctx.stroke();
       ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(220,200,255,0.95)';
+      ctx.font = '10px monospace';
+      var lbl = 'λ_max = ' + (lamMax >= 1 ? lamMax.toFixed(2) + ' µm' : Math.round(lamMax * 1000) + ' nm');
+      var tx = mx + 6;
+      if (tx + 100 > ox + gW) { ctx.textAlign = 'right'; tx = mx - 6; }
+      ctx.fillText(lbl, tx, Math.max(peakY - 8, oy - gH + 10));
+      ctx.textAlign = 'left';
       ctx.restore();
+    } else if (hF * WIEN_B / T < LAM_MIN) {
+      ctx.fillStyle = 'rgba(220,200,255,0.8)';
+      ctx.font = '10px monospace';
+      ctx.fillText('peak is left of the window (λ_max < 40 nm)', ox + 8, oy - gH + 30);
     }
 
     /* ── Legend ── */
-    var legX = ox + gW * 0.50;
+    var legX = ox + gW * 0.52;
     var legY = oy - gH * 0.92;
-    /* Planck solid line */
     ctx.strokeStyle = planckColor;
     ctx.lineWidth   = 2.5;
     ctx.beginPath();
@@ -196,7 +221,6 @@
     ctx.fillStyle = 'rgba(220,220,220,0.85)';
     ctx.font      = '10px monospace';
     ctx.fillText('Planck (quantum)', legX + 26, legY + 4);
-    /* Rayleigh-Jeans dashed */
     ctx.strokeStyle = 'rgba(255,180,60,0.80)';
     ctx.lineWidth   = 2;
     ctx.setLineDash([5, 4]);
@@ -211,16 +235,10 @@
     /* ── Info labels ── */
     ctx.font      = 'bold 12px monospace';
     ctx.fillStyle = 'rgba(200,160,255,0.9)';
-    ctx.fillText('T = ' + Math.round(T) + ' K', ox + 4, oy + 14);
+    ctx.fillText('T = ' + Math.round(T) + ' K', ox + 4, oy - gH + 12);
     ctx.fillStyle = 'rgba(200,200,200,0.75)';
     ctx.font      = '11px monospace';
-    ctx.textAlign = 'right';
-    ctx.fillText('h \u00d7 ' + hF.toFixed(2), ox + gW, oy + 14);
-    ctx.textAlign = 'left';
-
-    /* Restore overridden globals */
-    temperature = savedT;
-    hFactor     = savedH;
+    ctx.fillText('h × ' + hF.toFixed(2), ox + 4, oy - gH + 28);
   }
 
   function drawStatic() {
@@ -230,7 +248,7 @@
   /* ── Animation loop: auto temperature sweep ── */
   function drawFrame() {
     /* Oscillate temperature between 1000–10000 K at ~200 K/s (60fps → Δ~3.3 K/frame) */
-    var T = temperature + 1500 * Math.sin(animT * 0.018);
+    var T = Math.min(10000, Math.max(1000, temperature + 1500 * Math.sin(animT * 0.018)));
     drawScene(T, hFactor);
     animT += 1;
     if (running && !reduced) {
@@ -260,11 +278,21 @@
   var hSlider    = document.getElementById('h-slider');
   var tempReadout = document.getElementById('temperature-readout');
   var hReadout    = document.getElementById('h-readout');
+  var sunBtn      = document.getElementById('sun-preset-btn');
 
   if (tempSlider) {
     tempSlider.addEventListener('input', function () {
       temperature = parseInt(tempSlider.value, 10);
       if (tempReadout) tempReadout.textContent = temperature + ' K';
+      drawStatic();
+    });
+  }
+
+  if (sunBtn) {
+    sunBtn.addEventListener('click', function () {
+      temperature = 5772;
+      if (tempSlider) tempSlider.value = '5800';
+      if (tempReadout) tempReadout.textContent = '5772 K';
       drawStatic();
     });
   }

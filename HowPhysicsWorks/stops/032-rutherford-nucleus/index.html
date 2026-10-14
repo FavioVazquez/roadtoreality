@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -72,7 +75,7 @@
         <button class="sim-btn" id="mode-toggle">Switch to Manual Aim</button>
         <div style="display:flex;align-items:center;gap:0.5rem;flex:1;min-width:180px;">
           <label for="nucleus-charge-slider" style="font-size:var(--text-sm);white-space:nowrap;">Nuclear Charge Z</label>
-          <input type="range" id="nucleus-charge-slider" min="1" max="79" step="1" value="79" style="flex:1;">
+          <input type="range" id="nucleus-charge-slider" min="1" max="79" step="1" value="79" style="flex:1;" aria-label="Nuclear charge Z">
           <span id="nucleus-charge-readout" style="font-size:var(--text-sm);white-space:nowrap;min-width:90px;">Z = 79 (Gold)</span>
         </div>
         <div class="sim-control-row" style="gap:0.5rem;flex-wrap:wrap;display:flex;align-items:center;">
@@ -84,7 +87,7 @@
         </div>
         <div id="aim-slider-row" style="display:none;align-items:center;gap:0.5rem;width:100%;max-width:420px;">
           <label for="aim-slider" style="font-size:var(--text-sm);white-space:nowrap;">b</label>
-          <input type="range" id="aim-slider" min="0" max="100" step="1" value="50" style="width:100px;flex:none;">
+          <input type="range" id="aim-slider" min="0" max="100" step="1" value="50" style="width:100px;flex:none;" aria-label="Impact parameter b">
           <span id="aim-readout" style="font-size:var(--text-sm);white-space:nowrap;">medium</span>
         </div>
       </div>
@@ -100,16 +103,27 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Plum Pudding Model (Wrong)</h3>
-    <p>In 1909, the prevailing model of the atom — Thomson's "plum pudding" — had positive charge spread uniformly throughout the atom, with electrons embedded like raisins in dough. Under this model, alpha particles should barely deflect when passing through gold foil. The positive charge would be too diffuse to cause significant scattering.</p>
+    <p>In 1909, the prevailing model of the atom — Thomson's "plum pudding" (his own 1910 calculation gave only small-angle multiple scattering, which is why the large angles mattered) — had positive charge spread uniformly throughout the atom, with electrons embedded like raisins in dough. Under this model, alpha particles should barely deflect when passing through gold foil. The positive charge would be too diffuse to cause significant scattering.</p>
     <h3>The Unexpected Result</h3>
-    <p>Most alpha particles did pass straight through — confirming the atom is mostly empty space. But about 1 in 8000 scattered at angles greater than 90 degrees. Rutherford said this was "as if you fired a 15-inch shell at tissue paper and it came back and hit you." No diffuse charge distribution could cause that.</p>
+    <p>Most alpha particles passed almost straight through, which fits an atom that is mostly empty. But Geiger and Marsden found in 1909 that about 1 in 8,000, from a platinum sheet, came back at more than 90 degrees, and in 1913 they measured the full angular distribution from gold foil. Rutherford recalled, decades later, that it was "almost as incredible as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit you." No diffuse charge distribution could cause that.</p>
+    <p>The simulation draws the nucleus thousands of times too large relative to the atom, so that a backscatter happens every few seconds instead of once in eight thousand; the angle for a given aim follows Rutherford's formula exactly.</p>
     <h3>The Nuclear Model</h3>
-    <p>The only way to explain the backscattering was if all the positive charge — and nearly all the mass — was concentrated in an impossibly tiny region at the center. Rutherford called it the nucleus. It is 100,000 times smaller than the atom itself. The electrons orbit this nucleus in the vast empty space around it.</p>
+    <p>The only way to explain the backscattering was if all the positive charge — and nearly all the mass — was concentrated in an impossibly tiny region at the center. Rutherford called it the "central charge" in 1911 and the nucleus from 1912. It is tens of thousands of times smaller than the atom: for gold, about 7 femtometres against an atomic radius of 0.14 nanometres. Rutherford's own 1911 estimate from the fastest alphas available was that the central charge sits inside about 3 × 10⁻¹⁴ m. The electrons orbit this nucleus in the vast empty space around it.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Rutherford Scattering Formula</div>
     <p>$$\cot\!\left(\frac{\theta}{2}\right) = \frac{2b \, E_k}{k Z_1 Z_2 e^2}$$</p>
-    <p>Larger $b$ (impact parameter) = smaller deflection angle $\theta$. A head-on collision ($b = 0$) gives backscatter ($\theta = 180°$).</p>
+    <p>Larger $b$ (impact parameter) = smaller deflection angle $\theta$. A head-on collision ($b = 0$) gives backscatter ($\theta = 180°$). Here $k = 1/(4\pi\varepsilon_0)$, $E_k$ is the alpha's kinetic energy, $Z_1 = 2$ and $Z_2 = Z$.</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">H. Geiger and E. Marsden, "On a Diffuse Reflection of the &alpha;-Particles", <em>Proceedings of the Royal Society A</em> 82, 495 (1909). Cited: about 1 in 8,000 alphas reflected from a platinum plate.</li>
+      <li id="src-2">H. Geiger and E. Marsden, "The Laws of Deflexion of &alpha; Particles through Large Angles", <em>Philosophical Magazine</em> 25, 604 (1913). Cited: the gold-foil angular distribution.</li>
+      <li id="src-3">E. Rutherford, "The Scattering of &alpha; and &beta; Particles by Matter and the Structure of the Atom", <em>Philosophical Magazine</em> 21, 669 (1911). Cited: the "central charge" and the closest-approach estimate of about 3 &times; 10<sup>&minus;14</sup> m.</li>
+      <li id="src-4">E. Rutherford, remark recalled in a 1936 lecture, printed in J. Needham and W. Pagel (eds.), <em>Background to Modern Science</em> (Cambridge University Press, 1938). Cited: the 15-inch shell remark.</li>
+      <li id="src-5">J. J. Thomson, "On the Scattering of Rapidly Moving Electrified Particles", <em>Proceedings of the Cambridge Philosophical Society</em> 15, 465 (1910). Cited: small-angle multiple scattering in the plum-pudding model.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
