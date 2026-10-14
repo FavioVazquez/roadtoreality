@@ -67,7 +67,7 @@
     var last = show[show.length - 1];
     ctx.strokeStyle = COL.faint; ctx.beginPath(); ctx.moveTo(x0, gTop + gH + 0.5); ctx.lineTo(x1, gTop + gH + 0.5); ctx.stroke();
     var sk = simK();
-    txt('Neutrons per generation (log scale), last 12 · k from the sim\'s generations: ' + (sk === null ? '—' : sk.toFixed(2)), x0, gTop + gH + 16, COL.muted, narrow ? 10 : 11);
+    txt('Neutrons per generation (log scale), ' + (narrow ? '' : 'last 12 · ') + 'k from the sim\'s generations: ' + (sk === null ? '—' : sk.toFixed(2)), x0, gTop + gH + 16, COL.muted, narrow ? 10 : 11);
     if (last === 0) txt('The chain died out.', x0 + bw / 2, gTop + gH / 2, COL.hi, 13, 'center');
     if (last >= NMAX) txt('Runaway: capped for display', x0 + bw / 2, gTop + gH / 2, COL.hi, 13, 'center');
 

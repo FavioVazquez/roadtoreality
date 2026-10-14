@@ -18,6 +18,7 @@
   var SYM = ['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca','Sc','Ti','V','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga','Ge','As','Se','Br','Kr'];
   var SUB = [[1,0],[2,0],[2,1],[3,0],[3,1],[4,0],[3,2],[4,1]];   /* Madelung order up to Kr */
   var LCH = 'spdf';
+  var statusAcc = 0;
   var CLOSED = { 2: 1, 10: 1, 18: 1, 36: 1 };
   var REAL = { 24: '[Ar] 3d⁵ 4s¹', 29: '[Ar] 3d¹⁰ 4s¹' };
 
@@ -94,7 +95,7 @@
     txt('↑ energy order used (Madelung): 1s 2s 2p 3s 3p 4s 3d 4p', bx, by, COL.muted, 11);
     if (pauliOn && f.newest) txt('Newest electron: n = ' + f.newest.n + ', l = ' + f.newest.l + ', m_l = ' + f.newest.ml + ', m_s = ' + f.newest.ms, bx, by + 20, COL.text, 12);
     if (pauliOn && REAL[Z]) txt('Real ' + SYM[Z - 1] + ' is ' + REAL[Z] + ': an exception to this simple order', bx, by + 40, COL.closed, 12);
-    else if (pauliOn && CLOSED[Z]) txt('Shell closed: ' + SYM[Z - 1] + ' is a noble gas', bx, by + 40, COL.closed, 12);
+    else if (pauliOn && CLOSED[Z]) txt('Outer s and p full: ' + SYM[Z - 1] + ' is a noble gas', bx, by + 40, COL.closed, 12);
     if (!narrow) {
       var tx = W - 210, ty = 60;
       txt('Shell capacity 2n²', tx, ty, COL.muted, 11);
@@ -144,7 +145,7 @@
     ctx.stroke(); ctx.restore();
     ctx.fillStyle = COL.closed; ctx.beginPath(); ctx.arc(X(logRho), Y(Math.log10(g.P)), 5, 0, 2 * Math.PI); ctx.fill();
     txt('log pressure vs log density (formula)', gx, gy - 6, COL.muted, 11);
-    txt('dashed: n^5/3 and n^4/3 limits', gx + gw, gy - 6, COL.muted, 11, 'right');
+    txt('dashed: n^5/3 and n^4/3 limits', gx + gw / 2, gy + gh + 14, COL.muted, 10, 'center');
     txt('10³', gx, gy + gh + 14, COL.muted, 10, 'center'); txt('10¹⁰ g/cm³', gx + gw, gy + gh + 14, COL.muted, 10, 'right');
     var d = 0.01, s1 = (Math.log10(gasP(Math.pow(10, logRho + d)).P) - Math.log10(gasP(Math.pow(10, logRho - d)).P)) / (2 * d);
     var ry = narrow ? H - 58 : by0 + bxH + 32;
@@ -168,7 +169,7 @@
       return;
     }
     el.textContent = pauliOn
-      ? SYM[Z - 1] + ' (Z = ' + Z + '): ' + config(Z) + (CLOSED[Z] ? '. Shell closed.' : '.') + (REAL[Z] ? ' (Real ' + SYM[Z - 1] + ': ' + REAL[Z] + '.)' : '')
+      ? SYM[Z - 1] + ' (Z = ' + Z + '): ' + config(Z) + (CLOSED[Z] ? '. Outer s and p full.' : '.') + (REAL[Z] ? ' (Real ' + SYM[Z - 1] + ': ' + REAL[Z] + '.)' : '')
       : 'Exclusion switched off: every electron would drop into 1s, and there would be no shells and no periodic table.';
   }
   function syncZ() {
@@ -186,6 +187,7 @@
       addAcc += dt;
       if (addAcc > 0.7 && Z < 36) { addAcc = 0; Z++; syncZ(); setStatus(); }
     } else if (mode === 'star') {
+      statusAcc += dt; if (statusAcc > 0.5) { statusAcc = 0; setStatus(); }
       logRho = 6.5 + 3.5 * Math.sin(pulse * 0.25 - Math.PI / 2 + 0.15);
       var rs = document.getElementById('rho-slider'); if (rs) rs.value = logRho.toFixed(1);
       var rv = document.getElementById('rho-val'); if (rv) rv.textContent = '10^' + logRho.toFixed(1) + ' g/cm³';

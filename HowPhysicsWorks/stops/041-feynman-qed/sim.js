@@ -17,7 +17,7 @@
   var running = false, rafId = null, lastTs = null;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var NSTRIP = 41, LAM = 0.22, R_GLASS = 0.2, N_GLASS = 1.5;
+  var NSTRIP = 81, LAM = 0.15, R_GLASS = 0.2, N_GLASS = 1.5;
   var ALPHA = 1 / 137.035999177;                      /* CODATA 2022 */
   var ROWS = [
     ['Dirac (1928): g = 2', '1.000000000000000', ''],
@@ -50,7 +50,7 @@
       out.push({ x: x, l: l }); lmin = Math.min(lmin, l);
     }
     out.forEach(function (s) { s.ph = 2 * Math.PI * (s.l - lmin) / LAM; s.on = true; });
-    if (noMiddle) out.forEach(function (s) { if (Math.abs(s.x - (S[0] + P[0]) / 2) < 0.25) s.on = false; });
+    if (noMiddle || grating) out.forEach(function (s) { if (Math.abs(s.x - (S[0] + P[0]) / 2) < 0.25) s.on = false; });
     if (grating) out.forEach(function (s) { if (Math.cos(s.ph) < 0) s.on = false; });
     return { S: S, P: P, list: out };
   }
@@ -98,7 +98,7 @@
     arrowLine(x1, cy, ex, ey, 'oklch(0.78 0.16 40)', 2);
     arrowLine(cx, cy, ex, ey, COL.hi, 2.6);
     txt('front surface', cx - 10, cy + 20, 'oklch(0.78 0.14 200)', 11, 'right');
-    txt('back surface', ex, ey - 8, 'oklch(0.78 0.16 40)', 11, 'center');
+    txt('back surface', Math.max(40, Math.min(W - 40, ex)), ey - 8, 'oklch(0.78 0.16 40)', 11, 'center');
     txt('at 550 nm: R = ' + (reflect(550, d) * 100).toFixed(1) + ' %', 16, cy + 70, COL.text, 12);
     var gx = narrow ? 30 : W * 0.42, gy = narrow ? 270 : 50, gw = narrow ? W - 46 : W - gx - 20, gh = narrow ? 150 : 220;
     ctx.strokeStyle = COL.faint; ctx.strokeRect(gx + 0.5, gy + 0.5, gw, gh);
@@ -134,7 +134,10 @@
       }
       if (row[2]) txt(row[2], xs + 8, yy, COL.muted, narrow ? 10 : 12);
     }
-    if (nShow === 4) txt('Green: digits that agree with the measurement. They agree to about 1 part in 10¹²; the theory needs α, whose measured values disagree at that level.', x0, H - 24, COL.muted, narrow ? 10 : 11);
+    if (nShow === 4) {
+      var fn = narrow ? ['Green: digits that agree with the measurement.', 'They agree to about 1 part in 10¹²; the theory needs α,', 'whose measured values disagree at that level.'] : ['Green: digits that agree with the measurement. They agree to about 1 part in 10¹²; the theory needs α, whose measured values disagree at that level.'];
+      fn.forEach(function (ln, i) { txt(ln, x0, H - 24 - (fn.length - 1 - i) * 14, COL.muted, narrow ? 10 : 11); });
+    }
   }
 
   function draw() {
@@ -145,9 +148,9 @@
 
   function setStatus() {
     var el = document.getElementById('sim-status'); if (!el) return;
-    if (mode === 'mirror') el.textContent = grating ? 'Grating: strips whose arrows point backwards are scraped off, so the rest add up even away from the mirror angle.' : noMiddle ? 'Middle strips removed: the arrows that lined up are gone, and the end strips mostly cancel.' : 'Strips near the middle have almost equal path lengths, so their arrows line up; the ends spin round and cancel.';
+    if (mode === 'mirror') el.textContent = grating ? 'Grating: the middle is covered and, of the end strips, those whose arrows point backwards are scraped off, so the rest add up.' : noMiddle ? 'Middle strips removed: the arrows that lined up are gone, and the end strips mostly cancel.' : 'Strips near the middle have almost equal path lengths, so their arrows line up; the ends spin round and cancel.';
     else if (mode === 'glass') el.textContent = 'Glass layer ' + dNm.toFixed(0) + ' nm thick: reflects ' + (reflect(550, dNm) * 100).toFixed(1) + ' % of 550 nm light. Two arrows, one from each surface; the layer thickness sets the angle between them.';
-    else el.textContent = 'g/2: Dirac gives 1, Schwinger\'s first correction gets three more digits, and the full calculation matches the 2023 measurement to about one part in 10¹².';
+    else el.textContent = 'g/2: Dirac gives 1, Schwinger\'s first correction gets two more digits, and the full calculation matches the 2023 measurement to about one part in 10¹².';
   }
 
   function loop(ts) {

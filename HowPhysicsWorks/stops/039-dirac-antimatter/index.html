@@ -48,9 +48,9 @@
   }());
 </script>
 <main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Modern Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · 1928</div>
+    <div class="stop-header__era">Modern Physics · 1928</div>
     <h1 class="stop-header__title">Dirac and Antimatter</h1>
     <p class="stop-header__subtitle">For every particle, there is an antiparticle</p>
     <div class="stop-header__meta">
@@ -61,7 +61,7 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      In 1928 Paul Dirac wrote an equation for the electron that obeys special relativity<sup><a href="#src-1">[1]</a></sup>. It had solutions with negative energy that would not go away. In 1931 he proposed that they point to a new particle, an "anti-electron" with the electron's mass and the opposite charge<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>. In 1932 Carl Anderson reported such particles in cosmic rays<sup><a href="#src-3">[3]</a></sup>.
+      In 1928 Paul Dirac wrote an equation for the electron that obeys special relativity<sup><a href="#src-1">[1]</a></sup>. It had solutions with negative energy that would not go away. In 1931 he proposed that they point to a new particle, an "anti-electron" with the electron's mass and the opposite charge<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-8">[8]</a></sup>. In 1932 Carl Anderson reported such particles in cosmic rays<sup><a href="#src-3">[3]</a></sup>.
     </p>
     <p>
       The simulation does the energy bookkeeping for matter meeting antimatter, then shows how a single curved track gave the positron away.
@@ -93,9 +93,9 @@
         <div class="sim-control" style="flex:1 1 40%;min-width:200px">
           <label class="sim-control__label" for="p-slider">
             Momentum below the plate
-            <span class="sim-control__value" style="text-transform:none" id="p-val">60 MeV/c</span>
+            <span class="sim-control__value" style="text-transform:none" id="p-val">120 MeV/c</span>
           </label>
-          <input type="range" id="p-slider" min="20" max="150" step="5" value="60" aria-label="Momentum of the particle before the lead plate in MeV per c" aria-valuetext="60 MeV per c">
+          <input type="range" id="p-slider" min="70" max="150" step="5" value="120" aria-label="Momentum of the particle before the lead plate in MeV per c" aria-valuetext="120 MeV per c">
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
           <button class="sim-btn" id="charge-toggle" type="button" aria-pressed="false">Charge: positive</button>
@@ -116,10 +116,10 @@
     <p>Schrödinger's equation treats time and space differently, so it cannot be right for fast particles. Dirac looked for an equation that is first order in both, and found one that works only if the wavefunction has four components<sup><a href="#src-1">[1]</a></sup>. The electron's spin, which Pauli had added by hand, appears on its own<sup><a href="#src-7">[7]</a></sup>.</p>
     <p>The price was a set of solutions with negative energy. An electron in such a state would have energy below $-m_ec^2$, and nothing in the equation stopped an ordinary electron from falling into one.</p>
     <h3>The Anti-electron</h3>
-    <p>In 1931, persuaded by arguments from Robert Oppenheimer and Hermann Weyl, Dirac predicted a particle not yet seen: an "anti-electron" with the same mass as the electron and the opposite charge, which would annihilate when it met an electron<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>.</p>
+    <p>In 1930 Dirac tried to identify the empty negative-energy states, the "holes", with protons. Robert Oppenheimer showed that ordinary atoms would then annihilate almost at once, and Hermann Weyl that the holes must have the electron's own mass. In 1931 Dirac accepted this and predicted a particle not yet seen: an "anti-electron" with the same mass as the electron and the opposite charge, which would annihilate when it met an electron<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-8">[8]</a></sup>.</p>
     <h3>Energy Bookkeeping</h3>
     <p>When an electron and a positron at rest annihilate, their rest energy, $2m_ec^2$, becomes light. Total momentum is zero before, so it must be zero after: one photon cannot do that, but two photons going in opposite directions can, each carrying $m_ec^2 = 510.999$ keV<sup><a href="#src-6">[6]</a></sup><sup><a href="#src-7">[7]</a></sup>.</p>
-    <p>The reverse also happens. A photon with at least $2m_ec^2 \approx 1.022$ MeV can turn into an electron and a positron, but only near a nucleus. A photon of energy $E$ carries momentum $E/c$, while a pair with the same total energy can carry at most $\sqrt{E^2 - (2m_ec^2)^2}/c$. Something else has to take up the difference, and a nearby nucleus does, with almost no energy of its own. The <em>Pair production</em> view computes that missing momentum.</p>
+    <p>The reverse also happens. A photon with at least $2m_ec^2 \approx 1.022$ MeV can turn into an electron and a positron, but only near another charge, in practice a nucleus. A photon of energy $E$ carries momentum $E/c$, while a pair with the same total energy can carry at most $\sqrt{E^2 - (2m_ec^2)^2}/c$. Something else has to take up the difference, and a nearby nucleus does, with almost no energy of its own. The <em>Pair production</em> view computes that missing momentum.</p>
     <h3>Reading the Track</h3>
     <p>Anderson was studying cosmic rays with a cloud chamber inside a magnet<sup><a href="#src-5">[5]</a></sup>. A charged particle leaves a trail of droplets, and the field bends the trail into a circle of radius</p>
     <p style="overflow-x:auto;">$$r = \frac{p}{|q|\,B}$$</p>
@@ -140,12 +140,13 @@
     <h3>Sources</h3>
     <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
       <li id="src-1">P. A. M. Dirac, "The Quantum Theory of the Electron", <em>Proceedings of the Royal Society A</em> 117, 610–624 (1928).</li>
-      <li id="src-2">P. A. M. Dirac, "Quantised Singularities in the Quantum Field", <em>Proceedings of the Royal Society A</em> 133, 60–72 (1931).</li>
+      <li id="src-2">P. A. M. Dirac, "Quantised Singularities in the Electromagnetic Field", <em>Proceedings of the Royal Society A</em> 133, 60–72 (1931).</li>
       <li id="src-3">C. D. Anderson, "The Apparent Existence of Easily Deflectable Positives", <em>Science</em> 76, 238 (1932).</li>
       <li id="src-4">C. D. Anderson, "The Positive Electron", <em>Physical Review</em> 43, 491–494 (1933). Cited: 15 positive tracks in 1300 cosmic-ray photographs; mass less than 20 electron masses.</li>
-      <li id="src-5">Wikipedia, "Positron" and "Carl David Anderson" (accessed October 2026). Used for: the Oppenheimer and Weyl arguments, the 6 mm lead plate, the magnetic cloud chamber, the 1932 announcement.</li>
+      <li id="src-5">C. D. Anderson, "The Positive Electron", <em>Physical Review</em> 43, 491 (1933), Fig. 1 caption. Used for: the 6 mm lead plate and the magnetic cloud chamber (63 to 23 MeV across the plate); the 1932 announcement is [3]; Dirac [2] credits Oppenheimer and Weyl.</li>
       <li id="src-6">NIST, CODATA 2022 recommended values of the fundamental physical constants. Cited: $m_ec^2 = 0.510\,998\,950\,69$ MeV.</li>
       <li id="src-7">D. J. Griffiths, <em>Introduction to Elementary Particles</em>, 2nd ed., ch. 3 and 7 (2008). Relativistic kinematics, the Dirac equation and spin.</li>
+      <li id="src-8">P. A. M. Dirac, "A Theory of Electrons and Protons", <em>Proceedings of the Royal Society A</em> 126, 360–365 (1930); J. R. Oppenheimer, "On the Theory of Electrons and Protons", <em>Physical Review</em> 35, 562–563 (1930).</li>
     </ol>
   </div>
   <div class="stop-bridge content-column">

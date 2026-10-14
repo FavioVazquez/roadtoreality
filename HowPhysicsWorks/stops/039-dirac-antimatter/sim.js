@@ -18,13 +18,24 @@
   var MEC2 = 0.51099895069;          /* MeV, CODATA 2022 */
   var B_T = 1.5, PLATE_KEEP = 0.4;   /* illustrative */
 
-  var mode = 'annihilate', t = 0, eGamma = 2.0, nucleus = true, charge = 1, pMeV = 60, axis = 0.6;
+  var mode = 'annihilate', t = 0, eGamma = 2.0, nucleus = true, charge = 1, pMeV = 120, axis = 0.6;
 
   var COL = { era: 'oklch(0.68 0.20 310)', em: 'oklch(0.78 0.14 200)', ep: 'oklch(0.75 0.18 25)', ph: 'oklch(0.88 0.15 95)', text: 'rgba(255,255,255,0.88)', muted: 'rgba(255,255,255,0.55)', faint: 'rgba(255,255,255,0.18)' };
 
   function txt(s, x, y, col, size, align) {
     ctx.fillStyle = col || COL.text; ctx.font = (size || 12) + 'px "DM Sans", sans-serif';
     ctx.textAlign = align || 'left'; ctx.fillText(s, x, y);
+  }
+  /* word-wrap to maxW; returns the y of the last line drawn */
+  function wrapTxt(s, x, y, maxW, col, size, lh) {
+    ctx.font = size + 'px "DM Sans", sans-serif';
+    var words = s.split(' '), line = '';
+    words.forEach(function (w) {
+      var test = line ? line + ' ' + w : w;
+      if (line && ctx.measureText(test).width > maxW) { txt(line, x, y, col, size); y += lh; line = w; } else line = test;
+    });
+    if (line) txt(line, x, y, col, size);
+    return y + lh;
   }
   function dot(x, y, r, col, label) {
     ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill();
@@ -91,8 +102,8 @@
     var msg = eGamma < thr ? 'Below threshold: not enough energy to make two electron masses.'
       : !nucleus ? 'Above threshold, but no pair: a photon alone cannot conserve energy and momentum.'
       : 'Pair made. The nucleus takes up at least ' + (eGamma - Math.sqrt(eGamma * eGamma - thr * thr)).toFixed(3) + ' MeV/c of momentum.';
-    txt(msg, 16, by + 54, COL.text, W < 560 ? 11 : 12);
-    if (eGamma >= thr) txt('Photon momentum ' + eGamma.toFixed(2) + ' MeV/c; most a pair of this energy can carry: ' + Math.sqrt(eGamma * eGamma - thr * thr).toFixed(3) + ' MeV/c', 16, by + 74, COL.muted, W < 560 ? 10 : 11);
+    var ny = wrapTxt(msg, 16, by + 54, W - 32, COL.text, W < 560 ? 11 : 12, W < 560 ? 14 : 16);
+    if (eGamma >= thr) wrapTxt('Photon momentum ' + eGamma.toFixed(2) + ' MeV/c; most a pair of this energy can carry: ' + Math.sqrt(eGamma * eGamma - thr * thr).toFixed(3) + ' MeV/c', 16, ny + 2, W - 32, COL.muted, W < 560 ? 10 : 11, W < 560 ? 13 : 15);
   }
 
   function radiusM(p) { return p / 1000 / (0.2998 * B_T); }
@@ -123,7 +134,7 @@
     ctx.moveTo(sx, sy);
     for (k = 0; k < nShow; k++) ctx.lineTo(pts[k][0], pts[k][1]);
     ctx.stroke();
-    var tx = narrow ? 16 : x0 + cw + 24, ty = narrow ? y0 + ch + 24 : 60, sz = narrow ? 11 : 12;
+    var tx = narrow ? 16 : x0 + cw + 24, ty = narrow ? y0 + ch + 24 : 60, sz = narrow ? 11 : 12, avail = W - tx - 12;
     var lines = [
       'Below the plate: p = ' + p1 + ' MeV/c, r = ' + (radiusM(p1) * 100).toFixed(1) + ' cm',
       'Above the plate: p = ' + p2.toFixed(0) + ' MeV/c, r = ' + (radiusM(p2) * 100).toFixed(1) + ' cm',
@@ -131,7 +142,8 @@
       'Moving up and bending ' + (charge > 0 ? 'left' : 'right') + ' in this field → charge ' + (charge > 0 ? 'positive' : 'negative') + '.',
       'Light enough to curl this much: an electron mass, not a proton.'
     ];
-    lines.forEach(function (s, i) { txt(s, tx, ty + i * (narrow ? 16 : 22), i < 2 ? COL.text : COL.muted, sz); });
+    var ly = ty;
+    lines.forEach(function (s, i) { ly = wrapTxt(s, tx, ly, avail, i < 2 ? COL.text : COL.muted, sz, narrow ? 15 : 18) + (narrow ? 3 : 6); });
   }
 
   function draw() {
