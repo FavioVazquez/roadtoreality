@@ -129,6 +129,20 @@ def main(csv_path: str, project: str) -> None:
     (proj / "media").mkdir(parents=True, exist_ok=True)
     sf.write(proj / "media" / "chirp.wav", y.astype(np.float32), OUT_SR, subtype="PCM_24")
 
+    # ---- the same data at real speed for the end card, GWOSC-style: shifted up CARRIER Hz (single sideband),
+    # -0.25..+0.05 s, so the 100x slow motion can be compared with the real 0.3 s
+    from scipy.signal import hilbert, resample_poly
+    rm = (t >= -0.30) & (t <= 0.10)
+    xr = resample_poly(h[rm] / sigma, 375, 32)          # 4096 -> 48000 Hz
+    tr = np.arange(len(xr)) / OUT_SR
+    yr = np.real(hilbert(xr) * np.exp(2j * np.pi * CARRIER * tr))
+    keep = (tr >= 0.05) & (tr <= 0.35)                  # -0.25..+0.05 s around the largest |h|
+    yr = yr[keep]
+    tp = int(0.03 * OUT_SR)
+    yr[:tp] *= np.linspace(0, 1, tp); yr[-tp:] *= np.linspace(1, 0, tp)
+    yr = 0.7 * yr / np.abs(yr).max()
+    sf.write(proj / "media" / "realtime.wav", yr.astype(np.float32), OUT_SR, subtype="PCM_24")
+
     # ---- xray.json (film time = (t_data - W0) * SLOW; frame = floor(t * fps), as showtime's frame_of)
     events = []
     for i, e in enumerate(ev):

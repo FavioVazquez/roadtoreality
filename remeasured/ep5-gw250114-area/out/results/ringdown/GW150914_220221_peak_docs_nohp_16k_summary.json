@@ -1,0 +1,99 @@
+{
+ "label": "GW150914_220221_peak_docs_nohp_16k",
+ "config": {
+  "duration": 0.2,
+  "ds": 8,
+  "f_min": null,
+  "slice": 128.0,
+  "m_min": 50.0,
+  "m_max": 150.0,
+  "a_scale_max": 1e-21,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "H1": "H-H1_LOSC_16_V1-1126256640-4096.hdf5",
+  "L1": "L-L1_LOSC_16_V1-1126256640-4096.hdf5",
+  "t0_geocenter": 1126259462.4083147,
+  "ra": 1.95,
+  "dec": -1.27,
+  "psi": 0.82,
+  "provenance": "cited: geocenter peak 1126259462.4083147, ra/dec/psi 1.95/-1.27/0.82 and 220+221 at the peak from Isi et al. 2019 (arXiv:1905.00869); other settings = this project's protocol (same as the 220 runs); priors as in the ringdown package documentation example (ringdown.readthedocs.io), cited; hypothesis test: low-frequency treatment (f_min) \u2014 declared after observing the PSD low-f sensitivity; Task 2 single change vs GW150914_220221_peak_docs_nohp: input sample rate 16384 Hz",
+  "modes": [
+   [
+    1,
+    -2,
+    2,
+    2,
+    0
+   ],
+   [
+    1,
+    -2,
+    2,
+    2,
+    1
+   ]
+  ],
+  "variation": "220+221 at peak, ringdown-docs example priors (a_scale_max=1e-21, M 50-150, cosi=-1); no high-pass (f_min=None) as in docs example condition_data(ds=8); Task 2 change: 16 kHz GWOSC LOSC_16_V1 input (decimated x8 to the same 2048 Hz)",
+  "model_kws": {
+   "cosi": -1
+  }
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_LOSC_16_V1-1126256640-4096.hdf5",
+   "sha256": "9dc0e536cefe9e1fb6f85d35a8eeec91eb34800204a45048770972a74ad6e4fc"
+  },
+  "L1": {
+   "file": "L-L1_LOSC_16_V1-1126256640-4096.hdf5",
+   "sha256": "0ed720c98ba376c42275474d6c61a4c9d857047c46cb2bf4eb432eee5c374991"
+  }
+ },
+ "acf_source": "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ],
+  [
+   1,
+   -2,
+   2,
+   2,
+   1
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  68.58214338197034,
+  81.1195066159639,
+  95.50692574107049
+ ],
+ "chi_q05_q50_q95": [
+  0.6011705235377831,
+  0.8177482415436599,
+  0.9296630688410289
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 3219.0,
+ "ess_bulk_chi": 3223.0,
+ "start_times": {
+  "H1": 1126259462.423,
+  "L1": 1126259462.4160156
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 114.25936698913574,
+ "script_sha256": "a27aab14c87d29e6df3fd7df1a417e373841e0394b8c6c64992589a8fd93e71d"
+}

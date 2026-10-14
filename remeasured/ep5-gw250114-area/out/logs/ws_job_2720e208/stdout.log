@@ -1,0 +1,101 @@
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ for ck in gwosc_CHECKSUMS.tsv gwosc_CHECKSUMS_16k.tsv
++ tail -n +3 gwosc_CHECKSUMS.tsv
++ grep GW150914
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5 ']'
++ echo '30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a  /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_4_V1-1126256640-4096.hdf5 ./H-H1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5 ']'
++ echo 'b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384  /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_4_V1-1126256640-4096.hdf5 ./L-L1_LOSC_4_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ for ck in gwosc_CHECKSUMS.tsv gwosc_CHECKSUMS_16k.tsv
++ tail -n +3 gwosc_CHECKSUMS_16k.tsv
++ grep GW150914
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5 ']'
++ curl -sS -L --retry 5 -o /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5 https://gwosc.org/archive/data/O1_16KHZ/1126170624/H-H1_LOSC_16_V1-1126256640-4096.hdf5
++ echo '9dc0e536cefe9e1fb6f85d35a8eeec91eb34800204a45048770972a74ad6e4fc  /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5 ./H-H1_LOSC_16_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5 ']'
++ curl -sS -L --retry 5 -o /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5 https://gwosc.org/archive/data/O1_16KHZ/1126170624/L-L1_LOSC_16_V1-1126256640-4096.hdf5
++ echo '0ed720c98ba376c42275474d6c61a4c9d857047c46cb2bf4eb432eee5c374991  /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5 ./L-L1_LOSC_16_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ run_wave GW150914_220221_peak_16k GW150914_220221_peak_docs_nohp_16k
++ pids=
++ for lab in "$@"
++ pids=' 1758'
++ for lab in "$@"
++ pids=' 1758 1759'
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_16k cfg_GW150914_220221_peak_16k.json
++ rc=0
++ for p in $pids
++ wait 1758
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_docs_nohp_16k cfg_GW150914_220221_peak_docs_nohp_16k.json
++ for p in $pids
++ wait 1759
++ return 0
++ run_wave GW150914_220221_peak_dur0p05 GW150914_220221_peak_docs_nohp_dur0p05
++ pids=
++ for lab in "$@"
++ pids=' 2457'
++ for lab in "$@"
++ pids=' 2457 2458'
++ rc=0
++ for p in $pids
++ wait 2457
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_dur0p05 cfg_GW150914_220221_peak_dur0p05.json
++ /usr/bin/time -v python ringdown_fit.py GW150914_220221_peak_docs_nohp_dur0p05 cfg_GW150914_220221_peak_docs_nohp_dur0p05.json
++ for p in $pids
++ wait 2458
++ return 0
++ date -u +%s
++ grep -h '^DONE' GW150914_220221_peak_16k.log GW150914_220221_peak_docs_nohp_16k.log GW150914_220221_peak_docs_nohp_dur0p05.log GW150914_220221_peak_dur0p05.log
++ cut -c1-220
+DONE GW150914_220221_peak_16k {"m_det_Msun_q05_q50_q95": [64.97890852332294, 78.4862091083613, 92.13830865465842], "chi_q05_q50_q95": [0.51656173574218, 0.791647933952807, 0.9128617040365335], "rhat_m": 1.0, "ess_bulk_m"
+DONE GW150914_220221_peak_docs_nohp_16k {"m_det_Msun_q05_q50_q95": [68.58214338197034, 81.1195066159639, 95.50692574107049], "chi_q05_q50_q95": [0.6011705235377831, 0.8177482415436599, 0.9296630688410289], "rhat_m": 1.0,
+DONE GW150914_220221_peak_docs_nohp_dur0p05 {"m_det_Msun_q05_q50_q95": [67.16220210925131, 81.90128316224542, 100.40626082696421], "chi_q05_q50_q95": [0.5401670364643341, 0.8120870521082427, 0.9458276819712332], "rhat_m"
+DONE GW150914_220221_peak_dur0p05 {"m_det_Msun_q05_q50_q95": [62.470821384270565, 78.65266170861824, 96.87831184475876], "chi_q05_q50_q95": [0.40527639183664627, 0.7751114844569895, 0.9338040159750323], "rhat_m": 1.0, "e

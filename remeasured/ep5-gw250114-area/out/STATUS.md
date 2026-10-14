@@ -92,9 +92,46 @@ Dry runs (results/dryrun/; logs/combine_dryrun_*.log). These use the **IMR** ini
 - the same with the no-high-pass scan: medians 0.88, 0.74, 0.74, 0.76, 0.58, 0.55, 0.35; P = 1 (saturated) up to 13 M_f, then 0.9996, 0.9961, 0.967.
 Ready to run on ../premerger/ as soon as you say the samples have arrived; it needs the column names and the frame.
 
+## S3 — Literature pass for the series (2026-10-14, 04:20–05:10 UTC; no compute)
+Outputs: literature/refs.bib (67 entries, each with a DOI or arXiv id; pybtex-parsed), literature/RELATED-WORK.md, and literature/SEARCH-LOG.md with the raw responses in literature/search_raw/.
+The Literature Graph connector was not attached, so arXiv, OpenAlex and CrossRef were queried directly.
+- Each bib entry's x-verification field records what was opened: 11 FT (full text read), 43 AB (abstract or landing page), 13 MD (record only, paywalled).
+- Confirmed: Li, Ji & Zhang (arXiv:2111.12210) fit 28 heliocentric positions computed by Kepler, taken from Astronomia nova (Donahue's translation), not from Tycho's logs.
+- Not found: KeplerBench (2026). Only a GitHub repository with a `keplerbench` package turned up. It is not in refs.bib; a citation is needed.
+- Closest prior work per episode:
+  1. Carman 2021–2026, manuscript reconstructions working from Tycho's logs.
+  2. Aoki 1992/1996 on the Moon test (record only); Longhin 2025 fits Galileo's (not Newton's) Jupiter-satellite data.
+  3. Morrison & Ward 1975 — about 2400 transit contacts 1677–1973; excess perihelion motion +41.9 ± 0.5″ per century.
+  4. Will 2014 Eq. (67) for the 42.98″/cy coefficient; Park et al. 2017 (MESSENGER).
+  5. LVK 2025a/b; independent analyses by Prasad 2026 and Chung et al. 2026. Kastha et al. 2022 report that single-mode ringdown fits overestimate M_f, consistent with our S2 finding.
+- Directly relevant to Task 2: Wang & Shao 2023 trace the GW150914 overtone disagreements to noise estimation combined with sampling rate (2 kHz vs 16 kHz).
+
+## S4 — Task 2: the open Isi et al. 2019 check (2026-10-14, ws job 2720e208, 05:22:51–05:29:32 UTC)
+Fit: GW150914, 220+221 at the peak (geocentre 1126259462.4083147; ra/dec/psi 1.95/−1.27/0.82; cited from arXiv:1905.00869). Two prior bases: (P) project priors; (D) ringdown-docs priors (a_scale_max 1e-21, M 50–150, cosi = −1) without the 20 Hz high-pass. On each base, one change at a time:
+- (i) 16 kHz input: the GWOSC O1 LOSC_16_V1 files, same release as the 4 kHz LOSC_4_V1 files, decimated ×8 to the same 2048 Hz. sha256 values are in ../data/gwosc/CHECKSUMS_16k.tsv; both files were re-verified on ws.
+- (ii) 0.05 s analysis window instead of 0.2 s (102 samples instead of 410).
+
+Table: results/task2_isi2019_check.csv; posteriors in results/ringdown/. M_f is detector frame, in M_sun; intervals are the 16–84% quantiles, to compare with Isi et al.'s 68% intervals.
+
+| run | M_f median [16%, 84%] | chi_f median [16%, 84%] | Isi+2019 point (68, 0.63): HPD level | GWTC-2.1 IMR point: HPD level |
+|---|---|---|---|---|
+| P, 4 kHz, 0.2 s (reference, S2) | 79.1 [70.3, 88.0] | 0.80 [0.65, 0.88] | 0.71 | 0.88 |
+| P, **16 kHz**, 0.2 s | 78.5 [70.1, 86.7] | 0.79 [0.65, 0.88] | 0.69 | 0.88 |
+| P, 4 kHz, **0.05 s** | 78.7 [69.0, 88.5] | 0.78 [0.59, 0.88] | 0.68 | 0.91 |
+| D, 4 kHz, 0.2 s (reference, S2) | 82.1 [74.1, 90.5] | 0.82 [0.71, 0.90] | 0.87 | 0.94 |
+| D, **16 kHz**, 0.2 s | 81.1 [73.3, 89.0] | 0.82 [0.70, 0.89] | 0.85 | 0.93 |
+| D, 4 kHz, **0.05 s** | 81.9 [73.1, 91.4] | 0.81 [0.68, 0.90] | 0.84 | 0.98 |
+
+**Result.** Neither change closes the gap to Isi et al. 2019 (68 ± 7 M_sun, 0.63 ± 0.16). The 16 kHz input moves the M_f median by −0.6 (P) and −0.9 (D) M_sun; the 0.05 s window moves it by −0.45 (P) and −0.15 (D) M_sun. All are small compared with the posterior widths (≈ ±8–9 M_sun). Our medians stay 10.5–14 M_sun above Isi et al.'s, with their point on our 68–87% contours, i.e. about a 1σ-level difference that is not explained by sampling rate or window length.
+- For the GWTC-2.1 IMR remnant: with project priors it stays inside our 90% region at 16 kHz (88%), but sits just outside with the 0.05 s window (91%). With docs priors it lies outside 90% in all three runs (93–98%).
+- Remaining untested differences from Isi et al. 2019: the ACF/PSD estimate (data length and method), the amplitude prior and its scale, the polarization/inclination model (our D base fixes cosi = −1), and the package version (2019 code vs ringdown 1.1.0).
+- Wang & Shao 2023 (arXiv:2311.13300) attribute the published disagreements mainly to noise estimation combined with sampling rate. Here, sampling rate alone did not matter once the data were decimated to the same 2048 Hz.
+
+**Compute.** One ws job; 401 s wall; about 3,350 CPU-s (0.93 core-hours) for the 4 fits; plus about 1 GB of GWOSC download on ws. ws was in use 05:21–05:30 UTC, and the owner was told it could be stopped at about 05:31. The local 16 kHz download (992 MB) ran before the box was started.
+
 ## Open issues (updated in S2)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
-2. [S2: partly resolved] GW150914 calibration: the 220 fit is consistent with GWTC-2.1; reproducing Isi et al. 2019 with 220+221 at the peak fails at about 1–1.5 sigma. Next: rerun with the 16 kHz GWOSC 32 s files and the docs-example duration (0.05 s), one change at a time.
+2. [S4: checked] GW150914 calibration: the 220-only fit is consistent with GWTC-2.1. Reproducing Isi et al. 2019 with 220+221 at the peak still fails at about the 1σ level, and neither 16 kHz input nor a 0.05 s window changes that (S4). Next, one change at a time: ACF from a PSD (PE or BayesWave), the amplitude prior, the polarization model; also compare with the public code of Isi & Farr's 2023 comment (github.com/maxisi/gw150914_rd_comment), cited in arXiv:2310.13869.
 3. The area-law test needs the inspiral-only A_i (other lane). The combination script is ready and tested.
 4. The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
 5. Not supported by the package: calibration marginalisation (bound given in S2.1).

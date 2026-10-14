@@ -1,0 +1,99 @@
+## ep1 title.search:Tycho Mars 4
+   2022 Christián Carlos Carman; Gonzalo Luis Re | Tycho Brahe’s Appendix ad Observationes anni 1593 and the date of Brahe’s theory of Mars, the protot | https://doi.org/10.1177/00218286221099993 | Journal for the History of Astronomy | 2
+   2025 Christián Carlos Carman | Did Tycho (Or His Assistants) manipulate his observations? An analysis of Tycho’s table of mars mean | https://doi.org/10.1016/j.hm.2025.09.006 | Historia Mathematica | 0
+   2021 Matthew Boden | Tycho Goes to Mars: Fulldome Planetarium Show w/ Museums Victoria | https://doi.org/10.25959/32390022 | University of Tasmania | 0
+   None Maurice (1833-1907) Loewy; P. Puiseux; M | Planche XIV. Tycho – Crevasse d’Hésiode – Mur droit. Atlas Lunaire. D’après phototypie Lœwy et Puise | None | David Rumsey Historical Maps | 0
+## ep1 title.search:Kepler Mars observations 2
+   1975 FELIX SCHMEIDLER | 10.10. On the effect of perturbations in the observations of Mars used by Kepler | https://doi.org/10.1016/0083-6656(75)90142-7 | Vistas in Astronomy | 0
+   1975 FELIX SCHMEIDLER | On the effect of perturbations in the observations of Mars used by Kepler. | None | None | 0
+## ep1 title.search:Tycho observations Kepler 2
+   2009 Noel M. Swerdlow | Tycho, Longomontanus, and Kepler on Ptolemy’s Solar Observations and Theory, Precession of the Equin | https://doi.org/10.1007/978-90-481-2788-7_7 | Archimedes | 15
+   1999 Stephen S. Holt | ACIS Observations of TYCHO and Kepler | None | Chandra Proposal | 0
+## ep1 title.search:Astronomia nova Mars 0
+## ep2 title.search:moon test 25
+   2006 Giuseppe Lippi; Gian Cesare Guidi; Camil | Preanalytical variability: the dark side of the moon in laboratory testing | https://doi.org/10.1515/cclm.2006.073 | Clinical Chemistry and Laboratory Medicine (CCLM) | 415
+   1968 Kenneth L. Nordtvedt Jr | Testing Relativity with Laser Ranging to the Moon | https://doi.org/10.1103/physrev.170.1186 | Physical Review | 289
+   2009 JAMES G. WILLIAMS; SLAVA G. TURYSHEV; DA | LUNAR LASER RANGING TESTS OF THE EQUIVALENCE PRINCIPLE WITH THE EARTH AND MOON | https://doi.org/10.1142/s021827180901500x | International Journal of Modern Physics D | 158
+   2011 Philip T. Metzger; Jacob Russell Smith;  | Phenomenology of soil erosion due to rocket exhaust on the Moon and the Mauna Kea lunar test site | https://doi.org/10.1029/2010je003745 | Journal of Geophysical Research Atmospheres | 117
+   2017 Joana S. Oliveira; Mark A. Wieczorek | Testing the axial dipole hypothesis for the Moon by modeling the direction of crustal magnetization | https://doi.org/10.1002/2016je005199 | Journal of Geophysical Research Planets | 113
+   2004 James Gordon Williams; Slava G. Turyshev | Lunar Laser Ranging Tests of the Equivalence Principle with the Earth and Moon | None | None | 111
+   2012 Igor G. Mitrofanov; Maxim L. Litvak; Ant | Testing polar spots of water‐rich permafrost on the Moon: LEND observations onboard LRO | https://doi.org/10.1029/2011je003956 | Journal of Geophysical Research Atmospheres | 99
+   1967 Ralph F. Baierlein | Testing General Relativity with Laser Ranging to the Moon | https://doi.org/10.1103/physrev.162.1275 | Physical Review | 69
+   2018 Yuan Wen Cao; Yu-Huai Li; Wenjie Zou | Bell Test over Extremely High-Loss Channels: Towards Distributing Entangled Photon Pairs between Ear | https://doi.org/10.1103/physrevlett.120.140405 | Physical Review Letters | 48
+   2016 Peter Wolf; Luc Blanchet A | Analysis of Sun/Moon gravitational redshift tests with the STE-QUEST space mission | https://doi.org/10.1088/0264-9381/33/3/035012 | Classical and Quantum Gravity | 45
+   2010 A.C. Torres-Echeverría; Sebastián Martor | Modeling safety instrumented systems with MooN voting architectures addressing system reconfiguratio | https://doi.org/10.1016/j.ress.2010.12.003 | Reliability Engineering & System Safety | 43
+   2012 A.C. Torres-Echeverría; Sebastián Martor | Multi-objective optimization of design and testing of safety instrumented systems with MooN voting a | https://doi.org/10.1016/j.ress.2012.03.010 | Reliability Engineering & System Safety | 41
+   2009 Jason R. Norcross; Lesley R. Lee; Kurt G | Feasibility of Performing a Suited 10-km Ambulation on the Moon - Final Report of the EVA Walkback T | None | None | 31
+   2014 Flavia Franconi; Giuseppe M.C. Rosano; I | Need for gender-specific pre-analytical testing: The dark side of the moon in laboratory testing | https://doi.org/10.1016/j.ijcard.2014.11.019 | International Journal of Cardiology | 30
+   2015 Emmanuele Battista; Simone Dell’Agnello; | Earth-moon Lagrangian points as a test bed for general relativity and effective field theories of gr | https://doi.org/10.1103/physrevd.92.064045 | Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D. Particles and fields | 29
+   1986 R. E. Grimm | Tectonic tests of proposed polar wander paths for Mars and the Moon | https://doi.org/10.1016/0019-1035(86)90066-7 | Icarus | 29
+   2013 Miriam Götte; Sabine Kesting; Carl Albre | MOON-test - Determination of Motor Performance in the Pediatric Oncology | https://doi.org/10.1055/s-0033-1343411 | Klinische Pädiatrie | 27
+   2012 Kris A. Zacny; D. G. Currie; Gale L. Pau | Development and testing of the pneumatic lunar drill for the emplacement of the corner cube reflecto | https://doi.org/10.1016/j.pss.2012.07.025 | Planetary and Space Science | 27
+   2009 Arlin P. S. Crotts; Cameron Hummels | LUNAR OUTGASSING, TRANSIENT PHENOMENA, AND THE RETURN TO THE MOON. II. PREDICTIONS AND TESTS FOR OUT | https://doi.org/10.1088/0004-637x/707/2/1506 | The Astrophysical Journal | 27
+   2008 Gian Paolo Guizzo; Andrea Bertoli; Alber | Mars and Moon exploration passing through the European Precision Landing GNC Test Facility | https://doi.org/10.1016/j.actaastro.2007.12.006 | Acta Astronautica | 15
+   2004 M. Kennedy; J. E. Vidale; Michael Parker | Earthquakes and the Moon: Syzygy Predictions Fail the Test | https://doi.org/10.1785/gssrl.75.5.607 | Seismological Research Letters | 14
+   2015 R. A. Yingst; P. Russell; I. L. ten Kate | Designing remote operations strategies to optimize science mission goals: Lessons learned from the M | https://doi.org/10.1016/j.actaastro.2015.02.029 | Acta Astronautica | 13
+   1983 Carroll O. Alley | Laser Ranging to Retro-Reflectors on the Moon as a Test of Theories of Gravity | https://doi.org/10.1007/978-1-4613-3712-6_19 | Springer eBooks | 13
+   2023 Nelson V. Nunes; Norbert Bartel; A. V. B | Gravitational redshift test of EEP with RadioAstron from near Earth to the distance of the Moon | https://doi.org/10.1088/1361-6382/ace609 | Classical and Quantum Gravity | 12
+   2015 Giuseppe Lippi; Camilla Mattiuzzi; Emman | Pre-analytical variability and quality of diagnostic testing. Looking at the moon and gazing beyond  | None | New Zealand journal of medical laboratory science | 12
+## ep2 title.search:Newton Principia Jupiter 0
+## ep2 title.search:Newton Principia data 0
+## ep2 title.search:Newton lunar test gravitation 0
+## ep2 title.search:Principia Book 3 numbers 0
+## ep3 title.search:transits of Mercury 25
+   1975 L. V. Morrison; C. G. Ward | An Analysis of the Transits of Mercury : 1677-1973 | https://doi.org/10.1093/mnras/173.1.183 | Monthly Notices of the Royal Astronomical Society | 99
+   2008 A. Mura; Peter Wurz; Herbert Lichtenegge | The sodium exosphere of Mercury: Comparison between observations during Mercury's transit and model  | https://doi.org/10.1016/j.icarus.2008.11.014 | Icarus | 93
+   2004 H. Schleicher; Guenter R. Wiedemann; H.  | Detection of neutral sodium above Mercury during the transit on 2003 May 7 | https://doi.org/10.1051/0004-6361:20040477 | Astronomy and Astrophysics | 81
+   2012 Marcelo Emilio; J. R. Kuhn; R. I. Bush | MEASURING THE SOLAR RADIUS FROM SPACE DURING THE 2003 AND 2006 MERCURY TRANSITS | https://doi.org/10.1088/0004-637x/750/2/135 | The Astrophysical Journal | 79
+   2012 Marcelo Emilio; J. R. Kuhn; R. I. Bush | MEASURING THE SOLAR RADIUS FROM SPACE DURING THE 2003 and 2006 MERCURY TRANSITS | None | None | 44
+   2018 S. Orsini; Valeria Mangano; Anna Milillo | Mercury sodium exospheric emission as a proxy for solar perturbations transit | https://doi.org/10.1038/s41598-018-19163-x | Scientific Reports | 43
+   1969 Bernard R. Goldstein | Some Medieval Reports of Venus and Mercury Transits | https://doi.org/10.1111/j.1600-0498.1969.tb00135.x | Centaurus | 40
+   1976 Albert Van Helden | The Importance of the Transit of Mercury of 1631 | https://doi.org/10.1177/002182867600700101 | Journal for the History of Astronomy | 39
+   1882 Simon Newcomb | Discussion and results of observations on transits of Mercury from 1677 to 1881 | None | None | 38
+   2004 Glenn Schneider; Jay M. Pasachoff; L. Go | TRACE observations of the 15 November 1999 transit of Mercury and the Black Drop effect: considerati | https://doi.org/10.1016/j.icarus.2003.11.020 | Icarus | 33
+   1971 Wolfgang Mattig | Observations of stray-light and sunspot intensities during the Mercury transit of 1970 May 9 | https://doi.org/10.1007/bf00149065 | Solar Physics | 33
+   1971 P. Maltby | The effect of scattered light on solar intensity observations as derived from 9 May, 1970 Mercury tr | https://doi.org/10.1007/bf00146025 | Solar Physics | 24
+   2002 M. L. Sveshnikov | Solar-radius variations from transits of Mercury across the solar disk | https://doi.org/10.1134/1.1448847 | Astronomy Letters | 21
+   2013 A. E. Potter; R. M. Killen; K. Reardon | Observation of neutral sodium above Mercury during the transit of November 8, 2006 | https://doi.org/10.1016/j.icarus.2013.05.029 | Icarus | 19
+   1971 P. Maltby; L. Staveland | Sunspot intensity observations during the 9 May 1970 Mercury transit | https://doi.org/10.1007/bf00149066 | Solar Physics | 18
+   2004 F. Auchère; Guy E. Artzner | EIT Observations of the 15 November 1999 Mercury Transit | https://doi.org/10.1023/b:sola.0000022945.53373.17 | Solar Physics | 17
+   2018 Bahattin Erdoğan; Furkan Karlitepe; Tayl | Performance analysis of Real Time PPP for transit of Mercury | https://doi.org/10.1016/j.measurement.2018.07.050 | Measurement | 10
+   1998 J. P. Wülser; Hugh S. Hudson; M. Nishio | Precise Determination of the Coordinate Systems for the Yohkoh Telescopes and the Application of a T | https://doi.org/10.1023/a:1005058818887 | Solar Physics | 7
+   1975 Axel D. Wittmann; H. W�hl | Scattered light - a comparison between theory and experiments during the 1973 transit of Mercury | https://doi.org/10.1007/bf00156858 | Solar Physics | 7
+   2006 C. Briand; Wolfgang Mattig; Guido Ceppat | Mercury Transit for Stray Light Evaluation: IPM-THEMIS Case | https://doi.org/10.1007/s11207-006-0033-5 | Solar Physics | 6
+   2005 Glenn Schneider; Jay M. Pasachoff; L. Go | Space Studies of the Black-Drop Effect at a Mercury Transit | https://doi.org/10.1017/s1539299600015100 | Highlights of Astronomy | 6
+   1974 V. A. Efanov; I. G. Moiseev; A. B. Sever | Transit of Mercury across the solar disk | https://doi.org/10.1038/249330a0 | Nature | 6
+   1974 Axel D. Wittmann | Numerical Simulation of the Mercury Transit Black Drop Phenomenon | None | None | 6
+   1769 John Ewing | An Account of the Transit of Venus over the Sun, June 3d, 1769, and of the Transit of Mercury Nov. 9 | https://doi.org/10.2307/1005004 | Transactions of the American Philosophical Society | 6
+   2013 William Tobin | TRANSITS OF VENUS AND MERCURY AS MUSES | https://doi.org/10.3724/sp.j.1440-2807.2013.03.01 | Journal of Astronomical History and Heritage | 4
+## ep3 title.search:Newcomb Mercury 1
+   2014 Valdir Monteiro dos Santos Godoi | Note on Accounting for the Secular Variations of the Orbits of Venus and Mercury, by Simon Newcomb ( | None | viXra | 0
+## ep3 title.search:Mercury perihelion transits 0
+## ep3 title.search:Mercury perihelion history 0
+## ep4 title.search:Mercury perihelion advance 25
+   1996 Thomas Joseph Lydon; S. Sofia | A Measurement of the Shape of the Solar Disk: The Solar Quadrupole Moment, the Solar Octopole Moment | https://doi.org/10.1103/physrevlett.76.177 | Physical Review Letters | 65
+   2013 M. A. Abramowicz; George Ellis; Jiří Hor | The perihelion of Mercury advance and the light bending calculated in (enhanced) Newton’s theory | https://doi.org/10.1007/s10714-013-1630-x | General Relativity and Gravitation | 8
+   2003 Harihar Behera; P C Naik | A flat space-time relativistic explanation for the perihelion advance of Mercury | https://doi.org/10.48550/arxiv.astro-ph/0306611 | arXiv (Cornell University) | 5
+   2014 Keith John Treschman | Early astronomical tests of general relativity: the anomalous advance in the perihelion of Mercury a | None | None | 4
+   2003 Clovis Jacinto de Matos; Martin Tajmar | Advance of Mercury Perihelion Explained by Cogravity - Version II | https://doi.org/10.48550/arxiv.gr-qc/0304104 | arXiv (Cornell University) | 4
+   1968 S. P. S. Anand; Gregory G. Fahlman | Solar rotation and the perihelion advance of Mercury | https://doi.org/10.1016/0019-1035(68)90096-1 | Icarus | 4
+   2020 Christian Corda | Solution to the Advance of the Perihelion of Mercury in Newtonian Theory | None | viXra | 3
+   2011 Yu. M. Loskutov | Comparison of theoretical and experimental data on the advance of the mercury perihelion: The proper | https://doi.org/10.3103/s002713491102010x | Moscow University Physics Bulletin | 3
+   2012 M. A. Abramowicz | The perihelion of Mercury advance calculated in Newton's theory | https://doi.org/10.48550/arxiv.1212.0264 | arXiv (Cornell University) | 2
+   2012 Erich R. Bagge | Classical theory of advance of perihelion of Mercury with velocity dependent inertial and gravitatio | None | Journal of Systems Engineering and Electronics | 2
+   1999 P. Marmet | Classical Description of the Advance of the Perihelion of Mercury | https://doi.org/10.4006/1.3025405 | Physics Essays | 2
+   1956 E. Gerjuoy | Feasibility of a Nonrelativistic Explanation for the Advance of the Perihelion of Mercury | https://doi.org/10.1119/1.1934119 | American Journal of Physics | 2
+   1966 I. M. Winer | Rotating Solar Polytropes and the Perihelion Advance of the Planet Mercury | https://doi.org/10.1093/mnras/132.3.401 | Monthly Notices of the Royal Astronomical Society | 1
+   1946 F. W. Warburton | The Advance of the Perihelion of Mercury | https://doi.org/10.1103/physrev.70.86.2 | Physical Review | 1
+   1925 J. T. Combridge | On the advance of perihelion of mercury | https://doi.org/10.1088/1478-7814/38/1/320 | Proceedings of the Physical Society of London | 1
+   2026 Joseph Nduriri | mercury perihelion advance | https://doi.org/10.13140/rg.2.2.28076.01921 | None | 0
+   2025 Sato, Masanori | On the Perihelion Advance of Mercury in a Return to Newton’s Absolute Space and Absolute Time | https://doi.org/10.13140/rg.2.2.19835.58403/1 | None | 0
+   2022 Christian Bracco; Jean-Pierre Provost | Mercury perihelion advance in perspective (1906–1915) | https://doi.org/10.1142/9789811258251_0257 | The Fifteenth Marcel Grossmann Meeting | 0
+   2018 Henok Tadesse | Apparent Contraction and Expansion of Space Relative to Absolutely Moving Observer - New Explanation | None | viXra | 0
+   2017 Alfredo Dimas Moreira Garcia | Undulating Relativity + §26 Mercury Perihelion Advance of 42.99". | None | viXra | 0
+   2017 F. Rocha; Manuel M. Malheiro; Rubens M.  | Gravitomagnetic approach for Mercury perihelion advance | https://doi.org/10.1142/9789813226609_0581 | None | 0
+   2016 David Harrison | Advance of the perihelion of Mercury | None | Acervo Digital da Universidade Estadual Paulista (Universidade Estadual Paulista) | 0
+   2014 Valdir Monteiro dos Santos Godoi | Three Hypotheses for the Advance of the Perihelion of Mercury | None | viXra | 0
+   2014 Shao-Guang Chen | Advance of the perihelion of Mercury deduced from QFT | None | cosp | 0
+   2013 Henok Tadesse | ‘Elliptic’ Orbits and Mercury Perihelion Advance as Evidence for Absolute Motion | None | viXra | 0
+## ep4 title.search:perihelion precession Mercury measurement 0

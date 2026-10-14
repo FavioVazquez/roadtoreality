@@ -1,0 +1,96 @@
+{
+ "label": "GW150914_220221_peak_dur0p05",
+ "config": {
+  "duration": 0.05,
+  "ds": 2,
+  "f_min": 20.0,
+  "slice": 128.0,
+  "m_min": 35.0,
+  "m_max": 150.0,
+  "a_scale_max": 5e-21,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "H1": "H-H1_LOSC_4_V1-1126256640-4096.hdf5",
+  "L1": "L-L1_LOSC_4_V1-1126256640-4096.hdf5",
+  "t0_geocenter": 1126259462.4083147,
+  "ra": 1.95,
+  "dec": -1.27,
+  "psi": 0.82,
+  "provenance": "cited: geocenter peak 1126259462.4083147, ra/dec/psi 1.95/-1.27/0.82 and 220+221 at the peak from Isi et al. 2019 (arXiv:1905.00869); other settings = this project's protocol (same as the 220 runs); Task 2 single change vs GW150914_220221_peak: duration 0.2 s -> 0.05 s",
+  "modes": [
+   [
+    1,
+    -2,
+    2,
+    2,
+    0
+   ],
+   [
+    1,
+    -2,
+    2,
+    2,
+    1
+   ]
+  ],
+  "variation": "220+221 at peak, project protocol priors; Task 2 change: 0.05 s analysis window (as in the ringdown docs quick-start example)"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_LOSC_4_V1-1126256640-4096.hdf5",
+   "sha256": "30ad150a40c911e24652f2ffc2f8e7a92bb60d579531dde3160f475bb306c41a"
+  },
+  "L1": {
+   "file": "L-L1_LOSC_4_V1-1126256640-4096.hdf5",
+   "sha256": "b6896cb749931cfc0c35fb01e750f1c4e6847830122f9afa5640ebc78e97f384"
+  }
+ },
+ "acf_source": "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ],
+  [
+   1,
+   -2,
+   2,
+   2,
+   1
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  62.470821384270565,
+  78.65266170861824,
+  96.87831184475876
+ ],
+ "chi_q05_q50_q95": [
+  0.40527639183664627,
+  0.7751114844569895,
+  0.9338040159750323
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 3045.0,
+ "ess_bulk_chi": 2750.0,
+ "start_times": {
+  "H1": 1126259462.423,
+  "L1": 1126259462.4160156
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 19.004587411880493,
+ "script_sha256": "a27aab14c87d29e6df3fd7df1a417e373841e0394b8c6c64992589a8fd93e71d"
+}

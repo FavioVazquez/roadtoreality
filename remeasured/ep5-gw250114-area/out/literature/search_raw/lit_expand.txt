@@ -1,0 +1,373 @@
+#### ep3_MorrisonWard 10.1093/mnras/173.1.183 refs=0 citedby=30 
+  -- cited_by
+     1981 C. F. Yoder; S. J. Pea | The tides of Io | 10.1016/0019-1035(81)90088-9 | 299
+     1995 Francis Richard Stephe | Long-term fluctuations in the Earth’s rotation: 700 BC to AD 1990 | 10.1098/rsta.1995.0028 | 206
+     1977 Kurt Lambeck | Tidal dissipation in the oceans: astronomical, geophysical and oceanographic consequences | 10.1098/rsta.1977.0159 | 205
+     2015 R. S. Gross | Earth Rotation Variations – Long Period | 10.1016/b978-0-444-53802-4.00059-2 | 190
+     2011 C. F. Yoder | Astrometric and Geodetic Properties of Earth and the Solar System | 10.1029/rf001p0001 | 181
+     1984 Clifford M. Will | The confrontation between general relativity and experiment: An update1 | 10.1016/0370-1573(84)90119-4 | 153
+     1999 B. G. Bills; Richard D | Lunar orbital evolution: A synthesis of recent results | 10.1029/1999gl008348 | 128
+     2002 J. Chapront; Michelle  | A new determination of lunar orbital parameters, precession constant and tidal acceleration from LLR meas | 10.1051/0004-6361:20020420 | 103
+     2007 R. S. Gross | Earth Rotation Variations – Long Period | 10.1016/b978-044452748-6.00057-2 | 100
+     1979 Leslie V. Morrison | Re-determination of the decade fluctuations in the rotation of the Earth in the period 1861-1978 | 10.1111/j.1365-246x.1979.tb01029.x | 99
+     1980 John H. Parkinson; Les | The constancy of the solar diameter over the past 250 years | 10.1038/288548a0 | 89
+     2003 S. Pireaux; J.-P. Roze | Solar quadrupole moment and purely relativistic gravitation contributions to Mercury's perihelion advance | 10.1023/a:1023673227013 | 88
+     2012 Marcelo Emilio; J. R.  | MEASURING THE SOLAR RADIUS FROM SPACE DURING THE 2003 AND 2006 MERCURY TRANSITS | 10.1088/0004-637x/750/2/135 | 79
+     1990 P. Sisterna; H. Vuceti | Time variation of fundamental constants: Bounds from geophysical and astronomical data | 10.1103/physrevd.41.1034 | 79
+     1986 Dennis D. McCarthy; Al | The length of day since 1656 | 10.1016/0031-9201(86)90077-4 | 78
+     1978 James Gordon Williams; | Tidal acceleration of the Moon | 10.1029/gl005i011p00943 | 76
+     2003 Francis Richard Stephe | Historical eclipses and Earth's rotation | 10.1046/j.1468-4004.2003.44222.x | 73
+     2001 Duncan R. Lorimer | Binary and Millisecond Pulsars at the New Millennium | 10.12942/lrr-2001-5 | 72
+     2001 S. Pireaux; Godier, S; | Solar quadrupole moment and purely relativistic gravitation contributions to Mercury's perihelion Advance |  | 64
+     1980 Irwin I. Shapiro | Is the Sun Shrinking? | 10.1126/science.208.4439.51 | 53
+     2012 Marcelo Emilio; J. R.  | MEASURING THE SOLAR RADIUS FROM SPACE DURING THE 2003 and 2006 MERCURY TRANSITS |  | 44
+     1988 A. Cook | Experiments on gravitation | 10.1088/0034-4885/51/5/003 | 43
+     1978 Clyde C. Goad; Bruce C | Lunar tidal acceleration obtained from satellite‐derived ocean tide parameters | 10.1029/jb083ib05p02306 | 43
+     1996 Boris A. Kagan; Jürgen | Dissipation of Tidal Energy, Paleotides, and Evolution of the Earth–Moon System | 10.1016/s0065-2687(08)60021-7 | 41
+     2001 Leslie V. Morrison; Fr | Historical eclipses and the variability of the Earth's rotation | 10.1016/s0264-3707(01)00024-2 | 39
+     2014 James Gordon Williams; | The past and present Earth-Moon system: the speed of light stays steady as tides evolve | 10.1186/s13535-014-0002-5 | 37
+     1982 Vittorio M. Canuto; I. | Atomic and gravitational clocks | 10.1038/296709a0 | 34
+     1997 John M. Steele; Franci | Lunar Eclipse Times Predicted by the Babylonians | 10.1177/002182869702800203 | 26
+     1979 T. L. Felsentreger; Ja | M2 ocean tide parameters and the deceleration of the Moon's mean longitude from satellite orbit data | 10.1029/jb084ib09p04675 | 23
+     2008 David Edgar Cartwright | Theory of ocean tides with application to altimetry | 10.1007/bfb0117927 | 20
+  -- references
+#### ep2_Aoki 10.1007/BF00374744 refs=15 citedby=9 
+  -- cited_by
+     2009 Steffen Ducheyne | Understanding (in) Newton’s Argument for Universal Gravitation | 10.1007/s10838-009-9096-y | 31
+     2021 Guoxu Feng; Jun Yan Hu | A heuristic resolution of the Abraham–Minkowski controversy | 10.1140/epjp/s13360-021-01523-8 | 7
+     2023 Vasil Dinev Penchev | Logic, mathematics, physics: from a loose thread to the close link: Or what gravity is for both logic and | 10.2139/ssrn.4593958 | 6
+     2023 Søren Toxværd | Discrete Molecular Dynamics | 10.1016/b978-0-12-821978-2.00092-1 | 3
+     2023 Vasil Dinev Penchev | Logic, mathematics, physics: from a loose thread to the close link. Or what gravity is for both logic and | 10.20944/preprints202310.0894.v1 | 1
+     2023 Vasil Dinev Penchev | Logic, mathematics, physics: from a loose thread to the close link: Or what gravity is for both logic and | 10.33774/coe-2023-0rjbp | 1
+     2022 Søren Toxværd | Planetary systems with forces other than gravitational forces | 10.1007/s10569-022-10095-3 | 1
+     2006 Luis Mario Floría Pera | Some remarks on the treatment of quasi-Keplerian system |  | 0
+     1994 Eduardo Salles de Oliv | Omnis Philosophiae difficultas: o conceito de força na filosofia natural de Newton | 10.11606/d.8.1994.tde-08122022-132556 | 0
+  -- references
+     1687 Isaac Newton | Philosophiae naturalis principia mathematica | 10.5479/sil.52126.39088015628399 | 2850
+     1886 Geoffrey W. Hill | On the part of the motion of the lunar perigee which is a function of the mean motions of the sun and moo | 10.1007/bf02417081 | 550
+     1971 I. Bernard Cohen | Introduction to Newton's "Principia" | 10.4159/harvard.9780674283619 | 328
+     1958 W. D. MacMillan | The theory of the potential |  | 275
+     1973 Richard S. Westfall | Newton and the Fudge Factor | 10.1126/science.179.4075.751 | 161
+     1981 Richard S. Westfall | Never at Rest | 10.1017/cbo9781107340664 | 152
+     1974 Great Britain. Nautica | Explanatory supplement to the astronomical ephemeris and the American ephemeris and nautical almanac |  | 106
+     1970 D. T. Whiteside | The Mathematical Principles Underlying Newton's Principia Mathematica | 10.1177/002182867000100203 | 74
+     1970 D. T. Whiteside | Before the Principia : The Maturing of Newton's Thoughts on Dynamical Astronomy, 1664–1684 | 10.1177/002182867000100103 | 73
+     1951 R. König; K. H. Weise | Mathematische Grundlagen der Höheren Geodäsie und Kartographie | 10.1007/978-3-642-87438-3 | 43
+     1986 Derek Gjertsen | The Newton handbook |  | 39
+     2018 Stephen Peter Rigaud | Historical essay on the first publication of Sir Isaac Newton's Principia | 10.14711/spcol/b687369 | 34
+     1960 Ernest William Brown | An introductory treatise on the lunar theory |  | 23
+     1977 Richard S. Westfall | Book Review: Newton on the Lunar Motion: Isaac Newton's “Theory of the Moon's Motion” | 10.1177/002182867700800114 | 8
+     1991  | MARCH | 10.2307/jj.11374754.7 | 7
+#### ep1_Gingerich75 10.1016/0083-6656(75)90165-8 refs=0 citedby=3 
+  -- cited_by
+     2025 Christián Carlos Carma | Mars’s models behind Kepler’s ephemerides of 1604 and 1605 | 10.1007/s00407-025-00354-8 | 2
+     2025 Christián Carlos Carma | Kepler's First Attempts to Demonstrate the Bisection of the Earth's Orbit | 10.1484/j.cnt.5.151946 | 2
+     2021 Christián Carlos Carma | François Viète's method for calculating the eccentricity in a bisected model and its possible application | 10.1016/j.hm.2021.09.002 | 2
+  -- references
+#### ep1_Carman24 10.1007/s00407-024-00344-2 refs=9 citedby=4 
+  -- cited_by
+     2025 Christián Carlos Carma | Kepler's First Attempts to Demonstrate the Bisection of the Earth's Orbit | 10.1484/j.cnt.5.151946 | 2
+     2026 Christián Carlos Carma | The crisis of the vicarious hypothesis and the emergence of Kepler’s physical astronomy | 10.1016/j.hm.2026.103229 | 0
+     2026 Christián Carlos Carma | Kepler’s early applications of the distance law: manuscript evidence and the emergence of a universal phy | 10.1007/s00407-026-00370-2 | 0
+     2025 Christián Carlos Carma | Did Tycho (Or His Assistants) manipulate his observations? An analysis of Tycho’s table of mars mean oppo | 10.1016/j.hm.2025.09.006 | 0
+  -- references
+     1984 Noel M. Swerdlow; Otto | Mathematical Astronomy in Copernicus’s De Revolutionibus | 10.1007/978-1-4613-8262-1 | 193
+     2002 James R. Voelkel | The composition of Kepler's Astronomia nova | 10.5860/choice.39-5181 | 84
+     2004 J. L. E. Dreyer | Tycho Brahe: A Picture of Scientific Life and Work in the Sixteenth Century |  | 69
+     1915 Tycho Brahe; J. L. E.  | Tychonis Brahe Dani Opera Omnia | 10.1038/095141a0 | 69
+     2002 James R. Voelkel | The Composition of Kepler's Astronomia nova | 10.1515/9780691224015 | 53
+     2005 Noel M. Swerdlow | Ptolemy’s Theories of the Latitude of the Planets in the Almagest, Handy Tables, and Planetary Hypotheses | 10.1007/1-4020-3048-7_3 | 30
+     2009 Noel M. Swerdlow | The Lunar Theories of Tycho Brahe and Christian Longomontanus in the Progymnasmata and Astronomia Danica | 10.1080/00033790802364429 | 13
+     2020 Christián Carlos Carma | Longomontanus’ Model for the Longitudes of Mars | 10.1177/0021828620923802 | 7
+     2021 Gonzalo Luis Recio | Kepler’s derivation of the bisection of the earth’s orbit in Astronomia Nova | 10.1080/26375451.2021.1984061 | 3
+#### ep1_Schmeidler75 10.1016/0083-6656(75)90142-7 refs=0 citedby=0 
+  -- cited_by
+  -- references
+#### ep4_NobiliWill 10.1038/320039a0 refs=30 citedby=30 
+  -- cited_by
+     1993 Clifford M. Will; Jame | Theory and Experiment in Gravitational Physics | 10.1017/9781316338612 | 3623
+     2002 Jørgen Christensen-Dal | Helioseismology | 10.1103/revmodphys.74.1073 | 545
+     2003 M. J. Thompson; Jørgen | The Internal Rotation of the Sun | 10.1146/annurev.astro.41.011802.094848 | 479
+     1989 G. Leonard Tyler; Dona | Voyager Radio Science Observations of Neptune and Triton | 10.1126/science.246.4936.1466 | 316
+     1993 S. J. Ostro | Planetary radar astronomy | 10.1103/revmodphys.65.1235 | 271
+     2009 Ramon Brasser; Alessan | Constructing the secular architecture of the solar system II: the terrestrial planets | 10.1051/0004-6361/200912878 | 146
+     2015 Lorenzo Iorio | Gravitational anomalies in the solar system? | 10.1142/s0218271815300153 | 90
+     2003 S. Pireaux; J.-P. Roze | Solar quadrupole moment and purely relativistic gravitation contributions to Mercury's perihelion advance | 10.1023/a:1023673227013 | 88
+     2001 S. Pireaux; Godier, S; | Solar quadrupole moment and purely relativistic gravitation contributions to Mercury's perihelion Advance |  | 64
+     2014 Yi Xie; Xue-Mei Deng | On the (im)possibility of testing new physics in exoplanets using transit timing variations: deviation fr | 10.1093/mnras/stt2325 | 55
+     2013 James S Jenkins; Mikko | TWO SUPER-EARTHS ORBITING THE SOLAR ANALOG HD 41248 ON THE EDGE OF A 7:5 MEAN MOTION RESONANCE | 10.1088/0004-637x/771/1/41 | 52
+     2015 Xue-Mei Deng; Yi Xie | Improved upper bounds on Kaluza–Klein gravity with current Solar System experiments and observations | 10.1140/epjc/s10052-015-3771-4 | 38
+     2013 Shan-Shan Zhao; Yi Xie | Parametrized post-Newtonian secular transit timing variations for exoplanets | 10.1088/1674-4527/13/10/011 | 32
+     1992 James O. Berger; W. H. | The application of robust Bayesian analysis to hypothesis testing and Occam's Razor | 10.1007/bf02589047 | 32
+     2013 L Iorio | A possible new test of general relativity with Juno | 10.1088/0264-9381/30/19/195011 | 28
+     2017 Lorenzo Iorio | Post-Keplerian effects on radial velocity in binary systems and the possibility of measuring General Rela | 10.1093/mnras/stx2134 | 26
+     2013 L. Iorio | 3 A possible new test of general relativity with Juno |  | 24
+     2015 Shan-Shan Zhao; Yi Xie | Solar System and stellar tests of a quantum-corrected gravity | 10.1103/physrevd.92.064033 | 22
+     2017 Lorenzo Iorio | Post-Keplerian perturbations of the orbital time shift in binary pulsars: an analytical formulation with  | 10.1140/epjc/s10052-017-5008-1 | 21
+     2016 Lorenzo Iorio | Preliminary constraints on the location of the recently hypothesized new planet of the Solar System from  | 10.1007/s10509-016-2993-8 | 21
+     2014 K. Wilhelm; Bhola N. D | Secular perihelion advances of the inner planets and asteroid Icarus | 10.1016/j.newast.2014.02.007 | 18
+     2011 Ramon Brasser; Kevin J | Stability analysis of the martian obliquity during the Noachian era | 10.1016/j.icarus.2011.02.024 | 18
+     2014 Lorenzo Iorio | Orbital motions as gradiometers for post-Newtonian tidal effects | 10.3389/fspas.2014.00003 | 16
+     2013 O. Ragos; Ioannis Hara | Effects in the anomalistic period of celestial bodies due to a logarithmic correction to the Newtonian gr | 10.1007/s10509-013-1377-6 | 16
+     2012 A. Avalos-Vargas; G. A | The precession of the orbit of a charged body interacting with a massive charged body in General Relativi | 10.1140/epjp/i2012-12155-2 | 16
+     2005 B. G. Bills; Robert L. | Forced obliquity variations of Mercury | 10.1029/2003je002116 | 16
+     2014 Abraão J. S. Capistran | Weyl conformastatic perihelion advance | 10.1093/mnras/stu1567 | 15
+     2014 K. Wilhelm; Bhola N. D | On the gravitational redshift | 10.1016/j.newast.2014.01.012 | 15
+     2019 Ramon Brasser; A. C. B | The tidal parameters of TRAPPIST-1b and c | 10.1093/mnras/stz1231 | 14
+     2018 Lorenzo Iorio | Analytically calculated post-Keplerian range and range-rate perturbations: the solar Lense–Thirring effec | 10.1093/mnras/sty351 | 13
+  -- references
+     1984 Robert M. Wald | General Relativity |  | 6285
+     1993 Clifford M. Will; Jame | Theory and Experiment in Gravitational Physics | 10.1017/9781316338612 | 3623
+     1974 Sir Hermann Bondi | Gravitation and cosmology | 10.1016/0016-0032(74)90062-3 | 2797
+     1980 J M Irvine | General Relativity – An Einstein Centenary Survey | 10.1088/0031-9112/31/4/029 | 2620
+     2009 H. James Birx | Relativity, General Theory of | 10.4135/9781412963961.n455 | 2421
+     1963 G.L. Sewell | Gravitation, an introduction to current research | 10.1016/0016-0032(63)90691-4 | 1942
+     1962 Louis Witten | Gravitation: an Introduction to current research |  | 1863
+     1979 Stephen William Hawkin | General Relativity: an Einstein Centenary Survey |  | 1461
+     2019 Dan Lee | Introduction to general relativity | 10.1090/gsm/201/07 | 800
+     2006  | General Relativity and Cosmology | 10.1007/0-387-27406-5_9 | 584
+     2013 Hans C. Ohanian; REMO  | Gravitation and Spacetime | 10.1017/cbo9781139003391 | 493
+     1984 Norbert Straumann | General Relativity and Relativistic Astrophysics | 10.1007/978-3-642-84439-3 | 399
+     1962 H. P. Robertson; Thoma | Relativity and Cosmology |  | 280
+     2004 J Ehlers | General Relativity and Gravitation | 10.1888/0333750888/2108 | 260
+     2006  | Einstein’s Theory of Relativity | 10.1007/0-387-25900-7_3 | 212
+     1947 G. M. Clemence | The Relativity Effect in Planetary Motions | 10.1103/revmodphys.19.361 | 187
+     1967 Jϋrgen Ehlers | Relativity and cosmology |  | 171
+     1980 Clifford M. Will | THE CONFRONTATION BETWEEN GENERAL RELATIVITY AND EXPERIMENT* | 10.1111/j.1749-6632.1980.tb15940.x | 168
+     1984 Clifford M. Will | The confrontation between general relativity and experiment: An update1 | 10.1016/0370-1573(84)90119-4 | 153
+     1966 J. Weber | General relativity and cosmology | 10.1016/0032-0633(66)90121-8 | 153
+     1965 R. H. Dicke; Herbert M | The Theoretical Significance of Experimental Relativity | 10.1063/1.3047551 | 143
+     1975 S Cornbleet | Introduction to General Relativity | 10.1088/0031-9112/26/4/025 | 131
+     1961 John Lighton Synge; Ja | Relativity: The General Theory | 10.1063/1.3057155 | 97
+     1974 Martin John Rees; REMO | Black holes, gravitational waves, and cosmology : an introduction to current research |  | 84
+     1978 John David Anderson; M | Tests of general relativity using astrometric and radio metric observations of the planets | 10.1016/0094-5765(78)90034-6 | 70
+     1982 Henry A. Hill; Randall | Preliminary Determination of the Sun's Gravitational Quadrupole Moment from Rotational Splitting of Globa | 10.1103/physrevlett.49.1794 | 67
+     1944 N. Ernest Dorsey | THE VELOCITY OF LIGHT | 10.2307/1005532 | 46
+     1961 F. R. Tangherlini | An introduction to the general theory of relativity | 10.1007/bf02746778 | 45
+     1975 文隆 佐藤 | M. Rees, R. Ruffini and J. A. Wheeler : Black Holes, Gravitational Waves and Cosmology ; An Introduction  |  | 35
+     1965 R. H. Dicke; P. J. E.  | Gravitation and space science | 10.1007/bf00177090 | 27
+#### ep5_Cabero18 10.1103/PhysRevD.97.124069 refs=30 citedby=30 
+  -- cited_by
+     2019 Vitor Cardoso; Paolo P | Testing the nature of dark compact objects: a status report | 10.1007/s41114-019-0020-4 | 956
+     2021 R. Abbott; T. D. Abbot | Tests of general relativity with binary black holes from the second LIGO-Virgo gravitational-wave transie | 10.1103/physrevd.103.122002 | 755
+     2019 M. Isi; Matthew Giesle | Testing the No-Hair Theorem with GW150914 | 10.1103/physrevlett.123.111102 | 405
+     2018 Emanuele Berti; Kent Y | Extreme gravity tests with gravitational waves from compact binary coalescences: (II) ringdown | 10.1007/s10714-018-2372-6 | 335
+     2019 Christopher M. Biwer;  | PyCBC Inference: A Python-based Parameter Estimation Toolkit for Compact Binary Coalescence Signals | 10.1088/1538-3873/aaef0b | 289
+     2019 Matthew Giesler; M. Is | Black Hole Ringdown: The Importance of Overtones | 10.1103/physrevx.9.041060 | 270
+     2019 G. Carullo; W. Del Poz | Observational black hole spectroscopy: A time-domain multimode analysis of GW150914 | 10.1103/physrevd.99.123029 | 187
+     2018 Soichiro Isoyama; Hiro | Multiband gravitational-wave astronomy: Observing binary inspirals with a decihertz detector, B-DECIGO | 10.1093/ptep/pty078 | 178
+     2018 Richard Brito; Alessan | Black-hole spectroscopy by making full use of gravitational-wave modeling | 10.1103/physrevd.98.084038 | 144
+     2020 Richard Brito; Vítor C | Superradiance | 10.1007/978-3-030-46622-0 | 129
+     2021 M. Isi; Will M. Farr;  | Testing the Black-Hole Area Law with GW150914 | 10.1103/physrevlett.127.011103 | 124
+     2021 Abhirup Ghosh; Richard | Constraints on quasinormal-mode frequencies with LIGO-Virgo binary–black-hole observations | 10.1103/physrevd.103.124041 | 109
+     2025 Adrian Abac; I. Abouel | GW250114: Testing Hawking’s Area Law and the Kerr Nature of Black Holes | 10.1103/kw5g-d732 | 100
+     2018 G. Carullo; Laura van  | Empirical tests of the black hole no-hair conjecture using gravitational-wave observations | 10.1103/physrevd.98.104020 | 97
+     2021 J. Calderón Bustillo;  | Black-hole spectroscopy, the no-hair theorem, and GW150914: Kerr versus Occam | 10.1103/physrevd.103.024041 | 91
+     2018 S. Aneesh; Sukanta Bos | Gravitational waves from quasinormal modes of a class of Lorentzian wormholes | 10.1103/physrevd.97.124004 | 91
+     2020 Si-Jiang Yang; Jun-Jie | Weak cosmic censorship conjecture for the novel 4D charged Einstein–Gauss–Bonnet black hole with test sca | 10.1140/epjc/s10052-020-08511-9 | 88
+     2022 Sizheng Ma; Keefe Mitm | Quasinormal-mode filters: A new approach to analyze the gravitational-wave ringdown of binary black-hole  | 10.1103/physrevd.106.084036 | 80
+     2020 M. Cabero; J. Westerwe | Black hole spectroscopy in the next decade | 10.1103/physrevd.101.064044 | 72
+     2019 Alex B. Nielsen; Colli | Parameter estimation and statistical significance of echoes following black hole signals in the first Adv | 10.1103/physrevd.99.104012 | 63
+     2020 Lionel T. London | Modeling ringdown. II. Aligned-spin binary black holes, implications for data analysis and fundamental th | 10.1103/physrevd.102.084052 | 61
+     2019 K. Chakravarti; Sumant | Tidal Love numbers of black holes and neutron stars in the presence of higher dimensions: Implications of | 10.1103/physrevd.99.024036 | 58
+     2018 Anshu Gupta; Badri Kri | Dynamics of marginally trapped surfaces in a binary black hole merger: Growth and approach to equilibrium | 10.1103/physrevd.97.084028 | 51
+     2021 N. V. Krishnendu; F. O | Testing General Relativity with Gravitational Waves: An Overview | 10.3390/universe7120497 | 50
+     2021 Eliot Finch; C. J. Moo | Modeling the ringdown from precessing black hole binaries | 10.1103/physrevd.103.084048 | 48
+     2020 Si-Jiang Yang; Jing Ch | Weak cosmic censorship conjecture for a Kerr-Taub-NUT black hole with a test scalar field and particle | 10.1103/physrevd.101.064048 | 48
+     2020 Collin D. Capano; A. N | Binary black hole spectroscopy: A no-hair test of GW190814 and GW190412 | 10.1103/physrevd.102.124070 | 43
+     2026 Emanuele Berti; Vitor  | Black hole spectroscopy: from theory to experiment | 10.1088/1361-6382/ae59e2 | 37
+     2020 Swetha Bhagwat; M. Cab | Detectability of the subdominant mode in a binary black hole ringdown | 10.1103/physrevd.102.024023 | 37
+     2021 Neev Khera; Badri Kris | Inferring the gravitational wave memory for binary coalescence events | 10.1103/physrevd.103.044012 | 31
+  -- references
+     2016 B. P. Abbott; R. Abbot | Observation of Gravitational Waves from a Binary Black Hole Merger | 10.1103/physrevlett.116.061102 | 14152
+     2017 B. P. Abbott; R. Abbot | GW170817: Observation of Gravitational Waves from a Binary Neutron Star Inspiral | 10.1103/physrevlett.119.161101 | 9479
+     1973 Jacob D. Bekenstein | Black Holes and Entropy | 10.1103/physrevd.7.2333 | 7454
+     1973 J. M. Bardeen; Brandon | The four laws of black hole mechanics | 10.1007/bf01645742 | 3913
+     2016 B. P. Abbott; R. Abbot | GW151226: Observation of Gravitational Waves from a 22-Solar-Mass Binary Black Hole Coalescence | 10.1103/physrevlett.116.241103 | 3437
+     1984 Subrahmanyan Chandrase | The Mathematical Theory of Black Holes | 10.1007/978-94-009-6469-3_2 | 3165
+     1992 Konrad Jacobs | Elements of Information Theory | 10.1007/978-3-0348-8645-1_7 | 2918
+     2017 B. P. Abbott; R. Abbot | GW170104: Observation of a 50-Solar-Mass Binary Black Hole Coalescence at Redshift 0.2 | 10.1103/physrevlett.118.221101 | 2484
+     2009 Emanuele Berti; Vítor  | Quasinormal modes of black holes and black branes | 10.1088/0264-9381/26/16/163001 | 2285
+     2017 B. P. Abbott; R. Abbot | GW170814: A Three-Detector Observation of Gravitational Waves from a Binary Black Hole Coalescence | 10.1103/physrevlett.119.141101 | 2148
+     1999 Kostas D. Kokkotas; Be | Quasi-Normal Modes of Stars and Black Holes | 10.12942/lrr-1999-2 | 2052
+     1972 Jacob D. Bekenstein | Black holes and the second law | 10.1007/bf02757029 | 1734
+     1972 Stephen William Hawkin | Black holes in general relativity | 10.1007/bf01877517 | 1560
+     2016 B. P. Abbott; R. Abbot | Binary Black Hole Mergers in the First Advanced LIGO Observing Run | 10.1103/physrevx.6.041015 | 1375
+     1985 Edward W. Leaver | An analytic representation for the quasi-normal modes of Kerr black holes | 10.1098/rspa.1985.0119 | 1307
+     2017 B. P. Abbott; R. Abbot | GW170608: Observation of a 19 Solar-mass Binary Black Hole Coalescence | 10.3847/2041-8213/aa9f0c | 1230
+     2003 Dominik Endres; J.E. S | A new metric for probability distributions | 10.1109/tit.2003.813506 | 1165
+     1971 Stephen William Hawkin | Gravitational Radiation from Colliding Black Holes | 10.1103/physrevlett.26.1344 | 1144
+     2016 S. Khan; S. Husa; Mark | Frequency-domain gravitational waves from nonprecessing black-hole binaries. II. A phenomenological model | 10.1103/physrevd.93.044007 | 1081
+     2016 B. P. Abbott; R. Abbot | Properties of the Binary Black Hole Merger GW150914 | 10.1103/physrevlett.116.241102 | 1021
+     1999 Kokkotas, Kostas D.; S | Quasi-normal modes of stars and Black holes |  | 977
+     2015 John Veitch; V. Raymon | Parameter estimation for compact binaries with ground-based gravitational-wave observations using the LAL | 10.1103/physrevd.91.042003 | 959
+     2006 Emanuele Berti; Vítor  | Gravitational-wave spectroscopy of massive black holes with the space interferometer LISA | 10.1103/physrevd.73.064030 | 877
+     2004 Abhay Ashtekar; Badri  | Isolated and Dynamical Horizons and Their Applications | 10.12942/lrr-2004-10 | 826
+     2016 S. Husa; S. Khan; Mark | Frequency-domain gravitational waves from nonprecessing black-hole binaries. I. New numerical waveforms a | 10.1103/physrevd.93.044006 | 787
+     2016 Nicolás Yunes; Kent Ya | Theoretical physics implications of the binary black-hole mergers GW150914 and GW151226 | 10.1103/physrevd.94.084002 | 700
+     1998 P. Jaranowski; Andrzej | Data analysis of gravitational-wave signals from spinning neutron stars: The signal and its detection | 10.1103/physrevd.58.063001 | 690
+     1994 Theocharis A. Apostola | Spin-induced orbital precession and its modulation of the gravitational waveforms from merging binaries | 10.1103/physrevd.49.6274 | 639
+     2009 Alessandra Buonanno; B | Comparison of post-Newtonian templates for compact binary inspiral signals in gravitational-wave detector | 10.1103/physrevd.80.084043 | 637
+     2016 S. Klimenko; G. Vedova | Method for detection and reconstruction of gravitational wave transients with networks of advanced detect | 10.1103/physrevd.93.042004 | 462
+#### ep5_Isi21 10.1103/PhysRevLett.127.011103 refs=29 citedby=30 
+  -- cited_by
+     2023 Vishal Baibhav; Mark H | Agnostic black hole spectroscopy: Quasinormal mode content of numerical relativity waveforms and limits o | 10.1103/physrevd.108.104020 | 150
+     2021 William E. East; Justi | Dynamics of Spontaneous Black Hole Scalarization and Mergers in Einstein-Scalar-Gauss-Bonnet Gravity | 10.1103/physrevlett.127.101102 | 127
+     2022 José Luis Jaramillo; R | Gravitational Wave Signatures of Black Hole Quasinormal Mode Instability | 10.1103/physrevlett.128.211102 | 114
+     2025 Adrian Abac; I. Abouel | GW250114: Testing Hawking’s Area Law and the Kerr Nature of Black Holes | 10.1103/kw5g-d732 | 100
+     2024 Mark Ho-Yeuk Cheung; E | Extracting linear and nonlinear quasinormal modes from black hole merger simulations | 10.1103/physrevd.109.044069 | 92
+     2022 Eliot Finch; Christoph | Searching for a ringdown overtone in GW150914 | 10.1103/physrevd.106.043005 | 83
+     2022 Sizheng Ma; Keefe Mitm | Quasinormal-mode filters: A new approach to analyze the gravitational-wave ringdown of binary black-hole  | 10.1103/physrevd.106.084036 | 80
+     2023 Macarena Lagos; Lam Hu | Generation and propagation of nonlinear quasinormal modes of a Schwarzschild black hole | 10.1103/physrevd.107.044040 | 79
+     2023 Maxence Corman; Justin | Nonlinear studies of binary black hole mergers in Einstein-scalar-Gauss-Bonnet gravity | 10.1103/physrevd.107.024014 | 71
+     2021 S. Jalalzadeh; F. Rodr | Prospecting black hole thermodynamics with fractional quantum mechanics | 10.1140/epjc/s10052-021-09438-5 | 69
+     2023 Harrison Siegel; M. Is | Ringdown of GW190521: Hints of multiple quasinormal modes with a precessional interpretation | 10.1103/physrevd.108.064008 | 66
+     2022 Edgar Gasperín; José L | Energy scales and black hole pseudospectra: the structural role of the scalar product | 10.1088/1361-6382/ac5054 | 65
+     2021 Naritaka Oshita | On the ease of excitation of black hole ringing: Quantifying the importance of overtones by the excitatio | 10.1103/physrevd.104.124032 | 65
+     2022 José Luis Jaramillo | Pseudospectrum and binary black hole merger transients | 10.1088/1361-6382/ac8ddc | 56
+     2023 Neev Khera; Ariadna Ri | Nonlinear Ringdown at the Black Hole Horizon | 10.1103/physrevlett.131.231401 | 50
+     2024 Hengrui Zhu; Justin L. | Nonlinear effects in black hole ringdown from scattering experiments: Spin and initial data dependence of | 10.1103/physrevd.109.104050 | 47
+     2024 Hengrui Zhu; Justin L. | Challenges in quasinormal mode extraction: Perspectives from numerical solutions to the Teukolsky equatio | 10.1103/physrevd.109.044010 | 42
+     2024 V. Gennari; G. Carullo | Searching for ringdown higher modes with a numerical relativity-informed post-merger model | 10.1140/epjc/s10052-024-12550-x | 40
+     2026 Emanuele Berti; Vitor  | Black hole spectroscopy: from theory to experiment | 10.1088/1361-6382/ae59e2 | 37
+     2022 I. Ota; Cecilia Chiren | Black hole spectroscopy horizons for current and future gravitational wave detectors | 10.1103/physrevd.105.044015 | 36
+     2023 Swetha Bhagwat; Costan | Landscape of stellar-mass black-hole spectroscopy with third-generation gravitational-wave detectors | 10.1103/physrevd.108.043019 | 35
+     2024 Simona J. Miller; M. I | GW190521: Tracing imprints of spin-precession on the most massive black hole binary | 10.1103/physrevd.109.024024 | 29
+     2024 Alex Correia; Yifan Wa | Low evidence for ringdown overtone in GW150914 when marginalizing over time and sky location uncertainty | 10.1103/physrevd.110.l041501 | 27
+     2023 Ganesh Subramaniam; Av | How Different Connections in Flat FLRW Geometry Impact Energy Conditions in f(Q)$f(Q)$ Theory? | 10.1002/prop.202300038 | 26
+     2022 Che-Yu Chen; Hsu-Wen C | Eikonal quasinormal modes and photon orbits of deformed Schwarzschild black holes | 10.1103/physrevd.106.044068 | 25
+     2021 Eliot Finch; C. J. Moo | Frequency-domain analysis of black-hole ringdowns | 10.1103/physrevd.104.123034 | 25
+     2025 R. P. Udall; S. Hourih | Antialigned spin of GW191109: Glitch mitigation and its implications | 10.1103/physrevd.111.024046 | 23
+     2024 Shin'ichi Hirano; Masa | Parametrized black hole quasinormal ringdown formalism for higher overtones | 10.1103/physrevd.110.024015 | 23
+     2024 Asifa Ashraf; Abdelmal | Imprints of quantum gravity on periastron precession and trajectories around a black hole | 10.1016/j.dark.2024.101787 | 22
+     2024 Maxence Corman; Luis L | Nonlinear studies of modifications to general relativity: Comparing different approaches | 10.1103/physrevd.110.084048 | 21
+  -- references
+     2016 B. P. Abbott; R. Abbot | Observation of Gravitational Waves from a Binary Black Hole Merger | 10.1103/physrevlett.116.061102 | 14152
+     2014 F. Acernese; M. Agatho | Advanced Virgo: a second-generation interferometric gravitational wave detector | 10.1088/0264-9381/32/2/024001 | 4055
+     2019 B. P. Abbott; R. Abbot | GWTC-1: A Gravitational-Wave Transient Catalog of Compact Binary Mergers Observed by LIGO and Virgo durin | 10.1103/physrevx.9.031040 | 3520
+     2016 B. P. Abbott; R. Abbot | Tests of General Relativity with GW150914 | 10.1103/physrevlett.116.221101 | 1775
+     2015 J. Aasi; J. Abadie; B. | Characterization of the LIGO detectors during their sixth science run | 10.1088/0264-9381/32/11/115012 | 1296
+     2002 Roger Penrose | “Golden Oldie”: Gravitational Collapse: The Role of General Relativity | 10.1023/a:1016578408204 | 1178
+     1971 Stephen William Hawkin | Gravitational Radiation from Colliding Black Holes | 10.1103/physrevlett.26.1344 | 1144
+     2019 B. P. Abbott; R. Abbot | Tests of general relativity with the binary black hole signals from the LIGO-Virgo catalog GWTC-1 | 10.1103/physrevd.100.104036 | 814
+     2001 Robert M. Wald | The Thermodynamics of Black Holes | 10.12942/lrr-2001-6 | 758
+     2018 B. P. Abbott | Erratum: Tests of General Relativity with GW150914 [Phys. Rev. Lett. 116 , 221101 (2016)] | 10.1103/physrevlett.121.129902 | 580
+     2021 Rich Abbott; Thomas D. | Open data from the first and second observing runs of Advanced LIGO and Advanced Virgo | 10.1016/j.softx.2021.100658 | 526
+     2019 Vijay Varma; Scott E.  | Surrogate models for precessing binary black hole simulations with unequal masses | 10.1103/physrevresearch.1.033015 | 424
+     2019 M. Isi; Matthew Giesle | Testing the No-Hair Theorem with GW150914 | 10.1103/physrevlett.123.111102 | 405
+     2019 Vijay Varma; Scott E.  | Surrogate models for precessing binary black hole simulations with unequal masses |  | 286
+     2019 Matthew Giesler; M. Is | Black Hole Ringdown: The Importance of Overtones | 10.1103/physrevx.9.041060 | 270
+     2017 Jonathan Blackman; Sco | Numerical relativity waveform surrogate model for generically precessing binary black hole mergers | 10.1103/physrevd.96.024058 | 213
+     2019 G. Carullo; W. Del Poz | Observational black hole spectroscopy: A time-domain multimode analysis of GW150914 | 10.1103/physrevd.99.123029 | 187
+     2016 Abhirup Ghosh; Archism | Testing general relativity using golden black-hole binaries | 10.1103/physrevd.94.021101 | 149
+     2019 Vijay Varma; Davide Ge | High-Accuracy Mass, Spin, and Recoil Predictions of Generic Black-Hole Merger Remnants | 10.1103/physrevlett.122.011101 | 142
+     2016 Gian F. Giudice; Matth | Hunting for dark particles with gravitational waves | 10.1088/1475-7516/2016/10/001 | 142
+     2017 Abhirup Ghosh; Nathan  | Testing general relativity using gravitational wave signals from the inspiral, merger and ringdown of bin | 10.1088/1361-6382/aa972e | 134
+     2001 Piotr T. Chruściel; Er | Regularity of Horizons and the Area Theorem | 10.1007/pl00001029 | 132
+     2020 Swetha Bhagwat; Xisco  | Ringdown overtones, black hole spectroscopy, and no-hair theorem tests | 10.1103/physrevd.101.044033 | 123
+     2019 G. Carullo; W. Del Poz | Erratum: Observational black hole spectroscopy: A time-domain multimode analysis of GW150914 [Phys. Rev.  | 10.1103/physrevd.100.089903 | 103
+     2020 I. Ota; Cecilia Chiren | Overtones or higher harmonics? Prospects for testing the no-hair theorem with gravitational wave detectio | 10.1103/physrevd.101.104005 | 79
+     2005 Scott A. Hughes; Krist | Golden Binary Gravitational‐Wave Sources: Robust Probes of Strong‐Field Gravity | 10.1086/428826 | 70
+     2018 M. Cabero; Collin D. C | Observational tests of the black hole area increase law | 10.1103/physrevd.97.124069 | 64
+     2005 Scott A. Hughes; Krist | Golden Binary Gravitational-wave Sources: Robust Probes of Strong-Field Gravity |  | 30
+     2020 Maria Okounkova | Revisiting non-linearity in binary black hole mergers | 10.48550/arxiv.2004.00671 | 16
+#### ep2_Westfall 10.1126/science.179.4075.751 refs=4 citedby=30 
+  -- cited_by
+     1986 Anthony G. Greenwald;  | Under what conditions does theory obstruct research progress? | 10.1037//0033-295x.93.2.216 | 572
+     1974 Stephen G. Brush | Should the History of Science Be Rated X? | 10.1126/science.183.4130.1164 | 388
+     1978 Stephen Jay Gould | Morton's Ranking of Races by Cranial Capacity | 10.1126/science.347573 | 177
+     2012 Jeffrey L. Furman; Kyl | Governing knowledge in the scientific community: Exploring the role of retractions in biomedicine | 10.1016/j.respol.2011.11.001 | 151
+     1979 J. Scott Armstrong | Advocacy and Objectivity in Science | 10.1287/mnsc.25.5.423 | 127
+     2015 Charles G. Gross | Scientific Misconduct | 10.1146/annurev-psych-122414-033437 | 124
+     1980 Mary Jo Nye | N-Rays: An Episode in the History and Psychology of Science | 10.2307/27757473 | 124
+     2002 Lowell Gaertner; Const | The "I," the "we," and the "when": A meta-analysis of motivational primacy in self-definition. | 10.1037//0022-3514.83.3.574 | 118
+     2013 Constantine Sedikides; | A Three-Tier Hierarchy of Self-Potency | 10.1016/b978-0-12-407188-9.00005-3 | 112
+     2009  | Plastic fantastic: how the biggest fraud in physics shook the scientific world | 10.5860/choice.47-2065 | 91
+     1987 James E. Alcock | Parapsychology: Science of the anomalous or search for the soul? | 10.1017/s0140525x00054467 | 88
+     1987 K. Ramakrishna Rao; Jo | The anomaly called psi: Recent research and criticism | 10.1017/s0140525x00054455 | 80
+     2001 D Geggie | A survey of newly appointed consultants' attitudes towards research fraud | 10.1136/jme.27.5.344 | 63
+     1977 Stephen M. Stigler | Eight Centuries of Sampling Inspection: The Trial of the Pyx | 10.1080/01621459.1977.10480602 | 52
+     2007 Mark D. Lindner | Clinical attrition due to biased preclinical assessments of potential efficacy | 10.1016/j.pharmthera.2007.05.002 | 51
+     2006 Monwhea Jeng | A selected history of expectation bias in physics | 10.1119/1.2186333 | 51
+     2001 Peter R. Killeen; Scot | THE PRINCIPAL COMPONENTS OF RESPONSE STRENGTH | 10.1901/jeab.2001.75-111 | 49
+     1986 Bertram G. Murray | The Structure of Theory, and the Role of Competition in Community Dynamics | 10.2307/3565461 | 47
+     2005 Jeng, M | A selected history of expectation bias in physics |  | 40
+     1990 Randall M. Parker | Power, Control, and Validity in Research | 10.1177/002221949002301008 | 38
+     1987 Mario Bunge | Why parapsychology cannot become a science | 10.1017/s0140525x00054595 | 38
+     2020 Leendert van der Miese | Studying the echo in the early modern period: between the academy and the natural world | 10.1080/20551940.2020.1794649 | 33
+     2009 Steffen Ducheyne | Understanding (in) Newton’s Argument for Universal Gravitation | 10.1007/s10838-009-9096-y | 31
+     1975 A. M. Lucas | Hidden assumptions in measures of ‘knowledge about science and scientists’ | 10.1002/sce.3730590406 | 31
+     2023 Johnjoe McFadden | Razor sharp: The role of Occam's razor in science | 10.1111/nyas.15086 | 29
+     1978 Ian I. Mitroff; Thomas | Psychological Assumptions, Experimentation, and Real World Problems | 10.1177/0193841x7800200204 | 28
+     1987 Robert Nadon; John F.  | Hypnosis, psi, and the psychology of anomalous experience | 10.1017/s0140525x00054789 | 27
+     2011 Jeffrey L. Furman; Kyl | Governing Knowledge in the Scientific Community: Exploring the Role of Retractions in Biomedicine | 10.2139/ssrn.2014481 | 26
+     2015 Ernesto Carafoli | Scientific misconduct: the dark side of science | 10.1007/s12210-015-0415-4 | 25
+     2000 Jane Maienschein | ``Why Study History for Science?'' | 10.1023/a:1006733114136 | 25
+  -- references
+     1934 Isaac Newton | Sir Isaac Newton’s Mathematical Principles of Natural Philosophy and His System of the World | 10.1525/9780520321724 | 408
+     1957 Edward W. Strong | Newtonian Explications of Natural Philosophy | 10.2307/2707579 | 9
+     1972 Michael Newton | Congrulations | 10.1111/j.1552-6909.1972.tb02710.x | 1
+     1668 Samuel Colepresse | An account of some observations, made by Mr. Samuel Colepresse at and nigh Plymouth, A. 1667. by way of a | 10.1098/rstl.1668.0006 | 1
+#### ep4_Park17 10.3847/1538-3881/aa5be2 refs=30 citedby=30 
+  -- cited_by
+     2021 Ryan S. Park; W. M. Fo | The JPL Planetary and Lunar Ephemerides DE440 and DE441 | 10.3847/1538-3881/abd414 | 515
+     2022 S. Shankaranarayanan;  | Modified theories of gravity: Why, how and what? | 10.1007/s10714-022-02927-2 | 219
+     2019 Richard E. Zeebe; Luca | Solar System chaos and the Paleocene–Eocene boundary age constrained by geology and astronomy | 10.1126/science.aax0612 | 217
+     2018 Antonio Genova; E. Maz | Solar system expansion and strong equivalence principle as seen by the NASA MESSENGER mission | 10.1038/s41467-017-02558-1 | 142
+     2018 Clifford M. Will | Solar system versus gravitational-wave bounds on the graviton mass | 10.1088/1361-6382/aad13c | 89
+     2018 Clifford M. Will | New General Relativistic Contribution to Mercury’s Perihelion Advance | 10.1103/physrevlett.120.191101 | 84
+     2025 William J. Wolf; Carlo | Assessing Cosmological Evidence for Nonminimal Coupling | 10.1103/jysf-k72m | 77
+     2019 Richard E. Zeebe; Luca | Solar System chaos and the Paleocene–Eocene boundary age constrained by geology and astronomy |  | 71
+     2020 Tian-Yi Zhou; Yi Xie | Precessing and periodic motions around a black-bounce/traversable wormhole | 10.1140/epjc/s10052-020-08661-w | 70
+     2019 Jürgen Müller; Thomas  | Lunar Laser Ranging: a tool for general relativity, lunar geophysics and Earth science | 10.1007/s00190-019-01296-0 | 68
+     2022 S. K. Maurya; Megandhr | Isotropization of embedding Class I spacetime and anisotropic system generated by complexity factor in th | 10.1140/epjc/s10052-022-10030-8 | 62
+     2019 Alex S. Konopliv; R.S. | The Mercury gravity field, orientation, love number, and ephemeris from the MESSENGER radiometric trackin | 10.1016/j.icarus.2019.07.020 | 57
+     2018 Elena V. Pitjeva; N. P | Masses of the Main Asteroid Belt and the Kuiper Belt from the Motions of Planets and Spacecraft | 10.1134/s1063773718090050 | 56
+     2017 Richard E. Zeebe | Numerical Solutions for the Orbital Motion of the Solar System over the Past 100 Myr: Limits and New Resu | 10.3847/1538-3881/aa8cce | 54
+     2022 Jing Zhang; Yi Xie | Probing a black-bounce-Reissner–Nordström spacetime with precessing and periodic motion | 10.1140/epjc/s10052-022-10846-4 | 53
+     2019 Léo Bernus; O. Minazzo | Constraining the Mass of the Graviton with the Planetary Ephemeris INPOP | 10.1103/physrevlett.123.161103 | 51
+     2022 Hou‐Yu Lin; Xue-Mei De | Precessing and periodic orbits around Lee–Wick black holes | 10.1140/epjp/s13360-022-02391-6 | 46
+     2024 A. Fienga; O. Minazzol | Testing theories of gravity with planetary ephemerides | 10.1007/s41114-023-00047-0 | 45
+     2023 Yohai Kaspi; Eli Galan | Observational evidence for cylindrically oriented zonal flows on Jupiter | 10.1038/s41550-023-02077-8 | 44
+     2018 E. V. Pitjeva; N. P. P | Mass of the Kuiper belt | 10.1007/s10569-018-9853-5 | 44
+     2022 S. K. Maurya; Megandhr | Gravitationally decoupled anisotropic solution using polytropic EoS in the framework of 5D Einstein–Gauss | 10.1140/epjc/s10052-021-09979-9 | 42
+     2017 Luigi Imperi; LUCIANO  | An analysis of the geodesy and relativity experiments of BepiColombo | 10.1016/j.icarus.2017.09.008 | 41
+     2022 Jing Zhang; Yi Xie | Probing a self-complete and Generalized-Uncertainty-Principle black hole with precessing and periodic mot | 10.1007/s10509-022-04046-5 | 40
+     2019 Slava G. Turyshev; Vik | Diffraction of light by the gravitational field of the Sun and the solar corona | 10.1103/physrevd.99.024044 | 40
+     2022 Hou‐Yu Lin; Xue-Mei De | Bound Orbits and Epicyclic Motions around Renormalization Group Improved Schwarzschild Black Holes | 10.3390/universe8050278 | 39
+     2020 Fabrizio De Marchi; Ga | Testing general relativity in the solar system: present and future perspectives | 10.1088/1361-6382/ab6ae0 | 34
+     2022 Richard E. Zeebe; Luca | Geologically constrained astronomical solutions for the Cenozoic era | 10.1016/j.epsl.2022.117595 | 33
+     2022 Tiberiu Harko; Shahab  | Coupling matter and curvature in Weyl geometry: conformally invariant $$f\left( R,L_m\right) $$ gravity | 10.1140/epjc/s10052-022-10126-1 | 33
+     2021 Tanmay Kumar Poddar; S | Constraints on long range force from perihelion precession of planets in a gauged $$L_e-L_{\mu ,\tau }$$  | 10.1140/epjc/s10052-021-09078-9 | 33
+     2021 Bo Gao; Xue-Mei Deng | Bound orbits around modified Hayward black holes | 10.1142/s0217732321502370 | 32
+  -- references
+     1916 Albert Einstein | Die Grundlage der allgemeinen Relativitätstheorie | 10.1002/andp.19163540702 | 3437
+     2003 B. Bertotti; LUCIANO I | A test of general relativity using radio links with the Cassini spacecraft | 10.1038/nature01997 | 2012
+     1977  | Factorization Methods for Discrete Sequential Estimation | 10.1016/s0076-5392(08)x6052-7 | 1847
+     2025  | The Foundation of the General Theory of Relativity (1916) | 10.2307/jj.27710910.18 | 1692
+     1964 Irwin I. Shapiro | Fourth Test of General Relativity | 10.1103/physrevlett.13.789 | 1131
+     2011 C. W. F. Everitt; Dani | Gravity Probe B: Final Results of a Space Experiment to Test General Relativity | 10.1103/physrevlett.106.221101 | 1007
+     2004 James Gordon Williams; | Progress in Lunar Laser Ranging Tests of Relativistic Gravity | 10.1103/physrevlett.93.261101 | 719
+     2004 Ignazio Ciufolini; ERR | A confirmation of the general relativistic prediction of the Lense–Thirring effect | 10.1038/nature03007 | 528
+     1972 Clifford M. Will; Kenn | Conservation Laws and Preferred Frames in Relativistic Gravity. I. Preferred-Frame Theories and an Extend | 10.1086/151754 | 516
+     1916 W. de Sitter | On Einstein's Theory of Gravitation and its Astronomical Consequences. First Paper | 10.1093/mnras/76.9.699 | 463
+     2010 Alex S. Konopliv; S. W | Mars high resolution gravity fields from MRO, Mars seasonal gravity, and other dynamical parameters | 10.1016/j.icarus.2010.10.004 | 416
+     2001 Sean C. Solomon; R. L. | The MESSENGER mission to Mercury: scientific objectives and implementation | 10.1016/s0032-0633(01)00085-x | 412
+     2003 Theodore D. Moyer | Formulation for Observed and Computed Values of Deep Space Network Data Types for Navigation | 10.1002/0471728470 | 373
+     1989 Michael Hermann Soffel | Relativity in Astrometry, Celestial Mechanics and Geodesy | 10.1007/978-3-642-73406-9 | 370
+     2012 David E. Smith; Maria  | Gravity Field and Internal Structure of Mercury from MESSENGER | 10.1126/science.1218809 | 308
+     2006 Robert A. Jacobson; Pe | The Gravity Field of the Saturnian System from Satellite Observations and Spacecraft Tracking Data | 10.1086/508812 | 267
+     1999 Alex S. Konopliv; W. B | Venus Gravity: 180th Degree and Order Model | 10.1006/icar.1999.6086 | 260
+     2014 James Gordon Williams; | Lunar interior properties from the GRAIL mission | 10.1002/2013je004559 | 240
+     2013 Alex S. Konopliv; Ryan | The JPL lunar gravity field to spherical harmonic degree 660 from the GRAIL Primary Mission | 10.1002/jgre.20097 | 199
+     1947 G. M. Clemence | The Relativity Effect in Planetary Motions | 10.1103/revmodphys.19.361 | 187
+     2010 Lorenzo Iorio; Herbert | Phenomenology of the Lense-Thirring effect in the solar system | 10.1007/s10509-010-0489-5 | 174
+     2011 Lorenzo Iorio; Herbert | 0 Phenomenology of the Lense-Thirring effect in the Solar System |  | 171
+     2013 F. G. Lemoine; Sander  | High‒degree gravity models from GRAIL primary mission data | 10.1002/jgre.20118 | 166
+     2014 E. Mazarico; Antonio G | The gravity field, orientation, and ephemeris of Mercury from MESSENGER observations after three years in | 10.1002/2014je004675 | 135
+     1970 Bruce M. Barker; Rober | Derivation of the Equations of Motion of a Gyroscope from the Quantum Theory of Gravitation | 10.1103/physrevd.2.1428 | 128
+     1992 John Ries; R. J. Eanes | Progress in the determination of the gravitational coefficient of the Earth | 10.1029/92gl00259 | 114
+     2004 Redouane Mecheri; T. A | New values of gravitational moments J 2 and J 4 deduced from helioseismology | 10.1023/b:sola.0000043563.96766.21 | 78
+     2012 Petr Kuchyňka; W. M. F | A new approach to determining asteroid masses from planetary range measurements | 10.1016/j.icarus.2012.11.003 | 73
+     2012 Lorenzo Iorio | Constraining the Angular Momentum of the Sun with Planetary Orbital Motions and General Relativity | 10.1007/s11207-012-0086-6 | 69
+     2011 Ignazio Ciufolini; Ant | Testing gravitational physics with satellite laser ranging | 10.1140/epjp/i2011-11072-2 | 66
