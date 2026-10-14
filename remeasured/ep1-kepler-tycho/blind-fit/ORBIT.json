@@ -1,0 +1,448 @@
+{
+ "frame": "mean ecliptic and equinox J1590.0; epoch J1590.0 = JD(TT) 2301792.5; lengths in Earth a",
+ "model_1_circle_free_equant_circular_earth": {
+  "L0": {
+   "sigma": 0.04493,
+   "sigma_boot": 0.04493,
+   "sigma_formal": 0.033167,
+   "value": 354.535011
+  },
+  "LE0": {
+   "sigma": 0.072609,
+   "sigma_boot": 0.072609,
+   "sigma_formal": 0.054262,
+   "value": 97.564859
+  },
+  "Om": {
+   "sigma": 0.382783,
+   "sigma_boot": 0.082962,
+   "sigma_formal": 0.382783,
+   "value": 46.558518
+  },
+  "P": {
+   "sigma": 0.04691,
+   "sigma_boot": 0.04691,
+   "sigma_formal": 0.022936,
+   "value": 686.960664
+  },
+  "PE": {
+   "sigma": 0.024399,
+   "sigma_boot": 0.024399,
+   "sigma_formal": 0.010979,
+   "value": 365.276226
+  },
+  "R": {
+   "sigma": 0.001644,
+   "sigma_boot": 0.001644,
+   "sigma_formal": 0.000765,
+   "value": 1.516738
+  },
+  "eE": {
+   "sigma": 0.006709,
+   "sigma_boot": 0.003913,
+   "sigma_formal": 0.006709,
+   "value": 0.031017
+  },
+  "ec": {
+   "sigma": 0.005962,
+   "sigma_boot": 0.00269,
+   "sigma_formal": 0.005962,
+   "value": 0.085622
+  },
+  "eq": {
+   "sigma": 0.005867,
+   "sigma_boot": 0.001415,
+   "sigma_formal": 0.005867,
+   "value": 0.183639
+  },
+  "inc": {
+   "sigma": 0.015971,
+   "sigma_boot": 0.003308,
+   "sigma_formal": 0.015971,
+   "value": 1.851211
+  },
+  "varpi": {
+   "sigma": 0.926862,
+   "sigma_boot": 0.926862,
+   "sigma_formal": 0.432947,
+   "value": 320.399496
+  },
+  "varpiE": {
+   "sigma": 11.416845,
+   "sigma_boot": 5.388775,
+   "sigma_formal": 11.416845,
+   "value": 183.472946
+  }
+ },
+ "model_1b_circle_bisected_equant_circular_earth": {
+  "L0": {
+   "sigma": 0.045406,
+   "sigma_boot": 0.045406,
+   "sigma_formal": 0.033153,
+   "value": 354.536923
+  },
+  "LE0": {
+   "sigma": 0.072736,
+   "sigma_boot": 0.072736,
+   "sigma_formal": 0.054229,
+   "value": 97.570394
+  },
+  "Om": {
+   "sigma": 0.352728,
+   "sigma_boot": 0.171713,
+   "sigma_formal": 0.352728,
+   "value": 46.855261
+  },
+  "P": {
+   "sigma": 0.044475,
+   "sigma_boot": 0.044475,
+   "sigma_formal": 0.022853,
+   "value": 686.965974
+  },
+  "PE": {
+   "sigma": 0.023171,
+   "sigma_boot": 0.023171,
+   "sigma_formal": 0.010923,
+   "value": 365.279078
+  },
+  "R": {
+   "sigma": 0.001509,
+   "sigma_boot": 0.001509,
+   "sigma_formal": 0.000754,
+   "value": 1.516436
+  },
+  "eE": {
+   "sigma": 0.004,
+   "sigma_boot": 0.004,
+   "sigma_formal": 0.002001,
+   "value": 0.021601
+  },
+  "ec": {
+   "note": "bisected: ec = eq/2",
+   "value": 0.097524
+  },
+  "eq": {
+   "sigma": 0.00266,
+   "sigma_boot": 0.00266,
+   "sigma_formal": 0.001301,
+   "value": 0.195049
+  },
+  "inc": {
+   "sigma": 0.014001,
+   "sigma_boot": 0.00519,
+   "sigma_formal": 0.014001,
+   "value": 1.836416
+  },
+  "varpi": {
+   "sigma": 0.911464,
+   "sigma_boot": 0.911464,
+   "sigma_formal": 0.4336,
+   "value": 320.452778
+  },
+  "varpiE": {
+   "sigma": 11.592172,
+   "sigma_boot": 11.592172,
+   "sigma_formal": 5.491845,
+   "value": 216.124898
+  }
+ },
+ "model_1c_circle_free_equant_kepler_earth": {
+  "L0": {
+   "sigma": 0.031419,
+   "sigma_boot": 0.031419,
+   "sigma_formal": 0.021403,
+   "value": 354.601745
+  },
+  "LE0": {
+   "sigma": 0.057561,
+   "sigma_boot": 0.057561,
+   "sigma_formal": 0.037159,
+   "value": 97.509506
+  },
+  "Om": {
+   "sigma": 0.175824,
+   "sigma_boot": 0.105712,
+   "sigma_formal": 0.175824,
+   "value": 46.136358
+  },
+  "P": {
+   "sigma": 0.016707,
+   "sigma_boot": 0.016707,
+   "sigma_formal": 0.011903,
+   "value": 686.986996
+  },
+  "PE": {
+   "sigma": 0.007903,
+   "sigma_boot": 0.007903,
+   "sigma_formal": 0.005595,
+   "value": 365.266547
+  },
+  "R": {
+   "sigma": 0.000775,
+   "sigma_boot": 0.000775,
+   "sigma_formal": 0.000306,
+   "value": 1.521516
+  },
+  "eE": {
+   "sigma": 0.000946,
+   "sigma_boot": 0.000946,
+   "sigma_formal": 0.000483,
+   "value": 0.021592
+  },
+  "ec": {
+   "sigma": 0.000796,
+   "sigma_boot": 0.000796,
+   "sigma_formal": 0.000357,
+   "value": 0.09
+  },
+  "eq": {
+   "sigma": 0.001286,
+   "sigma_boot": 0.001286,
+   "sigma_formal": 0.000712,
+   "value": 0.175467
+  },
+  "inc": {
+   "sigma": 0.006874,
+   "sigma_boot": 0.003362,
+   "sigma_formal": 0.006874,
+   "value": 1.863327
+  },
+  "varpi": {
+   "sigma": 0.425358,
+   "sigma_boot": 0.425358,
+   "sigma_formal": 0.229594,
+   "value": 327.515392
+  },
+  "varpiE": {
+   "sigma": 3.154029,
+   "sigma_boot": 3.154029,
+   "sigma_formal": 1.748326,
+   "value": 118.695138
+  }
+ },
+ "model_1cb_circle_bisected_equant_kepler_earth": {
+  "L0": {
+   "sigma": 0.021749,
+   "sigma_boot": 0.021749,
+   "sigma_formal": 0.01933,
+   "value": 354.532421
+  },
+  "LE0": {
+   "sigma": 0.041587,
+   "sigma_boot": 0.041587,
+   "sigma_formal": 0.032492,
+   "value": 97.381911
+  },
+  "Om": {
+   "sigma": 0.179202,
+   "sigma_boot": 0.088056,
+   "sigma_formal": 0.179202,
+   "value": 46.09935
+  },
+  "P": {
+   "sigma": 0.015146,
+   "sigma_boot": 0.015146,
+   "sigma_formal": 0.011401,
+   "value": 686.969102
+  },
+  "PE": {
+   "sigma": 0.007967,
+   "sigma_boot": 0.007967,
+   "sigma_formal": 0.005434,
+   "value": 365.25992
+  },
+  "R": {
+   "sigma": 0.000567,
+   "sigma_boot": 0.000567,
+   "sigma_formal": 0.000346,
+   "value": 1.522551
+  },
+  "eE": {
+   "sigma": 0.000821,
+   "sigma_boot": 0.000821,
+   "sigma_formal": 0.000482,
+   "value": 0.021808
+  },
+  "ec": {
+   "note": "bisected: ec = eq/2",
+   "value": 0.088349
+  },
+  "eq": {
+   "sigma": 0.001059,
+   "sigma_boot": 0.001059,
+   "sigma_formal": 0.000671,
+   "value": 0.176699
+  },
+  "inc": {
+   "sigma": 0.006727,
+   "sigma_boot": 0.002939,
+   "sigma_formal": 0.006727,
+   "value": 1.862457
+  },
+  "varpi": {
+   "sigma": 0.275133,
+   "sigma_boot": 0.275133,
+   "sigma_formal": 0.201279,
+   "value": 328.318304
+  },
+  "varpiE": {
+   "sigma": 2.189642,
+   "sigma_boot": 2.189642,
+   "sigma_formal": 1.496929,
+   "value": 113.013881
+  }
+ },
+ "model_2_mars_ellipse_circular_earth": {
+  "L0": {
+   "sigma": 0.045134,
+   "sigma_boot": 0.045134,
+   "sigma_formal": 0.028335,
+   "value": 354.571627
+  },
+  "LE0": {
+   "sigma": 0.069765,
+   "sigma_boot": 0.069765,
+   "sigma_formal": 0.046246,
+   "value": 97.564134
+  },
+  "Om": {
+   "sigma": 0.297357,
+   "sigma_boot": 0.199761,
+   "sigma_formal": 0.297357,
+   "value": 47.087865
+  },
+  "P": {
+   "sigma": 0.037148,
+   "sigma_boot": 0.037148,
+   "sigma_formal": 0.019619,
+   "value": 686.974251
+  },
+  "PE": {
+   "sigma": 0.017916,
+   "sigma_boot": 0.017916,
+   "sigma_formal": 0.009412,
+   "value": 365.263918
+  },
+  "a": {
+   "sigma": 0.001188,
+   "sigma_boot": 0.001188,
+   "sigma_formal": 0.00062,
+   "value": 1.522379
+  },
+  "e": {
+   "sigma": 0.000937,
+   "sigma_boot": 0.000937,
+   "sigma_formal": 0.000516,
+   "value": 0.099901
+  },
+  "eE": {
+   "sigma": 0.003192,
+   "sigma_boot": 0.003192,
+   "sigma_formal": 0.001914,
+   "value": 0.015883
+  },
+  "inc": {
+   "sigma": 0.011024,
+   "sigma_boot": 0.005397,
+   "sigma_formal": 0.011024,
+   "value": 1.84126
+  },
+  "varpi": {
+   "sigma": 0.649781,
+   "sigma_boot": 0.649781,
+   "sigma_formal": 0.364862,
+   "value": 320.78716
+  },
+  "varpiE": {
+   "sigma": 10.750478,
+   "sigma_boot": 10.750478,
+   "sigma_formal": 5.217466,
+   "value": 236.767115
+  }
+ },
+ "model_3_two_kepler_ellipses": {
+  "L0": {
+   "sigma": 0.003631,
+   "sigma_boot": 0.003631,
+   "sigma_formal": 0.003445,
+   "value": 354.468098
+  },
+  "LE0": {
+   "sigma": 0.006125,
+   "sigma_boot": 0.006125,
+   "sigma_formal": 0.005851,
+   "value": 97.306704
+  },
+  "Om": {
+   "sigma": 0.036698,
+   "sigma_boot": 0.036698,
+   "sigma_formal": 0.030756,
+   "value": 46.365216
+  },
+  "P": {
+   "sigma": 0.002042,
+   "sigma_boot": 0.002042,
+   "sigma_formal": 0.001964,
+   "value": 686.973553
+  },
+  "PE": {
+   "sigma": 0.001103,
+   "sigma_boot": 0.001103,
+   "sigma_formal": 0.000949,
+   "value": 365.255177
+  },
+  "a": {
+   "sigma": 6.5e-05,
+   "sigma_boot": 6.5e-05,
+   "sigma_formal": 5.3e-05,
+   "value": 1.523697
+  },
+  "e": {
+   "sigma": 7.2e-05,
+   "sigma_boot": 7.2e-05,
+   "sigma_formal": 6.1e-05,
+   "value": 0.093065
+  },
+  "eE": {
+   "sigma": 9.1e-05,
+   "sigma_boot": 9.1e-05,
+   "sigma_formal": 8.6e-05,
+   "value": 0.017003
+  },
+  "inc": {
+   "sigma": 0.001259,
+   "sigma_boot": 0.001259,
+   "sigma_formal": 0.001195,
+   "value": 1.856435
+  },
+  "varpi": {
+   "sigma": 0.035923,
+   "sigma_boot": 0.034001,
+   "sigma_formal": 0.035923,
+   "value": 328.597896
+  },
+  "varpiE": {
+   "sigma": 0.39928,
+   "sigma_boot": 0.39928,
+   "sigma_formal": 0.368646,
+   "value": 95.036977
+  }
+ },
+ "outliers_model3": [
+  "1583-01-25V",
+  "1585-01-17M",
+  "1585-02-04V",
+  "1585-02-09V",
+  "1586-09-23V",
+  "1593-11-27V",
+  "1594-02-14V",
+  "1598-03-02V"
+ ],
+ "rms_arcmin_model3": {
+  "med_abs_lat": 0.724,
+  "med_abs_lon": 0.74,
+  "n": 179,
+  "rms_lat": 1.666,
+  "rms_lon": 1.303
+ }
+}
