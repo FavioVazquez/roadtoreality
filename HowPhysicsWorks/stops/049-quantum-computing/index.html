@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Classical bits are 0 or 1. Quantum bits (qubits) are both simultaneously — in superposition. Quantum computers use this to solve certain problems exponentially faster.">
+  <meta name="description" content="Apply H, X, Z and T gates to a qubit on the Bloch sphere, entangle two qubits with H and CNOT and watch their measurement results agree, and run Deutsch&#x27;s algorithm to see a speed-up come from interference. Plus what Shor&#x27;s and Grover&#x27;s algorithms do and do not promise.">
   <meta property="og:title" content="Quantum Computing — How Physics Works">
-  <meta property="og:description" content="Classical bits are 0 or 1. Quantum bits (qubits) are both simultaneously — in superposition. Quantum computers use this to solve certain problems exponentially faster.">
+  <meta property="og:description" content="Apply H, X, Z and T gates to a qubit on the Bloch sphere, entangle two qubits with H and CNOT and watch their measurement results agree, and run Deutsch&#x27;s algorithm to see a speed-up come from interference. Plus what Shor&#x27;s and Grover&#x27;s algorithms do and do not promise.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/049-quantum-computing/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -56,48 +56,108 @@
     <div class="stop-header__meta">
       <span class="stop-header__year">1985–present</span>
       <span>·</span>
-      <span class="stop-header__scientist">Feynman, Deutsch & others</span>
+      <span class="stop-header__scientist">Feynman, Deutsch &amp; others</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Classical bits are 0 or 1. Quantum bits (qubits) are both simultaneously — in superposition. Quantum computers use this to solve certain problems exponentially faster.</p>
+    <p>
+      In 1982 Richard Feynman asked how a computer could simulate physics when physics is quantum mechanical<sup><a href="#src-1">[1]</a></sup>. In 1985 David Deutsch described a universal quantum computer and posed a problem it could answer with one evaluation of a function where a classical computer needs two<sup><a href="#src-2">[2]</a></sup>; the one-query, always-correct form shown below is the later textbook version<sup><a href="#src-5">[5]</a></sup>.
+    </p>
+    <p>
+      A quantum computer is not a classical computer that tries every answer at once. Its advantage, where it has one, comes from amplitudes that can cancel. The simulation shows one qubit, two entangled qubits, and Deutsch's algorithm, computed exactly.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Quantum Computing — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: a Bloch sphere with quantum gates, a two-qubit Bell-state circuit with measurement statistics, and Deutsch's algorithm">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-one" type="button" aria-pressed="true">One qubit</button>
+        <button class="sim-btn" id="mode-bell" type="button" aria-pressed="false">Bell pair</button>
+        <button class="sim-btn" id="mode-deutsch" type="button" aria-pressed="false">Deutsch's algorithm</button>
+      </div>
+      <div id="q1-controls" style="display:contents">
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="Apply a gate to the qubit">
+          <button class="sim-btn" id="gate-H" type="button" aria-label="Apply the Hadamard gate H">H</button>
+          <button class="sim-btn" id="gate-X" type="button" aria-label="Apply the X gate, a bit flip">X</button>
+          <button class="sim-btn" id="gate-Z" type="button" aria-label="Apply the Z gate, a phase flip">Z</button>
+          <button class="sim-btn" id="gate-T" type="button" aria-label="Apply the T gate, a phase of pi over 4">T</button>
+        </div>
+      </div>
+      <div id="bell-controls" style="display:none">
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="bell-cnot" type="button" aria-pressed="true">CNOT: on</button>
+          <button class="sim-btn" id="bell-basis" type="button" aria-pressed="false">Measure in the X basis</button>
+        </div>
+      </div>
+      <div id="deutsch-controls" style="display:none">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="deutsch-f">Hidden function f</label>
+          <select id="deutsch-f" class="sim-btn" style="width:100%;min-height:44px;text-align:left" aria-label="Choose the hidden one-bit function f used by Deutsch's algorithm">
+            <option value="0">constant: f(0) = 0, f(1) = 0</option>
+            <option value="1">constant: f(0) = 1, f(1) = 1</option>
+            <option value="2" selected>balanced: f(x) = x</option>
+            <option value="3">balanced: f(x) = NOT x</option>
+          </select>
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Apply a gate, or press play to measure fresh copies of the qubit.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Manipulate qubit states on the Bloch sphere using quantum gates</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Build a quantum circuit and trace superposition through each gate</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Run Grover's search algorithm and see quantum speedup emerge</li>
-    </ul>
+    <h3>A Qubit Is a Pair of Amplitudes</h3>
+    <p>A classical bit is 0 or 1. A qubit's state is a weighted combination of the two,</p>
+    <p style="overflow-x:auto;">$$|\psi\rangle = \alpha\,|0\rangle + \beta\,|1\rangle, \qquad |\alpha|^2 + |\beta|^2 = 1,$$</p>
+    <p>where $\alpha$ and $\beta$ are complex numbers called amplitudes<sup><a href="#src-5">[5]</a></sup>. It is tempting to say the qubit is "both 0 and 1 at once", but a measurement never shows that: it gives 0 with probability $|\alpha|^2$ or 1 with probability $|\beta|^2$, and afterwards the qubit is in the state it showed. Press play in the first view: each tick measures a fresh copy of the same state, and the counts approach the probabilities.</p>
+    <p>Up to an overall phase, which has no effect on any measurement, a qubit's state is a point on a sphere, the Bloch sphere: $|0\rangle$ at the top, $|1\rangle$ at the bottom, and equal-weight combinations on the equator<sup><a href="#src-5">[5]</a></sup>. Gates are rotations of the sphere. X is a half turn about the x-axis and swaps 0 and 1. Z is a half turn about the z-axis and flips the sign of $\beta$. T turns by an eighth of a turn about the z-axis. H, the Hadamard gate, is a half turn about the axis halfway between x and z: it takes $|0\rangle$ to $(|0\rangle + |1\rangle)/\sqrt2$.</p>
+    <p>Try H, then Z, then H again. The state ends at $|1\rangle$. The probabilities after the first H are 50/50, and Z does not change them; it changes the sign of one amplitude, and the second H turns that sign into a definite answer. That is interference, and it is what quantum algorithms use.</p>
+    <h3>Two Qubits That Agree</h3>
+    <p>Two qubits have four amplitudes, one each for 00, 01, 10 and 11. Start both at 0, apply H to qubit a, then a CNOT gate, which flips b when a is 1. The result is the Bell state<sup><a href="#src-5">[5]</a></sup></p>
+    <p style="overflow-x:auto;">$$|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt2}.$$</p>
+    <p>Press play in the second view. Each shot gives 00 or 11, about half the time each, and never 01 or 10. Each qubit on its own is a fair coin; together they always agree. Switch to measuring in the X basis (an H on each qubit just before measuring) and they still always agree, now as ++ or −−. Could a pair of classical coins, secretly set to agree in both bases, explain this? For these two tests, yes. Bell's theorem concerns measurements at angles in between: quantum mechanics predicts correlations there that no preset values, fixed when the pair was made, can reproduce, and experiments confirm it<sup><a href="#src-5">[5]</a></sup>. The view here shows the entanglement; the proof that nothing is preset needs the intermediate angles, which it does not draw.</p>
+    <p>Switch the CNOT off and the state is $|+\rangle|0\rangle$: a is random, b is always 0, and in the X basis a is always + while b is random. Nothing is entangled. The agreement in the Bell state cannot be used to send a message: whoever holds one qubit sees only a fair coin, whatever is done to the other<sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>The Smallest Honest Speed-Up</h3>
+    <p>Deutsch's problem: a box computes a function $f$ from one bit to one bit. Is $f$ constant (the same output for both inputs) or balanced (different outputs)? A classical computer must evaluate $f(0)$ and $f(1)$: two queries. A quantum computer needs one<sup><a href="#src-2">[2]</a>,<a href="#src-5">[5]</a></sup>.</p>
+    <p>The third view steps through the circuit, with a started in $|0\rangle$ and b in $|1\rangle$. After the two Hadamards, all four amplitudes are $\pm 1/2$. One query of $f$ multiplies the amplitude for each input $x$ by $(-1)^{f(x)}$. The last Hadamard adds and subtracts the amplitudes: if $f$ is constant the two paths to a = 1 cancel and a = 0 is certain; if $f$ is balanced the paths to a = 0 cancel instead. One measurement then answers the question. The quantum computer did not evaluate $f$ twice in parallel; it never learns $f(0)$ or $f(1)$, only the one fact the interference picks out. The version shown is the deterministic form of the algorithm given in the textbook<sup><a href="#src-5">[5]</a></sup>.</p>
+    <h3>What Speed-Ups Are Known</h3>
+    <p>Deutsch's problem saves one query and has no practical use. Two later algorithms matter more, under stated conditions.</p>
+    <p>Peter Shor gave quantum algorithms (announced at a 1994 conference, with the full version published in 1997) for factoring integers and for discrete logarithms that take a number of steps polynomial in the number of digits<sup><a href="#src-3">[3]</a></sup>. Both problems are generally thought to be hard for classical computers and are used in cryptography<sup><a href="#src-3">[3]</a></sup>. For factoring, the best known classical methods take longer than any polynomial in the number of digits; nobody has proved that no fast classical method exists<sup><a href="#src-5">[5]</a></sup>. Shor's algorithm also needs a large quantum computer whose errors are corrected faster than they build up; it was written for what Shor called a hypothetical quantum computer<sup><a href="#src-3">[3]</a></sup>.</p>
+    <p>In 1996 Lov Grover gave an algorithm for searching $N$ unsorted items. A classical search must look at $N/2$ items to succeed half the time; Grover's needs about $\sqrt N$ steps, and no quantum algorithm can do better than that by more than a constant factor<sup><a href="#src-4">[4]</a></sup>. This speed-up is quadratic, not exponential, and it works by amplitude interference: the phases are arranged so that the right answer's amplitude grows while the others shrink<sup><a href="#src-4">[4]</a></sup>.</p>
+    <p>For most everyday tasks no quantum speed-up is known.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The qubits are perfect: no noise and no loss of coherence, which in real devices limits how many gates can be applied. The amplitudes are computed exactly; the measurement results are drawn at random with those probabilities.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>Qubits exist in superposition of 0 and 1 simultaneously. Quantum algorithms exploit interference and entanglement to solve certain problems exponentially faster than any classical computer.</li>
+      <li>A qubit's state is a pair of amplitudes; a measurement gives 0 or 1 with probabilities $|\alpha|^2$ and $|\beta|^2$.</li>
+      <li>H then CNOT makes a Bell state: each qubit alone is random, but the two results always agree, in more than one basis.</li>
+      <li>Quantum speed-ups come from interference of amplitudes, not from trying every answer in parallel.</li>
+      <li>Deutsch's algorithm saves one query; Shor's factors in polynomial time on a large error-corrected quantum computer; Grover's search is quadratically faster.</li>
     </ul>
+    <p style="overflow-x:auto;">$$|\Phi^+\rangle = \tfrac{1}{\sqrt2}\bigl(|00\rangle + |11\rangle\bigr)$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">R. P. Feynman, "Simulating physics with computers", <em>International Journal of Theoretical Physics</em> 21, 467 (1982).</li>
+      <li id="src-2">D. Deutsch, "Quantum theory, the Church–Turing principle and the universal quantum computer", <em>Proceedings of the Royal Society of London A</em> 400, 97 (1985).</li>
+      <li id="src-3">P. W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer", <em>SIAM Journal on Computing</em> 26, 1484 (1997); arXiv:quant-ph/9508027. First presented in Proc. 35th IEEE Symp. on Foundations of Computer Science (1994), p. 124. Cited: polynomial number of steps in the input size; factoring and discrete logarithms generally thought hard classically and used in cryptosystems; a hypothetical quantum computer.</li>
+      <li id="src-4">L. K. Grover, "A fast quantum mechanical algorithm for database search", <em>Proceedings of the 28th Annual ACM Symposium on Theory of Computing</em> (STOC 1996), p. 212; arXiv:quant-ph/9605043. Cited: N/2 classical looks for a 50 % chance; $O(\sqrt N)$ steps; within a constant factor of the fastest possible quantum algorithm.</li>
+      <li id="src-5">M. A. Nielsen and I. L. Chuang, <em>Quantum Computation and Quantum Information</em>, 10th anniversary ed., Cambridge University Press (2010). Qubits, the Bloch sphere, gates, Bell states, Bell's theorem, no-signalling, Deutsch's algorithm and classical factoring methods.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Quantum computers compute in superposition. And yet the deepest questions remain unanswered. The final stop maps the open frontiers — where the next revolution is waiting to happen.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Quantum computers test quantum mechanics with many particles at once. Last stop: the questions physics has not yet answered.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +183,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
