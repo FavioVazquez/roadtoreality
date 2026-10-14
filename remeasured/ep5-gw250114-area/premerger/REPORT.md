@@ -169,3 +169,6 @@ Written after the freeze commit 497bcd8 was pushed. Lane 1 is the build-box run 
   - GW250114: 6.5 h, 33.5 M likelihood calls (louder signal, so a tighter posterior and more iterations).
 - bilby 2.8.2 ignores `seed` when it also gets `rstate`. For reproducible dynesty runs, pass a seeded `rstate` (numpy Generator) explicitly.
 - On the Devin box, never `pkill -f` a pattern that also appears in the exec shell's own command line; it kills the shell. Kill by PID.
+
+## Note on commit hashes (added 14 Oct 2026, after the PR)
+The branch's commits were re-authored to the project's single author before merging (same contents, same author dates; tool attribution lines removed), so their hashes changed: acf0fc0 → d740d69, 60d6b8d → 13f4010, 497bcd8 (freeze) → dae20b1, 1005436 (comparison) → bd978df. The freeze commit's author date is 2026-10-14 14:47:20 UTC and the comparison's 14:48:44 UTC (84 s later); the original push order is visible in pull request #29's history. The posterior checksums above are unchanged and are the primary freeze evidence.
