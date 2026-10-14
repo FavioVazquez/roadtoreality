@@ -689,9 +689,48 @@ Source: CHECKER-EP5.md (owner's folder showtime-local/…/2026-10-14/paper/, rea
 - no "lane still running".
 Every decimal number appears verbatim in this file (script check), and all citation keys are in refs.bib (72 entries). The phrase "the analysis agent" no longer appears. Supersedes ab4847b7….
 
-## Open issues (updated in S10)
+## S11 — Task 9: sensitivity of the decision to the A_i offset (POST HOC, prompted by an independent review of paper draft 6; PRE-REGISTERED 2026-10-14 16:48 UTC, before computing)
+**Status: post hoc.** This analysis was not in the S6 or S9 plans. It was requested after a reviewer pointed out that the unexplained 6.6% A_i excess over LVK (S9 (3)) may decide between sentences 3 and 4. Its result is reported as a sensitivity of the decision. **It does not replace the pre-registered S9 headline.**
+
+**Fixed before computing:**
+- **Inputs.** The committed pre-merger samples of both lanes (lane 1 CSV, sha256 7a3d4816…; lane 2, sha256 df4748f4…), the S9 ringdown posteriors, the same area formula, and the same 20-cell decision set per lane (S9).
+- **Scalings.** Every pre-merger A_i sample is multiplied uniformly by:
+  - (a) 1/1.066, which brings A_i to LVK's −40 t_M level (independent-draw ratio, S9);
+  - (b) 2.944/2.992, the lane-1 mass-prior reweighting (S9 H4).
+  The same factors are applied to lane 2.
+- **Reported quantities.** P(ΔA > 0) for every cell, P_min per lane, and the sentence the S6 rule would give. With the S10 s.e. of 0.011 for the 20 M_f cells, a "within 2 s.e. of 0.90" flag is added if |P_min − 0.90| < 0.022.
+- **Crossing factor.** For each lane, the factor k at which P_min = 0.90, found by bisection on k ∈ [0.85, 1.0]. P_min increases monotonically as k decreases, because every A_i shrinks.
+- **Reviewer's numbers** (lane 1, 20 M_f): (a) 0.917 (V0), 0.922 (V1); (b) 0.879 and 0.880. They will be reproduced or corrected.
+- **Files.** results/area_task9_scale.csv; log logs/area_task9_scale.log; script scripts/area_task9_scale.py.
+
+### S11 results (POST HOC; written 16:49 UTC; pre-registration saved first as STATUS.md v21, sha256 788ee8d9…, copy in prereg/STATUS_S11_preregistered.md)
+Script: scripts/area_task9_scale.py. Table: results/area_task9_scale.csv (40 cells × 3 scalings); summary in results/area_task9_scale.json; log logs/area_task9_scale.log. Local, seconds.
+
+| lane | nominal (k = 1) | (a) k = 1/1.066, LVK −40 t_M level | (b) k = 2.944/2.992, mass prior |
+|---|---|---|---|
+| lane 1: P_min (cell) → sentence | 0.863 (20 M_f, no high-pass) → 4 | 0.917 (20 M_f, baseline) → **3** (within 2 s.e. of 0.90) | 0.879 (20 M_f, baseline) → **4** (within 2 s.e. of 0.90) |
+| lane 2: P_min (cell) → sentence | 0.847 (20 M_f, no high-pass) → 4 | 0.906 (20 M_f, baseline) → **3** (within 2 s.e. of 0.90) | 0.865 (20 M_f, no high-pass) → **4** |
+
+- **Reviewer's numbers reproduced** (lane 1, 20 M_f): (a) 0.9170 (V0) and 0.9220 (V1); (b) 0.8790 (V0) and 0.8802 (V1).
+- **Crossing factors** (bisection; P_min = 0.90):
+  - lane 1 at **k = 0.9598**, i.e. A_i lowered by 4.0%;
+  - lane 2 at **k = 0.9455**, i.e. A_i lowered by 5.4%.
+  - For lane 1, the crossing is reached when the excess over LVK falls from 6.6% to about 2.3% (1.066 × 0.9598). Any larger remaining excess keeps sentence 4.
+- **Reading.** The decision between sentences 3 and 4 depends on the unexplained part of the A_i offset.
+  - If our A_i were at LVK's −40 t_M level, the rule would give sentence 3 ("favour, strength depends on start time") for both lanes.
+  - Removing only the quarter of the offset that the mass prior could explain leaves sentence 4.
+  - In case (a), and in case (b) for lane 1, P_min is within 2 s.e. (0.022) of the 0.90 boundary.
+- **The pre-registered S9 headline (sentence 4) is unchanged; this section is a post hoc sensitivity.**
+
+**Paper section updated (S11).** out/PAPER-SECTION-ep5.md, sha256 6c5a74aa5967ce09ac6c8fd9355d2a240ad9101ed591ac1fcacfb35b5ba2945d, 1199 words by `wc -w`. Changes:
+- one bullet added on the post hoc offset sensitivity [S11 results];
+- "with the overtone no cell exceeds 0.96, and no retained 220-only cell exceeds 0.982". The owner suggested 0.98, but the 15 M_f no-high-pass cell is 0.9823, so 0.98 would be false; 0.982 is used;
+- the 8 M_f overtone fit is stated as "not run".
+Some sentences were compressed to stay within 1,200 words; no content was removed except a repeated clause on LVK's reference fit, which is still stated once. Every decimal number appears verbatim in this file, and all citation keys are present. Supersedes 057afad9….
+
+## Open issues (updated in S11)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
-2. [S10: the remaining checker items are listed in S10 §5] [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
+2. [S11 (post hoc): the A_i offset decides between sentences 3 and 4; crossing at k = 0.9598 (lane 1), 0.9455 (lane 2)] [S10: the remaining checker items are listed in S10 §5] [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
    - which choice is right, to be settled by an injection with a known answer (rule 3);
    - why a filter acting above ~800 Hz moves M_f by 3 M_sun;
    - the valid B1 rerun on the R1 file (about 1 min);
@@ -732,6 +771,8 @@ Every decimal number appears verbatim in this file (script check), and all citat
 - **Session 9 (Task 7):** from the Task 7 brief to 15:20 UTC. ws job afb26f81: 15:10:25–15:16:19 UTC, 10 fits, 5,166 CPU-s (1.4 core-hours; under $0.5 on-demand estimate). One failed submit (ws unreachable, nothing ran). Local analysis about 2 min CPU.
 
 - **Session 10 (Task 8):** local only, from the Task 8 brief to 15:45 UTC; checks about 1 min of CPU in total.
+
+- **Session 11 (Task 9, post hoc):** local only, to 16:49 UTC; seconds of CPU.
 
 ## File checksums of outputs
 See CHECKSUMS_outputs.tsv (sha256 of every file in out/ at the time of writing).

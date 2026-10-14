@@ -1,0 +1,53 @@
+{
+ "summary": {
+  "lane1_XPHM_fmax131": {
+   "nominal": {
+    "k": 1.0,
+    "P_min": 0.8631441219614416,
+    "sentence": 4,
+    "within_2se_of_090": false
+   },
+   "a_LVK_level": {
+    "k": 0.9380863039399624,
+    "P_min": 0.9169552860435876,
+    "sentence": 3,
+    "within_2se_of_090": true
+   },
+   "b_mass_prior": {
+    "k": 0.9839572192513368,
+    "P_min": 0.8790304379715004,
+    "sentence": 4,
+    "within_2se_of_090": true
+   },
+   "k_cross_090": 0.9597809432880924,
+   "Ai_excess_at_cross_pct": 4.190441266120781
+  },
+  "lane2_XPHM_fmax131": {
+   "nominal": {
+    "k": 1.0,
+    "P_min": 0.8466493757431629,
+    "sentence": 4,
+    "within_2se_of_090": false
+   },
+   "a_LVK_level": {
+    "k": 0.9380863039399624,
+    "P_min": 0.906067206698375,
+    "sentence": 3,
+    "within_2se_of_090": true
+   },
+   "b_mass_prior": {
+    "k": 0.9839572192513368,
+    "P_min": 0.8650469431232659,
+    "sentence": 4,
+    "within_2se_of_090": false
+   },
+   "k_cross_090": 0.9455174450511228,
+   "Ai_excess_at_cross_pct": 5.762194577587243
+  }
+ },
+ "inputs": {
+  "lane1_XPHM_fmax131": "7a3d4816ddb36e93989cb9895993c23ff0b195fea3b64c87af2ae3f0a6981c7b",
+  "lane2_XPHM_fmax131": "df4748f41a5099b807c5edfec5006f5d2dca1d2fc2dbb3965040d689cd370569"
+ },
+ "script_sha256": "5dc01a201bad3b0ce4454c6c305e8b579d6f7f139452a4be527b850835bffa5c"
+}

@@ -1,0 +1,93 @@
+         premerger  start_Mf     variant                    label  P_nominal  P_a_LVK_level  P_b_mass_prior
+lane1_XPHM_fmax131      10.5 V0_baseline       GW250114_220_10p5M     0.9993         0.9997          0.9994
+lane1_XPHM_fmax131      10.5     V1_nohp  GW250114_220_10p5M_nohp     0.9983         0.9992          0.9986
+lane1_XPHM_fmax131      10.5    V2_pePSD GW250114_220_10p5M_pePSD     0.9991         0.9996          0.9993
+lane1_XPHM_fmax131      10.5   V4_220221    GW250114_220221_10p5M     0.9563         0.9792          0.9635
+lane1_XPHM_fmax131      12.0 V0_baseline         GW250114_220_12M     0.9993         0.9997          0.9994
+lane1_XPHM_fmax131      12.0     V1_nohp    GW250114_220_12M_nohp     0.9984         0.9992          0.9987
+lane1_XPHM_fmax131      12.0    V2_pePSD   GW250114_220_12M_pePSD     0.9991         0.9996          0.9993
+lane1_XPHM_fmax131      12.0   V4_220221      GW250114_220221_12M     0.9197         0.9584          0.9315
+lane1_XPHM_fmax131      13.0 V0_baseline         GW250114_220_13M     0.9986         0.9994          0.9989
+lane1_XPHM_fmax131      13.0     V1_nohp    GW250114_220_13M_nohp     0.9985         0.9993          0.9987
+lane1_XPHM_fmax131      13.0    V2_pePSD   GW250114_220_13M_pePSD     0.9984         0.9993          0.9987
+lane1_XPHM_fmax131      13.0   V4_220221      GW250114_220221_13M     0.8920         0.9419          0.9070
+lane1_XPHM_fmax131      15.0 V0_baseline         GW250114_220_15M     0.9581         0.9800          0.9650
+lane1_XPHM_fmax131      15.0     V1_nohp    GW250114_220_15M_nohp     0.9823         0.9921          0.9855
+lane1_XPHM_fmax131      15.0   V4_220221      GW250114_220221_15M     0.9261         0.9592          0.9359
+lane1_XPHM_fmax131      18.0 V0_baseline         GW250114_220_18M     0.9513         0.9751          0.9587
+lane1_XPHM_fmax131      18.0     V1_nohp    GW250114_220_18M_nohp     0.9693         0.9847          0.9742
+lane1_XPHM_fmax131      18.0   V4_220221      GW250114_220221_18M     0.9106         0.9469          0.9211
+lane1_XPHM_fmax131      20.0 V0_baseline         GW250114_220_20M     0.8640         0.9170          0.8790
+lane1_XPHM_fmax131      20.0     V1_nohp    GW250114_220_20M_nohp     0.8631         0.9220          0.8802
+lane2_XPHM_fmax131      10.5 V0_baseline       GW250114_220_10p5M     0.9993         0.9996          0.9994
+lane2_XPHM_fmax131      10.5     V1_nohp  GW250114_220_10p5M_nohp     0.9977         0.9991          0.9982
+lane2_XPHM_fmax131      10.5    V2_pePSD GW250114_220_10p5M_pePSD     0.9991         0.9996          0.9992
+lane2_XPHM_fmax131      10.5   V4_220221    GW250114_220221_10p5M     0.9480         0.9742          0.9562
+lane2_XPHM_fmax131      12.0 V0_baseline         GW250114_220_12M     0.9992         0.9996          0.9994
+lane2_XPHM_fmax131      12.0     V1_nohp    GW250114_220_12M_nohp     0.9979         0.9991          0.9983
+lane2_XPHM_fmax131      12.0    V2_pePSD   GW250114_220_12M_pePSD     0.9990         0.9995          0.9992
+lane2_XPHM_fmax131      12.0   V4_220221      GW250114_220221_12M     0.9076         0.9508          0.9207
+lane2_XPHM_fmax131      13.0 V0_baseline         GW250114_220_13M     0.9983         0.9993          0.9986
+lane2_XPHM_fmax131      13.0     V1_nohp    GW250114_220_13M_nohp     0.9980         0.9992          0.9984
+lane2_XPHM_fmax131      13.0    V2_pePSD   GW250114_220_13M_pePSD     0.9980         0.9991          0.9984
+lane2_XPHM_fmax131      13.0   V4_220221      GW250114_220221_13M     0.8774         0.9324          0.8938
+lane2_XPHM_fmax131      15.0 V0_baseline         GW250114_220_15M     0.9503         0.9754          0.9581
+lane2_XPHM_fmax131      15.0     V1_nohp    GW250114_220_15M_nohp     0.9780         0.9899          0.9818
+lane2_XPHM_fmax131      15.0   V4_220221      GW250114_220221_15M     0.9160         0.9526          0.9268
+lane2_XPHM_fmax131      18.0 V0_baseline         GW250114_220_18M     0.9430         0.9702          0.9514
+lane2_XPHM_fmax131      18.0     V1_nohp    GW250114_220_18M_nohp     0.9636         0.9814          0.9691
+lane2_XPHM_fmax131      18.0   V4_220221      GW250114_220221_18M     0.8999         0.9395          0.9113
+lane2_XPHM_fmax131      20.0 V0_baseline         GW250114_220_20M     0.8490         0.9061          0.8651
+lane2_XPHM_fmax131      20.0     V1_nohp    GW250114_220_20M_nohp     0.8466         0.9107          0.8650
+{
+ "lane1_XPHM_fmax131": {
+  "nominal": {
+   "k": 1.0,
+   "P_min": 0.8631441219614416,
+   "sentence": 4,
+   "within_2se_of_090": false
+  },
+  "a_LVK_level": {
+   "k": 0.9380863039399624,
+   "P_min": 0.9169552860435876,
+   "sentence": 3,
+   "within_2se_of_090": true
+  },
+  "b_mass_prior": {
+   "k": 0.9839572192513368,
+   "P_min": 0.8790304379715004,
+   "sentence": 4,
+   "within_2se_of_090": true
+  },
+  "k_cross_090": 0.9597809432880924,
+  "Ai_excess_at_cross_pct": 4.190441266120781
+ },
+ "lane2_XPHM_fmax131": {
+  "nominal": {
+   "k": 1.0,
+   "P_min": 0.8466493757431629,
+   "sentence": 4,
+   "within_2se_of_090": false
+  },
+  "a_LVK_level": {
+   "k": 0.9380863039399624,
+   "P_min": 0.906067206698375,
+   "sentence": 3,
+   "within_2se_of_090": true
+  },
+  "b_mass_prior": {
+   "k": 0.9839572192513368,
+   "P_min": 0.8650469431232659,
+   "sentence": 4,
+   "within_2se_of_090": false
+  },
+  "k_cross_090": 0.9455174450511228,
+  "Ai_excess_at_cross_pct": 5.762194577587243
+ }
+}
+lane1_XPHM_fmax131 nominal argmin GW250114_220_20M_nohp
+lane1_XPHM_fmax131 a_LVK_level argmin GW250114_220_20M
+lane1_XPHM_fmax131 b_mass_prior argmin GW250114_220_20M
+lane2_XPHM_fmax131 nominal argmin GW250114_220_20M_nohp
+lane2_XPHM_fmax131 a_LVK_level argmin GW250114_220_20M
+lane2_XPHM_fmax131 b_mass_prior argmin GW250114_220_20M_nohp
