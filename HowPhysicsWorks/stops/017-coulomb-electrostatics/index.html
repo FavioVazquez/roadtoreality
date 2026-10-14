@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -67,6 +68,10 @@
       <span class="stop-header__scientist">Charles-Augustin de Coulomb</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How does the force between two charges change when you halve their distance, double one charge, or flip one sign?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1785, Charles-Augustin de Coulomb used a delicate torsion balance — a wire that twists under tiny forces — to measure the repulsion between two charged spheres well enough to tell an inverse square from anything else. He found something striking: the electric force between charges obeys exactly the same mathematical form as Newton's law of gravity. Both forces follow an inverse-square law. But electricity adds something gravity cannot do — it can repel as well as attract.</p>
     <p>Drag the two charges below to explore how force changes with distance. Switch their signs to see attraction and repulsion. Watch the live F&nbsp;vs.&nbsp;r graph on the right track the inverse-square curve in real time.</p>
@@ -106,6 +111,15 @@
       <span>Interactive — drag the charges to explore the force</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With both magnitudes at 3.0 μC, drag one charge until the graph's readout shows r = 1.00 m: F reads about 0.081 N. Drag to r = 0.50 m: F reads about 0.32 N, four times as much for half the distance.</li>
+      <li>Keep r fixed and move <strong>Q₁ magnitude</strong> from 3.0 to 6.0 μC: the F readout doubles, and the dashed 1/r² curve shifts up with it.</li>
+      <li>Press <strong>Q₂: −</strong> so it reads Q₂: +: the mode text changes from Attraction to Repulsion, the force arrows turn from purple to orange and point apart, and the F readout stays the same.</li>
+      <li>Drag the charges together: the r label between them stops at 0.30 m, the closest the simulation allows.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What Coulomb discovered</h3>
     <p>Before Coulomb, the qualitative fact that like charges repel and opposite charges attract was well known. Priestley had guessed the law in 1767, and Cavendish had tested it privately; Coulomb's torsion balance made the measurement public and direct. He measured the restoring torque with enough precision to establish that the force between two charges scales as:</p>
@@ -119,6 +133,10 @@
 
     <h3>Real-world anchors</h3>
     <p>Coulomb's law is responsible for the cling of freshly washed clothing, the snapping of a spark from a doorknob after crossing a carpet, and the behavior of every protein and DNA strand in your body. Every chemical bond — ionic, covalent, hydrogen — is Coulomb's law at work, once quantum mechanics says where the electrons can be.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The charges are points held wherever you put them: the force is computed and drawn but never moves them. Distances use a fixed scale of 100 pixels to 1 m, and the charges cannot come closer than 0.30 m. The force arrows are drawn on a capped logarithmic scale, so they show direction and rough size, not proportion, and the graph's vertical axis plots log(1 + F), which is close to linear for forces well below 1 N. The field lines are a two-dimensional sketch whose number grows with the charge.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -127,9 +145,9 @@
       <li><span>Coulomb's constant \(k \approx 9 \times 10^9\) N·m²/C² makes the electric force between charges of 1 C separated by 1 m equal to 9 billion newtons — far stronger than gravity at any atomic scale.</span></li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">C.-A. Coulomb, "Premier mémoire sur l'électricité et le magnétisme" and "Second mémoire", <em>Histoire de l'Académie Royale des Sciences</em> (1785; published 1788).</li>
       <li id="src-2">J. Priestley, <em>The History and Present State of Electricity</em> (London, 1767).</li>
       <li id="src-3">H. Cavendish, <em>The Electrical Researches of the Honourable Henry Cavendish</em>, ed. J. C. Maxwell (Cambridge, 1879).</li>

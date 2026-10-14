@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -73,6 +74,10 @@
       <span class="stop-header__scientist">Lemaître, Hubble & Penzias/Wilson</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How do Hubble's 24 galaxies, modern supernovae and the microwave background show that the universe is expanding and was once hot?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1927 Georges Lemaître found a solution of Einstein's equations for a universe that expands, and pointed out that it explains why distant galaxies are seen moving away from us<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-3">[3]</a></sup>. Two years later Edwin Hubble published distances and velocities for 24 galaxies and found that the velocity grows in proportion to the distance<sup><a href="#src-1">[1]</a></sup>. In 2018 the members of the International Astronomical Union voted, 78 % in favour, to recommend calling this the Hubble–Lemaître law<sup><a href="#src-4">[4]</a></sup>.
@@ -135,6 +140,15 @@
       <span id="sim-status">Drag on the plot or use the slider to set the slope. Press play to run the galaxies backwards.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>In <strong>Hubble 1929</strong>, press <strong>Show least-squares line</strong>: it reads 424 km/s/Mpc. Press <strong>Play</strong>: each galaxy slides back at its own constant speed, and those on your 500 line reach zero distance together after 1/H₀ = 1.96 billion years.</li>
+      <li>With the least-squares line on, move <strong>Distance-scale correction</strong> to 1.5 mag (× 2.00): the fit halves to 212. At 3.9 mag (× 6.03) it reads 70.</li>
+      <li>In <strong>Supernovae today</strong> the least-squares line gives 73.4 km/s/Mpc. Set <strong>Supernova calibration shift</strong> to −0.18 mag and it drops to 67.5.</li>
+      <li>In <strong>Afterglow (CMB)</strong>, move <strong>Blackbody temperature</strong> from 2.725 to 2.735 K: the scale of the strip below jumps from ±72 to ±5,564 kJy/sr, far larger than the error bars. Back at 2.725 K, press <strong>Play</strong>: the curve keeps its shape and stops at z = 1,090 and 2,973 K.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Fitting Hubble's Line</h3>
     <p>If space expands uniformly, every distance grows by the same fraction per unit time. A galaxy twice as far away then recedes twice as fast, from any vantage point, so there is no centre. Written as a formula, this is the Hubble–Lemaître law</p>
@@ -162,9 +176,10 @@
     <h3>The First Minutes</h3>
     <p>Run the movie back further and the temperature reaches billions of kelvin, hot enough for nuclear reactions. In the first few minutes protons and neutrons fused into helium and a few other light nuclei. The theory predicts that about a quarter of the ordinary mass ended up as helium-4. The Planck analysis uses the predicted helium fraction, 0.2454<sup><a href="#src-10">[10]</a></sup>, and measurements in gas clouds of distant, little-processed galaxies give $Y_p = 0.245 \pm 0.003$<sup><a href="#src-15">[15]</a></sup>. The agreement between the expansion, the microwave background and the helium abundance is why the hot Big Bang is the standard account of the early universe. What happened at the very start, before any of these processes, is not known: the equations are being extrapolated beyond anything measured.</p>
 
-    <h3>What the Simulation Leaves Out</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
     <p>Nothing on this page is a new measurement. The data are transcribed from the sources below; the straight-line fits, temperatures and ages labelled "computed here" are calculated from those data or from the cited formulas.</p>
-    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+    <ul class="sim-limits__list">
       <li>The rewind in the two Hubble views keeps every galaxy at its present velocity. The real expansion slowed down and then sped up, so $1/H_0$ is only a rough age.</li>
       <li>Hubble's velocities are plotted as printed, without the correction for the Sun's motion that he included in his own fit.</li>
       <li>For the supernovae the horizontal axis is the distance now, the luminosity distance from the supernova's brightness divided by $1+z$, and the vertical axis is $cz$. At these redshifts $cz$ is about 1 % larger than the true recession speed, which is why the least-squares slope here is a little above the SH0ES value. Supernovae observed by more than one survey are listed several times in the data file; their distances are averaged here (28 of the 150). The SH0ES Hubble-flow sample extends to $z = 0.15$; the cut at $z = 0.05$ is made here to keep the plot close to a straight line.</li>
@@ -195,6 +210,7 @@
         </table>
       </div>
     </details>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -205,9 +221,9 @@
     </ul>
     <p style="overflow-x:auto;">$$v = H_0\,d, \qquad T(z) = T_0\,(1+z)$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">E. Hubble, "A Relation between Distance and Radial Velocity among Extra-Galactic Nebulae", <em>Proceedings of the National Academy of Sciences</em> 15, 168–173 (1929). Cited: Table 1 (p. 169), the 24 distances and velocities; solutions $K = +465 \pm 50$ (24 objects) and $+513 \pm 60$ km/s per $10^6$ parsecs (9 groups) and the round value 500 (p. 170).</li>
       <li id="src-2">G. Lemaître, <em>Annales de la Société Scientifique de Bruxelles</em> A47, 49 (1927). Not opened for this page; its content is described in [3] (p. 3) and [5].</li>
       <li id="src-3">W. L. Freedman and B. F. Madore, "The Hubble Constant", <em>Annual Review of Astronomy and Astrophysics</em> 48, 673–710 (2010). Cited: Lemaître's 1927 solution and its explanation of the recession of galaxies (p. 3 of the arXiv version, 1004.1856).</li>

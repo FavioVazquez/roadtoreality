@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -77,6 +78,10 @@
       <span class="stop-header__scientist">Perlmutter, Schmidt & Riess</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">What mix of matter and dark energy makes distant supernovae as faint as they are observed to be?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Gravity pulls matter together, so in the 1990s astronomers expected the expansion of the universe to be slowing down. Two teams set out to measure how fast, using type Ia supernovae as standard light bulbs. In 1998 the High-Z Supernova Search Team reported that distant supernovae are on average 10 to 15 % farther away than expected in a low-density universe without a cosmological constant, and that the expansion is accelerating<sup><a href="#src-1">[1]</a></sup>. In 1999 the Supernova Cosmology Project, with 42 distant supernovae, found the same: a cosmological constant greater than zero with 99 % confidence<sup><a href="#src-2">[2]</a></sup>.
@@ -128,6 +133,15 @@
       <span id="sim-status">Accelerating today.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With <strong>Planck 2018</strong>, read Deceleration q₀ = −0.527 (accelerating), Acceleration began at z = 0.63 and Supernova χ² = 55.6 for 40 bins. Press <strong>Matter only</strong>: q₀ becomes 0.500 (decelerating), your model’s curve drops below zero in the lower panel, and χ² rises to 1469.4.</li>
+      <li>Move <strong>H₀</strong> from 67.4 to 73.0 km/s/Mpc: Age falls from 13.79 to 12.73 billion years, while the Supernova χ² stays at 55.6, because H₀ is absorbed in the fitted offset.</li>
+      <li>Press <strong>Recollapse</strong>, then <strong>Play</strong>: Fate reads “Stops expanding at a = 1.50, then recollapses”, and the marker climbs the a(t) curve and turns back down.</li>
+      <li>Press <strong>Flat: on (ΩΛ follows Ωm)</strong> to switch it off, then set <strong>Matter Ωm</strong> to 0.100 and <strong>Dark energy ΩΛ</strong> to 1.500: Age reads “no Big Bang”, and Fate says the universe stops shrinking at a = 0.52 and bounces.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Friedmann Equation</h3>
     <p>In a universe that is the same everywhere, all distances scale together with one number, the scale factor $a(t)$, set to 1 today. Einstein's equations then reduce to one equation for its rate of change, found by Alexander Friedmann in 1922<sup><a href="#src-7">[7]</a></sup>. Written with today's expansion rate $H_0$ it reads</p>
@@ -151,14 +165,16 @@
     <p>The simulation treats dark energy as a cosmological constant, whose pressure equals minus its energy density ($w = -1$). Since 2024 the Dark Energy Spectroscopic Instrument (DESI) has measured baryon acoustic oscillations, a standard ruler imprinted in the distribution of galaxies. Combined with the microwave background and supernovae, its data prefer a dark energy that weakens with time ($w_0 > -1$, $w_a < 0$ in the common parametrization $w = w_0 + w_a(1-a)$). With the first year of data the preference was 2.5σ, 3.5σ or 3.9σ, depending on which supernova sample was used<sup><a href="#src-5">[5]</a></sup>. With three years of data it is 3.1σ for DESI and the microwave background alone, and 2.8σ, 3.8σ or 4.2σ when the Pantheon+, Union3 or DES 5-year supernovae are added<sup><a href="#src-6">[6]</a></sup>.</p>
     <p>None of these reaches the 5σ that physicists usually ask before claiming a discovery, the significance depends on which supernova sample is used, and the DESI team itself notes that combining supernovae from many surveys is a delicate calibration problem<sup><a href="#src-6">[6]</a></sup>. The hint is taken seriously and is not settled. Stop 50 keeps a gauge on it.</p>
 
-    <h3>What the Simulation Leaves Out</h3>
-    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <ul class="sim-limits__list">
       <li>Dark energy is a cosmological constant ($w = -1$). Evolving dark energy is described above but not simulated.</li>
       <li>Radiation is photons at 2.7255 K plus three massless neutrino species, $\Omega_r h^2 = 4.18 \times 10^{-5}$ (computed). Neutrino masses are left out.</li>
       <li>The supernova points are the binned Pantheon (2018) compilation with only their statistical errors. The published analysis also uses a covariance matrix of systematic errors, so the $\chi^2$ values here are illustrative, not a cosmological fit. The 2018 Pantheon release is used because it includes a published binned version.</li>
       <li>$H_0$ changes only the time axis and the age. The supernova panel does not depend on it, because it is absorbed in the fitted offset.</li>
       <li>Nothing on this page is a new measurement: the data are transcribed from the sources, and the ages, $\chi^2$ values and magnitude differences marked "computed here" are calculated from those data and the equations above.</li>
     </ul>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -169,9 +185,9 @@
     </ul>
     <p style="overflow-x:auto;">$$q_0 = \Omega_r + \tfrac12\Omega_m - \Omega_\Lambda < 0 \;\Rightarrow\; \text{acceleration}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">A. G. Riess et al., "Observational Evidence from Supernovae for an Accelerating Universe and a Cosmological Constant", <em>The Astronomical Journal</em> 116, 1009 (1998). Cited (abstract): 16 high-redshift and 34 nearby supernovae; distances on average 10 % to 15 % farther than expected for $\Omega_M = 0.2$ without a cosmological constant; $\Omega_\Lambda > 0$ at 3.0σ and 4.0σ and $q_0 < 0$ at 2.8σ and 3.9σ for two fitting methods.</li>
       <li id="src-2">S. Perlmutter et al., "Measurements of Ω and Λ from 42 High-Redshift Supernovae", <em>The Astrophysical Journal</em> 517, 565 (1999). Cited (abstract): flat-universe fit $\Omega_M = 0.28^{+0.09}_{-0.08}$ (statistical) $^{+0.05}_{-0.04}$ (systematic); $P(\Lambda > 0) = 99\,\%$.</li>
       <li id="src-3">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited: $H_0 = 67.4 \pm 0.5$ km/s/Mpc and $\Omega_m = 0.315 \pm 0.007$ (abstract); age $13.797 \pm 0.023$ Gyr and $\Omega_\Lambda = 0.6847 \pm 0.0073$ (Table 2, TT,TE,EE+lowE+lensing).</li>

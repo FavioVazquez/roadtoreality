@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Feynman, Deutsch &amp; others</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How can a qubit, an entangled pair and one query of a function show interference that classical bits cannot?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1982 Richard Feynman asked how a computer could simulate physics when physics is quantum mechanical<sup><a href="#src-1">[1]</a></sup>. In 1985 David Deutsch described a universal quantum computer and posed a problem it could answer with one evaluation of a function where a classical computer needs two<sup><a href="#src-2">[2]</a></sup>; the one-query, always-correct form shown below is the later textbook version<sup><a href="#src-5">[5]</a></sup>.
@@ -117,6 +122,15 @@
       <span id="sim-status">Apply a gate, or press play to measure fresh copies of the qubit.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>In <strong>One qubit</strong>, press <strong>H</strong>, <strong>Z</strong>, <strong>H</strong>: P(0) reads 0.500 after the first H and stays 0.500 after Z, which only flips β to −0.707. The second H ends at β = 1.000, P(0) = 0.000.</li>
+      <li>Press <strong>Bell pair</strong>, then <strong>Play</strong>: only 00 and 11 fill, “Same result on a and b” stays at 100 %, and qubit a alone is near 50 %. Press <strong>Measure in the X basis</strong>: the counts restart and only ++ and −− appear.</li>
+      <li>Press <strong>CNOT: on</strong> so it reads CNOT: off: the state becomes |+⟩|0⟩, 00 and 10 appear about equally, and the agreement drops to about 50 %.</li>
+      <li>Press <strong>Deutsch's algorithm</strong> and <strong>Play</strong>: at the last step the readout says P(a = 1) = 1.00 → balanced. Choose a constant function in <strong>Hidden function f</strong>: it reads P(a = 1) = 0.00 → constant, after one query either way.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>A Qubit Is a Pair of Amplitudes</h3>
     <p>A classical bit is 0 or 1. A qubit's state is a weighted combination of the two,</p>
@@ -137,8 +151,10 @@
     <p>Peter Shor gave quantum algorithms (announced at a 1994 conference, with the full version published in 1997) for factoring integers and for discrete logarithms that take a number of steps polynomial in the number of digits<sup><a href="#src-3">[3]</a></sup>. Both problems are generally thought to be hard for classical computers and are used in cryptography<sup><a href="#src-3">[3]</a></sup>. For factoring, the best known classical methods take longer than any polynomial in the number of digits; nobody has proved that no fast classical method exists<sup><a href="#src-5">[5]</a></sup>. Shor's algorithm also needs a large quantum computer whose errors are corrected faster than they build up; it was written for what Shor called a hypothetical quantum computer<sup><a href="#src-3">[3]</a></sup>.</p>
     <p>In 1996 Lov Grover gave an algorithm for searching $N$ unsorted items. A classical search must look at $N/2$ items to succeed half the time; Grover's needs about $\sqrt N$ steps, and no quantum algorithm can do better than that by more than a constant factor<sup><a href="#src-4">[4]</a></sup>. This speed-up is quadratic, not exponential, and it works by amplitude interference: the phases are arranged so that the right answer's amplitude grows while the others shrink<sup><a href="#src-4">[4]</a></sup>.</p>
     <p>For most everyday tasks no quantum speed-up is known.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The qubits are perfect: no noise and no loss of coherence, which in real devices limits how many gates can be applied. The amplitudes are computed exactly; the measurement results are drawn at random with those probabilities.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -150,9 +166,9 @@
     </ul>
     <p style="overflow-x:auto;">$$|\Phi^+\rangle = \tfrac{1}{\sqrt2}\bigl(|00\rangle + |11\rangle\bigr)$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">R. P. Feynman, "Simulating physics with computers", <em>International Journal of Theoretical Physics</em> 21, 467 (1982).</li>
       <li id="src-2">D. Deutsch, "Quantum theory, the Church–Turing principle and the universal quantum computer", <em>Proceedings of the Royal Society of London A</em> 400, 97 (1985).</li>
       <li id="src-3">P. W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer", <em>SIAM Journal on Computing</em> 26, 1484 (1997); arXiv:quant-ph/9508027. First presented in Proc. 35th IEEE Symp. on Foundations of Computer Science (1994), p. 124. Cited: polynomial number of steps in the input size; factoring and discrete logarithms generally thought hard classically and used in cryptosystems; a hypothetical quantum computer.</li>

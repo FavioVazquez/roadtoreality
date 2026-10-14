@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Galileo Galilei</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">What sets how long a pendulum takes to swing: its length, its mass, or how wide it swings?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       The story, told by his pupil Viviani after his death: a young Galileo in Pisa cathedral timed a swinging lamp with his pulse and saw that wide and narrow swings took the same time. The lamp now in the cathedral was hung in 1587, after the supposed date, and Galileo never told the story himself. What is documented is a letter of 29 November 1602 in which he claims that swings of any width take equal times (true to about 1% for swings under 15°, and the reason for this stop's date).
@@ -108,11 +113,24 @@
       <span id="sim-status">Change the length and watch the period change. Change the mass — it doesn't matter.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>▶ Play</strong> at the defaults (1.0 m, 15°): after one full swing <em>T (from the sim)</em> appears, close to <em>T (formula)</em> = 2.007 s.</li>
+      <li>While it swings, drag <strong>Mass</strong> from 1 kg to 10 kg: the bob grows, the swing does not restart, and T (from the sim) stays the same.</li>
+      <li>Set <strong>Length</strong> to 0.5 m, then 2.0 m: T (formula) goes from 1.419 s to 2.838 s. Four times the length gives twice the period.</li>
+      <li>Set <strong>Length</strong> back to 1.0 m and <strong>Release angle</strong> to 80°, then press <strong>▶ Play</strong>: T (from the sim) reads about 2.28 s, 14% longer than the formula.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Physics</h3>
     <p>For small angles, the period of a pendulum is T = 2π√(L/g), where L is the length and g is gravitational acceleration. Notice what's missing from that formula: mass. Galileo's observation was correct — mass has no effect on the period whatsoever (in a vacuum).</p>
     <p>This property — isochronism — makes pendulums ideal for timekeeping. Christiaan Huygens built a working pendulum clock in 1656 (patented 1657); Galileo had sketched one in 1641 that was never finished, and for two centuries, pendulum clocks were the most accurate timekeepers ever made. Navigation, astronomy, and the Industrial Revolution all depended on them.</p>
     <p>The formula drifts at large angles: at 15° the true period is 0.4% longer than 2π√(L/g), at 45° 4%, at 80° 14%. Try 80° and compare the sim's period with the formula in the panel (2.28 s against 2.01 s for a 1 m pendulum).</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The sim solves the full equation θ″ = −(g/L)·sin θ with g = 9.8 m/s² for a point bob on a massless, rigid rod, with no air drag and no friction at the pivot, so the swing never dies down. Mass only changes the drawn size of the bob; it does not enter the equation. <em>T (from the sim)</em> is timed between zero crossings checked once per animation frame, so its last digits can be off by up to one frame (about 0.017 s on a 60 Hz screen).</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -123,9 +141,9 @@
     </ul>
     <p>$$T = 2\pi\sqrt{\frac{L}{g}}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>V. Viviani, <em>Racconto istorico della vita di Galileo</em> (written 1654, published 1717). Source of the cathedral-lamp story.</li>
       <li>Galileo Galilei to Guidobaldo del Monte, 29 November 1602. Documented claim that swings of any width take equal times.</li>
       <li>C. Huygens, <em>Horologium Oscillatorium</em> (1673). Amplitude dependence of the period and the cycloidal pendulum.</li>

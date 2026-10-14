@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Democritus</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">If you keep zooming into a grain of sand, what structures do you meet, and do you ever reach something that cannot be cut?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Democritus asked one of the oldest questions in physics: if you keep cutting a piece of matter in half, do you ever reach something you cannot cut? He said yes — and called it the <em>atomos</em>, the uncuttable. He was right about the concept more than 2,000 years before anyone could prove it.
@@ -94,10 +99,23 @@
       <span>Drag the slider to zoom in. Each level reveals a new layer of structure.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Move <strong>Zoom level</strong> one step, from Grain of sand to Molecules: the scale badge goes from 1 mm to 1 nm, a zoom of a million times.</li>
+      <li>Step on to Atoms and then Nucleus: the badge goes from 0.1 nm to 10 fm, and the text gives the nucleus as 10,000 to 100,000 times smaller than the atom.</li>
+      <li>Go to the last step, Quarks (badge under 1 fm): quarks and electrons are the smallest constituents we know, and whether anything is truly indivisible is still open.</li>
+      <li>Press <strong>Auto-zoom</strong>: the simulation steps through all five levels, about every 3 seconds, then starts again at the grain of sand.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Radical Idea</h3>
     <p>Democritus's teacher Leucippus had the seed of the idea, but Democritus developed it fully: all matter consists of atoms (indivisible) moving through void (empty space). Different atoms have different shapes and sizes — and their arrangements produce everything we see. Iron is made of smooth, interlocking atoms. Water of round, slippery ones. Fire of sharp, fast ones.</p>
     <p>Aristotle rejected it, and for most of antiquity and the Middle Ages the dominant view followed him. But atomism never disappeared: Epicurus built his philosophy on it around 300 BCE, Lucretius put it into Latin verse (<em>De rerum natura</em>, c. 55 BCE), and that poem, recovered in 1417, fed the atomism of Gassendi, Boyle and Newton in the 1600s. Dalton's atomic theory (1803–1808) made atoms quantitative, with relative weights. Einstein's 1905 analysis of Brownian motion predicted how a visible grain should jitter if atoms were real; Jean Perrin's measurements (1908–1909) matched it and settled the question.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Each level is a schematic. Every particle at a level is drawn as the same circle in the same colour, so molecules are not shown as bonded atoms, the different sizes of carbon, oxygen and silicon atoms are not shown, and protons are not told apart from neutrons. Electrons are drawn moving on two dashed orbits, a display choice; the nucleus level describes an electron cloud. The drawn sizes are not to scale with the badges, which span from 1 mm to under 1 fm, and the small jiggle of each particle is decoration, not a modelled thermal motion.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -108,9 +126,9 @@
     </ul>
     <p>$$\text{matter} = \text{atoms} + \text{void}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Lucretius, <em>De rerum natura</em> (c. 55 BCE).</li>
       <li id="src-2">A. Einstein, “Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen,” <em>Annalen der Physik</em> 17 (1905), 549–560.</li>
       <li id="src-3">J. Perrin, <em>Les Atomes</em> (1913).</li>

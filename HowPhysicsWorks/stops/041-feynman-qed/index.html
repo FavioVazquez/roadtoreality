@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Richard Feynman</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How does adding one arrow per path explain mirrors and coloured thin glass, and how closely does QED predict the electron's magnetism?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Quantum electrodynamics, QED, is the theory of light and electrons. In his 1985 book of lectures for a general audience, Richard Feynman explained it with little arrows: every way an event can happen contributes an arrow, and the arrows add<sup><a href="#src-2">[2]</a></sup>. His 1949 paper had turned the same idea into a practical method of calculation<sup><a href="#src-1">[1]</a></sup>; the sum-over-paths idea itself is in his 1948 paper<sup><a href="#src-9">[9]</a></sup>.
@@ -114,6 +119,15 @@
       <span id="sim-status">Press play: one arrow per strip of mirror is added.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>In <strong>Mirror</strong>, press <strong>Remove the middle strips</strong>: the final arrow's length falls from 15.43 to 4.65, so the reflection, its square, drops to about a tenth.</li>
+      <li>Press <strong>Make a grating</strong>: the middle stays covered and the end strips whose arrows point backwards are scraped off. The remaining arrows add up and the final length rises to 17.13.</li>
+      <li>Press <strong>Glass layer</strong> and set <strong>Layer thickness</strong> to 275 nm, then 550 nm: “at 550 nm: R” reads 16.0 % and then 0.0 %, as the two arrows line up and then cancel.</li>
+      <li>Press <strong>Electron g-factor</strong>, then <strong>Play</strong>: the rows appear one by one, and green digits mark agreement with the 2023 measurement, through 1.0011 for Schwinger's term and through 1.00115965218 for the full theory.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>One Arrow per Path</h3>
     <p>In QED the chance of an event is found by adding up amplitudes, one for each way the event can happen. Feynman drew each amplitude as an arrow<sup><a href="#src-2">[2]</a></sup>. For light, the arrow turns like the hand of a very fast stopwatch while the light travels, once per wavelength of path, so its direction is set by the path length $l$:</p>
@@ -127,8 +141,10 @@
     <h3>The Electron's Magnetism, Digit by Digit</h3>
     <p>Dirac's equation predicts that the electron's magnetic moment corresponds to a g-factor of exactly 2. Measurements by Polykarp Kusch and Henry Foley, published in 1948, found it slightly larger<sup><a href="#src-4">[4]</a></sup>. The same year Julian Schwinger calculated QED's first correction, $a_e = (g-2)/2 = \alpha/2\pi$<sup><a href="#src-3">[3]</a></sup>. With today's fine-structure constant, $\alpha^{-1} = 137.035\,999\,177$<sup><a href="#src-7">[7]</a></sup>, that is 0.001 161 4.</p>
     <p>The calculation has since been carried to the fifth power of $\alpha$. In 2018 Tatsumi Aoyama, Toichiro Kinoshita and Makiko Nio gave $a_e = 1\,159\,652\,182.032(720) \times 10^{-12}$<sup><a href="#src-5">[5]</a></sup>, using the fine-structure constant of 2011; with later values of $\alpha$ the prediction moves by about 1 part in $10^{12}$, which is the limit the authors mention. In 2023 a measurement gave $g/2 = 1.001\,159\,652\,180\,59(13)$, to 0.13 parts per trillion<sup><a href="#src-6">[6]</a></sup>. Theory and measurement agree to about one part in $10^{12}$; the authors note that the comparison is now limited by disagreeing measurements of $\alpha$, on which the prediction depends<sup><a href="#src-6">[6]</a></sup>.</p>
-    <h3>What the Simulation Assumes</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Assumes</h3>
     <p>The mirror arrows all have the same length; real amplitudes also depend on distance and angle. The wavelength is drawn far larger than real light compared with the mirror so the turning can be seen. The glass layer uses the two-arrow rule and ignores multiple reflections inside the layer, and the colour swatch is an approximation from three wavelengths. The g-factor digits are quoted from the sources, except Schwinger's term, which is calculated.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -139,9 +155,9 @@
     </ul>
     <p style="overflow-x:auto;">$$\frac{g-2}{2} = \frac{\alpha}{2\pi} + \dots \qquad P = \Bigl|\sum_{\text{paths}} e^{\,i\phi}\Bigr|^2$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">R. P. Feynman, "Space-Time Approach to Quantum Electrodynamics", <em>Physical Review</em> 76, 769 (1949).</li>
       <li id="src-2">R. P. Feynman, <em>QED: The Strange Theory of Light and Matter</em>, Princeton University Press (1985). Four lectures for a general audience; the arrows, the mirror, the grating and the two-surface rule for glass.</li>
       <li id="src-3">J. Schwinger, "On Quantum-Electrodynamics and the Magnetic Moment of the Electron", <em>Physical Review</em> 73, 416 (1948).</li>

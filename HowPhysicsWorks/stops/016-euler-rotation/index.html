@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -68,6 +69,10 @@
       <span class="stop-header__scientist">Leonhard Euler</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Under the same torque, how much faster does a rod spin up than a disk or a ring of the same mass and size?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Newton's second law, in the form F = ma we all learn, was first written down by Euler in 1750, and Euler then did the same for rotation. A force applied off-center creates a torque, and that torque produces angular acceleration — but how much depends not on mass alone, but on how that mass is distributed around the axis of rotation.</p>
     <p>The three shapes below — rod, disk, and ring — have identical mass, the same outer size, and the same torque applied. Watch their angular velocities diverge. The rod spins up fastest, because most of its mass sits near the axis; the ring slowest, because all of its mass sits at the rim. The graph traces every angular velocity over time, making the difference unmistakable.</p>
@@ -98,6 +103,14 @@
       <span>Left: disk, rod, and ring with equal torque applied. Right: angular velocity over time for each.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the simulation running at the defaults (<strong>Torque τ</strong> 5.0 N·m, <strong>Mass m</strong> 2.0 kg), compare the three ω readouts: the rod's is always 1.5 times the disk's and 3 times the ring's, since their angular accelerations are 30, 20 and 10 rad/s².</li>
+      <li>Raise <strong>Torque τ</strong> to 10.0 N·m: all three ω readouts restart from 0 and each reaches a given value in half the time it took before.</li>
+      <li>Change <strong>Mass m</strong>: the curves restart and all three shapes slow down or speed up by the same factor, so the order rod, disk, ring and the 3 : 2 : 1 ratio never change. Mass sets the scale; shape sets the ratio.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Torque and angular acceleration</h3>
     <p>The rotational analogue of Newton's second law is:</p>
@@ -111,6 +124,10 @@
     <p>The graph on the right shows three diverging straight lines — one per shape — confirming that angular velocity rises linearly at a rate inversely proportional to \(I\).</p>
     <h3>Euler's equations for 3D rotation</h3>
     <p>Between 1750 (his 'new principle of mechanics') and 1765 (<em>Theoria motus corporum solidorum</em>), Euler extended this to a set of equations relating the angular velocity components \(\omega_1, \omega_2, \omega_3\) along the principal axes of a body to the applied torques. These equations govern gyroscope precession, spacecraft attitude control, and the wobbly path of a thrown frisbee.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The torque is constant and there is no friction or air drag, so ω keeps growing in a straight line for as long as the simulation runs. The sizes are fixed (r = 0.5 m for the disk and ring, L = 1.0 m for the rod) and each body turns about a fixed axis through its centre; Euler's three-dimensional equations from the essay are not simulated. The rod's I is that of a uniform thin rod; the dots at its ends are only part of the drawing. The graph's ω axis rescales to the largest value shown and keeps the last 300 steps of 0.016 s each.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Equation</div>
@@ -118,9 +135,9 @@
       <li><span>\(\tau = I\alpha\) — the rotational analogue of Newton's second law. A body with more mass spread far from the axis (high \(I\)) is harder to spin. This is why figure skaters pull in their arms to speed up (angular momentum \(L = I\omega\) is conserved, so a smaller \(I\) means a larger \(\omega\)), and why hollow wheels roll differently than solid ones.</span></li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">L. Euler, "Découverte d'un nouveau principe de mécanique", <em>Mémoires de l'Académie des Sciences de Berlin</em> 6 (1752, for 1750).</li>
       <li id="src-2">L. Euler, "Du mouvement de rotation des corps solides autour d'un axe variable", <em>Mémoires de l'Académie des Sciences de Berlin</em> 14 (1765, for 1758).</li>
       <li id="src-3">L. Euler, <em>Theoria motus corporum solidorum seu rigidorum</em> (Rostock and Greifswald, 1765).</li>

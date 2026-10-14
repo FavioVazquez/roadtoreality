@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Erwin Schrödinger</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Why does a single stationary state of an electron in a box never move, while a mix of states sloshes, spreads and comes back?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1926 Erwin Schrödinger published a wave equation for matter<sup><a href="#src-1">[1]</a></sup>. It does not give a particle's path. It gives a wavefunction $\psi$, and later that year Max Born proposed that $|\psi|^2$ is the probability of finding the particle at each place<sup><a href="#src-3">[3]</a></sup>.
@@ -120,6 +125,15 @@
       <span id="sim-status">Wave packet: press play to watch it bounce, spread and revive.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>One state</strong> and move <strong>State n (one state)</strong> to 3: the status reads 2 nodes and E = 3.384 eV. Press <strong>Play</strong>: the colour (the phase) turns while |ψ|² stays still.</li>
+      <li>Press <strong>States 1 + 2</strong>, then <strong>Play</strong>: |ψ|² sloshes from wall to wall and the ⟨x⟩ trace swings with the period in the status line, 3.67 fs.</li>
+      <li>Press <strong>Wave packet</strong>, set <strong>Playback speed</strong> to 2.00 fs/s and press <strong>Play</strong>: the packet bounces and spreads into ripples, reappears mirrored near t = 5.5 fs and is back in its starting shape at t = 11.0 fs.</li>
+      <li>Press <strong>Hydrogen atom</strong>: the 1s radial curve peaks on the dashed “Bohr orbit, 1 a₀” line. Then try <strong>2s</strong> and <strong>2p (m = 0)</strong>: one shows a spherical node, the other a nodal plane through the nucleus, and both read E = −3.40 eV.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>A Wave Equation for Matter</h3>
     <p>De Broglie had given electrons a wavelength. Schrödinger asked what equation such a wave obeys. For one particle of mass $m$ moving along a line in a potential $V(x)$ his time-dependent equation reads<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-6">[6]</a></sup></p>
@@ -136,8 +150,10 @@
     <p>A localised wave packet needs many terms. It travels, reflects off the walls and spreads into a complicated interference pattern. In this box every energy is a whole-number multiple of $E_1$, so after $t = h/E_1 \approx 11$ fs every phase is back where it started and the packet returns exactly to its original shape, a quantum revival<sup><a href="#src-5">[5]</a></sup>. Halfway there, at about 5.5 fs, it reappears mirrored. Revivals of this kind have been observed in electron wave packets in Rydberg atoms<sup><a href="#src-8">[8]</a></sup>.</p>
     <h3>The Cloud That Replaced the Orbit</h3>
     <p>For the hydrogen atom the same equation, with the electron held by the proton's Coulomb pull, gives the energies $E_n = -13.6\ \text{eV}/n^2$, the levels of Bohr's model<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-7">[7]</a></sup>. But the states are not orbits. They are three-dimensional clouds of probability<sup><a href="#src-6">[6]</a></sup>. The ground state, 1s, is a ball with no edge; the chance of finding the electron at distance $r$ peaks at the Bohr radius $a_0 \approx 0.0529$ nm<sup><a href="#src-7">[7]</a></sup>, exactly where Bohr put his orbit. The 2s state has a spherical node, and 2p (here the one with $m = 0$) has a nodal plane through the nucleus. In this model 2s and 2p have the same energy. The dashed circle and line mark Bohr's orbit radius $n^2 a_0$ for comparison.</p>
-    <h3>How the Simulation Works</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">How the Simulation Works</h3>
     <p>The sim adds up the stationary states with their exact phase factors, so there is no time-stepping error. The packet is a Gaussian (width 0.07 nm, starting at 0.3 nm, moving right) expanded on the lowest 80 states; the readout shows how much of the state those 80 terms capture. The model is one-dimensional and non-relativistic, with perfectly hard walls. Time runs $10^{15}$ to $10^{16}$ times slower than in the model, at the playback speed shown. The hydrogen view uses the exact non-relativistic 1s, 2s and 2p wavefunctions in a slice through the nucleus; for visibility the brightness is the square root of the density, and the colour shows the phase, which for a stationary state only turns. $\langle x \rangle$ and $\langle E \rangle$ are averages calculated from $\psi$, not measurements.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -149,9 +165,9 @@
     </ul>
     <p style="overflow-x:auto;">$$i\hbar\,\frac{\partial \psi}{\partial t} = \hat H\,\psi$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">E. Schrödinger, "Quantisierung als Eigenwertproblem (Erste Mitteilung)", <em>Annalen der Physik</em> 79, 361–376 (1926). Hydrogen energy levels from the wave equation.</li>
       <li id="src-2">E. Schrödinger, "Quantisierung als Eigenwertproblem (Vierte Mitteilung)", <em>Annalen der Physik</em> 81, 109–139 (1926). The time-dependent equation.</li>
       <li id="src-3">M. Born, "Zur Quantenmechanik der Stoßvorgänge", <em>Zeitschrift für Physik</em> 37, 863–867 (1926). Probability interpretation.</li>

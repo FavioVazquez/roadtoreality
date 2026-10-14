@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -68,6 +69,10 @@
       <span class="stop-header__scientist">Robert Hooke</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How far does a stretch stay proportional to the force, and what do steel, glass and rubber do beyond that point?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Hooke discovered that extension is proportional to force — the simplest law of elasticity, and the basis of every spring and suspension system. His famous anagram, revealed as "ut tensio, sic vis" (as the extension, so the force), gave physics the linear restoring-force law, F = −kx, published in <em>Lectures de Potentia Restitutiva</em> (1678) after a 1676 anagram, ceiiinosssttuv, that staked his claim.</p>
   </div>
@@ -102,6 +107,14 @@
       <span>Drag the Load slider to stretch the spring through elastic, plastic, and rupture zones</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With <strong>Material</strong> on <strong>Ductile: steel wire, 500 N/m</strong>, drag <strong>Load</strong>: the readout climbs along the straight line from 7.5 N at 1.5 cm to 10.0 N at 2.0 cm. Past yield the label turns plastic, the coil turns grey, and x runs out to 10.0 cm while F only reaches 14.0 N. At the end of the slider it breaks.</li>
+      <li>Choose <strong>Brittle: glass fibre, 800 N/m</strong>: the label stays elastic and the white dot stays on the straight green line up to 11.9 N at 1.5 cm. At the end of the slider it snaps, with no plastic zone.</li>
+      <li>Choose <strong>Elastomer: rubber band, 50 N/m</strong>: the green curve bends upward. Set <strong>Load</strong> so x reads 30.0 cm, then 60.0 cm: F goes from 17.1 N to 46.9 N, about 2.7 times the force for twice the stretch.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>How to explore</h3>
     <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
@@ -115,6 +128,10 @@
     <p>Near the bottom of any smooth potential-energy well the curve is a parabola, because the straight-line term vanishes at a minimum. A parabola of energy, U = ½kx², is a force of −kx. That is why nearly every small vibration, from a pendulum at small angles to an atom in a crystal, behaves like a Hooke oscillator. The law holds only for small displacements: the curves above bend away from the straight line, and then the material yields or breaks.</p>
     <p>A spring's k belongs to that particular spring. Divide the force by the cross-section to get stress, divide the extension by the original length to get strain, and the ratio of the two is a property of the material, now called Young's modulus after Thomas Young's 1807 lectures. Typical values are about 200 GPa for steel, about 70 GPa for glass and roughly 0.01 to 0.1 GPa for rubber. For a straight rod, k = EA/L, so a 1 m steel rod with a 1 mm² section has k of about 200,000 N/m, far stiffer than the 500 N/m coil in the simulation.</p>
     <p>In 1679 and 1680 Hooke wrote to Newton suggesting that a planet's path could be built from straight-line motion bent by an attraction toward the Sun, and later that this attraction might weaken with the inverse square of distance. When Book I of the <em>Principia</em> was presented to the Royal Society in 1686 Hooke claimed priority, and Newton rejected the claim. Historians still weigh how much of the idea was his; what is certain is that the quarrel keeps Hooke's name beside Newton's.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <ul class="sim-limits__list"><li>The curves are model shapes, not measured data: steel follows a straight line to yield at 2 cm, then a line one tenth as steep to rupture at 10 cm; glass is a straight line to 1.5 cm; the rubber band follows F = kx(1 + (x/0.8 m)²) up to 1.2 m.</li><li>Lowering the load retraces the same curve, so a steel wire pulled past yield returns to zero stretch. A real one would stay permanently longer.</li><li>The graph's x-axis is rescaled to each material's breaking stretch, and the drawn spring stops lengthening at half of it, so neither picture is to scale.</li><li>The load is a hanging mass of F/g. Its bobbing is drawn at a fixed height, never dies down, and is capped in rate, so at light loads it is slower than the T readout.</li></ul>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -123,9 +140,9 @@
       <li>$$F = -kx$$</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">R. Hooke, <em>Lectures de Potentia Restitutiva, or of Spring</em> (1678). Cited: the law ut tensio, sic vis.</li>
       <li id="src-2">R. Hooke, <em>A Description of Helioscopes and Some Other Instruments</em> (1676). Cited: the anagram ceiiinosssttuv.</li>
       <li id="src-3">T. Young, <em>A Course of Lectures on Natural Philosophy and the Mechanical Arts</em> (1807). Cited: the modulus of elasticity.</li>

@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -67,6 +68,10 @@
       <span class="stop-header__scientist">Heinrich Hertz</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">In which directions does an oscillating dipole radiate, and how does its frequency set the spacing of the wavefronts?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1887 Heinrich Hertz built a spark-gap transmitter and a loop detector a few metres away and saw sparks answer sparks; in 1888 he set up standing waves against a metal sheet, measured their wavelength, and showed the waves travel at the speed of light and reflect, refract and polarise like light, as Maxwell had predicted twenty-three years earlier.</p>
   </div>
@@ -98,9 +103,21 @@
       <span>Oscillate the dipole and watch EM wavefronts radiate. Adjust the frequency and the animation speed; the wavelength shown on the canvas is the animation speed divided by the frequency.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Reset</strong>, then <strong>Play</strong>, and compare directions: the rings are brightest to the left and right of the dipole and fade to nothing straight above and below it, along the antenna axis.</li>
+      <li>Raise <strong>Dipole frequency</strong> from 1.2 to 3.0: the readout λ drops from 83 px to 33 px and new rings come out faster and closer together.</li>
+      <li>Set <strong>Dipole frequency</strong> to 1.0 and <strong>Animation speed (px/s)</strong> to 200: λ reads 200 px, the animation speed divided by the frequency. Rings of the same colour are one λ apart; a red ring and the next blue ring are half a λ apart.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <p>A dipole antenna — two conducting rods with alternating charge — is the simplest EM radiator. The radiation is not uniform in all directions: it is zero directly along the antenna axis and strongest perpendicular to it. This sin&sup2;&theta; pattern is why a radio antenna is mounted vertically for horizontal coverage, and why Hertz saw nothing when his loop faced the ends of his dipole.</p>
     <p>Each half-cycle of oscillation reverses the E-field direction, producing a new wavefront of opposite polarity. The colored rings in the simulation show successive half-cycles: red for positive E-field, blue for negative. Rings of the same colour are one wavelength &lambda; = v/f apart; a red ring and the next blue ring are half a wavelength apart.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The rings show the sin²θ pattern as brightness only; they do not dim as they spread, and the field close to the antenna is not drawn. The wave speed is in pixels per second, not c, and time advances a fixed 0.016 s per frame, so the frequency in Hz is in animation time. The charges sliding ±20 px along the antenna are a picture of the oscillating dipole, not drawn to scale against the wavelength, and the scene is a flat slice through the antenna.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
@@ -112,9 +129,9 @@
       <li>Hertz's experiments of 1887–88 directly confirmed Maxwell's 1865 prediction and opened the door to radio, television, and wireless communication.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>H. Hertz, "Ueber sehr schnelle electrische Schwingungen", <em>Annalen der Physik und Chemie</em> 267 (31), 421–448 (1887).</li>
       <li>H. Hertz, "Ueber elektrodynamische Wellen im Luftraume und deren Reflexion", <em>Annalen der Physik und Chemie</em> 270 (34), 609–623 (1888).</li>
       <li>H. Hertz, <em>Untersuchungen über die Ausbreitung der elektrischen Kraft</em> (Leipzig, 1892); English translation <em>Electric Waves</em> (1893). Collects both papers.</li>

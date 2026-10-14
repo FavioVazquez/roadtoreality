@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Aristotle</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Does a 10 kg ball fall faster than a 1 kg ball, and what has to change before the heavier one lands first?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Aristotle taught that heavier objects fall faster than lighter ones — proportionally. A 10 kg stone should fall 10 times faster than a 1 kg stone (<em>De Caelo</em> I.6, 273b30–274a2). This seemed obvious. Rocks fall, feathers float. For nearly 2,000 years it was the textbook view, though not unchallenged: John Philoponus in the 6th century wrote that two weights dropped from the same height arrive almost together, and in 1586 Simon Stevin and Jan de Groot dropped lead balls from about nine metres in Delft and reported the same.
@@ -108,11 +113,24 @@
       <span id="sim-status">Press Drop to release both balls simultaneously.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the starting 1 kg and 10 kg and <strong>Air resistance</strong> at None, press <strong>Drop!</strong>: the balls land together, the two time badges match and the banner reads “Same time! Aristotle was wrong.”</li>
+      <li>Set <strong>Air resistance</strong> to Heavy and press <strong>Drop again</strong>: now the 10 kg ball lands first, but only a fraction of a second ahead, nowhere near the ten times sooner of Aristotle's rule.</li>
+      <li>Keep Heavy air, set <strong>Right ball mass</strong> to 2 kg and drop again: the gap in the banner shrinks. The same push from the air is a larger fraction of the lighter ball's weight.</li>
+      <li>Set both <strong>Left ball mass</strong> and <strong>Right ball mass</strong> to the same value: with any air setting they land together.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What Aristotle Believed</h3>
     <p>Aristotle's theory was part of a larger framework: everything has a "natural place." Earth and water belong below, fire and air above. Heavy objects (more earth) fall faster because they are "seeking" their natural place more urgently. Light objects (more air) rise. It was internally consistent and matched casual observation.</p>
     <p>Galileo is credited with disproving this — possibly by dropping balls from the Leaning Tower of Pisa, though historians debate whether that demonstration actually happened. What he definitely did was roll balls down inclined planes and measure times precisely. The result: all objects accelerate at the same rate regardless of mass (ignoring air resistance).</p>
     <p>The only case where Aristotle's intuition seems right is when air resistance is significant — a feather falls slowly not because it's light, but because its large surface area creates more drag relative to its weight. With air resistance off, mass doesn't matter at all. In the simulation the air pushes on both balls equally, as if they were the same size (the drawing scales the balls with mass only so you can tell them apart); the heavier one is slowed less because the same push is a smaller fraction of its weight.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Gravity is a constant 9.8 m/s², and the drop height is set by the height of the canvas at 60 pixels to the metre, about 4.5 m on a desktop screen. The air's push grows with the square of the speed, with illustrative coefficients of 0.08, 0.25 and 0.6 kg/m for Light, Medium and Heavy, not values measured for real balls; buoyancy in air is ignored. Times come from small steps at the screen's frame rate, so they can differ from the exact result by about a hundredth of a second, and the banner calls two landings “Same time” when they are less than 0.05 s apart.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -126,9 +144,9 @@
     <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Newton replaced it with:</p>
     <p>$$a = \frac{F}{m}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>Aristotle, <em>Physics</em> IV.8 and <em>De Caelo</em> I.6, 273b30–274a2.</li>
       <li>John Philoponus, <em>In Physica</em> 683 (Vitelli ed.).</li>
       <li>S. Stevin, <em>De Beghinselen des Waterwichts</em> (1586), appendix.</li>

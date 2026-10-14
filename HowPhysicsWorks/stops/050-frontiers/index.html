@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -79,6 +80,10 @@
       <span class="stop-header__scientist">Everyone alive</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Where do today’s best measurements disagree, or run out, and which measurement would settle each open question?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       This road began with Thales asking a new kind of question: what natural process causes this? Forty-nine stops later the question has not changed. What has changed is the answer's form. An answer in physics is now a number with an error bar, and a question is open when two numbers that should agree do not, or when there is no number at all.
@@ -152,6 +157,15 @@
       <span id="sim-status">How fast is the universe expanding?</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>On <strong>Hubble tension</strong> the gauge reads 4.9σ apart with <strong>SH0ES 2022</strong> and 1.5σ with <strong>CCHP 2025</strong>. With SH0ES, drag <strong>Local value</strong> down to 69.7: only then does it read 2.0σ.</li>
+      <li>On <strong>Neutrino masses</strong>, the window with <strong>Normal ordering</strong> and <strong>Bound in ΛCDM</strong> is 0.059–0.064 eV. Press <strong>Inverted ordering</strong>: “No window left”. Press <strong>Bound with evolving dark energy</strong>: the window reopens at 0.099–0.163 eV.</li>
+      <li>On <strong>Dark energy</strong>, press <strong>DESI + CMB</strong>, <strong>+ Pantheon+</strong>, <strong>+ Union3</strong> and <strong>+ DES-SN5YR</strong> in turn: the preference reads 3.1σ, 2.8σ, 3.8σ and 4.2σ. None reaches 5σ, and each red w(z) curve differs from the dashed w = −1 line.</li>
+      <li>On <strong>Quantum gravity</strong>, drag <strong>Collision energy</strong> to its maximum, 1.22 × 10¹⁹ GeV: ħc/E reaches 1.62 × 10⁻³⁵ m, the Planck length, at about 9 × 10¹⁴ times the LHC’s energy.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>How Fast Is the Universe Expanding?</h3>
     <p>Two routes to the Hubble constant disagree. The Planck satellite measures the microwave background and, assuming the standard ΛCDM model, infers $H_0 = 67.4 \pm 0.5$ km/s/Mpc<sup><a href="#src-1">[1]</a></sup>. The SH0ES team builds a distance ladder from parallaxes to Cepheids to supernovae and measures $73.04 \pm 1.04$<sup><a href="#src-2">[2]</a></sup>. Divided by their combined uncertainty the difference is 4.9σ (computed here; the SH0ES paper quotes 5σ). The Chicago–Carnegie program, calibrating type Ia supernovae with red-giant stars (the tip of the red giant branch) instead of Cepheids and using the Carnegie Supernova Project's distant sample, finds $70.39 \pm 1.22\,(\text{stat}) \pm 1.33\,(\text{sys}) \pm 0.70\,(\sigma_\text{SN})$<sup><a href="#src-3">[3]</a></sup>; with those terms added in quadrature it sits 1.5σ from Planck (computed here). Either some step in a distance ladder is off, or the standard model of the early universe is missing something. Letting dark energy evolve, as in the DESI fits below, does not help: it lowers the inferred $H_0$ further<sup><a href="#src-7">[7]</a></sup>.</p>
@@ -175,14 +189,16 @@
     <h3>The End of the Road, for Now</h3>
     <p>Each of these questions is open in the same way the orbit of Mercury was open in 1900 (stop 34) or the expanding universe in 1920 (stop 42): a small, stubborn disagreement between careful measurements and the best theory available. Some will turn out to be errors in the measurements. Some may be the first sign of something new. The way to tell is the method this road began with: ask what natural process causes it, predict a number, and measure it.</p>
 
-    <h3>What the Gauges Leave Out</h3>
-    <ul style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.4rem;">
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Gauges Leave Out</h3>
+    <ul class="sim-limits__list">
       <li>The Hubble-tension gauge treats each measurement as a Gaussian with the quoted uncertainty. For the Chicago–Carnegie value the three quoted uncertainties are added in quadrature here.</li>
       <li>The dark-energy gauge shows best-fit curves only. The uncertainties on $w_0$ and $w_a$ are strongly correlated, so drawing separate error bands would mislead.</li>
       <li>The neutrino gauge places KATRIN on the sum axis at three times its bound, which is right only for nearly equal masses; KATRIN measures a weighted mass, not the sum.</li>
       <li>$\hbar c/E$ is a rough estimate of the distance a collision resolves.</li>
       <li>Nothing on this page is a new measurement: every value is cited, and the separations, shares and floors marked "computed here" are calculated from those values.</li>
     </ul>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -192,9 +208,9 @@
       <li>Each question names the measurement that would settle it. That is the method the road started with.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Planck Collaboration, "Planck 2018 results. VI. Cosmological parameters", <em>Astronomy &amp; Astrophysics</em> 641, A6 (2020). Cited: $H_0 = 67.4 \pm 0.5$ km/s/Mpc (abstract); $\Omega_c h^2 = 0.1200 \pm 0.0012$, $\Omega_b h^2 = 0.02237 \pm 0.00015$, $\Omega_\Lambda = 0.6847 \pm 0.0073$, $H_0 = 67.36$ (Table 2, TT,TE,EE+lowE+lensing).</li>
       <li id="src-2">A. G. Riess et al., "A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km/s/Mpc Uncertainty from the Hubble Space Telescope and the SH0ES Team", <em>The Astrophysical Journal Letters</em> 934, L7 (2022). Cited (abstract): $H_0 = 73.04 \pm 1.04$ km/s/Mpc; a 5σ difference with Planck + ΛCDM.</li>
       <li id="src-3">W. L. Freedman et al., "Status Report on the Chicago-Carnegie Hubble Program (CCHP): Measurement of the Hubble Constant Using the Hubble and James Webb Space Telescopes", <em>The Astrophysical Journal</em> 985, 203 (2025); erratum 993, 252 (2025), which does not change $H_0$. Cited (abstract): $H_0 = 70.39 \pm 1.22$ (stat) $\pm 1.33$ (sys) $\pm 0.70$ ($\sigma_\text{SN}$), TRGB.</li>

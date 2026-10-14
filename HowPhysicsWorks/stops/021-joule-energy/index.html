@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -67,6 +68,10 @@
       <span class="stop-header__scientist">James Prescott Joule</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">When a falling weight turns a paddle in water, where does its potential energy go, and does the total ever change?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>James Prescott Joule was a brewer who became one of the most precise experimentalists in history. He showed that mechanical work and heat are interchangeable — that they are both forms of the same thing, energy. His experiments of 1843&ndash;1850, ending with the famous paddle-wheel, measured the conversion ratio with extraordinary accuracy, and in doing so gave the first law of thermodynamics its experimental foundation (Mayer had argued for the equivalence in 1842; Helmholtz generalised it in 1847): energy is conserved across all its forms.</p>
   </div>
@@ -98,11 +103,23 @@
       <span>Watch how PE converts to KE and then to heat as the weight falls. Try different masses and heights.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Reset</strong>, then <strong>Play</strong>, and watch the bars at the defaults (2.0 kg, 1.5 m): Potential (PE) drains, Heat (Q) fills, Kinetic (tiny) sits at 0.09 J during the fall, and the line underneath reads Total: 29.4 J (conserved) throughout.</li>
+      <li>Set <strong>Mass (kg)</strong> to 4.0: the equation at the bottom reads E = mgh = 4.0 × 9.8 × 1.5 = 58.8 J, twice the energy for twice the mass, and at the bottom all 58.8 J shows as heat.</li>
+      <li>Set <strong>Mass (kg)</strong> to 5.0 and <strong>Drop height (m)</strong> to 3.0: the total is 147.0 J, yet the kinetic bar reads only 0.90 J, well under 1 % of it, because the weight falls slowly.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Experiment</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">Joule suspended a known mass from a cord wound around a paddle-wheel axle. When the mass fell, it rotated the paddle through water. The temperature rise in the water was measured with extraordinary precision — a few hundredths of a degree per drop. By letting the weights fall twenty times per run and averaging dozens of runs, Joule found that 772.7 foot-pounds of work warm a pound of water by one degree Fahrenheit, which in today's units is 4.16 joules per calorie, within 0.7 % of the modern value (4.186 J). The energy bars show the first drop: the kinetic energy of the slowly falling weight is only 0.09 J of the 29.4 J at the defaults.</p>
     <h3 style="margin-top:1.25rem;">Why It Was Controversial</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">In 1843, most physicists believed in caloric — a weightless fluid that flowed from hot bodies to cold ones. Joule's result implied that heat is not a substance but a mode of motion. The temperature rise is tiny (drop a 2 kg weight from 1.5 m and you heat 1 kg of water by just 0.007°C), but it is perfectly reproducible — which is the whole point.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The weight always takes 5 s to fall, whatever the height, and moves at constant speed from the first instant, so its kinetic energy is ½m(h/5 s)² with no speed-up phase. Every joule of potential energy lost is booked as heat in the water, with g = 9.8 m/s²: nothing goes into the pulley, the cord or the floor, and the small kinetic energy left at the bottom is added to the heat. The sim does not compute a temperature; the water’s colour shows the fraction of energy converted, not a thermometer reading.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
@@ -113,9 +130,9 @@
       <li>This result unified mechanics and thermodynamics, displacing the caloric theory of heat. It became the foundation of the first law of thermodynamics.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">J. P. Joule, "On the Calorific Effects of Magneto-Electricity, and on the Mechanical Value of Heat", <em>Philosophical Magazine</em> ser. 3, 23, 263&ndash;276, 347&ndash;355, 435&ndash;443 (1843).</li>
       <li id="src-2">J. P. Joule, "On the Mechanical Equivalent of Heat", <em>Philosophical Transactions of the Royal Society</em> 140, 61&ndash;82 (1850).</li>
       <li id="src-3">J. R. Mayer, "Bemerkungen &uuml;ber die Kr&auml;fte der unbelebten Natur", <em>Annalen der Chemie und Pharmacie</em> 42, 233&ndash;240 (1842).</li>

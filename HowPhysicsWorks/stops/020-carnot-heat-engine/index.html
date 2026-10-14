@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -67,6 +68,10 @@
       <span class="stop-header__scientist">Sadi Carnot</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">What sets the highest efficiency a heat engine can reach between a hot and a cold reservoir, and why can it never be 100%?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>Carnot showed there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering. Adjust the hot and cold reservoir temperatures below and watch the efficiency readout change. The enclosed area on the PV diagram is exactly the net work extracted per cycle.</p>
   </div>
@@ -98,9 +103,22 @@
       <span>Left: PV diagram with isothermal (red/blue) and adiabatic (orange/teal) curves. Right: piston animation. Efficiency shown top-right.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Keep <strong>T<sub>H</sub> (hot reservoir, K)</strong> at 600 K and lower <strong>T<sub>C</sub> (cold reservoir, K)</strong> from 300 to 200 K: η rises from 50.0% to 66.7% and W from 1729 to 2305 J, while Q_H stays at 3458 J.</li>
+      <li>Set T<sub>C</sub> to 200 K and T<sub>H</sub> to 400 K, then T<sub>H</sub> to 800 K and T<sub>C</sub> to 400 K: η reads 50.0% both times, because only the ratio T<sub>C</sub>/T<sub>H</sub> matters, while W doubles from 1153 to 2305 J.</li>
+      <li>Set T<sub>H</sub> to 800 K and T<sub>C</sub> to 200 K, the widest gap the sliders allow: η reads 75.0%. Only a cold reservoir at 0 K would give 100%.</li>
+      <li>Watch the label under the piston as the dot goes round: Hot source T_H on the red stroke, Cold sink T_C on the blue one, and Insulated (adiabatic) with a dashed grey outline on the orange and teal strokes, where no heat flows.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What's happening</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The four stages of the Carnot cycle are: (1) isothermal expansion at T<sub>H</sub> — the gas absorbs heat and expands; (2) adiabatic expansion — temperature drops from T<sub>H</sub> to T<sub>C</sub>; (3) isothermal compression at T<sub>C</sub> — the gas releases heat and is compressed; (4) adiabatic compression — temperature rises back to T<sub>H</sub>. The enclosed area equals net work done per cycle. The gas is a monatomic ideal gas (&gamma; = 5/3), one mole, and the volume axis is logarithmic so the four corners stay apart. At the defaults the numbers on the diagram are W = 1729 J, Q<sub>H</sub> = 3458 J and Q<sub>C</sub> = 1729 J, so W/Q<sub>H</sub> = 0.50 = 1 &minus; 300/600.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>Every stroke is reversible and slow, with no friction and no heat leaks, and the hot isothermal expansion always doubles the volume (V₂/V₁ = 2), so Q_H = nRT<sub>H</sub> ln 2 and W depends only on T<sub>H</sub> − T<sub>C</sub>. Because the volume axis is logarithmic and the pressure axis does not start at zero, the shaded shape shows the cycle but its drawn area is not to scale with the work; the W readout gives the work. The dot spends a quarter of each loop on every stroke, whatever its length, so its timing is a display choice.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
@@ -113,9 +131,9 @@
       <li><span>Temperature must be in Kelvin for this formula. Celsius is the Kelvin scale shifted by 273.15; Fahrenheit is shifted and stretched; only Kelvin makes T<sub>C</sub>/T<sub>H</sub> a ratio of absolute temperatures.</span></li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">S. Carnot, <em>R&eacute;flexions sur la puissance motrice du feu et sur les machines propres &agrave; d&eacute;velopper cette puissance</em> (Bachelier, Paris, 1824).</li>
       <li id="src-2">&Eacute;. Clapeyron, "M&eacute;moire sur la puissance motrice de la chaleur", <em>Journal de l'&Eacute;cole Royale Polytechnique</em> 14, 153&ndash;190 (1834).</li>
       <li id="src-3">W. Thomson, "On an Absolute Thermometric Scale founded on Carnot's Theory of the Motive Power of Heat", <em>Philosophical Magazine</em> 33, 313&ndash;317 (1848).</li>

@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Michelson &amp; Morley</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How far should the fringes have moved when the apparatus turned, if the ether stood still, and how does that compare with what was seen?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1887 Albert Michelson and Edward Morley, working in Cleveland, Ohio, tried to detect Earth's motion through the luminiferous ether, the medium that light waves were then thought to travel in<sup><a href="#src-1">[1]</a></sup>. If the ether stood still while Earth moved through it, turning their apparatus by 90° should have moved its interference fringes by about 0.4 of a fringe. They saw less than a twentieth of that<sup><a href="#src-1">[1]</a></sup>.
@@ -119,6 +124,15 @@
       <span id="sim-status">Press play to rotate the apparatus. The model fringes move; the observed ones did not.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the sim playing (<strong>Play</strong>) and <strong>Auto-rotate: on</strong>, watch the model strip’s label swing between +0.20 fringe with arm 1 along the motion and −0.20 at 90°, a swing of 0.40, while the 1887 strip below stays still.</li>
+      <li>Raise <strong>Speed through ether</strong> from 30 to 60 km/s: the model swing for a 90° turn goes from 0.40 to 1.60 fringe, four times as much for twice the speed.</li>
+      <li>Lower <strong>Speed through ether</strong> to 6 km/s: the swing reads 0.02 and the curve on the graph stays inside the grey band.</li>
+      <li>Press <strong>Lorentz–FitzGerald contraction: off</strong> to switch it on: the swing reads 0.00, the curve goes flat and the two light pulses return together at every angle.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Light in a Moving Medium</h3>
     <p>In the nineteenth century light was understood as a wave, and a wave was thought to need something to wave in. That medium was called the luminiferous ether. If light moves at speed $c$ relative to the ether, an apparatus moving through the ether at speed $v$ should see light take slightly different times to cross it in different directions.</p>
@@ -137,8 +151,10 @@
     <p>Michelson and Morley did not conclude that the ether does not exist. They concluded that the relative motion of Earth and the ether, if any, must be small, small enough to rule out Fresnel's explanation of stellar aberration, which assumed an ether at rest<sup><a href="#src-1">[1]</a></sup>. One possibility then on the table was that Earth drags the nearby ether along with it.</p>
     <p>Toggle the contraction in the simulation and the two light pulses return together at every angle; stops 029 and 030 come back to this. In 1889 George FitzGerald<sup><a href="#src-5">[5]</a></sup> and in 1892 Hendrik Lorentz<sup><a href="#src-6">[6]</a></sup> independently proposed that objects moving through the ether shrink along the direction of motion by the factor $\sqrt{1 - v^2/c^2}$, just enough to cancel the expected shift. In 1905 Einstein's special relativity made the speed of light the same for every observer moving at constant velocity, and the ether was no longer needed<sup><a href="#src-7">[7]</a></sup>. His paper mentions "unsuccessful attempts to discover any motion of the earth relatively to the light medium" without naming this experiment; how much it influenced him is still discussed by historians.</p>
     <p>Modern versions use lasers and rotating optical cavities. One reported in 2009 found no direction dependence of the speed of light at the level of about one part in $10^{17}$<sup><a href="#src-8">[8]</a></sup>.</p>
-    <h3>What the Simulation Leaves Out</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
     <p>The prediction uses the textbook second-order formula for an ether at rest relative to the Sun, and the speed slider stands for the whole speed through the ether. A real analysis would add the Sun's own motion and the daily and yearly changes in direction. The fringes are drawn as an ideal pattern; the real ones were viewed through a telescope and read by eye against a fiducial mark. The shifts are computed exactly from the two round-trip times, $t(\theta) = \frac{2L}{c}\frac{\sqrt{1-\beta^2\sin^2\theta}}{1-\beta^2}$ with $\beta = v/c$, not taken from data; at $\beta = 10^{-4}$ this agrees with the formula above. The light pulses in the top view are drawn at an exaggerated speed (shown on screen) so the lag can be seen.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -149,9 +165,9 @@
     </ul>
     <p style="overflow-x:auto;">$$\Delta N_{90^\circ} = \frac{2 L v^2}{\lambda c^2}$$</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">A. A. Michelson and E. W. Morley, "On the Relative Motion of the Earth and the Luminiferous Ether", <em>American Journal of Science</em> ser. 3, 34, 333–345 (1887). Cited: expected shift about 0.4 fringe; path about $2 \times 10^7$ wavelengths (about 11 m) per arm; stone slab about 1.5 m square floating on mercury; readings at sixteen directions, noon and evening, July 1887; displacement "certainly less than the twentieth part" of the expected value; conclusion on Fresnel's explanation of aberration; the 1881 oversight, pointed out by Potier (footnote) and analysed by Lorentz.</li>
       <li id="src-2">NASA Goddard Space Flight Center, <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html" target="_blank" rel="noopener" style="overflow-wrap:anywhere;">Earth Fact Sheet</a>. Cited: mean orbital velocity 29.78 km/s.</li>
       <li id="src-3">A. A. Michelson, "The Relative Motion of the Earth and the Luminiferous Ether", <em>American Journal of Science</em> ser. 3, 22, 120–129 (1881). Arms about 1.2 m (Potsdam).</li>

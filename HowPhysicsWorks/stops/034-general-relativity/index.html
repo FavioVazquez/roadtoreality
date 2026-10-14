@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Albert Einstein</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How much does Mercury's perihelion turn each century from the other planets' pull, and how much does general relativity add?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Mercury's orbit is an ellipse, and the point where it comes closest to the Sun, the perihelion, slowly turns around the Sun. Newton's gravity explains most of that turning: the other planets tug on Mercury and twist its orbit. By the 1850s astronomers had added up every tug they could and still came up short by a small amount each century. Nobody could find the missing cause until Einstein, in November 1915, computed the effect of curved spacetime and got the missing amount.
@@ -105,6 +110,15 @@
       <span id="sim-status">The planets' pull is on. Add the GR correction to close the gap.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Press <strong>Planets’ pull: on</strong> so it reads off, with the GR correction off: the advance readout shows 0.0″ / century, the caption reads “Pure Newton, Sun only: the ellipse stays put.” and the perihelion line stays on the start line.</li>
+      <li>Turn the planets back on and press <strong>Add GR correction (1PN)</strong>: the advance readout goes from 532.3″ to 575.3″ / century.</li>
+      <li>Switch <strong>Planets’ pull</strong> off again, keeping GR on: the readout shows 43.0″ / century from the formula. After a few orbits, compare it with the caption’s “From the sim’s orbit” value, which comes from the orbit itself.</li>
+      <li>With both on, press <strong>Show planets vs leftover</strong>: a dashed planets-only orbit appears, the teal wedge between the two perihelion lines grows, and the bar splits into 532.3″ (cited) and Leftover: 43.0″ (GR, 1PN).</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>An Orbit That Turns</h3>
     <p>For one planet alone around the Sun, Newton's law of gravity gives a closed ellipse. The planet comes back to exactly the same perihelion every orbit, forever. Turn both effects off in the simulation and you see this: the perihelion line does not move.</p>
@@ -121,9 +135,11 @@
     <p style="overflow-x:auto;">$$\Delta\varpi = \frac{6\pi G M_\odot}{a(1-e^2)\,c^2}$$</p>
     <p>For Mercury, with semi-major axis $a = 0.387$ AU, eccentricity $e = 0.2056$ and period 87.97 days<sup><a href="#src-4">[4]</a></sup>, this is about 0.10″ per orbit. Mercury goes around about 415 times per century, so the total is 42.98″ per century. Einstein did this calculation in November 1915 and found 43″, within the 45″ ± 5″ then quoted by astronomers for the gap<sup><a href="#src-5">[5]</a></sup>. It was the one quantitative test available in 1915, and the theory passed it with no adjustable parameter.</p>
 
-    <h3>Why the Simulation Exaggerates</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">Why the Simulation Exaggerates</h3>
     <p>A tenth of an arcsecond per orbit is far too small to see on a screen. The simulation multiplies both the planets' pull and the GR term by the factor on the slider, so the perihelion turns visibly in seconds. Every readout divides that factor back out and reports real arcseconds per century. The planets are treated as rings of mass spread along their circular orbits, Gauss's way of keeping only their long-term effect. With Mercury's real eccentricity that model gives about 556″ per century, 4 % above the full calculation (it is a planar model with circular planets; the full calculation includes their eccentricities and the tilts of the orbits), and the exaggeration adds a further 1 to 3 % because the amplified rings are no longer a small perturbation. The ring strengths are therefore scaled down by 5 to 7 %, depending on the exaggeration level, so that the planets' part reads the cited 532.3″. That number is a calibration, not a result of the simulation. The GR term is not tuned: the simulation integrates the force above and tracks the turning of the osculating perihelion, and you can compare the sim's own value with the formula.</p>
     <p>The dashed orbit that appears in the split view is a second copy of Mercury that feels the planets but not GR. The angle between its perihelion and the real one is the leftover, and it grows at about 43″ per century. At 10,000× both effects are amplified so much that they are no longer small perturbations, and a second-order cross term between them appears: the leftover the sim shows comes out about 2.5″ low, and the GR-only value about 0.2″ high. Both deficits shrink in proportion to the exaggeration; at 1,000× the leftover is within 0.3″ of the formula.</p>
+    </section>
   </div>
   <section class="takeaway-box content-column" id="remeasured-mercury-transits" data-remeasured="pending" aria-labelledby="remeasured-mercury-title" style="border-left-style:dashed;">
     <div class="takeaway-box__title" id="remeasured-mercury-title">Re-measured from the historical transits: coming soon</div>
@@ -139,9 +155,9 @@
     <p style="overflow-x:auto;">$$\Delta\varpi_{\text{GR}} = \frac{6\pi G M_\odot}{a(1-e^2)\,c^2}$$</p>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">For Mercury: about 0.1035″ per orbit, or 42.98″ per century.</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">R. S. Park et al., "Precession of Mercury's Perihelion from Ranging to the MESSENGER Spacecraft", <em>The Astronomical Journal</em> 153, 121 (2017). Cited: sum of the planetary, planet-interaction and asteroid rows of their Table 532.3035″, solar oblateness 0.0286″, gravitoelectric (Schwarzschild-like) 42.9799″, Lense–Thirring −0.0020″, total 575.3100 ± 0.0015″ per Julian century.</li>
       <li id="src-2">U. J. J. Le Verrier, "Lettre de M. Le Verrier à M. Faye sur la théorie de Mercure et sur le mouvement du périhélie de cette planète", <em>Comptes rendus de l'Académie des sciences</em> 49, 379–383 (1859). Cited: excess of about 38″ per century.</li>
       <li id="src-3">S. Newcomb, "Discussion and results of observations on transits of Mercury from 1677 to 1881", <em>Astronomical Papers of the American Ephemeris</em> 1, 363–487 (1882). Cited: excess of about 43″ per century.</li>

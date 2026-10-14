@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -67,6 +68,10 @@
       <span class="stop-header__scientist">James Clerk Maxwell</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Where do electric field lines start and end, and how do oscillating E and B fields line up as a wave travels?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>James Clerk Maxwell looked at all of the known laws of electricity and magnetism — Gauss, Faraday, Ampère — and realized they were inconsistent. By adding one term (the "displacement current") he made them consistent, and in doing so predicted that oscillating electric and magnetic fields would sustain each other in a self-propagating wave. He calculated the speed from purely electrical measurements: 310,740 km/s, against Fizeau's 314,858 km/s for light, a match to about 1 % with no free parameter. Light is an electromagnetic wave.</p>
   </div>
@@ -98,10 +103,22 @@
       <span>Left: drag the charges to see field lines update live. Right: adjust frequency and amplitude of the propagating EM wave.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>Drag the +q or −q charge in the left panel: the 16 lines from +q are traced again at once. Follow each one to see whether it ends on −q or runs off the edge of the panel.</li>
+      <li>Raise <strong>Wave frequency</strong> from 1.0 to 2.0: twice as many wavelengths fit across the right panel and the readout reads freq: 2.0× (wave speed stays c); the crests still move across at the same speed.</li>
+      <li>Move <strong>Wave amplitude</strong> from 0.60 to 1.00: the E arrows and the B curve grow together. Where the blue E arrows shrink to nothing the gold B markers vanish too, and where E points up B is a dot (out of the screen): they rise and fall in phase.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What You Are Seeing</h3>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;"><strong style="color:var(--color-text-primary);">Left panel — the static field, as a reminder.</strong> Gauss's law says the number of lines leaving +q equals the number arriving at &minus;q; count them. The field lines (traced by following the electric field vector step by step) originate on the positive charge and terminate on the negative charge. Drag either charge to see the field lines recompute in real time.</p>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;"><strong style="color:var(--color-text-primary);">Right panel — EM wave.</strong> Blue vertical arrows show the electric field (E) oscillating perpendicular to the direction of propagation. Gold markers (dots = out of screen, crosses = into screen) show the magnetic field (B) perpendicular to both E and the propagation direction. E and B rise and fall together, in phase, with E &times; B pointing along the direction of travel. Together, E and B sustain each other — this is what Maxwell predicted: light.</p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The left panel traces 16 lines from +q only, in a flat plane, and stops each line at the panel edge, so lines that head outward are cut off instead of curving back to −q. The two panels are separate pictures: the charges on the left are static and do not radiate, and the wave on the right is a drawn plane wave, not computed from them. Frequency and amplitude are relative display settings, the on-screen wave speed stands for c without being to scale, and B is drawn at a fixed fraction of E’s length in a flattened perspective.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Maxwell's Four Equations</div>
@@ -118,9 +135,9 @@
       <li>Together, these four equations predict that oscillating electric and magnetic fields sustain each other — forming a self-propagating wave at speed \(c = \dfrac{1}{\sqrt{\mu_0 \varepsilon_0}} \approx 3 \times 10^8\) m/s.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">J. C. Maxwell, "A Dynamical Theory of the Electromagnetic Field", <em>Philosophical Transactions of the Royal Society</em> 155, 459&ndash;512 (1865).</li>
       <li id="src-2">J. C. Maxwell, "On Physical Lines of Force", Part III, <em>Philosophical Magazine</em> ser. 4, 23, 12&ndash;24 (1862). Cited: 310,740 km/s.</li>
       <li id="src-3">O. Heaviside, "Electromagnetic induction and its propagation", <em>The Electrician</em> (1885), reprinted in <em>Electrical Papers</em> vol. 1 (1892).</li>

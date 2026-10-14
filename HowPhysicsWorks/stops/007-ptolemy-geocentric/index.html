@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Claudius Ptolemy</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How can a planet riding a circle on a circle around the Earth seem to stop and go backwards, and what decides when?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       Ptolemy's model placed Earth at the center of the universe, with the Sun, Moon, and planets orbiting around it on circles, and circles carried on circles. But planets don't move uniformly — they sometimes seem to slow down, stop, and move backwards in the sky (retrograde motion). The fix, due to Apollonius of Perga and Hipparchus two and three centuries before Ptolemy, and perfected by him: epicycles. Each planet rode on a small circle (epicycle) whose center traveled on the larger circle (deferent).
@@ -111,6 +116,15 @@
       <span id="model-readout" aria-live="polite">Deferent and epicycle for Mars.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With <strong>Mars</strong> selected, press <strong>Play</strong> and watch the strip: the longitude line turns back in a shaded band labelled “retrograde 73 d, 15.9°”, centred on the dashed opposition marker.</li>
+      <li>During the loop, watch the orbit view: the epicycle's arm stays parallel to the Earth–Sun line, Mars sits on the side of its epicycle nearest the Earth, and the λ readout says retrograde.</li>
+      <li>Press <strong>Jupiter</strong>, then <strong>Saturn</strong>: the caption gives a loop every 399 and 378 days, spanning 9.9° and 6.7° of longitude, smaller than the 15.9° of Mars.</li>
+      <li>Press <strong>Venus</strong>: the epicycle's centre now stays on the line to the Sun all year, and the strip marks each loop with an inferior conjunction instead of an opposition.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>Why Ptolemy Was Taken Seriously</h3>
     <p>The geocentric model wasn't just religious dogma — it was genuinely good science by the standards of the time. Ptolemy's <em>Almagest</em> (compiled ~150 CE; the planets are in Books IX–XIII) was the most sophisticated astronomical work of antiquity, synthesizing centuries of Babylonian and Greek observations into a predictive mathematical system.</p>
@@ -119,10 +133,12 @@
     <p>For an outer planet (Mars, Jupiter, Saturn) the deferent carries the epicycle's centre round the Earth once per sidereal period: 687 days for Mars, 4,333 for Jupiter, 10,756 for Saturn<sup><a href="#src-5">[5]</a></sup>. The planet rides the epicycle, whose arm turns once a year and always points the same way as the line from the Earth to the Sun. That is not a choice made for the simulation: it is how the <em>Almagest</em>'s outer-planet models behave once their numbers are fitted to the sky<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-6">[6]</a></sup>. For an inner planet (Mercury, Venus) it is the other way round. The epicycle's centre stays on the line to the mean Sun all year, and the planet goes round the epicycle once per synodic period, 116 days for Mercury and 584 for Venus<sup><a href="#src-5">[5]</a></sup>.</p>
     <p>The model fixes only the ratio of each epicycle to its deferent, not distances. The simulation uses 0.656, 0.192 and 0.104 for Mars, Jupiter and Saturn, and 0.387 and 0.723 for Mercury and Venus: these are the modern ratios of mean orbital distances (Earth's to the planet's for an outer planet, the planet's to Earth's for an inner one), which is what the epicycle-to-deferent ratio stands for once the Sun is put at the centre. Ptolemy's own values, fitted to his observations, are close: 39;30 parts in 60 for Mars (0.658), 11;30 for Jupiter (0.192), 6;30 for Saturn (0.108), 43;10 for Venus (0.719) and 22;30 for Mercury (0.375)<sup><a href="#src-6">[6]</a></sup>. The Sun is drawn at an arbitrary distance, in Ptolemy's order: beyond Mercury and Venus, inside Mars.</p>
     <p>Run Mars and the model, with these periods and ratios and nothing else, produces a retrograde loop every 780 days (2.14 years). Each loop lasts about 73 days and carries Mars back about 16° along the ecliptic, and each one is centred on an opposition, when Mars stands opposite the Sun. Those are outputs of the simulation, not observations. For Jupiter and Saturn the loops come every 399 and 378 days, just over a year, and are smaller.</p>
-    <h3>What This Simple Version Leaves Out</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What This Simple Version Leaves Out</h3>
     <p>Ptolemy's deferents are not centred on the Earth. Each is an <strong>eccentric</strong> circle, its centre set off to one side, and the epicycle's centre moves uniformly not as seen from the Earth or from that centre but as seen from a third point, the <strong>equant</strong>, which lies on the far side of the deferent's centre from the Earth, at the same distance from it<sup><a href="#src-6">[6]</a></sup>. Together they make each planet move faster on one side of the zodiac than on the other, so the loops come at uneven intervals and differ in size around the sky. In modern terms they reproduce, to first order, the effects of an elliptical orbit and Kepler's law of areas. Without them, every Mars loop here is identical and exactly 780 days apart. The real sky is not like that: the dates on which Mars stood most nearly opposite the Sun were 27 July 2018, 14 October 2020, 8 December 2022, 16 January 2025 and 19 February 2027, intervals of 810, 785, 770 and 764 days<sup><a href="#src-7">[7]</a></sup>. For that reason the simulation counts days of model time and puts no calendar dates on its oppositions.</p>
     <p>Two more simplifications. Everything here lies in one plane, while Ptolemy also modelled the planets' small tilts north and south of the ecliptic; that is why real retrograde paths look like loops or zigzags on the sky rather than a back-and-forth along a line. And Mercury's model in the <em>Almagest</em> has an extra moving centre that this version omits.</p>
     <p>Copernicus' model used about as many circles as Ptolemy's; what it removed was the coincidence. In Ptolemy's system every planet's loop turns once a year in step with the Sun, for no stated reason. Put the Sun at the centre and that yearly rhythm is simply the Earth's own orbit. One explanation for six coincidences was the clue.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
@@ -134,9 +150,9 @@
     <p style="overflow-x:auto;">$$\tan(\lambda - \lambda_d) = \frac{r \sin\alpha}{R + r\cos\alpha}$$</p>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">Longitude \(\lambda\) of a planet seen from the Earth, exactly, for a deferent of radius \(R\) and an epicycle of radius \(r\): \(\lambda_d\) is the direction of the epicycle's centre, and \(\alpha\), the angle of the epicycle's arm measured from the deferent's radius, turns once per synodic period. The planet goes backwards when the arm's motion outruns the deferent's, near \(\alpha = 180°\).</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">Ptolemy, <em>Almagest</em> (c. 150 CE), Books IX–XIII (planetary theory); translation by G. J. Toomer, <em>Ptolemy's Almagest</em> (Springer, 1984).</li>
       <li id="src-2">O. Gingerich, "Crisis versus Aesthetic in the Copernican Revolution", <em>Vistas in Astronomy</em> 17 (1975), 85–95.</li>
       <li id="src-3">O. Gingerich, <em>The Book Nobody Read: Chasing the Revolutions of Nicolaus Copernicus</em> (Walker, 2004).</li>

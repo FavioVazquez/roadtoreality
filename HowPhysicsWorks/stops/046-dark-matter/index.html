@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
@@ -64,6 +65,10 @@
       <span class="stop-header__scientist">Vera Rubin</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">Can the stars and gas of NGC 3198 explain its flat rotation curve, and what does a dark halo fit actually pin down?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>
       In 1933 Fritz Zwicky measured how fast the galaxies of the Coma cluster move and found them far too fast to be held together by the mass their light suggested<sup><a href="#src-1">[1]</a></sup>. Nearly forty years later the same problem turned up inside single galaxies. Vera Rubin and Kent Ford measured the rotation of the Andromeda galaxy from its glowing gas clouds<sup><a href="#src-2">[2]</a></sup>; Albert Bosma followed the neutral hydrogen of spiral galaxies with radio telescopes, far beyond the edge of their starlight<sup><a href="#src-3">[3]</a></sup>; and Rubin, Ford and Norbert Thonnard measured 21 spirals<sup><a href="#src-4">[4]</a></sup>. In galaxy after galaxy the rotation speed stays high, the curve flat, far out where the stars and gas thin out. If gravity is Newton's, a flat curve needs mass that we do not see.
@@ -128,6 +133,15 @@
       <span id="sim-status">Visible matter only, Υ★ = 0.50: beyond 2.2 kpc the model is below every observed point, by more than its error bar (rms 54 km/s). Add a halo.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the halo at <strong>None</strong>, press <strong>Play</strong>: the filled dots, moving at the model’s speed, fall behind the hollow circles moving at the observed speed. Drag <strong>Stellar M/L Υ★</strong> from 0.50 to 1.20: the status moves from “beyond 2.2 kpc” to “beyond 10.0 kpc the model is below every observed point”.</li>
+      <li>At Υ★ = 0.50 press <strong>Fit a pseudo-isothermal halo</strong>: v∞ = 143.8 km/s, r_c = 2.98 kpc, χ²/ν = 1.67, rms 4.9 km/s, and the readout puts 1.9 × 10¹¹ M☉ of halo inside 44 kpc.</li>
+      <li>Set Υ★ to 0.35, press <strong>Fit the halo</strong>, then repeat at 0.65: the fits give r_c = 2.00 kpc (χ²/ν = 2.59) and r_c = 4.54 kpc (χ²/ν = 1.69). A heavier disk is traded for a larger core.</li>
+      <li>Press <strong>NFW</strong>, then <strong>Fit the halo</strong> at Υ★ = 0.50: χ²/ν = 2.57 and rms 8.1 km/s, a worse fit than the cored halo’s 1.67.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>What a Rotation Curve Tells You</h3>
     <p>A star or gas cloud on a circular orbit at radius $r$ moves at the speed $v$ for which gravity supplies exactly the needed inward pull. For a spherical distribution of mass this gives</p>
@@ -156,10 +170,12 @@
     <p style="overflow-x:auto;position:relative;">$$\chi^2 = \sum_{i=1}^{43}\left(\frac{v_{\text{model}}(r_i) - v_i}{\sigma_i}\right)^2$$</p>
     <p>with $\nu = N - k$ and $k$ the number of halo parameters adjusted (2, or 0 with no halo). Press the fit button: it finds the two halo parameters that minimise $\chi^2$ for the stars and bulge you have set. At the default $\Upsilon_\star = 0.5$ the simulation's best pseudo-isothermal halo has $v_\infty = 143.8$ km/s and $r_c = 2.98$ kpc, with $\chi^2/\nu = 1.67$ and an rms difference of 4.9 km/s; its best NFW halo has $V_{200} = 114$ km/s and $c = 8.7$, with $\chi^2/\nu = 2.57$ and 8.1 km/s rms. Inside the last point at 44 kpc the fitted halo holds about $1.9 \times 10^{11}$ solar masses, roughly six times the stars and gas together. These are fits of this page's model, not values from the literature.</p>
 
-    <h3>What the Curve Cannot Tell You</h3>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Curve Cannot Tell You</h3>
     <p>The rotation curve demands extra mass, at the latest from 10 kpc outward. It does not say how that mass is split between the disk and the halo, or what shape the halo has in the middle. Change $\Upsilon_\star$ and press "Fit the halo" again: with the pseudo-isothermal halo, $\Upsilon_\star = 0.35$, 0.5 and 0.65 give $\chi^2/\nu$ of 2.6, 1.7 and 1.7, each with a different core radius (2.0, 3.0 and 4.5 kpc). A heavier disk is traded for a halo with a larger core. Van Albada and collaborators pointed out exactly this for NGC 3198 in 1985<sup><a href="#src-5">[5]</a></sup>. Whether real halos have cores, as the pseudo-isothermal shape assumes, or the steep central cusps of the NFW shape is still argued over, galaxy by galaxy<sup><a href="#src-11">[11]</a></sup><sup><a href="#src-12">[12]</a></sup>.</p>
     <p>The model also has limits of its own. The exponential disk is a smooth stand-in for the measured light. "Compare SPARC's disk from the light" draws SPARC's own disk curve, computed from the observed light profile<sup><a href="#src-7">[7]</a></sup>: inside about 5 kpc the two differ by up to about 25 km/s, because the galaxy is not a perfect exponential, and that is where the fits here are worst. Rotation curves like this one can also be fitted with no dark matter at all, by changing Newton's law at very small accelerations (MOND)<sup><a href="#src-13">[13]</a></sup>; Begeman, Broeils and Sanders did this for NGC 3198 among other galaxies<sup><a href="#src-16">[16]</a></sup>. That is why the other evidence matters.</p>
 
+    </section>
     <h3>The Other Evidence</h3>
     <p>Two independent lines of evidence point the same way. Gravitational lensing of the colliding galaxy cluster 1E 0657−558, the Bullet Cluster, shows the mass concentrated where the galaxies are, offset at 8σ from the hot gas that holds most of the ordinary matter<sup><a href="#src-14">[14]</a></sup>. The pattern of peaks in the cosmic microwave background measures the density of ordinary matter and of matter that does not interact with light separately: Planck finds $\Omega_c h^2 = 0.120 \pm 0.001$ for dark matter and $\Omega_b h^2 = 0.0224 \pm 0.0001$ for ordinary (baryonic) matter<sup><a href="#src-15">[15]</a></sup>. From these two cited numbers, about 84 % of the matter in the universe is not made of atoms. What that matter is remains unknown.</p>
   </div>
@@ -173,9 +189,9 @@
     <p style="overflow-x:auto;position:relative;">$$v(r)^2 = \frac{G\,M(&lt;r)}{r}$$</p>
     <p style="color:var(--color-text-secondary);font-size:var(--text-sm);">A flat curve, $v$ constant, needs $M(&lt;r) \propto r$.</p>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li id="src-1">F. Zwicky, "Die Rotverschiebung von extragalaktischen Nebeln", <em>Helvetica Physica Acta</em> 6, 110–127 (1933). For the history of this and the later evidence: G. Bertone and D. Hooper, "History of dark matter", <em>Reviews of Modern Physics</em> 90, 045002 (2018).</li>
       <li id="src-2">V. C. Rubin and W. K. Ford, Jr., "Rotation of the Andromeda Nebula from a Spectroscopic Survey of Emission Regions", <em>The Astrophysical Journal</em> 159, 379 (1970).</li>
       <li id="src-3">A. Bosma, <em>The distribution and kinematics of neutral hydrogen in spiral galaxies of various morphological types</em>, PhD thesis, University of Groningen (1978).</li>
