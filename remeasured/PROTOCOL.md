@@ -19,3 +19,6 @@ Rules for every run
    DE441); Mercury -> per-transit agreement with Horizons, then the leftover drift vs GR's 42.98"/cy; finale -> GW150914
    calibration vs Isi 2021 (97%/95%), then GW250114 vs LVK 2025.
 7. Public text: no "first"/"never before"; AI-WRITING-RULES pass; Fable claims review before anything public.
+
+Deviations
+- 2026-10-14, episode 1 (blind-fit): the brief named the model families (circle with equant, Kepler ellipse) and quoted Kepler's 8′, against rule 1. The run is a blind measurement under prescribed models, not a blind discovery, and is labelled so in blind-fit/REPORT.md. A model-agnostic re-run is in ep1-kepler-tycho/agnostic-fit/ (in progress).
