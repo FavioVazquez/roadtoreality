@@ -129,13 +129,113 @@ Table: results/task2_isi2019_check.csv; posteriors in results/ringdown/. M_f is 
 
 **Compute.** One ws job; 401 s wall; about 3,350 CPU-s (0.93 core-hours) for the 4 fits; plus about 1 GB of GWOSC download on ws. ws was in use 05:21–05:30 UTC, and the owner was told it could be stopped at about 05:31. The local 16 kHz download (992 MB) ran before the box was started.
 
-## Open issues (updated in S2)
+## S5 — Task 3: like-with-like against Isi & Farr's 2023 comment (PRE-REGISTERED 2026-10-14 06:15 UTC, before any fit)
+**Sources.** The repository github.com/maxisi/gw150914_rd_comment (commit a4e8e4bc10e37f7126946e1910b7b5306d1bb672; arXiv:2310.13869) is a showyourwork paper build and contains no fit code or configs. The fit configs and posterior summaries are in its Zenodo record 10.5281/zenodo.7597043. We downloaded figure2.tar.gz (95.5 MB, md5 3b5f3d920d8f4d7fc7783ce288f96f86 = Zenodo's value) to ../data/external/zenodo_7597043/; figure1.tar.gz (4.48 GB) was not downloaded. Their README says the runs used `ringdown` at git 49f2dc4ef5093128961d52c95ca1196167ad840e (Dec 2022, PyMC sampler); we read that source to translate the settings.
+
+**Their configuration** (figure2/gw150914/config-ds8.ini; config-ds1.ini is the same without ds = 8 and digital_filter): GWOSC GWTC-1 files {H,L}-*_GWOSC_16KHZ_R1-1126257415-4096 (sha256 in ../data/gwosc/CHECKSUMS_16k_R1.tsv); high-pass 20 Hz; ds = 8 with scipy decimate (digital_filter = False); no slicing, so the full 4096 s file is conditioned (then 25% trimmed per edge, as in both versions); ACF method `td` (direct autocorrelation of the conditioned data); model mchi_aligned, modes 220+221; A_scale = 5e-21 fixed with flat_A = 1 (Gaussian quadratures re-weighted to a flat amplitude prior); M 35–140 M_sun; cosi ~ U(−1, −0.99); chi 0–0.99; ra/dec/psi 1.95/−1.27/0.82; duration 0.2 s; t0 = 1126259462.4083147 + t0M·69 M_sun·G/c³, scanned t0M = −6…10 in 0.2 steps.
+
+**Their own numbers (the reproduction target), from figure2/gw150914/summary_samples.hdf5 at t0M = 0** (2,000 samples each; M detector frame, 16/50/84%):
+- ds8 (2048 Hz): M = 72.3 [64.9, 79.0] M_sun, chi = 0.72 [0.56, 0.82].
+- ds1 (16384 Hz): M = 68.6 [61.3, 76.7] M_sun, chi = 0.67 [0.48, 0.79].
+- Our P run at matched sampling (16 kHz input, ds 8; S4): 78.5 [70.1, 86.7]. So the like-for-like gap at 2048 Hz is 6.2 M_sun, and 9.9 M_sun against their 16384 Hz run (the ~10 M_sun quoted in the task brief is the gap to Isi+2019's 68 ± 7 and to this ds1 run).
+
+**Translation to ringdown 1.1.0** (a renaming, not ported code; the two `condition()` implementations are line-for-line the same apart from flow → f_min and the digital_filter default, False in 49f2dc4e vs True in 1.1.0; the `td` ACF code is identical; the old flat_A prior, 0.5·Σq² − Σ log A for the aligned model, equals 1.1.0's flat_amplitude_prior with marginalized = False and 2 quadratures, which also applies no upper cutoff in the likelihood run): condition_data(ds = 8, f_min = 20, digital_filter = False), no slice; compute_acfs(method = "td"); update_model(m_min = 35, m_max = 140, a_scale_max = 5e-21, marginalized = False, flat_amplitude_prior = True, cosi_max = −0.99). Sampler: ours (NumPyro NUTS, 4 chains × (1000 warm-up + 2000), seed 1234); theirs was PyMC NUTS. Runner: scripts/ringdown_fit.py with three new optional keys (slice null, condition_kws, acf_kws) whose defaults reproduce earlier runs; the earlier version is kept as scripts/archive/ringdown_fit_sha256_a27aab14c87d.py.
+
+**Task 3(a) — does their config run unchanged under 1.1.0?** scripts/test_their_ini_rd110.py loads config-ds8.ini with `Fit.from_config` verbatim, then with [target] t0 added (their pipe supplies t0), builds the model, and records every error/warning. Expectation from reading the source (to be confirmed on ws): 1.1.0 matches model keys case-insensitively but has no `a_scale` or `flat_a` setting (they became `a_scale_max` and `flat_amplitude_prior`, and `marginalized = True` is now the default), so it logs "unknown model argument" for both; the required a_scale_max is then missing when the model is built; `flow` is accepted with a deprecation warning.
+
+**Run order (configs in configs/task3/; each step changes exactly one setting from the previous one).**
+Chain A, theirs → ours:
+1. A0_theirs_ds8: their config-ds8 as published (reproduction check).
+2. A0_theirs_ds1: their config-ds1 (16384 Hz) as published (reproduction check).
+3. A1a_acf_fd: ACF method td → fd (Welch, 1.1.0 default nperseg) on the same full segment.
+4. A1b_acf_slice128: data conditioned/used for the ACF: full 4096 s → ±128 s (A1a + A1b = our ACF/PSD estimate).
+5. A2_amp_marg: amplitude prior: fixed A_scale + flat-A → marginalised quadratures with per-mode a_scale ~ U(0, 5e-21) (ours).
+6. A3_pol_generic: polarization/inclination: aligned, cosi ~ U(−1, −0.99) → generic 4-quadrature model (ours).
+7. A4a_digfilt: decimation: scipy decimate → FFT cut (digital_filter True, ours).
+8. A4b_mmax150: m_max 140 → 150.
+9. A4c_dataV1: data: GWTC-1 R1 16 kHz → O1 LOSC_16_V1 16 kHz. This config is identical to our S4 "P, 16 kHz" run (closure check: same seed, should reproduce 78.5).
+Chain B, single changes on our P 16 kHz base (to check that the attribution does not depend on the order of chain A):
+10. B1_acf_theirs: their ACF estimate only (td, full file).
+11. B2_amp_theirs: their amplitude prior only.
+12. B3_pol_theirs: their polarization model only.
+13. B4_digfilt_off: their decimation filter only.
+
+**Decision rules (fixed now).**
+- Reproduction (a): A0 reproduces their run if its M median is within 1.5 M_sun of theirs (≈ 0.2σ; covers PyMC vs NumPyro and 2,000-sample noise) and its 16/84% bounds are within 2 M_sun. Otherwise we say it does not reproduce and stop attributing.
+- Attribution (b): the step changes telescope to the total A0 → A4c shift by construction. A setting "explains" the gap if its chain-A step moves the median by ≥ 3 M_sun (half the 6.2 M_sun gap; MC noise on a median is ≈ 0.3 M_sun) and its chain-B single change moves our run by ≥ 3 M_sun in the opposite direction. If no step passes, we say the gap is spread over several settings or unexplained.
+- Every run is reported, whatever it shows. No setting is chosen afterwards for matching a published value.
+
+**Compute plan.** One ws job: data fetch + sha256 check, the parse test (seconds), then 13 fits with at most 3 at once (the ds1 run, n = 3,277 samples per detector, takes one slot throughout). Estimate 25–45 min wall.
+
+### S5 results (ws job 52094c2c, 06:48:23–07:16:35 UTC; all 13 fits exit 0)
+Table: results/task3_isifarr_ladder.csv (scripts/task3_compare.py); figure: figures/task3_ladder.png (scripts/task3_figure.py); logs: logs/ws_job_52094c2c/; posteriors: results/ringdown/T3_*. M_f is detector frame in M_sun, median [16%, 84%]. "Δ" is the change in median from the previous chain-A step, or, for chain B, from our base (A4c).
+
+**Deviations from the pre-registered plan (compute only, no change to any fit setting).** The box was shared with the owner's bilby run, so at the owner's request at most 2 fits ran at once (not 3), with XLA_FLAGS=--xla_cpu_multi_thread_eigen=false and OMP/OPENBLAS/MKL threads = 4. The suggested `intra_op_parallelism_threads=4` was not used because it is not an XLA flag. B1 is invalid (see below).
+
+**(a) Their config under ringdown 1.1.0 unchanged** (logs/ws_job_52094c2c/T3_parse_test.log): `Fit.from_config(config-ds8.ini)` logs "unknown model argument" for `name`, `a_scale` and `flat_a`, then stops with `TypeError: Data.condition() got an unexpected keyword argument 'flow'` (fit.py line 577 → condition_data → Data.condition). The same happens with [target] t0 added. My pre-registered expectation that `flow` would only give a deprecation warning was wrong: that deprecation path exists only in `PowerSpectrum.from_data`. Even with `flow` renamed, the amplitude settings would be silently dropped and 1.1.0's default (marginalised) prior used. The `ringdown_pipe` entry point exists (--help works). So the published files do not run as is. The hand translation (S5 above) does run, and it reproduces their numbers:
+
+| run | M_f median [16%, 84%] | chi_f median | Δ median | R-hat / ESS(M) |
+|---|---|---|---|---|
+| Isi & Farr 2023 published, 2048 Hz (cited) | 72.3 [64.9, 79.0] | 0.72 | — | — |
+| **A0** their config, 2048 Hz (our rerun) | 72.0 [64.8, 78.8] | 0.72 | −0.3 vs published | 1.00 / 3297 |
+| Isi & Farr 2023 published, 16384 Hz (cited) | 68.6 [61.3, 76.7] | 0.67 | — | — |
+| **A0** their config, 16384 Hz (our rerun) | 68.5 [60.8, 76.5] | 0.67 | −0.2 vs published | 1.00 / 1539 |
+| A1a + ACF method td → Welch | 71.8 [64.7, 78.6] | 0.71 | −0.2 | 1.00 / 3972 |
+| A1b + ACF/conditioning data: full file → ±128 s | 72.5 [65.7, 79.2] | 0.73 | +0.7 | 1.00 / 3760 |
+| A2 + amplitude prior → marginalised (ours) | 73.3 [66.5, 80.1] | 0.74 | +0.9 | 1.00 / 7216 |
+| A3 + polarization → generic (ours) | 75.3 [67.9, 82.6] | 0.76 | +1.9 | 1.00 / 4579 |
+| A4a + decimation: scipy decimate → FFT cut (ours) | 78.5 [70.3, 86.8] | 0.79 | **+3.2** | 1.00 / 3579 |
+| A4b + m_max 140 → 150 | 78.5 [70.3, 86.9] | 0.79 | +0.0 | 1.00 / 3462 |
+| A4c + data R1 → V1 (= our run) | 78.5 [70.3, 86.9] | 0.79 | +0.0 | 1.00 / 3462 |
+| B1 ours + their ACF only | invalid | — | — | R-hat NaN / ESS 4 |
+| B2 ours + their amplitude prior only | 76.2 [67.9, 84.7] | 0.77 | −2.3 | 1.00 / 1651 |
+| B3 ours + their polarization only | 74.7 [66.8, 83.0] | 0.75 | **−3.7** | 1.00 / 3508 |
+| B4 ours + their decimation filter only | 75.3 [67.9, 82.4] | 0.76 | **−3.2** | 1.00 / 5347 |
+
+- **Reproduction passes the pre-registered test.** Medians agree within 0.3 M_sun (rule: 1.5 M_sun) and the 16/84% bounds within 0.5 M_sun (rule: 2 M_sun), at both sampling rates.
+- **Closure passes.** A4c gives 78.46 [70.32, 86.90], against S4's 78.49 [70.12, 86.68] for the same config. The runs are not bit-identical (different thread settings), but the difference is within Monte Carlo noise.
+- **A4b → A4c is exactly zero, and that is expected.** The GWTC-1 R1 and O1 LOSC_16_V1 16 kHz files are bit-identical wherever both exist, for H1 and L1 (checked over the full overlap, GPS 1126257415–1126260736). The release choice therefore does not matter.
+- **B1 is invalid, a defect in our design.** The L1 LOSC_16_V1 file is NaN for its first 189 s (GPS 1126256640–1126256829; 3,096,576 samples). The R1 file starts after that gap. Conditioning the full V1 file spreads the NaN through the filter, and the fit returned garbage (scipy warned about NaN input; R-hat NaN; ESS 4). We show it greyed out and do not use it. A valid B1 is the same change on the R1 file, which is bit-identical within ±128 s: one fit of about 1 min, not yet run.
+
+**(b) Attribution.**
+- Going from their settings to ours (2048 Hz) moves the median by +6.5 M_sun: 72.0 → 78.5.
+- **The decimation filter is the only setting that meets the pre-registered rule** (≥ 3 M_sun in chain A and ≥ 3 M_sun the other way in chain B): +3.2 in chain A, −3.2 in chain B.
+  - Their 2022 ringdown (49f2dc4e) downsamples with `scipy.signal.decimate`, an order-8 Chebyshev anti-alias filter run zero-phase. This is the default there (digital_filter = False).
+  - ringdown 1.1.0 changed the default to digital_filter = True: zero all frequencies above the new Nyquist (1024 Hz), then keep every 8th sample.
+  - All our earlier GW150914 and GW250114 fits used the 1.1.0 default.
+- **The polarization model comes second.**
+  - Aligned (cos ι in [−1, −0.99]) vs generic moves the median by +1.9 in chain A and −3.7 in chain B.
+  - That fails the chain-A threshold, so by the pre-registered rule it does not "explain" the gap alone. It is still a contribution of about 2–4 M_sun.
+- **Amplitude prior:** +0.9 in chain A and −2.3 in chain B.
+- **ACF estimate (method plus data length):** +0.5 net in chain A; chain B is invalid.
+- **m_max and data release:** 0.0 each.
+- **The effects do not add up.** The three valid single changes in chain B sum to −9.2 M_sun, against a total of 6.5. The settings interact, so the chain-A split depends on the order of steps. Only the decimation filter is large in both chains.
+- **About 3.5 M_sun more comes from the analysis sampling rate, which this task did not split up.** The ~10 M_sun gap in the brief is measured against their 16384 Hz run (68.6) and Isi+2019 (68 ± 7). Within their settings, analysing at 16384 Hz without decimation instead of at 2048 Hz moves the median from 72.0 to 68.5; their own published pair shows the same 3.7 M_sun. S4's "16 kHz" test changed only the *input* rate; it still decimated to 2048 Hz with the FFT cut. Our settings at 16384 Hz with no decimation were not run.
+- **Conclusion.** At 2048 Hz the like-for-like gap (6.5 M_sun, about 0.8σ) is explained by settings, not by the data or a bug. The decimation filter is about half of it and the polarization model about a third, with the amplitude prior and ACF making up the rest. The remaining ~3.5 M_sun to the 16384 Hz result is the analysis rate (with decimation) in their own setup. **This test does not say which setting is right.**
+  - The 3 M_sun response to the filter is surprising, because the two filters differ mainly above about 800 Hz (the scipy filter cuts at 0.8 × 1024 Hz), while the 220/221 frequencies are below about 400 Hz. We do not understand why yet.
+  - The way to decide is an injection with a known remnant, analysed with both filters and at both rates (project rule 3). That has not been done.
+
+**Implication for Part B (GW250114).** All our GW250114 220-only fits also used the FFT-cut decimation (4 kHz input, ds = 2). Whether the published GW250114 analysis (arXiv:2509.08054) used scipy decimation is not known here, and it could bear on the ~4 M_sun gap of S2.1. That test, one fit at 10.5 M_f with digital_filter = False, has not been run.
+
+**Compute.** One ws job, shared box, 28.2 min wall:
+- 06:48–06:54 UTC: re-download and verify the R1 16 kHz files on ws.
+- 06:54–07:16 UTC: fits.
+- CPU: 8,836 CPU-s (2.45 core-hours) for the 13 fits. The 16384 Hz fit alone took 22.5 min wall, 4,729 CPU-s and 9.8 GB peak RSS; each 2048 Hz fit took 0.8–1.7 min.
+- The owner was told at about 07:17 UTC that the job had finished. The owner stops the box.
+- Locally: the R1 16 kHz download (1.0 GB, 10.3 min), source reading, and the table and figure (seconds).
+
+## Open issues (updated in S5)
 1. [S2: investigated] The 220-only remnant at 10.5–13 M_f moves by up to ~1 sigma with conditioning choices (high-pass, PSD, low-frequency treatment). No single change reproduces the published scan at every start time. Next: obtain the published 'ringdown' configuration (conditioning, ACF, priors) to compare like with like, or adopt a pre-declared protocol and carry the conditioning spread as a systematic.
-2. [S4: checked] GW150914 calibration: the 220-only fit is consistent with GWTC-2.1. Reproducing Isi et al. 2019 with 220+221 at the peak still fails at about the 1σ level, and neither 16 kHz input nor a 0.05 s window changes that (S4). Next, one change at a time: ACF from a PSD (PE or BayesWave), the amplitude prior, the polarization model; also compare with the public code of Isi & Farr's 2023 comment (github.com/maxisi/gw150914_rd_comment), cited in arXiv:2310.13869.
+2. [S5: largely explained] GW150914 calibration. Isi & Farr's 2023 settings, translated to ringdown 1.1.0, reproduce their published 220+221 posteriors to within 0.3 M_sun at 2048 Hz and 16384 Hz. At 2048 Hz the 6.5 M_sun gap to our run comes from settings: mainly the decimation filter (≈ 3 M_sun; scipy decimate vs FFT cut), then the polarization model (≈ 2–4 M_sun), with smaller contributions from the amplitude prior and ACF. Analysing at 16384 Hz instead of 2048 Hz lowers the mass by a further ≈ 3.5 M_sun in their settings. Still open:
+   - which choice is right, to be settled by an injection with a known answer (rule 3);
+   - why a filter acting above ~800 Hz moves M_f by 3 M_sun;
+   - the valid B1 rerun on the R1 file (about 1 min);
+   - our settings at 16384 Hz without decimation.
 3. The area-law test needs the inspiral-only A_i (other lane). The combination script is ready and tested.
 4. The 220-only remnant mass drops by 9.3 M_sun between 13 and 15 M_f (11.8 M_sun between 12 and 15 M_f) in the baseline scan, and by 6.1 M_sun between 13 and 15 M_f without the high-pass. Start-time choice dominates; any area statement must report the full scan and both conditioning variants.
 5. Not supported by the package: calibration marginalisation (bound given in S2.1).
 6. Two ws submits failed on script bugs on my side (exit 127: an env-var prefix inside /usr/bin/time; exit 2: a text-substitution placeholder that also matched inside "GW250114"). No fits ran in either; both were resubmitted. Records are in logs/ws_job_*_FAILED/.
+7. [S5] GW250114 220-only fits all used FFT-cut decimation, the 1.1.0 default. Testing digital_filter = False at 10.5 M_f is a single fit, not yet run.
 
 ## Time and compute used
 - **Day 1, Part A:** 02:35–02:58 UTC (about 25 min wall, including the figure at about 03:17). About 12 min of that was the Zenodo download (262 MB, 6 files). Analysis compute was 2.2 s on the local Intel Mac (6 cores), plus a few seconds for the figure.
@@ -150,6 +250,8 @@ Table: results/task2_isi2019_check.csv; posteriors in results/ringdown/. M_f is 
 
 
 - **Session 2 (follow-up):** 03:36–04:20 UTC wall (about 45 min, mostly local analysis and writing). ws was in use from about 03:40 to 04:17 UTC (about 37 min; the owner was told it could be shut down at 04:17). ws jobs: e7f0ae82, 6 fits, 715 s wall; 0200c18a, 3 fits, 94 s; fa544ba8, 6 fits, 179 s; plus 2 failed submits (seconds each, no fits). That is 15 fits and **8.1 core-hours** of CPU (per-fit table: logs/compute_accounting_raw_followup.txt). Job e7f0ae82 ran 6 fits at once on 32 vCPU, about 4x oversubscribed: each GW250114 fit took about 11 min and about 3,000 CPU-s, against about 1.4 min and 750 CPU-s when running ≤3 at a time. About 6 core-hours were wasted to contention; in future, run at most 3 fits at once. Estimated cost of session 2 on ws: under $1.5 (on-demand estimate, not a bill). Local: GWTC-2.1 download (134 MB, about 8 min with two resumed connections); all comparison, combination and plotting scripts take under 1 min of CPU in total.
+
+- **Session 5 (Task 3):** from the Task 3 brief (after 05:31 UTC) to 07:21 UTC, mostly local work (source reading, configs, pre-registration, analysis). The R1 16 kHz download took 10.3 min locally. ws job 52094c2c ran 06:48:23–07:16:35 UTC (28.2 min) on the shared box, with at most 2 fits at once and threads capped: 13 fits, 8,836 CPU-s (2.45 core-hours). A rough cost share is under $1 (on-demand estimate, not a bill). The owner stops the box.
 
 ## File checksums of outputs
 See CHECKSUMS_outputs.tsv (sha256 of every file in out/ at the time of writing).

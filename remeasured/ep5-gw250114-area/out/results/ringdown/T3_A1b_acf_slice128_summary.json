@@ -1,0 +1,105 @@
+{
+ "label": "T3_A1b_acf_slice128",
+ "config": {
+  "duration": 0.2,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "t0_geocenter": 1126259462.4083147,
+  "ra": 1.95,
+  "dec": -1.27,
+  "psi": 0.82,
+  "modes": [
+   [
+    1,
+    -2,
+    2,
+    2,
+    0
+   ],
+   [
+    1,
+    -2,
+    2,
+    2,
+    1
+   ]
+  ],
+  "H1": "H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5",
+  "L1": "L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5",
+  "ds": 8,
+  "f_min": 20.0,
+  "slice": 128.0,
+  "condition_kws": {
+   "digital_filter": false
+  },
+  "acf_kws": {},
+  "m_min": 35.0,
+  "m_max": 140.0,
+  "a_scale_max": 5e-21,
+  "model_kws": {
+   "marginalized": false,
+   "flat_amplitude_prior": true,
+   "cosi_max": -0.99
+  },
+  "variation": "A1a + data for conditioning/ACF: full 4096 s file -> +-128 s around t0 (our ACF estimate)",
+  "provenance": "cited: t0 1126259462.4083147, ra/dec/psi 1.95/-1.27/0.82, 220+221 and all 'theirs' settings from Isi & Farr 2023 comment (arXiv:2310.13869) config-ds8.ini / config-ds1.ini in Zenodo 10.5281/zenodo.7597043 figure2.tar.gz (md5 3b5f3d920d8f4d7fc7783ce288f96f86), translated to ringdown 1.1.0 names (old ringdown 49f2dc4e keys are case-insensitive: M_min/M_max, A_scale, flat_A, cosi_max; model mchi_aligned); sampler settings (NumPyro NUTS 4x(1000+2000), seed 1234) are ours, theirs used PyMC"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5",
+   "sha256": "85898801039db110fb8ccb1ec5862076a4cbe59710b1d08540c2f49be4285c1e"
+  },
+  "L1": {
+   "file": "L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5",
+   "sha256": "480a4773a487ab70bf0b5ff5c5b11e66401c5c30c9ef10c81afe1075eca76405"
+  }
+ },
+ "acf_source": "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ],
+  [
+   1,
+   -2,
+   2,
+   2,
+   1
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  60.62723525379955,
+  72.47244983821052,
+  83.37715089120248
+ ],
+ "chi_q05_q50_q95": [
+  0.4281052875885111,
+  0.7301946691025116,
+  0.8649323413703661
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 3760.0,
+ "ess_bulk_chi": 3181.0,
+ "start_times": {
+  "H1": 1126259462.423,
+  "L1": 1126259462.4160156
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 52.388280391693115,
+ "script_sha256": "c32394118f08d1ecc981a980e881bbf1128e9dc2df74f1525900e05f310e7a82"
+}

@@ -1,0 +1,26 @@
+1791960848 start T3_A0_theirs_ds1
+1791960848 start T3_A0_theirs_ds8
+1791960899 end T3_A0_theirs_ds8 rc=0
+1791960899 start T3_A1a_acf_fd
+1791960945 end T3_A1a_acf_fd rc=0
+1791960945 start T3_A1b_acf_slice128
+1791961000 end T3_A1b_acf_slice128 rc=0
+1791961000 start T3_A2_amp_marg
+1791961096 end T3_A2_amp_marg rc=0
+1791961096 start T3_A3_pol_generic
+1791961190 end T3_A3_pol_generic rc=0
+1791961190 start T3_A4a_digfilt
+1791961285 end T3_A4a_digfilt rc=0
+1791961285 start T3_A4b_mmax150
+1791961380 end T3_A4b_mmax150 rc=0
+1791961380 start T3_A4c_dataV1
+1791961472 end T3_A4c_dataV1 rc=0
+1791961472 start T3_B1_acf_theirs
+1791961532 end T3_B1_acf_theirs rc=0
+1791961532 start T3_B2_amp_theirs
+1791961581 end T3_B2_amp_theirs rc=0
+1791961581 start T3_B3_pol_theirs
+1791961680 end T3_B3_pol_theirs rc=0
+1791961680 start T3_B4_digfilt_off
+1791961768 end T3_B4_digfilt_off rc=0
+1791962195 end T3_A0_theirs_ds1 rc=0

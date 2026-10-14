@@ -1,0 +1,115 @@
++ set -o pipefail
++ date -u +%s
++ D=/home/dev/remeasured/ep5/data
++ for ck in gwosc_CHECKSUMS_16k.tsv gwosc_CHECKSUMS_16k_R1.tsv
++ tail -n +3 gwosc_CHECKSUMS_16k.tsv
++ grep GW150914
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5 ']'
++ echo '9dc0e536cefe9e1fb6f85d35a8eeec91eb34800204a45048770972a74ad6e4fc  /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_LOSC_16_V1-1126256640-4096.hdf5 ./H-H1_LOSC_16_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5 ']'
++ echo '0ed720c98ba376c42275474d6c61a4c9d857047c46cb2bf4eb432eee5c374991  /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_LOSC_16_V1-1126256640-4096.hdf5 ./L-L1_LOSC_16_V1-1126256640-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ for ck in gwosc_CHECKSUMS_16k.tsv gwosc_CHECKSUMS_16k_R1.tsv
++ tail -n +3 gwosc_CHECKSUMS_16k_R1.tsv
++ grep GW150914
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 ']'
++ curl -sS -L --retry 5 -o /home/dev/remeasured/ep5/data/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 https://gwosc.org/eventapi/json/GWTC-1-confident/GW150914/v3/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5
++ echo '85898801039db110fb8ccb1ec5862076a4cbe59710b1d08540c2f49be4285c1e  /home/dev/remeasured/ep5/data/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 ./H-H1_GWOSC_16KHZ_R1-1126257415-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ '[' -f /home/dev/remeasured/ep5/data/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 ']'
++ curl -sS -L --retry 5 -o /home/dev/remeasured/ep5/data/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 https://gwosc.org/eventapi/json/GWTC-1-confident/GW150914/v3/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5
++ echo '480a4773a487ab70bf0b5ff5c5b11e66401c5c30c9ef10c81afe1075eca76405  /home/dev/remeasured/ep5/data/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5'
++ sha256sum -c -
+/home/dev/remeasured/ep5/data/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5: OK
++ ln -sf /home/dev/remeasured/ep5/data/L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5 ./L-L1_GWOSC_16KHZ_R1-1126257415-4096.hdf5
++ IFS='	'
++ read ev ifo fn nbytes md5 sha url
++ source /home/dev/remeasured/venv-ringdown/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ VIRTUAL_ENV=/home/dev/remeasured/venv-ringdown
+++ _OLD_VIRTUAL_PATH=/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ PATH=/home/dev/remeasured/venv-ringdown/bin:/home/dev/.local/bin:/home/dev/.local/bin:/home/dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv-ringdown) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(venv-ringdown) '
+++ export VIRTUAL_ENV_PROMPT
+++ hash -r
++ export XLA_FLAGS=--xla_cpu_multi_thread_eigen=false
++ XLA_FLAGS=--xla_cpu_multi_thread_eigen=false
++ export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4 NUMEXPR_NUM_THREADS=4
++ OMP_NUM_THREADS=4
++ OPENBLAS_NUM_THREADS=4
++ MKL_NUM_THREADS=4
++ NUMEXPR_NUM_THREADS=4
++ python -c 'import numpyro; numpyro.set_host_device_count(8); import jax, os; print('\''xla preflight ok'\'', jax.devices()[:2], os.environ['\''XLA_FLAGS'\''])'
+xla preflight ok [CpuDevice(id=0), CpuDevice(id=1)] --xla_force_host_platform_device_count=8 --xla_cpu_multi_thread_eigen=false
++ date -u
++ nproc
++ uptime
++ free -g
++ python test_their_ini_rd110.py config-ds8.ini
++ echo 'parse test exit 0'
++ printf '%s\n' T3_A0_theirs_ds1 T3_A0_theirs_ds8 T3_A1a_acf_fd T3_A1b_acf_slice128 T3_A2_amp_marg T3_A3_pol_generic T3_A4a_digfilt T3_A4b_mmax150 T3_A4c_dataV1 T3_B1_acf_theirs T3_B2_amp_theirs T3_B3_pol_theirs T3_B4_digfilt_off
++ xargs -P 2 '-I{}' sh -c 'date -u +"%s start {}" >> fit_times.txt; /usr/bin/time -v python ringdown_fit.py {} cfg_{}.json > {}.log 2>&1; rc=$?; echo "$(date -u +%s) end {} rc=$rc" >> fit_times.txt'
++ date -u +%s
++ date -u
++ uptime
++ free -g
++ cut -c1-240
++ grep -h '^DONE' T3_A0_theirs_ds1.log T3_A0_theirs_ds8.log T3_A1a_acf_fd.log T3_A1b_acf_slice128.log T3_A2_amp_marg.log T3_A3_pol_generic.log T3_A4a_digfilt.log T3_A4b_mmax150.log T3_A4c_dataV1.log T3_B1_acf_theirs.log T3_B2_amp_theirs.log T3_B3_pol_theirs.log T3_B4_digfilt_off.log T3_parse_test.log
+DONE T3_A0_theirs_ds1 {"m_det_Msun_q05_q50_q95": [55.98611311074853, 68.47759453872632, 81.88956561417018], "chi_q05_q50_q95": [0.2780431905186178, 0.6675314538931477, 0.8478060295338687], "rhat_m": 1.0, "ess_bulk_m": 1539.0, "wall_s": 1344
+DONE T3_A0_theirs_ds8 {"m_det_Msun_q05_q50_q95": [60.09315165627605, 72.00375758443579, 83.26431933482266], "chi_q05_q50_q95": [0.39903662962942155, 0.7168515683720932, 0.8597365208810765], "rhat_m": 1.0, "ess_bulk_m": 3297.0, "wall_s": 48.
+DONE T3_A1a_acf_fd {"m_det_Msun_q05_q50_q95": [59.95799571301197, 71.7948886209719, 83.03568481953285], "chi_q05_q50_q95": [0.3941997064194673, 0.7127989067145555, 0.8596102872905409], "rhat_m": 1.0, "ess_bulk_m": 3972.0, "wall_s": 43.40811
+DONE T3_A1b_acf_slice128 {"m_det_Msun_q05_q50_q95": [60.62723525379955, 72.47244983821052, 83.37715089120248], "chi_q05_q50_q95": [0.4281052875885111, 0.7301946691025116, 0.8649323413703661], "rhat_m": 1.0, "ess_bulk_m": 3760.0, "wall_s": 5
+DONE T3_A2_amp_marg {"m_det_Msun_q05_q50_q95": [62.043316305431134, 73.33538407113863, 84.27719538619027], "chi_q05_q50_q95": [0.4707467440647597, 0.7406075532243515, 0.871289491263577], "rhat_m": 1.0, "ess_bulk_m": 7216.0, "wall_s": 92.967
+DONE T3_A3_pol_generic {"m_det_Msun_q05_q50_q95": [62.968942509838534, 75.28188722245332, 87.46926971289706], "chi_q05_q50_q95": [0.48529785639070494, 0.7610411813544857, 0.8870387156931432], "rhat_m": 1.0, "ess_bulk_m": 4579.0, "wall_s": 9
+DONE T3_A4a_digfilt {"m_det_Msun_q05_q50_q95": [64.95515024257426, 78.44850562232664, 92.7020779951656], "chi_q05_q50_q95": [0.5156497604559648, 0.7897311836135392, 0.9157075050742043], "rhat_m": 1.0, "ess_bulk_m": 3579.0, "wall_s": 92.4236
+DONE T3_A4b_mmax150 {"m_det_Msun_q05_q50_q95": [65.13508205357009, 78.46263737119385, 92.78346322079456], "chi_q05_q50_q95": [0.5259293068837448, 0.7905249507900547, 0.9154626527318608], "rhat_m": 1.0, "ess_bulk_m": 3462.0, "wall_s": 91.506
+DONE T3_A4c_dataV1 {"m_det_Msun_q05_q50_q95": [65.13508205357009, 78.46263737119385, 92.78346322079456], "chi_q05_q50_q95": [0.5259293068837448, 0.7905249507900547, 0.9154626527318608], "rhat_m": 1.0, "ess_bulk_m": 3462.0, "wall_s": 89.2655
+DONE T3_B1_acf_theirs {"m_det_Msun_q05_q50_q95": [49.79559254444742, 61.78106710641952, 69.39068233116147], "chi_q05_q50_q95": [0.139255042992185, 0.3288096400245142, 0.7971864104530942], "rhat_m": NaN, "ess_bulk_m": 4.0, "wall_s": 57.50624
+DONE T3_B2_amp_theirs {"m_det_Msun_q05_q50_q95": [61.92372886438344, 76.20492356389542, 89.83791438742946], "chi_q05_q50_q95": [0.4381140601502034, 0.7684228257035315, 0.9007270272581586], "rhat_m": 1.0, "ess_bulk_m": 1651.0, "wall_s": 45.7
+DONE T3_B3_pol_theirs {"m_det_Msun_q05_q50_q95": [61.484302581936866, 74.71332512618663, 88.56875968895822], "chi_q05_q50_q95": [0.4463713546243273, 0.7538593572907304, 0.8957064779749226], "rhat_m": 1.0, "ess_bulk_m": 3508.0, "wall_s": 96.
+DONE T3_B4_digfilt_off {"m_det_Msun_q05_q50_q95": [62.92284927956434, 75.27232783356736, 87.16205820283153], "chi_q05_q50_q95": [0.4837976796192572, 0.760115215627589, 0.8878736629481584], "rhat_m": 1.0, "ess_bulk_m": 5347.0, "wall_s": 85.5
++ grep -h 'FAILED\|unknown model\|Error' T3_parse_test.log
++ head -20
+LOG WARNING ringdown.fit: unknown model argument: name
+LOG WARNING ringdown.fit: unknown model argument: a_scale
+LOG WARNING ringdown.fit: unknown model argument: flat_a
+FAILED: TypeError("Data.condition() got an unexpected keyword argument 'flow'")
+TypeError: Data.condition() got an unexpected keyword argument 'flow'
+LOG WARNING ringdown.fit: unknown model argument: name
+LOG WARNING ringdown.fit: unknown model argument: a_scale
+LOG WARNING ringdown.fit: unknown model argument: flat_a
+FAILED: TypeError("Data.condition() got an unexpected keyword argument 'flow'")
+TypeError: Data.condition() got an unexpected keyword argument 'flow'

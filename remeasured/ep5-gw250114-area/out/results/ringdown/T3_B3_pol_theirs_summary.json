@@ -1,0 +1,101 @@
+{
+ "label": "T3_B3_pol_theirs",
+ "config": {
+  "duration": 0.2,
+  "num_warmup": 1000,
+  "num_samples": 2000,
+  "num_chains": 4,
+  "seed": 1234,
+  "t0_geocenter": 1126259462.4083147,
+  "ra": 1.95,
+  "dec": -1.27,
+  "psi": 0.82,
+  "modes": [
+   [
+    1,
+    -2,
+    2,
+    2,
+    0
+   ],
+   [
+    1,
+    -2,
+    2,
+    2,
+    1
+   ]
+  ],
+  "H1": "H-H1_LOSC_16_V1-1126256640-4096.hdf5",
+  "L1": "L-L1_LOSC_16_V1-1126256640-4096.hdf5",
+  "ds": 8,
+  "f_min": 20.0,
+  "slice": 128.0,
+  "condition_kws": {},
+  "acf_kws": {},
+  "m_min": 35.0,
+  "m_max": 150.0,
+  "a_scale_max": 5e-21,
+  "model_kws": {
+   "cosi_max": -0.99
+  },
+  "variation": "our P 16 kHz + their polarization/inclination model only (aligned, cosi ~ U(-1,-0.99))",
+  "provenance": "cited: t0 1126259462.4083147, ra/dec/psi 1.95/-1.27/0.82, 220+221 and all 'theirs' settings from Isi & Farr 2023 comment (arXiv:2310.13869) config-ds8.ini / config-ds1.ini in Zenodo 10.5281/zenodo.7597043 figure2.tar.gz (md5 3b5f3d920d8f4d7fc7783ce288f96f86), translated to ringdown 1.1.0 names (old ringdown 49f2dc4e keys are case-insensitive: M_min/M_max, A_scale, flat_A, cosi_max; model mchi_aligned); sampler settings (NumPyro NUTS 4x(1000+2000), seed 1234) are ours, theirs used PyMC"
+ },
+ "inputs": {
+  "H1": {
+   "file": "H-H1_LOSC_16_V1-1126256640-4096.hdf5",
+   "sha256": "9dc0e536cefe9e1fb6f85d35a8eeec91eb34800204a45048770972a74ad6e4fc"
+  },
+  "L1": {
+   "file": "L-L1_LOSC_16_V1-1126256640-4096.hdf5",
+   "sha256": "0ed720c98ba376c42275474d6c61a4c9d857047c46cb2bf4eb432eee5c374991"
+  }
+ },
+ "acf_source": "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)",
+ "modes": [
+  [
+   1,
+   -2,
+   2,
+   2,
+   0
+  ],
+  [
+   1,
+   -2,
+   2,
+   2,
+   1
+  ]
+ ],
+ "n_samples": 8000,
+ "m_det_Msun_q05_q50_q95": [
+  61.484302581936866,
+  74.71332512618663,
+  88.56875968895822
+ ],
+ "chi_q05_q50_q95": [
+  0.4463713546243273,
+  0.7538593572907304,
+  0.8957064779749226
+ ],
+ "rhat_m": 1.0,
+ "rhat_chi": 1.0,
+ "ess_bulk_m": 3508.0,
+ "ess_bulk_chi": 3395.0,
+ "start_times": {
+  "H1": 1126259462.423,
+  "L1": 1126259462.4160156
+ },
+ "versions": {
+  "ringdown": "1.1.0",
+  "jax": "0.6.0",
+  "numpyro": "0.19.0",
+  "arviz": "0.23.4",
+  "numpy": "2.2.6"
+ },
+ "platform": "Linux-7.0.0-1013-aws-x86_64-with-glibc2.39",
+ "wall_s": 96.35437965393066,
+ "script_sha256": "c32394118f08d1ecc981a980e881bbf1128e9dc2df74f1525900e05f310e7a82"
+}

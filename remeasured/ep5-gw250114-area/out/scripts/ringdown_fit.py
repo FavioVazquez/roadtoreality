@@ -2,7 +2,10 @@
 """Kerr ringdown fit with `ringdown` (Isi & Farr; JAX/NumPyro). Generalisation of ringdown_220_fit.py (identical defaults).
 Extra optional config keys: modes (list of [p,s,l,m,n], default [[1,-2,2,2,0]]);
   psd_files {ifo: two-column text (f [Hz], PSD [1/Hz])} -> ACF = PowerSpectrum.to_acf() instead of the data-estimated ACF;
-  model_kws (extra Fit.update_model settings, e.g. cosi).
+  model_kws (extra Fit.update_model settings, e.g. cosi, marginalized, flat_amplitude_prior, cosi_max).
+Added for Task 3 (defaults reproduce the earlier behaviour exactly; earlier version archived as
+archive/ringdown_fit_sha256_a27aab14c87d.py): slice may be null -> no slicing (condition the full file);
+  condition_kws (extra Fit.condition_data kwargs, e.g. digital_filter); acf_kws (extra Fit.compute_acfs kwargs, e.g. method="td").
 Usage: ringdown_fit.py <label> <config.json>
 Config keys: H1, L1 (GWOSC hdf5 paths), t0_geocenter (GPS s), ra, dec, psi (rad), duration (s),
              ds (decimation), f_min (Hz), slice (s each side), m_min, m_max (Msun, detector frame),
@@ -29,8 +32,12 @@ modes = [tuple(m) for m in cfg.get("modes", [[1, -2, 2, 2, 0]])]   # (prograde, 
 fit = rd.Fit(modes=modes)
 fit.load_data({ifo: cfg[ifo] for ifo in ("H1", "L1")}, kind="gwosc")
 fit.set_target(cfg["t0_geocenter"], ra=cfg["ra"], dec=cfg["dec"], psi=cfg["psi"], duration=cfg["duration"])
-fit.condition_data(ds=cfg["ds"], f_min=cfg["f_min"], slice_left=cfg["slice"], slice_right=cfg["slice"])
-acf_source = "data (Fit.compute_acfs, default Welch-type estimate on conditioned data)"
+slice_kws = {} if cfg["slice"] is None else dict(slice_left=cfg["slice"], slice_right=cfg["slice"])
+fit.condition_data(ds=cfg["ds"], f_min=cfg["f_min"], **slice_kws, **cfg.get("condition_kws", {}))
+print("conditioned:", {i: (float(d.index[0]), float(d.index[-1]), len(d)) for i, d in fit.data.items()}, cfg.get("condition_kws", {}), flush=True)
+acf_kws = cfg.get("acf_kws", {})
+acf_source = ("data (Fit.compute_acfs, default Welch-type estimate on conditioned data)" if not acf_kws
+              else "data (Fit.compute_acfs with " + json.dumps(acf_kws) + ")")
 if cfg.get("psd_files"):
     for ifo, p in cfg["psd_files"].items():
         psd = rd.PowerSpectrum(np.loadtxt(p), ifo=ifo)
@@ -38,7 +45,7 @@ if cfg.get("psd_files"):
         inputs[ifo + "_psd"] = {"file": p, "sha256": sha256(p)}
     acf_source = "PSD files " + json.dumps(cfg["psd_files"])
 else:
-    fit.compute_acfs()
+    fit.compute_acfs(**acf_kws)
 print("ACF source:", acf_source, {i: (float(a.delta_t), len(a)) for i, a in fit.acfs.items()}, flush=True)
 fit.update_model(m_min=cfg["m_min"], m_max=cfg["m_max"], a_scale_max=cfg["a_scale_max"], **cfg.get("model_kws", {}))
 print("valid model settings:", fit.valid_model_settings, flush=True)

@@ -1,0 +1,73 @@
+LOG INFO arviz.preview: arviz_base not installed
+LOG INFO arviz.preview: arviz_stats not installed
+LOG INFO arviz.preview: arviz_plots not installed
+LOG INFO root: Loading Schw QNM dict from file /home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/qnm/schwarzschild/data/Schw_dict.pickle
+LOG INFO root: Trying latin1 encoding.
+ringdown 1.1.0
+==== verbatim: Fit.from_config(config-ds8.ini)
+LOG INFO ringdown.utils.utils: Loading config from config-ds8.ini
+LOG INFO ringdown.fit: initializing fit
+LOG WARNING ringdown.fit: unknown model argument: name
+LOG WARNING ringdown.fit: unknown model argument: a_scale
+LOG WARNING ringdown.fit: unknown model argument: flat_a
+LOG INFO ringdown.fit: ignoring invalid target section: {'ra': 1.95, 'dec': -1.27, 'psi': 0.82, 'duration': 0.2}
+LOG INFO ringdown.data: loading GWOSC file from disk
+LOG INFO ringdown.data: loading GWOSC file from disk
+LOG INFO ringdown.fit: conditioning fit data
+LOG WARNING ringdown.fit: conditioning without target
+FAILED: TypeError("Data.condition() got an unexpected keyword argument 'flow'")
+Traceback (most recent call last):
+  File "/home/dev/scratch/.claude-science/jobs/52094c2c-264f-4ea2-884a-e6985f7a29b3/test_their_ini_rd110.py", line 15, in attempt
+    fit = rd.Fit.from_config(path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/ringdown/fit.py", line 577, in from_config
+    fit.condition_data(**cond_kws)
+  File "/home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/ringdown/fit.py", line 737, in condition_data
+    new_data[k] = d.condition(t0=t0s[k], **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Data.condition() got an unexpected keyword argument 'flow'
+==== with [target] t0 = t0-ref: Fit.from_config(their_ini_with_t0.ini)
+LOG INFO ringdown.utils.utils: Loading config from their_ini_with_t0.ini
+LOG INFO ringdown.fit: initializing fit
+LOG WARNING ringdown.fit: unknown model argument: name
+LOG WARNING ringdown.fit: unknown model argument: a_scale
+LOG WARNING ringdown.fit: unknown model argument: flat_a
+LOG INFO ringdown.data: loading GWOSC file from disk
+LOG INFO ringdown.data: loading GWOSC file from disk
+LOG INFO ringdown.fit: conditioning fit data
+FAILED: TypeError("Data.condition() got an unexpected keyword argument 'flow'")
+Traceback (most recent call last):
+  File "/home/dev/scratch/.claude-science/jobs/52094c2c-264f-4ea2-884a-e6985f7a29b3/test_their_ini_rd110.py", line 15, in attempt
+    fit = rd.Fit.from_config(path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/ringdown/fit.py", line 577, in from_config
+    fit.condition_data(**cond_kws)
+  File "/home/dev/remeasured/venv-ringdown/lib/python3.12/site-packages/ringdown/fit.py", line 737, in condition_data
+    new_data[k] = d.condition(t0=t0s[k], **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Data.condition() got an unexpected keyword argument 'flow'
+==== ringdown_pipe --help
+0 usage: ringdown_pipe [-h] [-o OUTDIR] [--force] [-s] [--ntasks NTASKS]
+                     [--platform {cpu,gpu}] [-C CONSTRAINTS] [-t TIME] [-v]
+                     config
+
+Analyze event ringdown at different times.
+
+positional arguments:
+  config                Path to configuration file.
+
+options:
+  -h, --help            show this help message and exit
+  -o OUTDIR, --outdir OUTDIR
+                        Output directory.
+  --force               Run even if output directory already exists (pre-
+                        existing runs will not be repeated).
+  -s, --submit          Submit slurm job automatically.
+  --ntasks NTASKS       Maximum number of tasks request through SLURM.
+  --platform {cpu,gpu}  Platform to run on (default 'cpu').
+  -C CONSTRAINTS, --constraints CONSTRAINTS
+                        SLURM constraints.
+  -t TIME, --time TIME  SLURM time directive.
+  -v, --verbose
+ 
+parse test exit 0
