@@ -1,0 +1,10 @@
+03:16 bilby INFO    : No prior given, using default BBH priors in /home/ubuntu/venvs/bilby/lib/python3.10/site-packages/bilby/gw/prior_files/precessing_spins_bbh.prior.
+03:16 bilby INFO    : Waveform generator instantiated: WaveformGenerator(duration=8.0, sampling_frequency=1024.0, start_time=1126259456.3999023, frequency_domain_source_model=bilby.gw.source.lal_binary_black_hole_relative_binning, time_domain_source_model=None, parameter_conversion=bilby.gw.conversion.convert_to_lal_binary_black_hole_parameters, waveform_arguments={'waveform_approximant': 'IMRPhenomXPHM', 'reference_frequency': 20.0, 'minimum_frequency': 20.0, 'maximum_frequency': 132.0})
+03:16 bilby INFO    : Loaded distance marginalisation lookup table from .distance_marginalization_lookup.npz.
+03:16 bilby INFO    : Initial fiducial waveforms set up
+03:16 bilby INFO    : Summary Data Obtained
+03:16 bilby INFO    : Using scipy optimization to find maximum likelihood parameters.
+03:16 bilby INFO    : Parameters over which likelihood is maximized: ['dec', 'ra', 'theta_jn', 'psi', 'phase', 'a_1', 'a_2', 'tilt_1', 'tilt_2', 'phi_12', 'phi_jl', 'chirp_mass', 'mass_ratio', 'geocent_time']
+03:16 bilby INFO    : No parameter bounds were given. Using priors instead.
+03:16 bilby INFO    : Fiducial ln likelihood ratio: -26.17
+03:16 bilby INFO    : Optimizing fiducial parameters. Iteration : 1
