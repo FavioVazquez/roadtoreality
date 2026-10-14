@@ -29,7 +29,7 @@
 
   function resize() {
     var rect = mount.getBoundingClientRect();
-    W = Math.max(360, rect.width  || mount.clientWidth  || 640);
+    W = Math.max(280, rect.width  || mount.clientWidth  || 640);
     H = Math.max(260, rect.height || mount.clientHeight || 400);
     canvas.width  = W * dpr;
     canvas.height = H * dpr;
@@ -54,10 +54,11 @@
   var leftParticles = [];
 
   /* EMA-smoothed histogram bins */
-  var BINS      = 10;
-  var BIN_MAX_V = 4.0;      /* speed axis max (in base units) */
+  var BINS      = 12;
+  var BIN_MAX_V = 4.0;      /* speed axis max, in units of SPEED_UNIT (fixed, so the histogram shifts with T) */
+  var SPEED_UNIT = 1.2;     /* speed of one axis unit: 1.2 = the base speed at T = 1 */
   var histEMA   = [];
-  var EMA_ALPHA = 0.06;
+  var EMA_ALPHA = 0.02;
 
   function initLeft() {
     leftParticles = [];
@@ -126,7 +127,7 @@
       var newT = parseInt(tempSlider.value, 10) / 500;
       rescaleLeftSpeeds(temperature, newT);
       temperature = newT;
-      if (tempVal) tempVal.textContent = newT.toFixed(1) + ' T';
+      if (tempVal) tempVal.textContent = 'T = ' + newT.toFixed(1) + ' (relative)';
     });
   }
 
@@ -139,7 +140,7 @@
   }
 
   /* Expose wallBtn for reset */
-  window._dopplerWallBtn = wallBtn;
+  window._boltzmannWallBtn = wallBtn;
 
   /* ─────────────────────────────────────────────────────────
      PHYSICS HELPERS
@@ -231,14 +232,21 @@
     for (var k = 0; k < leftParticles.length; k++) {
       var pk = leftParticles[k];
       var spd = Math.sqrt(pk.vx * pk.vx + pk.vy * pk.vy);
-      /* Normalise speed by base speed */
-      var normSpd = spd / Math.max(0.01, baseSpeed());
-      var bin = Math.min(BINS - 1, Math.floor(normSpd / (BIN_MAX_V / BINS)));
-      rawBins[bin]++;
+      /* Absolute speed on a fixed axis, so the distribution visibly shifts with T */
+      var normSpd = spd / SPEED_UNIT;
+      var bin = Math.floor(normSpd / (BIN_MAX_V / BINS));
+      if (bin < BINS) rawBins[bin]++;   /* speeds beyond the axis are not binned */
     }
     for (var d = 0; d < BINS; d++) {
       histEMA[d] = histEMA[d] * (1 - EMA_ALPHA) + rawBins[d] * EMA_ALPHA;
     }
+  }
+
+  /* ln of the binomial coefficient C(n, k) */
+  function lnC(n, k) {
+    var sum = 0;
+    for (var i = 1; i <= k; i++) sum += Math.log(n - k + i) - Math.log(i);
+    return sum;
   }
 
   function stepRight(box) {
@@ -280,12 +288,9 @@
         if (rightParticles[j].x > midX) inRight++;
       }
       /* Max entropy when half in each side: entropyVal→1 */
-      var frac = inRight / rightParticles.length;
-      var overlap = frac < 0.5 ? frac : 1 - frac;   /* 0 = all one side, 0.5 = even */
-      var target = 1.0 - Math.abs(1.0 - 2.0 * overlap) * (1.0 - overlap);
-      /* Smooth approach */
-      entropyVal += (target - entropyVal) * 0.015;
-      entropyVal = Math.max(0, Math.min(1, entropyVal));
+      var nTot = rightParticles.length;
+      var target = lnC(nTot, inRight) / lnC(nTot, nTot >> 1);   /* S / S_max = ln C(N,n) / ln C(N,N/2) */
+      entropyVal = Math.max(0, Math.min(1, target));
     }
   }
 
@@ -334,29 +339,44 @@
     if (histH < 24) return;
 
     var binW   = histW / BINS;
-    var maxEMA = Math.max.apply(null, histEMA) || 1;
+
+    /* sigma = sqrt(kT/m) measured from the particles (2-D gas: <v^2> = 2 sigma^2),
+       in the same fixed axis units as the histogram bins. */
+    var sumV2 = 0;
+    for (var q = 0; q < leftParticles.length; q++) {
+      sumV2 += leftParticles[q].vx * leftParticles[q].vx + leftParticles[q].vy * leftParticles[q].vy;
+    }
+    var sigma = Math.max(0.01, Math.sqrt(sumV2 / Math.max(1, leftParticles.length) / 2) / SPEED_UNIT);
+
+    /* Both drawn as unit-area densities: histogram bar = count / (N * bin width). */
+    var nPart = Math.max(1, leftParticles.length);
+    var binV  = BIN_MAX_V / BINS;
+    var peakD = 0.6065 / sigma;                       /* MB density at v = sigma */
+    for (var h = 0; h < BINS; h++) {
+      var dens = histEMA[h] / (nPart * binV);
+      if (dens > peakD) peakD = dens;
+    }
+    var yScale = histH * 0.92 / peakD;
 
     ctx.strokeStyle = 'rgba(82,133,200,0.25)';
     ctx.lineWidth = 1;
     ctx.strokeRect(histX, histY, histW, histH);
 
     for (var b = 0; b < BINS; b++) {
-      var bh = Math.max(1, (histEMA[b] / maxEMA) * histH * 0.92);
+      var bh = Math.max(1, (histEMA[b] / (nPart * binV)) * yScale);
       ctx.fillStyle = COLOR_HIST;
       ctx.fillRect(histX + b * binW + 1, histY + histH - bh, binW - 2, bh);
     }
 
-    /* Maxwell-Boltzmann theory curve:
-       f(v) ~ v * exp(-v^2 / (2*T))  (2D Maxwell-Boltzmann) */
+    /* Maxwell-Boltzmann theory curve (2-D): f(v) = v / sigma^2 * exp(-v^2 / (2 sigma^2)),
+       peak at v = sigma */
     ctx.beginPath();
     var first = true;
     for (var s = 0; s <= BINS * 4; s++) {
       var v = (s / (BINS * 4)) * BIN_MAX_V;
-      var vn = v / Math.max(0.01, Math.sqrt(temperature) * 1.2);
-      var fv = vn * Math.exp(-vn * vn * 0.5);
-      var normFv = fv / 0.6065;   /* normalise peak to ~1 */
+      var fv = (v / (sigma * sigma)) * Math.exp(-v * v / (2 * sigma * sigma));
       var px = histX + (v / BIN_MAX_V) * histW;
-      var py = histY + histH - normFv * histH * 0.92;
+      var py = histY + histH - fv * yScale;
       if (first) { ctx.moveTo(px, py); first = false; }
       else ctx.lineTo(px, py);
     }
@@ -442,7 +462,7 @@
     ctx.font = '9px monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('S = k ln \u03A9', meterX + 4, meterY);
+    ctx.fillText('S / S_max', meterX + 4, meterY);
     ctx.textAlign = 'right';
     ctx.fillStyle = 'rgba(255,200,60,0.9)';
     ctx.fillText((entropyVal * 100).toFixed(0) + '%', meterX + meterW - 2, meterY);
@@ -488,16 +508,26 @@
     drawRightPanel(rb);
   }
 
+  /* Keep the Play button in step with the loop (the shell's autoplay starts the sim without touching it) */
+  function syncPlayBtn(state) {
+    var pb = document.getElementById('sim-play-btn');
+    if (!pb) return;
+    pb.dataset.state = state;
+    pb.textContent = state === 'playing' ? '\u23F8 Pause' : '\u25B6 Play';
+  }
+
   /* ── SimAPI ─────────────────────────────────────────────── */
   window.SimAPI = {
     start: function () {
       if (running) return;
       running = true;
+      syncPlayBtn('playing');
       if (reduced) { drawStatic(); return; }
       raf = requestAnimationFrame(drawFrame);
     },
     pause: function () {
       running = false;
+      syncPlayBtn('paused');
       if (raf) { cancelAnimationFrame(raf); raf = null; }
     },
     reset: function () {
@@ -506,9 +536,9 @@
       initLeft();
       initRight();
       entropyVal = 0;
-      if (window._dopplerWallBtn) {
-        window._dopplerWallBtn.disabled = false;
-        window._dopplerWallBtn.style.opacity = '1';
+      if (window._boltzmannWallBtn) {
+        window._boltzmannWallBtn.disabled = false;
+        window._boltzmannWallBtn.style.opacity = '1';
       }
       drawStatic();
     },

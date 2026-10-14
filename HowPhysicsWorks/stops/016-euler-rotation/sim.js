@@ -24,20 +24,19 @@
 
   // Simulation time
   var simTime = 0;
-  var OMEGA_MAX = 20.0; // rad/s cap
   var DT = 0.016;
 
   // Shapes: name, formula, moment-of-inertia function, color, angle, omega
   var COLORS = ['#5285c8', '#c87052', '#52c882'];
   var shapes = [
     { label: 'Disk',  formula: 'I = ½mr²', color: COLORS[0], angle: 0, omega: 0, history: [] },
-    { label: 'Rod',   formula: 'I = ⅓mL²', color: COLORS[1], angle: 0, omega: 0, history: [] },
+    { label: 'Rod',   formula: 'I = ¹⁄₁₂mL²', color: COLORS[1], angle: 0, omega: 0, history: [] },
     { label: 'Ring',  formula: 'I = mr²',   color: COLORS[2], angle: 0, omega: 0, history: [] }
   ];
 
   function getI(idx) {
     if (idx === 0) return 0.5 * mass * R * R;         // disk
-    if (idx === 1) return (1 / 3) * mass * L * L;     // rod (about end → use (1/12)mL² about center)
+    if (idx === 1) return (1 / 12) * mass * L * L;    // thin rod about its centre, L = 2R
     return mass * R * R;                               // ring
   }
 
@@ -178,17 +177,23 @@
     ctx.fillText('ω (rad/s)', 0, 0);
     ctx.restore();
 
+    // y-axis scale: auto-fit to the largest value in the history window
+    var yMax = 5;
+    shapes.forEach(function(s) {
+      for (var q = 0; q < s.history.length; q++) if (s.history[q] > yMax) yMax = s.history[q];
+    });
+
     // panel title
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText('Angular Velocity over Time', gx, gy - 8);
 
-    // y-axis: OMEGA_MAX
+    // y-axis: top label (auto-scaled)
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.font = '10px monospace';
     ctx.textAlign = 'right';
-    ctx.fillText(OMEGA_MAX.toFixed(0), gx - 2, gy + 4);
+    ctx.fillText(yMax.toFixed(0), gx - 2, gy + 4);
     ctx.fillText('0', gx - 2, gy + gh);
 
     // grid line at half
@@ -208,7 +213,7 @@
       ctx.lineWidth = 2;
       for (var k = 0; k < s.history.length; k++) {
         var px = gx + (k / (MAX_HISTORY - 1)) * gw;
-        var py = gy + gh - (s.history[k] / OMEGA_MAX) * gh;
+        var py = gy + gh - (s.history[k] / yMax) * gh;
         if (k === 0) ctx.moveTo(px, py);
         else ctx.lineTo(px, py);
       }
@@ -216,7 +221,7 @@
 
       // legend dot + label on right edge
       if (s.history.length > 0) {
-        var lastY = gy + gh - (s.history[s.history.length - 1] / OMEGA_MAX) * gh;
+        var lastY = gy + gh - (s.history[s.history.length - 1] / yMax) * gh;
         ctx.fillStyle = s.color;
         ctx.beginPath();
         ctx.arc(gx + gw, lastY, 3, 0, Math.PI * 2);
@@ -243,7 +248,7 @@
     shapes.forEach(function(s, i) {
       var I = getI(i);
       var alpha = torque / I;
-      s.omega = Math.min(s.omega + alpha * DT, OMEGA_MAX);
+      s.omega = s.omega + alpha * DT;
       s.angle += s.omega * DT;
       s.history.push(s.omega);
       if (s.history.length > MAX_HISTORY) s.history.shift();

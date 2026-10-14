@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
+  <meta name="description" content="Faraday — a bookbinder's apprentice with almost no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
   <meta property="og:title" content="Faraday's Electromagnetic Induction — How Physics Works">
-  <meta property="og:description" content="Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
+  <meta property="og:description" content="Faraday — a bookbinder's apprentice with almost no formal education — discovered that a changing magnetic field creates an electric current. Every generator on Earth runs on this principle.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/019-faraday-induction/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Faraday — a bookbinder's apprentice with no formal education — discovered that a changing magnetic field creates an electric current. Move the magnet through the coil below and watch the galvanometer needle respond to the <em>rate of change</em> of flux, not to flux itself. Pull the magnet back out and the needle flips direction — Lenz's law in action.</p>
+    <p>Faraday — a bookbinder's apprentice with almost no formal education — discovered that a changing magnetic field creates an electric current. Move the magnet through the coil below and watch the galvanometer needle respond to the <em>rate of change</em> of flux, not to flux itself. Pull the magnet back out and the needle flips direction — Lenz's law in action.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Faraday's Electromagnetic Induction — interactive simulation">
@@ -72,7 +75,7 @@
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <label for="magnet-position-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Magnet position:</label>
           <input id="magnet-position-slider" type="range" min="0" max="1" step="0.01" value="0.2" style="flex:1;" aria-label="Magnet position left to right">
-          <span id="magnet-position-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">far left</span>
+          <span id="magnet-position-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">20%</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <button id="auto-oscillate-btn" class="sim-btn" style="font-size:var(--text-sm);">Auto Oscillate</button>
@@ -91,21 +94,30 @@
   </div>
   <div class="stop-body content-column">
     <h3>What's happening</h3>
-    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The galvanometer needle is driven by the <em>time-derivative</em> of magnetic flux through the coil — dΦ/dt — not by the flux itself. When the magnet sits still, no current flows. Only movement creates induction. And when the magnet reverses direction, the induced current reverses too (Lenz's law).</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The galvanometer needle is driven by the <em>time-derivative</em> of magnetic flux through the coil — dΦ/dt — not by the flux itself. When the magnet sits still, no current flows. Only movement creates induction. And when the magnet reverses direction, the induced current reverses too (Lenz's law). The needle also reverses once during every pass, at the moment the magnet's centre crosses the coil, because the flux stops rising and starts falling. The yellow dots drift along the leads in the direction of the induced current; the N and S marks show which face of the coil has become which pole, always the one that opposes the magnet's motion (an approaching N pole meets a coil face that has become N). The coil in the picture has five turns.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
       <li>A changing magnetic flux through a coil induces an electromotive force (EMF). The magnitude depends on how fast the flux changes — not on the flux itself.</li>
-      <li>$$\mathcal{E} = -\frac{d\Phi_B}{dt}$$</li>
-      <li>Lenz's law: the induced current opposes the change that caused it. Move the magnet in &rarr; current one way; pull it out &rarr; current reverses.</li>
+      <li>$$\mathcal{E} = -N\frac{d\Phi_B}{dt}$$</li>
+      <li>This is for a coil of N turns (five in the picture). Faraday stated the law in words and pictures of lines of force; the equation is Maxwell's (1855&ndash;1861).</li>
+      <li>Lenz's law (Heinrich Lenz, 1834): the induced current opposes the change that caused it. Move the magnet in &rarr; current one way; pull it out &rarr; current reverses.</li>
       <li>$$\Phi_B = \int \mathbf{B} \cdot d\mathbf{A}$$</li>
       <li>Every generator, transformer, and induction motor in the world runs on this principle.</li>
     </ul>
   </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">M. Faraday, "Experimental Researches in Electricity", <em>Philosophical Transactions of the Royal Society</em> 122, 125&ndash;162 (1832) (First Series, read 24 November 1831).</li>
+      <li id="src-2">H. F. E. Lenz, "Ueber die Bestimmung der Richtung der durch elektrodynamische Vertheilung erregten galvanischen Str&ouml;me", <em>Annalen der Physik und Chemie</em> 107 (31), 483&ndash;494 (1834).</li>
+      <li id="src-3">J. C. Maxwell, "On Faraday's Lines of Force", <em>Transactions of the Cambridge Philosophical Society</em> 10, 27&ndash;83 (1856, read 1855).</li>
+    </ol>
+  </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Faraday gave us generators. Carnot asked a harder question: how much work can you extract from heat? His answer set a fundamental limit that no engineer has ever beaten — and never will.</span>
+    <span>Faraday gave us generators. Seven years earlier, Carnot had asked a harder question: how much work can you extract from heat? His answer set a limit no engineer has beaten.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>

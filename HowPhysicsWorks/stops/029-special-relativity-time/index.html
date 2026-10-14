@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Einstein showed that time passes more slowly for moving observers — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.">
+  <meta name="description" content="Einstein showed that a moving clock, seen from the frame it moves through, runs slow — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.">
   <meta property="og:title" content="Special Relativity: Time Dilation — How Physics Works">
-  <meta property="og:description" content="Einstein showed that time passes more slowly for moving observers — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.">
+  <meta property="og:description" content="Einstein showed that a moving clock, seen from the frame it moves through, runs slow — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/029-special-relativity-time/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Einstein showed that time passes more slowly for moving observers — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.</p>
+    <p>Einstein showed that a moving clock, seen from the frame it moves through, runs slow — and this is not an illusion. GPS satellites require relativity corrections to stay accurate.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Special Relativity: Time Dilation — interactive simulation">
@@ -70,7 +73,7 @@
     <div class="sim-controls">
       <div class="sim-control-row" style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
         <label for="velocity-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Velocity</label>
-        <input type="range" id="velocity-slider" min="0" max="990" step="10" value="0" style="flex:1;min-width:120px;">
+        <input type="range" id="velocity-slider" min="0" max="990" step="10" value="0" aria-label="Velocity as a fraction of the speed of light" style="flex:1;min-width:120px;">
         <span id="velocity-readout" style="font-size:var(--text-sm);font-family:monospace;color:var(--color-text-secondary);white-space:nowrap;">v&nbsp;=&nbsp;0.000c &nbsp; &gamma;&nbsp;=&nbsp;1.000</span>
       </div>
       <div class="sim-actions" style="margin-left:auto;">
@@ -85,17 +88,27 @@
   </div>
   <div class="stop-body content-column">
     <h3>The Twin Paradox</h3>
-    <p>Imagine twins. One stays on Earth; the other boards a rocket. When the traveling twin returns, they are younger &mdash; not metaphorically, but physically. Their heart has beaten fewer times. Their cells have divided fewer times. This is time dilation: moving clocks run slow.</p>
+    <p>Imagine twins. One stays on Earth; the other boards a rocket. When the traveling twin returns, they are younger &mdash; not metaphorically, but physically. Their heart has beaten fewer times. Their cells have divided fewer times. This is time dilation: moving clocks run slow. The simulation shows the outbound leg as seen from Earth. Seen from the rocket, it is Earth's clock that runs slow; the asymmetry that makes the traveller younger at the reunion comes from turning around, which changes the rocket's frame and not Earth's.</p>
     <h3>The Lorentz Factor &gamma;</h3>
-    <p>The ratio of the twins&rsquo; aging rates is the Lorentz factor &gamma;. At everyday speeds &gamma; is indistinguishable from 1. At 99% the speed of light, &gamma;&nbsp;&asymp;&nbsp;7 &mdash; the traveling twin ages 7 times more slowly than the Earth twin.</p>
+    <p>The ratio of the twins&rsquo; aging rates is the Lorentz factor &gamma;. At everyday speeds &gamma; is indistinguishable from 1. At 99% the speed of light, &gamma;&nbsp;&asymp;&nbsp;7 &mdash; the traveling twin ages at one seventh the rate of the Earth twin, as judged from Earth.</p>
     <h3>It Is Not an Illusion</h3>
-    <p>Time dilation has been measured directly. Atomic clocks flown on aircraft tick slightly slower than identical clocks on the ground. GPS satellites &mdash; traveling at ~14,000 km/h &mdash; must correct for time dilation or their position fixes would drift by kilometers per day.</p>
+    <p>Time dilation has been measured directly. In 1972 Hafele and Keating flew atomic clocks around the world. Flown eastward, with Earth's rotation, the clocks came back 59 nanoseconds behind the ground clocks; flown westward they came back 273 nanoseconds ahead, exactly as relativity, counting both speed and altitude, predicted.<sup><a href="#src-2">[2]</a></sup> Fast muons last longer too: in the CERN storage ring, muons at &gamma;&nbsp;=&nbsp;29.3 lived as dilation predicts, to 0.1&nbsp;%.<sup><a href="#src-4">[4]</a></sup> GPS satellites, travelling at about 3.9 km/s, carry clocks that would run slow by about 7 microseconds a day from their speed alone. They also sit in weaker gravity than we do, which (general relativity, stop 034) makes them run fast by about 45 microseconds a day. The net effect, about 38 microseconds a day fast, is built into the system; left uncorrected it would grow into a position error of about 10 km per day.<sup><a href="#src-5">[5]</a></sup></p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
+      <li id="src-2">J. C. Hafele and R. E. Keating, <em>Science</em> 177, 166 and 168 (1972).</li>
+      <li id="src-3">D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): muons on Mount Washington.</li>
+      <li id="src-4">J. Bailey et al., <em>Nature</em> 268, 301 (1977): muon lifetime at &gamma;&nbsp;=&nbsp;29.3 in the CERN storage ring.</li>
+      <li id="src-5">N. Ashby, "Relativity in the Global Positioning System", <em>Living Reviews in Relativity</em> 6, 1 (2003).</li>
+    </ol>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <div class="takeaway-box__formula">$$\Delta t = \gamma \, \Delta t_0$$</div>
     <div class="takeaway-box__formula">$$\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}$$</div>
-    <p style="margin-top:0.5rem;font-size:var(--text-sm);color:var(--color-text-secondary);">At $v = 0.99c$, $\gamma \approx 7.09$ &mdash; the moving twin ages 7 times more slowly.</p>
+    <p style="margin-top:0.5rem;font-size:var(--text-sm);color:var(--color-text-secondary);">At $v = 0.99c$, $\gamma \approx 7.09$ &mdash; the moving twin ages at one seventh the rate, as judged from Earth.</p>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

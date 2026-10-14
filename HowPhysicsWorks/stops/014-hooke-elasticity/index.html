@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    #weight-slider { min-height: 44px; margin: 0; background: transparent; }
+    #material-selector { min-height: 44px; min-width: 0; width: 100%; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +64,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Hooke discovered that extension is proportional to force — the simplest law of elasticity, and the basis of every spring and suspension system. His famous anagram, revealed as "ut tensio, sic vis" (as the extension, so the force), gave physics its first linear restoring force law: F = −kx.</p>
+    <p>Hooke discovered that extension is proportional to force — the simplest law of elasticity, and the basis of every spring and suspension system. His famous anagram, revealed as "ut tensio, sic vis" (as the extension, so the force), gave physics the linear restoring-force law, F = −kx, published in <em>Lectures de Potentia Restitutiva</em> (1678) after a 1676 anagram, ceiiinosssttuv, that staked his claim.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Hooke's Law — interactive spring simulation">
@@ -71,15 +75,15 @@
       <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
         <div class="sim-material-selector" style="display:flex;align-items:center;gap:0.75rem;">
           <label for="material-selector" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Material:</label>
-          <select id="material-selector" class="sim-select" style="background:oklch(0.18 0 0);color:oklch(0.85 0 0);border:1px solid oklch(1 0 0 / 0.18);border-radius:4px;padding:0.25rem 0.5rem;font-size:var(--text-sm);cursor:pointer;">
-            <option value="0">Steel (k = 500 N/m)</option>
-            <option value="1">Rubber (k = 50 N/m)</option>
-            <option value="2">Glass (k = 800 N/m)</option>
+          <select id="material-selector" class="sim-select" style="background:oklch(0.18 0 0);color:oklch(0.85 0 0);border:1px solid oklch(1 0 0 / 0.18);border-radius:4px;padding:0.25rem 0.5rem;min-height:44px;max-width:100%;font-size:var(--text-sm);cursor:pointer;">
+            <option value="0">Ductile: steel wire, 500 N/m</option>
+            <option value="1">Brittle: glass fibre, 800 N/m</option>
+            <option value="2">Elastomer: rubber band, 50 N/m</option>
           </select>
         </div>
         <div class="sim-weight-slider" style="display:flex;align-items:center;gap:0.75rem;">
           <label for="weight-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Load:</label>
-          <input id="weight-slider" type="range" min="0" max="1" step="0.01" value="0.3" style="flex:1;" aria-label="Applied load from 0 to rupture">
+          <input id="weight-slider" type="range" min="0" max="1" step="0.01" value="0.15" style="flex:1;" aria-label="Applied load from 0 to rupture">
           <span id="weight-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:4rem;text-align:right;">elastic</span>
         </div>
       </div>
@@ -97,16 +101,30 @@
     <h3>How to explore</h3>
     <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
       <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Drag the Load slider — the F vs. x graph tracks your position on the material's stress curve in real time</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Switch materials: Steel snaps suddenly, Rubber stretches far, Glass barely bends before breaking</li>
+      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Switch materials: a steel wire yields and stretches a long way before it breaks, a glass fibre follows Hooke's line and then snaps with no warning, a rubber band is elastic far beyond the straight line but never truly plastic. The k values belong to these particular springs, not to the materials</li>
       <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Push past the yield point to see plastic deformation — and all the way to rupture for the full story</li>
     </ul>
+  </div>
+  <div class="stop-body content-column">
+    <h3>Why the law is linear, and what it is not</h3>
+    <p>Near the bottom of any smooth potential-energy well the curve is a parabola, because the straight-line term vanishes at a minimum. A parabola of energy, U = ½kx², is a force of −kx. That is why nearly every small vibration, from a pendulum at small angles to an atom in a crystal, behaves like a Hooke oscillator. The law holds only for small displacements: the curves above bend away from the straight line, and then the material yields or breaks.</p>
+    <p>A spring's k belongs to that particular spring. Divide the force by the cross-section to get stress, divide the extension by the original length to get strain, and the ratio of the two is a property of the material, now called Young's modulus after Thomas Young's 1807 lectures. Typical values are about 200 GPa for steel, about 70 GPa for glass and roughly 0.01 to 0.1 GPa for rubber. For a straight rod, k = EA/L, so a 1 m steel rod with a 1 mm² section has k of about 200,000 N/m, far stiffer than the 500 N/m coil in the simulation.</p>
+    <p>In 1679 and 1680 Hooke wrote to Newton suggesting that a planet's path could be built from straight-line motion bent by an attraction toward the Sun, and later that this attraction might weaken with the inverse square of distance. When Book I of the <em>Principia</em> was presented to the Royal Society in 1686 Hooke claimed priority, and Newton rejected the claim. Historians still weigh how much of the idea was his; what is certain is that the quarrel keeps Hooke's name beside Newton's.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
     <ul class="takeaway-box__list">
-      <li>F = −kx: the restoring force is proportional to displacement. This linear relationship underlies oscillations throughout physics, from pendulums to electromagnetic waves.</li>
+      <li>F = −kx: the restoring force is proportional to displacement. This linear relationship underlies oscillations throughout physics, from pendulums to the vibrations of atoms in a crystal.</li>
       <li>$$F = -kx$$</li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">R. Hooke, <em>Lectures de Potentia Restitutiva, or of Spring</em> (1678). Cited: the law ut tensio, sic vis.</li>
+      <li id="src-2">R. Hooke, <em>A Description of Helioscopes and Some Other Instruments</em> (1676). Cited: the anagram ceiiinosssttuv.</li>
+      <li id="src-3">T. Young, <em>A Course of Lectures on Natural Philosophy and the Mechanical Arts</em> (1807). Cited: the modulus of elasticity.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

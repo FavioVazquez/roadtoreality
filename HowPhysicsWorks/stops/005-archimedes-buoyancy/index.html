@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Archimedes discovered that buoyancy equals the weight of displaced fluid. Drag objects into water and see it happen.">
+  <meta name="description" content="Archimedes proved that the buoyant force equals the weight of the displaced fluid. Drop crates of different densities into water and see the forces.">
   <meta property="og:title" content="Archimedes and Buoyancy — How Physics Works">
-  <meta property="og:description" content="Drag objects of different densities into water. The displaced volume equals the buoyant force — Archimedes discovered this in his bath.">
+  <meta property="og:description" content="Drop crates of different densities into water. The weight of the displaced water equals the buoyant force, as Archimedes proved in On Floating Bodies.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/005-archimedes-buoyancy/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -61,13 +61,13 @@
   </header>
   <div class="stop-intro content-column">
     <p>
-      The king of Syracuse had a problem: was his gold crown really gold, or had the craftsman mixed in cheaper silver? He asked Archimedes to find out without melting the crown. The answer came in the bath.
+      The story everyone knows: King Hiero II of Syracuse suspected his goldsmith of mixing silver into a gold wreath, and Archimedes, stepping into a bath, saw how to check it without melting it. The story is told by Vitruvius two centuries later (<em>De architectura</em> IX, preface); Archimedes himself never mentions it, and Galileo (<em>La Bilancetta</em>, 1586) pointed out that the water-overflow method as told is too crude to catch the fraud; a hydrostatic balance would do it.
     </p>
     <p>
-      Archimedes noticed that his body displaced water when he got in. He realized the volume of water displaced equals the volume of the submerged object — and that the water pushes back with a force equal to its own weight. This is the buoyant force.
+      Two separate facts are tangled in the legend. The bath shows the first: a submerged body displaces its own volume of water. Archimedes' principle is the second, and it is about weight: the water pushes up on the body with a force equal to the weight of the water displaced. This is the buoyant force.
     </p>
     <p>
-      Click an object below to drop it into the water. Dense objects sink; less dense ones float. Watch the water level rise exactly as much as the object's volume.
+      Choose a material below and drop a crate of it into the water. Dense ones sink; less dense ones float. Watch the water level rise as the crate goes in; the readout gives the displaced volume (the level change is drawn about 2.5 times larger than true so you can see it). The forces are real newtons for a 3-litre crate; the falling motion is a cartoon.
     </p>
   </div>
   <div class="sim-wrapper content-column">
@@ -96,16 +96,24 @@
     <h3>The Principle</h3>
     <p>Archimedes' principle states: an object submerged in fluid experiences an upward buoyant force equal to the weight of the fluid it displaces. If that force is greater than the object's weight, the object floats. If less, it sinks.</p>
     <p>This is why a massive steel ship floats — its hollow interior displaces far more water than its hull weighs. And why a solid steel ball sinks — it displaces less water than its weight requires.</p>
-    <p>Archimedes reportedly ran naked through the streets of Syracuse shouting "Eureka!" (I have found it!) when he made the connection. He then used it to prove the crown had been adulterated — the crown displaced more water than an equal weight of pure gold would have, revealing its lower density.</p>
+    <p>In Vitruvius' telling he ran home naked shouting "Eureka!" (I have found it!), then showed that the wreath displaced more water than an equal weight of gold, so it was less dense. Whatever happened in the bath, the physics is in his own book: <em>On Floating Bodies</em> proves the buoyancy law as a theorem.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
       <li>Buoyant force = weight of displaced fluid. If buoyancy exceeds gravity, the object floats.</li>
       <li>What matters is density (mass per volume), not mass alone. A hollow steel ship floats; a solid steel ball sinks.</li>
-      <li>Archimedes' insight was the first quantitative principle in fluid mechanics — 2,000 years before Newton.</li>
+      <li>Archimedes proved it as a theorem (<em>On Floating Bodies</em>, Book I, Propositions 5–7, c. 250 BCE) from one postulate about how fluid under more pressure pushes fluid under less.</li>
     </ul>
     <p>$$F_b = \rho_{\text{fluid}} \cdot V_{\text{displaced}} \cdot g$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">Archimedes, <em>On Floating Bodies</em>, Book I, Postulate 1 and Propositions 5–7; English translation in T. L. Heath, <em>The Works of Archimedes</em> (Cambridge University Press, 1897).</li>
+      <li id="src-2">Vitruvius, <em>De architectura</em>, Book IX, preface, section 9–12 (the crown and the bath, written about two centuries after Archimedes).</li>
+      <li id="src-3">Galileo Galilei, <em>La Bilancetta</em> (1586), on the hydrostatic balance and why the overflow method is too coarse to detect the fraud.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>

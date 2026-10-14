@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Objects moving at high speed are measured as shorter along their direction of motion. Space itself compresses for fast-moving things.">
+  <meta name="description" content="Objects moving at high speed are measured as shorter along their direction of motion. The effect is mutual: the passenger measures our rulers as the short ones.">
   <meta property="og:title" content="Special Relativity: Length Contraction — How Physics Works">
-  <meta property="og:description" content="Objects moving at high speed are measured as shorter along their direction of motion. Space itself compresses for fast-moving things.">
+  <meta property="og:description" content="Objects moving at high speed are measured as shorter along their direction of motion. The effect is mutual: the passenger measures our rulers as the short ones.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/030-special-relativity-length/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -52,7 +55,7 @@
   <header class="stop-header">
     <div class="stop-header__era">The Modern Revolution · 1905</div>
     <h1 class="stop-header__title">Special Relativity: Length Contraction</h1>
-    <p class="stop-header__subtitle">Moving objects are shorter</p>
+    <p class="stop-header__subtitle">Moving objects measure shorter</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1905</span>
       <span>·</span>
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Objects moving at high speed are measured as shorter along their direction of motion. Space itself compresses for fast-moving things.</p>
+    <p>Objects moving at high speed are measured as shorter along their direction of motion. The effect is mutual: the passenger measures our rulers as the short ones.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Special Relativity: Length Contraction — interactive simulation">
@@ -70,7 +73,7 @@
     <div class="sim-controls">
       <div class="sim-control-row" style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
         <label for="velocity-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Velocity</label>
-        <input type="range" id="velocity-slider" min="0" max="990" step="10" value="0" style="flex:1;min-width:120px;">
+        <input type="range" id="velocity-slider" min="0" max="990" step="10" value="0" aria-label="Velocity as a fraction of the speed of light" style="flex:1;min-width:120px;">
         <span id="velocity-readout" style="font-size:var(--text-sm);font-family:monospace;color:var(--color-text-secondary);white-space:nowrap;">v&nbsp;=&nbsp;0.000c &nbsp; L&nbsp;=&nbsp;100.0&nbsp;m</span>
       </div>
       <div class="sim-actions" style="margin-left:auto;">
@@ -84,12 +87,21 @@
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>Space Compresses at High Speed</h3>
-    <p>A meter stick moving past you at relativistic speed is measured as shorter along its direction of motion. At 99% the speed of light, it measures only about 14 cm &mdash; not because it physically changed, but because of the geometry of spacetime.</p>
+    <h3>Moving Objects Measure Shorter</h3>
+    <p>A meter stick moving past you at relativistic speed is measured as shorter along its direction of motion. At 99% the speed of light, it measures only about 14 cm &mdash; not because anything happened to the stick, but because of how lengths are compared between frames.</p>
     <h3>Only Along the Direction of Motion</h3>
-    <p>Length contraction is strictly along the direction of travel. The height and width perpendicular to motion are unchanged. A sphere moving at 0.99c looks like a flattened disk to a stationary observer.</p>
+    <p>Length contraction is strictly along the direction of travel. The height and width perpendicular to motion are unchanged. A sphere moving at 0.99c is measured as an ellipsoid flattened to a seventh of its width along the motion. A photograph would show something else: light from its far side takes longer to arrive, and for a sphere that effect exactly cancels the flattening, so the outline stays circular and the sphere appears rotated instead (the Terrell–Penrose effect, 1959).<sup><a href="#src-2">[2]</a><a href="#src-3">[3]</a></sup> The simulation shows the measured shape, not a photograph.</p>
     <h3>The Same Root Cause as Time Dilation</h3>
-    <p>Time dilation and length contraction are two sides of the same spacetime geometry. They are both required to keep the speed of light constant for all inertial observers. You cannot have one without the other.</p>
+    <p>Time dilation and length contraction are two sides of the same spacetime geometry. They are both required to keep the speed of light constant for all inertial observers. You cannot have one without the other. The third piece, and the one that resolves every apparent paradox, is that observers in relative motion disagree about which events are simultaneous. Measuring a length means marking both ends at the same instant, and &lsquo;the same instant&rsquo; is frame-dependent. That is where the contraction comes from.</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. Einstein, <em>Annalen der Physik</em> 17, 891 (1905).</li>
+      <li id="src-2">J. Terrell, "Invisibility of the Lorentz Contraction", <em>Physical Review</em> 116, 1041 (1959).</li>
+      <li id="src-3">R. Penrose, "The apparent shape of a relativistically moving sphere", <em>Proceedings of the Cambridge Philosophical Society</em> 55, 137 (1959).</li>
+      <li>D. H. Frisch and J. H. Smith, <em>American Journal of Physics</em> 31, 342 (1963): the muon's view of the atmosphere.</li>
+    </ol>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>

@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Schrödinger's equation describes how quantum wavefunctions evolve in time — giving probabilities, not certainties, for where a particle will be found.">
-  <meta property="og:title" content="Schrödinger's Wave Equation — How Physics Works">
-  <meta property="og:description" content="Schrödinger's equation describes how quantum wavefunctions evolve in time — giving probabilities, not certainties, for where a particle will be found.">
+  <meta name="description" content="Schrödinger&#x27;s 1926 equation sets how a wavefunction changes in time. Watch an electron in a 1 nm box: a stationary state stays put, a superposition sloshes, a wave packet spreads and revives.">
+  <meta property="og:title" content="Schrödinger&#x27;s Wave Equation — How Physics Works">
+  <meta property="og:description" content="Schrödinger&#x27;s 1926 equation sets how a wavefunction changes in time. Watch an electron in a 1 nm box: a stationary state stays put, a superposition sloshes, a wave packet spreads and revives.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/036-schrodinger-wavefunction/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Schrödinger's Wave Equation — How Physics Works</title>
+  <title>Schrödinger&#x27;s Wave Equation — How Physics Works</title>
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
@@ -48,10 +48,10 @@
   }());
 </script>
 <main class="stop-page container" data-era="modern">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Modern Physics"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">The Modern Revolution · 1926</div>
-    <h1 class="stop-header__title">Schrödinger's Wave Equation</h1>
+    <div class="stop-header__era">Modern Physics · 1926</div>
+    <h1 class="stop-header__title">Schrödinger&#x27;s Wave Equation</h1>
     <p class="stop-header__subtitle">The probability cloud that replaced the orbit</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1926</span>
@@ -60,44 +60,107 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Schrödinger's equation describes how quantum wavefunctions evolve in time — giving probabilities, not certainties, for where a particle will be found.</p>
+    <p>
+      In 1926 Erwin Schrödinger published a wave equation for matter<sup><a href="#src-1">[1]</a></sup>. It does not give a particle's path. It gives a wavefunction $\psi$, and later that year Max Born proposed that $|\psi|^2$ is the probability of finding the particle at each place<sup><a href="#src-3">[3]</a></sup>.
+    </p>
+    <p>
+      The simulation solves the equation exactly for an electron trapped in a box 1 nm wide. Pick a starting state and watch how it changes, then switch to hydrogen to see the clouds that replaced Bohr's orbits.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Schrödinger's Wave Equation — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: wavefunction of an electron in a one-nanometre box evolving under the Schrödinger equation">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="System">
+        <button class="sim-btn" id="mode-box" type="button" aria-pressed="true">Particle in a box</button>
+        <button class="sim-btn" id="mode-hyd" type="button" aria-pressed="false">Hydrogen atom</button>
+      </div>
+      <div id="box-controls" style="display:contents">
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="Starting state">
+          <button class="sim-btn" id="preset-one" type="button" aria-pressed="false">One state</button>
+          <button class="sim-btn" id="preset-two" type="button" aria-pressed="false">States 1 + 2</button>
+          <button class="sim-btn" id="preset-packet" type="button" aria-pressed="true">Wave packet</button>
+        </div>
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="n-slider">
+            State n (one state)
+            <span class="sim-control__value" style="text-transform:none" id="n-val">n = 1 (0 nodes)</span>
+          </label>
+          <input type="range" id="n-slider" min="1" max="6" step="1" value="1" aria-label="Quantum number n of the single stationary state" aria-valuetext="n = 1, 0 nodes">
+        </div>
+      </div>
+      <div id="hyd-controls" style="display:none;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="Hydrogen state">
+        <button class="sim-btn" id="h-1s" type="button" aria-pressed="true">1s</button>
+        <button class="sim-btn" id="h-2s" type="button" aria-pressed="false">2s</button>
+        <button class="sim-btn" id="h-2p" type="button" aria-pressed="false">2p (m = 0)</button>
+      </div>
+      <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+        <label class="sim-control__label" for="speed-slider">
+          Playback speed
+          <span class="sim-control__value" style="text-transform:none" id="speed-val">0.10 fs/s</span>
+        </label>
+        <input type="range" id="speed-slider" min="0.02" max="2" step="0.02" value="0.1" aria-label="Simulated femtoseconds per real second" aria-valuetext="0.10 femtoseconds per second">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="parts-toggle" type="button" aria-pressed="false">Hide Re ψ and Im ψ</button>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 10</span>
+      <span id="sim-status">Wave packet: press play to watch it bounce, spread and revive.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Solve the particle-in-a-box and visualize quantum probability densities</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Switch between energy levels and count the nodes</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ See how the wavefunction evolves in time according to the Schrödinger equation</li>
-    </ul>
+    <h3>A Wave Equation for Matter</h3>
+    <p>De Broglie had given electrons a wavelength. Schrödinger asked what equation such a wave obeys. For one particle of mass $m$ moving along a line in a potential $V(x)$ his time-dependent equation reads<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-6">[6]</a></sup></p>
+    <p style="overflow-x:auto;">$$i\hbar\,\frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m}\,\frac{\partial^2 \psi}{\partial x^2} + V(x)\,\psi$$</p>
+    <p>In the first of his 1926 papers he solved the time-independent form for the hydrogen atom and recovered its energy levels<sup><a href="#src-1">[1]</a></sup>. Wolfgang Pauli had obtained the same levels from Heisenberg's matrix mechanics only days earlier<sup><a href="#src-9">[9]</a></sup>; Schrödinger then showed that the two theories give the same predictions<sup><a href="#src-4">[4]</a></sup>.</p>
+    <h3>What $\psi$ Means</h3>
+    <p>The wavefunction is a complex number at each point, with a size and a phase. Schrödinger at first hoped it described a spread-out electron. Born's reading, which became the standard one, is that $|\psi(x)|^2$ is a probability density: a position measurement finds the electron at one place, and over many repeats the results are distributed as $|\psi|^2$<sup><a href="#src-3">[3]</a></sup>. In the simulation the height of the coloured area is $|\psi|^2$ and its colour is the phase.</p>
+    <h3>An Electron in a Box</h3>
+    <p>The simplest case is a particle between two walls it cannot pass, with $V = 0$ inside. The states of fixed energy are standing waves that fit the box<sup><a href="#src-6">[6]</a></sup>:</p>
+    <p style="overflow-x:auto;">$$\psi_n(x) = \sqrt{\tfrac{2}{L}}\,\sin\frac{n\pi x}{L}, \qquad E_n = \frac{n^2 h^2}{8 m L^2}$$</p>
+    <p>For an electron in a box $L = 1$ nm wide, the CODATA constants<sup><a href="#src-7">[7]</a></sup> give $E_1 \approx 0.376$ eV. Each state's wavefunction only turns its phase in time, at a rate $E_n/\hbar$, so $|\psi_n|^2$ never changes. That is why these are called stationary states. State $n$ has $n - 1$ nodes, points inside the box where $\psi$ is always zero. Choose <em>One state</em>, move the $n$ slider and count them; the colour cycles while the shape stays still.</p>
+    <h3>Superpositions Move</h3>
+    <p>Any other state is a sum of stationary states, $\psi(x,t) = \sum_n c_n\,\psi_n(x)\,e^{-iE_n t/\hbar}$. Because the phases turn at different rates, the parts drift in and out of step and $|\psi|^2$ moves. An equal mix of $n = 1$ and $n = 2$ sloshes from side to side with period $h/(E_2 - E_1) \approx 3.7$ fs.</p>
+    <p>A localised wave packet needs many terms. It travels, reflects off the walls and spreads into a complicated interference pattern. In this box every energy is a whole-number multiple of $E_1$, so after $t = h/E_1 \approx 11$ fs every phase is back where it started and the packet returns exactly to its original shape, a quantum revival<sup><a href="#src-5">[5]</a></sup>. Halfway there, at about 5.5 fs, it reappears mirrored. Revivals of this kind have been observed in electron wave packets in Rydberg atoms<sup><a href="#src-8">[8]</a></sup>.</p>
+    <h3>The Cloud That Replaced the Orbit</h3>
+    <p>For the hydrogen atom the same equation, with the electron held by the proton's Coulomb pull, gives the energies $E_n = -13.6\ \text{eV}/n^2$, the levels of Bohr's model<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-7">[7]</a></sup>. But the states are not orbits. They are three-dimensional clouds of probability<sup><a href="#src-6">[6]</a></sup>. The ground state, 1s, is a ball with no edge; the chance of finding the electron at distance $r$ peaks at the Bohr radius $a_0 \approx 0.0529$ nm<sup><a href="#src-7">[7]</a></sup>, exactly where Bohr put his orbit. The 2s state has a spherical node, and 2p (here the one with $m = 0$) has a nodal plane through the nucleus. In this model 2s and 2p have the same energy. The dashed circle and line mark Bohr's orbit radius $n^2 a_0$ for comparison.</p>
+    <h3>How the Simulation Works</h3>
+    <p>The sim adds up the stationary states with their exact phase factors, so there is no time-stepping error. The packet is a Gaussian (width 0.07 nm, starting at 0.3 nm, moving right) expanded on the lowest 80 states; the readout shows how much of the state those 80 terms capture. The model is one-dimensional and non-relativistic, with perfectly hard walls. Time runs $10^{15}$ to $10^{16}$ times slower than in the model, at the playback speed shown. The hydrogen view uses the exact non-relativistic 1s, 2s and 2p wavefunctions in a slice through the nucleus; for visibility the brightness is the square root of the density, and the colour shows the phase, which for a stationary state only turns. $\langle x \rangle$ and $\langle E \rangle$ are averages calculated from $\psi$, not measurements.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>The wavefunction ψ(x,t) evolves deterministically via Schrödinger's equation, but its square |ψ|² gives only probabilities for measurement outcomes. Nature is fundamentally probabilistic.</li>
+      <li>The Schrödinger equation (1926) fixes how the wavefunction $\psi$ changes in time; $|\psi|^2$ gives the probabilities of where the particle is found (Born, 1926).</li>
+      <li>Stationary states have fixed $|\psi|^2$; for an electron in a 1 nm box the lowest energy is about 0.376 eV.</li>
+      <li>Superpositions move because their parts turn phase at different rates; in a box a packet revives exactly after $h/E_1$.</li>
+      <li>In hydrogen the orbit becomes a cloud: the 1s probability peaks at the Bohr radius, but the electron has no path.</li>
     </ul>
+    <p style="overflow-x:auto;">$$i\hbar\,\frac{\partial \psi}{\partial t} = \hat H\,\psi$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">E. Schrödinger, "Quantisierung als Eigenwertproblem (Erste Mitteilung)", <em>Annalen der Physik</em> 79, 361–376 (1926). Hydrogen energy levels from the wave equation.</li>
+      <li id="src-2">E. Schrödinger, "Quantisierung als Eigenwertproblem (Vierte Mitteilung)", <em>Annalen der Physik</em> 81, 109–139 (1926). The time-dependent equation.</li>
+      <li id="src-3">M. Born, "Zur Quantenmechanik der Stoßvorgänge", <em>Zeitschrift für Physik</em> 37, 863–867 (1926). Probability interpretation.</li>
+      <li id="src-4">E. Schrödinger, "Über das Verhältnis der Heisenberg-Born-Jordanschen Quantenmechanik zu der meinen", <em>Annalen der Physik</em> 79, 734–756 (1926).</li>
+      <li id="src-5">R. W. Robinett, "Quantum wave packet revivals", <em>Physics Reports</em> 392, 1–119 (2004). Revival time $h/E_1$ and mirror revival in the infinite well.</li>
+      <li id="src-6">D. J. Griffiths and D. F. Schroeter, <em>Introduction to Quantum Mechanics</em>, 3rd ed., ch. 1, 2 and 4 (2018). Time-dependent equation, stationary states, infinite square well, hydrogen wavefunctions.</li>
+      <li id="src-7">E. Tiesinga, P. J. Mohr, D. B. Newell and B. N. Taylor, "CODATA recommended values of the fundamental physical constants: 2018", <em>Reviews of Modern Physics</em> 93, 025010 (2021). Cited: $h$, $m_e$, $e$, the Rydberg energy 13.606 eV and the Bohr radius 0.0529 nm; used to calculate $E_1 = 0.376$ eV and the periods 3.7 fs and 11 fs.</li>
+      <li id="src-8">J. A. Yeazell, M. Mallalieu and C. R. Stroud Jr., "Observation of the collapse and revival of a Rydberg electronic wave packet", <em>Physical Review Letters</em> 64, 2007–2010 (1990).</li>
+      <li id="src-9">W. Pauli, "Über das Wasserstoffspektrum vom Standpunkt der neuen Quantenmechanik", <em>Zeitschrift für Physik</em> 36, 336–363 (1926).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>Wavefunctions evolve deterministically. But Heisenberg showed that certain pairs of properties — position and momentum — are fundamentally, irreducibly uncertain.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>A wave packet cannot be narrow in position and in wavelength at the same time. Heisenberg turned that into a limit.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +186,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>

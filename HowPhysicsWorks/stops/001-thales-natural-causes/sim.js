@@ -169,10 +169,10 @@
     ctx.font       = '12px "DM Sans", system-ui, sans-serif';
     ctx.textAlign  = 'center'; ctx.textBaseline = 'top';
     ctx.fillText('Earth floats on water.', x + w / 2, y + h - 50);
-    ctx.fillText('Quakes are waves — testable!', x + w / 2, y + h - 32);
-    ctx.fillStyle = 'oklch(0.72 0.15 145)';
+    ctx.fillText('Quakes are waves in that water.', x + w / 2, y + h - 32);
+    ctx.fillStyle = 'oklch(0.50 0.12 220)';
     ctx.font = 'bold 11px "DM Sans", sans-serif';
-    ctx.fillText('✓  leads to a prediction', x + w / 2, y + h - 14);
+    ctx.fillText('A natural cause, though a wrong one.', x + w / 2, y + h - 14);
 
     ctx.restore();
   }

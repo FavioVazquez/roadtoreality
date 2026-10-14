@@ -29,7 +29,8 @@
     this.color= color;
     this.r    = Math.max(12, Math.min(30, mass * 2.5 + 8));
     this.vy   = 0;
-    /* metre position (0 = start, positive = downward) */
+    /* metre position of the ball's BOTTOM (0 = start line, positive = downward),
+       so both bottoms start level and land together when air is off */
     this.posM = 0;
     this.landed = false;
     this.landTime = null;
@@ -44,17 +45,20 @@
     this.vy += acc * dt;
     this.posM += this.vy * dt;
 
-    var canvasY = startY + this.posM * SCALE;
-    if (canvasY + this.r >= floorY) {
-      this.posM  = (floorY - startY - this.r) / SCALE;
+    var bottomY = startY + this.posM * SCALE;
+    if (bottomY >= floorY) {
+      /* interpolate the landing time inside this step */
+      var over = (bottomY - floorY) / (this.vy * SCALE);
+      this.landTime = Math.max(0, elapsed - over);
+      this.posM  = (floorY - startY) / SCALE;
       this.vy    = 0;
       this.landed = true;
-      this.landTime = elapsed;
     }
   };
 
   Ball.prototype.canvasY = function () {
-    return startY + this.posM * SCALE;
+    /* centre of the ball: bottom minus radius */
+    return startY + this.posM * SCALE - this.r;
   };
 
   var elapsed = 0; /* seconds since drop */
@@ -188,7 +192,7 @@
       ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(ball.landTime.toFixed(2) + 's', ball.x, floorY - ball.r - 8);
+      ctx.fillText(ball.landTime.toFixed(2) + 's', ball.x, floorY - 2 * ball.r - 6);
       ctx.restore();
     }
   }
@@ -255,12 +259,21 @@
       var mount = document.getElementById('sim-mount');
       if (mount) {
         var rect = mount.getBoundingClientRect();
-        W = canvas.width  = Math.round(rect.width)  || 600;
-        H = canvas.height = Math.max(400, Math.round(rect.height || 400));
+        var dpr0 = window.devicePixelRatio || 1;
+        W = Math.round(rect.width)  || 600;
+        H = Math.max(400, Math.round(rect.height || 400));
+        canvas.width  = Math.round(W * dpr0);
+        canvas.height = Math.round(H * dpr0);
+        canvas.style.width  = W + 'px';
         canvas.style.height = H + 'px';
+        ctx.setTransform(dpr0, 0, 0, dpr0, 0, 0);
         initBalls();
         draw();
       }
+    }
+    if (dropped && !running && ball1 && ball2 && ball1.landed && ball2.landed) {
+      /* a finished run: Play starts a new drop */
+      initBalls();
     }
     if (!dropped) {
       /* First press = drop */
@@ -328,7 +341,7 @@
         var dot = document.querySelector('.sim-caption__dot');
         if (dot) dot.classList.remove('is-running');
         var btn = document.getElementById('sim-play-btn');
-        if (btn) { btn.textContent = '↺ Done'; btn.dataset.state = 'paused'; }
+        if (btn) { btn.textContent = '↺ Drop again'; btn.dataset.state = 'paused'; }
       }
     }
 
