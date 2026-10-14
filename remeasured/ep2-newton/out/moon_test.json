@@ -1,0 +1,153 @@
+{
+ "inputs": {
+  "R_paris_ft": 19615783.074098863,
+  "R_km": 6371.978909510205,
+  "T_days": 27.321527777777778,
+  "F_solar_1726": 1.0056266704177803,
+  "s_obs_pendulum_ft": 15.095697009305077,
+  "s_obs_huygens_direct_ft": 15.083333333333334,
+  "s_obs_huygens_horary_converted_ft": 15.082706404320986,
+  "rel_sigma_R_picard": 0.0006551834896331226
+ },
+ "variants": {
+  "A_1687": {
+   "k": 60,
+   "F": 1.0,
+   "moon_fall_1min_ft": 15.008997799558989,
+   "moon_fall_1min_small_angle_ft": 15.008997864959815,
+   "pred_surface_fall_1s_ft": 15.008997799558989,
+   "pred_surface_fall_1s_m": 4.875513614236298,
+   "ratios": {
+    "pendulum pi^2 L/2 (1726 basis)": {
+     "ratio": 0.9942566938318484,
+     "sigma_rel": 0.02500961847877687
+    },
+    "Huygens 15 ft 1 in (1673 p.155; 1687 p.407)": {
+     "ratio": 0.995071677318828,
+     "sigma_rel": 0.02505939256351903
+    }
+   }
+  },
+  "B_1726": {
+   "k": 60,
+   "F": 1.0056266704177803,
+   "moon_fall_1min_ft": 15.008997799558989,
+   "moon_fall_1min_small_angle_ft": 15.008997864959815,
+   "pred_surface_fall_1s_ft": 15.093448483478298,
+   "pred_surface_fall_1s_m": 4.902946522461007,
+   "ratios": {
+    "pendulum pi^2 L/2 (1726 basis)": {
+     "ratio": 0.9998510485587122,
+     "sigma_rel": 0.02500961847877687
+    },
+    "Huygens 15 ft 1 in (1673 p.155; 1687 p.407)": {
+     "ratio": 1.0006706176891689,
+     "sigma_rel": 0.02505939256351903
+    }
+   }
+  },
+  "C_60half": {
+   "k": 60.5,
+   "F": 1.0,
+   "moon_fall_1min_ft": 15.134072781221981,
+   "moon_fall_1min_small_angle_ft": 15.134072847167815,
+   "pred_surface_fall_1s_ft": 15.387358304852155,
+   "pred_surface_fall_1s_m": 4.998420008072959,
+   "ratios": {
+    "pendulum pi^2 L/2 (1726 basis)": {
+     "ratio": 1.0193208233688908,
+     "sigma_rel": 0.02500961847877687
+    },
+    "Huygens 15 ft 1 in (1673 p.155; 1687 p.407)": {
+     "ratio": 1.0201563517029053,
+     "sigma_rel": 0.02505939256351903
+    }
+   }
+  }
+ },
+ "newton_arithmetic_check": {
+  "versed_sine_printed_ft": 15.093364197530866,
+  "recomputed_ft": 15.008997799558989
+ },
+ "envelope_vs_pendulum": {
+  "59": 0.9453678033448667,
+  "60": 0.9942566938318484,
+  "61": 1.0448026788085503
+ },
+ "sigma_components": {
+  "k (moon distance, +/-0.5 R plausible)": 0.025,
+  "R (Picard's +/-2\" per latitude)": 0.0006551834896331226,
+  "T (rounded to the minute, +/-0.5 min uniform)": 1.4674790158087229e-05,
+  "obs pendulum pi^2 L/2 (1726 basis)": 0.00022701475595913735,
+  "obs Huygens 15 ft 1 in (1673 p.155; 1687 p.407)": 0.0015948902463801817
+ },
+ "historical_vs_modern": {
+  "Picard degree": {
+   "historical": 111.2120118385909,
+   "modern": 111.21361110893096,
+   "unit": "km",
+   "rel_diff": -1.4380167356442541e-05
+  },
+  "Earth radius (Picard sphere vs mean)": {
+   "historical": 6371.978909510205,
+   "modern": 6371.01,
+   "unit": "km",
+   "rel_diff": 0.00015208099033037215
+  },
+  "Moon distance (60 R vs a/R_mean)": {
+   "historical": 60.0,
+   "modern": 60.33580232961493,
+   "unit": "R",
+   "rel_diff": -0.0055655567117586235
+  },
+  "Moon distance in km (60 x Picard R vs a)": {
+   "historical": 382318.7345706123,
+   "modern": 384400.0,
+   "unit": "km",
+   "rel_diff": -0.005414322136804595
+  },
+  "Sidereal month": {
+   "historical": 27.321527777777778,
+   "modern": 27.321582,
+   "unit": "d",
+   "rel_diff": -1.9845930672168777e-06
+  },
+  "Seconds pendulum (3 ft 8.5 lin vs g/pi^2)": {
+   "historical": 0.9936927019418175,
+   "modern": 0.9939054685172366,
+   "unit": "m",
+   "rel_diff": -0.00021407123932681849
+  },
+  "Fall in 1 s (pi^2 L/2 vs g/2)": {
+   "historical": 4.903676932207669,
+   "modern": 4.904726893172249,
+   "unit": "m",
+   "rel_diff": -0.00021407123932659644
+  },
+  "Fall in 1 s (Huygens 15 ft 1 in vs g/2)": {
+   "historical": 4.89966072330903,
+   "modern": 4.904726893172249,
+   "unit": "m",
+   "rel_diff": -0.0010329157919620746
+  }
+ },
+ "contributions_1687": {
+  "k = 60 instead of a/R": 0.9833960837337944,
+  "Picard R instead of mean R": 1.0001520809903304,
+  "27d7h43m instead of modern month": 1.0000039691979503,
+  "pendulum fall instead of g/2 (Paris)": 1.0002141170756345
+ },
+ "modern_baseline_newton_formula": 1.010669836612609,
+ "book1_prop45": {
+  "c": 0.0027975940691005734,
+  "apse_arcmin_per_rev": 91.47415291503307
+ },
+ "modern_physics": {
+  "two_body_factor": 0.9878494157304577,
+  "solar_mean_radial_factor": 1.002797603200116,
+  "GM_pred": 398634.3676485295,
+  "GM_earth": 398600.435436,
+  "g_mean_over_g_paris": 1.0010974837402973,
+  "newton_solar_fraction_from_apse": 0.005546239598234693
+ }
+}

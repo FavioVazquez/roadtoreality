@@ -1,0 +1,75 @@
+== Inputs (from transcription.json)
+Picard degree (Mesure de la Terre p.22): 57060 toises
+  circumference = 123,249,600 Paris ft; Newton prints 123,249,600 (1687 p.406, 1726 p.397)
+  radius = 19,615,783.1 Paris ft; Newton prints 19,615,800 (1726 p.413)
+  = 6371.979 km
+  Picard's arcs recomputed: Sourdon 57065.0 t/deg (printed 57064.5), Amiens 57057.3 t/deg (printed 57057)
+  Picard's stated +/-2" per observation -> +/-0.066% on the degree (+/-37 toises)
+Sidereal month (1687 p.406 = 1726 p.397): 27 d 7 h 43 m = 27.321528 d
+1726 solar factor (p.396): 178.725 / 177.725 = 1.005627
+Surface fall in 1 s:
+  seconds pendulum 3 ft 8 1/2 lin (Huygens p.152; Newton 1726 p.397; Picard p.4 '36 pouces 8 1/2 lignes' = 3.059028 ft)
+  pi^2 L / 2 = 15.09570 ft = 15 ft 1 in 1.78 lin = 2173.78 lines; Newton prints 15 ft 1 in 1.78 lin = 2173.78 lines (p.413: 2173 7/9)
+  Huygens p.155: 14 ft 9 in 6 lin horary x 881/864 = 15.08271 Paris ft = 15 ft 0 in 11.91 lin; he rounds to 15 ft 1 in = 15.08333
+  1687 p.407 (as Newton cites Huygens): 15 1/12 ft = 15.08333
+
+== Moon test
+[A_1687] 1687 Prop. IV as printed: 60 R, no solar term
+  Moon's fall in 1 min at 60 R: versed sine 15.00900 ft = 15 ft 0 in 1.30 lin (small-angle 15.00900)
+  predicted surface fall in 1 s: 15.00900 ft = 15 ft 0 in 1.30 lin = 4.8755 m
+  ratio predicted/observed vs pendulum pi^2 L/2 (1726 basis): 0.99426  (1 sigma 2.50%; distance alone 2.50%)
+  ratio predicted/observed vs Huygens 15 ft 1 in (1673 p.155; 1687 p.407): 0.99507  (1 sigma 2.51%; distance alone 2.50%)
+[B_1726] 1726 Prop. IV: 60 R in syzygies, force augmented by 178 29/40 : 177 29/40 (Prop. III Corol.)
+  Moon's fall in 1 min at 60 R: versed sine 15.00900 ft = 15 ft 0 in 1.30 lin (small-angle 15.00900)
+  predicted surface fall in 1 s: 15.09345 ft = 15 ft 1 in 1.46 lin = 4.9029 m
+  ratio predicted/observed vs pendulum pi^2 L/2 (1726 basis): 0.99985  (1 sigma 2.50%; distance alone 2.50%)
+  ratio predicted/observed vs Huygens 15 ft 1 in (1673 p.155; 1687 p.407): 1.00067  (1 sigma 2.51%; distance alone 2.50%)
+[C_60half] sensitivity: 60 1/2 R in the one-body formula (Newton's two-body distance, 1687 p.407; also his corrected Tycho value, 1726 p.397)
+  Moon's fall in 1 min at 60.5 R: versed sine 15.13407 ft = 15 ft 1 in 7.31 lin (small-angle 15.13407)
+  predicted surface fall in 1 s: 15.38736 ft = 15 ft 4 in 7.78 lin = 4.9984 m
+  ratio predicted/observed vs pendulum pi^2 L/2 (1726 basis): 1.01932  (1 sigma 2.50%; distance alone 2.50%)
+  ratio predicted/observed vs Huygens 15 ft 1 in (1673 p.155; 1687 p.407): 1.02016  (1 sigma 2.51%; distance alone 2.50%)
+
+Newton's printed versed sine (1726 p.397): 15 ft 1 in 1.44 lin = 15.09336 ft; recomputed 15.00900 ft (diff -0.559%)
+Newton's printed 15 1/12 ft (1687 p.406): diff -0.493%
+
+Uncertainty budget (relative, 1 sigma) on the predicted surface fall:
+  k (moon distance, +/-0.5 R plausible): 2.500%
+  R (Picard's +/-2" per latitude): 0.066%
+  T (rounded to the minute, +/-0.5 min uniform): 0.001%
+  observed, pendulum pi^2 L/2 (1726 basis): 0.023%
+  observed, Huygens 15 ft 1 in (1673 p.155; 1687 p.407): 0.159%
+Envelope over Newton's printed distance range (1687 formula, vs pendulum): 59 R -> 0.9454, 60 R -> 0.9943, 61 R -> 1.0448
+
+== Modern values (cited)
+Earth mean radius (JPL) 6371.01 km; meridian degree at 49.2 N (WGS84) 111.2136 km = 57060.8 toises
+Moon a = 384400.0 km, e = 0.0549, a/R_mean = 60.3358; time-mean distance a(1+e^2/2) = 384979 km (60.4267 R)
+Sidereal month (Horizons 301) 27.321582 d; GM_earth 398600.435436, GM_moon 4902.800066 km^3/s^2
+g at Paris (WGS84 normal gravity, 48 50' 10" N, 67 m): 9.80945 m/s^2 -> fall in 1 s 4.90473 m = 15.09893 Paris ft
+
+Historical vs modern:
+  Picard degree: 111.212 vs 111.214 km  (-0.001%)
+  Earth radius (Picard sphere vs mean): 6371.98 vs 6371.01 km  (+0.015%)
+  Moon distance (60 R vs a/R_mean): 60 vs 60.3358 R  (-0.557%)
+  Moon distance in km (60 x Picard R vs a): 382319 vs 384400 km  (-0.541%)
+  Sidereal month: 27.3215 vs 27.3216 d  (-0.000%)
+  Seconds pendulum (3 ft 8.5 lin vs g/pi^2): 0.993693 vs 0.993905 m  (-0.021%)
+  Fall in 1 s (pi^2 L/2 vs g/2): 4.90368 vs 4.90473 m  (-0.021%)
+  Fall in 1 s (Huygens 15 ft 1 in vs g/2): 4.89966 vs 4.90473 m  (-0.103%)
+
+Where the 1687 ratio comes from (each factor = effect of using the historical instead of the modern value):
+  k = 60 instead of a/R: x0.98340 (-1.660%)
+  Picard R instead of mean R: x1.00015 (+0.015%)
+  27d7h43m instead of modern month: x1.00000 (+0.000%)
+  pendulum fall instead of g/2 (Paris): x1.00021 (+0.021%)
+  Newton's one-body formula with all-modern inputs: predicted/observed = 1.01067
+  product of input factors x modern baseline = 0.99426 (= variant A vs pendulum: 0.99426)
+
+Modern physics behind the baseline (each factor multiplies the predicted g):
+  two-body: 1/(1+m/M) = 0.98785
+  Sun, mean radial term 1 + (1/2)(T_moon/T_year)^2 = 1.00280  [Newton 1726 uses 1.00563, from the 3 deg 3 min apse motion]
+  GM_earth implied by the Moon's orbit with both = 398634.4 km^3/s^2 vs 398600.435436 (+0.009%)
+  GM/R_mean^2 = 9.82022 m/s^2 vs normal gravity at Paris 9.80945 (+0.110%: rotation, flattening, latitude, height)
+  check: Prop. 45 Cor. 2 with apse motion 3.0500 deg/rev gives solar fraction 1/180.30; Newton prints 1/178.725; modern mean radial term 1/357.4
+  Book I Prop. 45 Cor. 2 (1726 p.141): c = 1/357.45 -> apse motion 91.474' per rev; printed 1 deg 31' 28" = 91.467'
+  Newton's first-order coefficient 1/357.45 vs modern mean radial term 1/357.45 (-0.00%); Book III Prop. III uses 2/357.45 = 1/178.725

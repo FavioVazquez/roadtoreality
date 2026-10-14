@@ -1,0 +1,801 @@
+{
+ "_about": "Episode 2 kill test: every primary-source number, read on the page images (not the OCR). Scripts read only this file. Confidence H = unambiguous at full resolution; M = readable but a small fraction glyph or a scan at its resolution limit. Image URL: https://archive.org/download/<archive_id>/page/n<image_n>.jpg. Fractions are [whole, numerator, denominator].",
+ "sources": {
+  "P1687": {
+   "edition": "Newton, Philosophiae Naturalis Principia Mathematica, 1st ed., London 1687",
+   "archive_id": "philosophiaenat00newt",
+   "copy": "Smithsonian Libraries (Dibner)"
+  },
+  "P1726": {
+   "edition": "Newton, Philosophiae Naturalis Principia Mathematica, 3rd ed., London 1726",
+   "archive_id": "A297190",
+   "copy": "Biblioteca de la Universidad de Sevilla"
+  },
+  "M1729": {
+   "edition": "Newton, The Mathematical Principles of Natural Philosophy, tr. Andrew Motte, London 1729, vol. II",
+   "archive_id": "bim_eighteenth-century_principia-english-th_newton-sir-isaac_1729_2",
+   "copy": "ECCO microfilm via Internet Archive"
+  },
+  "PIC1671": {
+   "edition": "Jean Picard, Mesure de la Terre, Paris: Imprimerie Royale 1671",
+   "archive_id": "mesure-de-la-terre-par-...-picard-jean-btv-1b-7300361b",
+   "copy": "BnF Gallica ark:/12148/btv1b7300361b, mirrored on archive.org"
+  },
+  "HUY1673": {
+   "edition": "Christiaan Huygens, Horologium Oscillatorium, Paris: F. Muguet 1673",
+   "archive_id": "gpl_3536690",
+   "copy": "George Peabody Library, Johns Hopkins"
+  }
+ },
+ "moon_test": {
+  "P1687": {
+   "where": "Book III, Prop. IV Theor. IV, pp. 406-407 (image n403-n404)",
+   "moon_distance_earth_radii_assumed": {
+    "value": 60,
+    "page": 406,
+    "image_n": 403,
+    "conf": "H",
+    "text": "Assumamus distantiam mediocrem sexaginta semidiametrorum"
+   },
+   "moon_distance_list": {
+    "page": 406,
+    "image_n": 403,
+    "conf": "H except Copernicus 60 1/3 (denominator blurred: M; 1726 and Motte print 60 1/3)",
+    "plerique_astronomi": 59,
+    "Vendelinus": 60,
+    "Copernicus": [
+     60,
+     1,
+     3
+    ],
+    "Kircherus": [
+     62,
+     1,
+     2
+    ],
+    "Tycho": [
+     56,
+     1,
+     2
+    ],
+    "Tycho_corrected_for_refraction": 61
+   },
+   "sidereal_period": {
+    "d": 27,
+    "h": 7,
+    "m": 43,
+    "page": 406,
+    "image_n": 403,
+    "conf": "H"
+   },
+   "earth_circumference_paris_ft": {
+    "value": 123249600,
+    "page": 406,
+    "image_n": 403,
+    "conf": "H",
+    "text": "uti a Gallis mensurantibus nuper definitum est"
+   },
+   "moon_fall_1min_paris_ft_printed": {
+    "value": [
+     15,
+     1,
+     12
+    ],
+    "page": 406,
+    "image_n": 403,
+    "conf": "H"
+   },
+   "surface_fall_1s_paris_ft_huygens": {
+    "value": [
+     15,
+     1,
+     12
+    ],
+    "page": 407,
+    "image_n": 404,
+    "conf": "H",
+    "text": "uti Hugenius, factis pendulorum experimentis & computo inde inito, demonstravit"
+   },
+   "two_body_distance_earth_radii": {
+    "value": [
+     60,
+     1,
+     2
+    ],
+    "page": 407,
+    "image_n": 404,
+    "conf": "H",
+    "text": "distantia centrorum Lunae ac Terrae ab invicem erit 60 1/2 semidiametrorum terrestrium (per Prop. LX Lib. I)"
+   }
+  },
+  "P1726": {
+   "where": "Book III, Prop. III Corol. and Prop. IV, pp. 396-397 (image n437-n438); Prop. XIX, p. 413 (image n454)",
+   "solar_factor": {
+    "from": [
+     177,
+     29,
+     40
+    ],
+    "to": [
+     178,
+     29,
+     40
+    ],
+    "page": 396,
+    "image_n": 437,
+    "conf": "H",
+    "text": "Actio solis ... est ad lunae vim centripetam ut 2 ad 357,45 circiter, seu 1 ad 178 29/40; Corol.: augeatur primo in ratione 177 29/40 ad 178 29/40",
+    "basis": "apsidal motion 3 deg 3 min per revolution, corol. 2 prop. XLV lib. I",
+    "apse_motion_per_rev_deg": [
+     3,
+     3,
+     60
+    ]
+   },
+   "moon_distance_earth_radii_assumed": {
+    "value": 60,
+    "page": 397,
+    "image_n": 438,
+    "conf": "H",
+    "text": "Assumamus distantiam mediocrem sexaginta semidiametrorum in syzygiis"
+   },
+   "moon_distance_list": {
+    "page": [
+     396,
+     397
+    ],
+    "image_n": [
+     437,
+     438
+    ],
+    "conf": "H except Streetus 60 2/5 (M; Motte prints 60 2/5)",
+    "Ptolemaeus_et_plerique": 59,
+    "Vendelinus_et_Hugenius": 60,
+    "Copernicus": [
+     60,
+     1,
+     3
+    ],
+    "Streetus": [
+     60,
+     2,
+     5
+    ],
+    "Tycho": [
+     56,
+     1,
+     2
+    ],
+    "Tycho_corrected_for_refraction": [
+     60,
+     1,
+     2
+    ]
+   },
+   "sidereal_period": {
+    "d": 27,
+    "h": 7,
+    "m": 43,
+    "page": 397,
+    "image_n": 438,
+    "conf": "H"
+   },
+   "earth_circumference_paris_ft": {
+    "value": 123249600,
+    "page": 397,
+    "image_n": 438,
+    "conf": "H"
+   },
+   "moon_fall_1min_paris_ft_printed": {
+    "value": [
+     15,
+     1,
+     12
+    ],
+    "page": 397,
+    "image_n": 438,
+    "conf": "H"
+   },
+   "moon_versed_sine_1min_printed": {
+    "ft": 15,
+    "in": 1,
+    "lin": [
+     1,
+     4,
+     9
+    ],
+    "page": 397,
+    "image_n": 438,
+    "conf": "H",
+    "text": "sinus versus est pedum Parisiensium 15 1/12 circiter, vel magis accurate pedum 15. dig. 1. & lin. 1 4/9"
+   },
+   "seconds_pendulum_paris": {
+    "ft": 3,
+    "in": 0,
+    "lin": [
+     8,
+     1,
+     2
+    ],
+    "page": 397,
+    "image_n": 438,
+    "conf": "H",
+    "text": "penduli, in latitudine Lutetiae Parisiorum ad singula minuta secunda oscillantis, longitudo est pedum trium Parisiensium & linearum 8 1/2, ut observavit Hugenius"
+   },
+   "surface_fall_1s_printed": {
+    "ft": 15,
+    "in": 1,
+    "lin": [
+     1,
+     7,
+     9
+    ],
+    "page": 397,
+    "image_n": 438,
+    "conf": "H"
+   },
+   "picard_degree_toises_cited": {
+    "value": 57060,
+    "page": 413,
+    "image_n": 454,
+    "conf": "H",
+    "text": "Picartus mensurando arcum gradus unius & 22' 55'' in meridiano inter Ambianum & Malvoisinam, invenit arcum gradus unius esse hexapedarum Parisiensium 57060"
+   },
+   "earth_radius_paris_ft_printed": {
+    "value": 19615800,
+    "page": 413,
+    "image_n": 454,
+    "conf": "H"
+   },
+   "surface_fall_1s_lines_printed": {
+    "value": [
+     2173,
+     7,
+     9
+    ],
+    "in_vacuo": 2174,
+    "page": 413,
+    "image_n": 454,
+    "conf": "H"
+   },
+   "latitude_paris": {
+    "deg": 48,
+    "min": 50,
+    "sec": 10,
+    "page": 413,
+    "image_n": 454,
+    "conf": "H"
+   },
+   "sidereal_day": {
+    "h": 23,
+    "m": 56,
+    "s": 4,
+    "page": 413,
+    "image_n": 454,
+    "conf": "H"
+   },
+   "book1_prop45_cor2": {
+    "c_denominator": 357.45,
+    "apse_angle_printed": {
+     "deg": 180,
+     "min": 45,
+     "sec": 44
+    },
+    "apse_motion_per_rev_printed": {
+     "deg": 1,
+     "min": 31,
+     "sec": 28
+    },
+    "page": 141,
+    "image_n": 182,
+    "conf": "H",
+    "text": "Ponamus vim illam extraneam esse 357.45 partibus minorem quam vis altera ... apsis summa singulis revolutionibus progrediendo conficiet 1 gr. 31 m. 28 sec. Apsis lunae est duplo velocior circiter."
+   }
+  },
+  "M1729": {
+   "where": "vol. II, Book III Prop. IV, pp. 216-217 (image n239-n240)",
+   "moon_distance_assumed_as_printed": {
+    "value": 60,
+    "unit_printed": "diameters",
+    "page": 216,
+    "image_n": 239,
+    "conf": "H",
+    "note": "Motte prints 'the mean distance of 60 diameters in the syzygies'; the Latin says semidiametrorum. Translation slip; not used."
+   },
+   "sidereal_period": {
+    "d": 27,
+    "h": 7,
+    "m": 43,
+    "page": 216,
+    "image_n": 239,
+    "conf": "H"
+   },
+   "earth_circumference_paris_ft": {
+    "value": 123249600,
+    "page": 216,
+    "image_n": 239,
+    "conf": "H"
+   },
+   "moon_versed_sine_1min_printed": {
+    "ft": 15,
+    "in": 1,
+    "lin": [
+     1,
+     4,
+     9
+    ],
+    "page": 216,
+    "image_n": 239,
+    "conf": "H"
+   },
+   "seconds_pendulum_paris": {
+    "ft": 3,
+    "in": 0,
+    "lin": [
+     8,
+     1,
+     2
+    ],
+    "page": 217,
+    "image_n": 240,
+    "conf": "H"
+   },
+   "surface_fall_1s_printed": {
+    "ft": 15,
+    "in": 1,
+    "lin": [
+     1,
+     7,
+     9
+    ],
+    "page": 217,
+    "image_n": 240,
+    "conf": "M"
+   },
+   "two_body_distance_earth_radii": {
+    "value": [
+     60,
+     1,
+     2
+    ],
+    "page": 217,
+    "image_n": 240,
+    "conf": "H"
+   }
+  },
+  "PIC1671": {
+   "where": "Mesure de la Terre, art. 4 p. 4 (image n15); art. XI p. 22 (image n41)",
+   "units": {
+    "toise_pieds": 6,
+    "pied_pouces": 12,
+    "pouce_lignes": 12,
+    "page": 4,
+    "image_n": 15,
+    "conf": "H"
+   },
+   "seconds_pendulum": {
+    "pouces": 36,
+    "lignes": [
+     8,
+     1,
+     2
+    ],
+    "seasonal_spread_lignes": [
+     0,
+     1,
+     10
+    ],
+    "page": 4,
+    "image_n": 15,
+    "conf": "H",
+    "text": "36 pouces 8 lignes 1/2 ... ce n'est seulement de la dixieme partie d'vne ligne"
+   },
+   "degree_from_sourdon": {
+    "toises": 57064,
+    "pieds": 3,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "degree_from_amiens": {
+    "toises": 57057,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "lat_diff_malvoisine_sourdon": {
+    "deg": 1,
+    "min": 11,
+    "sec": 57,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "meridian_dist_malvoisine_sourdon": {
+    "toises": 68430,
+    "pieds": 3,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "lat_diff_malvoisine_amiens": {
+    "deg": 1,
+    "min": 22,
+    "sec": 55,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "meridian_dist_malvoisine_amiens": {
+    "toises": 78850,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H"
+   },
+   "stated_precision_per_observation_arcsec": {
+    "value": 2,
+    "toises": 32,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H",
+    "text": "nous ne pouvions repondre de deux secondes, & par consequent de la valeur d'environ 32 Toises sur chaque observation"
+   },
+   "adopted_degree_toises": {
+    "value": 57060,
+    "page": 22,
+    "image_n": 41,
+    "conf": "H",
+    "text": "Nous nous arresterons cependant au compte rond de 57060 Toises pour vn degre d'vn grand cercle de la Terre"
+   }
+  },
+  "HUY1673": {
+   "where": "Horologium Oscillatorium, Pars IV (De centro oscillationis), p. 152 (image n173); Prop. XXV p. 155 (image n176)",
+   "paris_to_horary_foot": {
+    "paris": 864,
+    "horary": 881,
+    "page": 152,
+    "image_n": 173,
+    "conf": "H"
+   },
+   "seconds_pendulum": {
+    "paris_ft": 3,
+    "lines": [
+     8,
+     1,
+     2
+    ],
+    "page": 152,
+    "image_n": 173,
+    "conf": "H",
+    "text": "tribus hujusmodi pedibus, cum octo lineis & dimidia"
+   },
+   "pi_ratio_used": {
+    "num": 355,
+    "den": 113,
+    "page": 155,
+    "image_n": 176,
+    "conf": "H"
+   },
+   "fall_1s_horary": {
+    "ft": 14,
+    "unc": 9,
+    "lin": 6,
+    "page": 155,
+    "image_n": 176,
+    "conf": "H"
+   },
+   "fall_1s_paris_rounded": {
+    "ft": 15,
+    "unc": 1,
+    "page": 155,
+    "image_n": 176,
+    "conf": "H",
+    "text": "proxime pedum 15 & unciae unius"
+   }
+  }
+ },
+ "jupiter": {
+  "P1726": {
+   "where": "Book III, Phaenomenon I, pp. 390-391 (image n431-n432)",
+   "periods": [
+    {
+     "d": 1,
+     "h": 18,
+     "m": 27,
+     "s": 34
+    },
+    {
+     "d": 3,
+     "h": 13,
+     "m": 13,
+     "s": 42
+    },
+    {
+     "d": 7,
+     "h": 3,
+     "m": 42,
+     "s": 36
+    },
+    {
+     "d": 16,
+     "h": 16,
+     "m": 32,
+     "s": 9
+    }
+   ],
+   "periods_page": 390,
+   "periods_image_n": 431,
+   "periods_conf": "H",
+   "periods_qualifier": "stellis fixis quiescentibus (relative to the fixed stars)",
+   "rows": {
+    "Borelli": {
+     "a": [
+      [
+       5,
+       2,
+       3
+      ],
+      [
+       8,
+       2,
+       3
+      ],
+      14,
+      [
+       24,
+       2,
+       3
+      ]
+     ],
+     "conf": "H",
+     "measured": [
+      true,
+      true,
+      true,
+      true
+     ]
+    },
+    "Townlei per microm.": {
+     "a": [
+      5.52,
+      8.78,
+      13.47,
+      24.72
+     ],
+     "conf": "H",
+     "measured": [
+      true,
+      true,
+      true,
+      true
+     ]
+    },
+    "Cassini per telescop.": {
+     "a": [
+      5,
+      8,
+      13,
+      23
+     ],
+     "conf": "H",
+     "measured": [
+      true,
+      true,
+      true,
+      true
+     ]
+    },
+    "Cassini per eclips. satell.": {
+     "a": [
+      [
+       5,
+       2,
+       3
+      ],
+      9,
+      [
+       14,
+       23,
+       60
+      ],
+      [
+       25,
+       3,
+       10
+      ]
+     ],
+     "conf": "M (14 23/60 and 25 3/10: small fraction glyphs; same in Motte p. 207)",
+     "measured": [
+      true,
+      true,
+      true,
+      true
+     ]
+    },
+    "Pound": {
+     "a": [
+      5.965,
+      9.494,
+      15.141,
+      26.63
+     ],
+     "conf": "H",
+     "page": 391,
+     "image_n": 432,
+     "measured": [
+      false,
+      false,
+      true,
+      true
+     ],
+     "note": "4th: 8'16'' (15 ft tube micrometer), 3rd: 4'42'' (123 ft telescope); 1st and 2nd 'ex temporibus periodicis' 2'56''47''' and 1'51''6''' (derived, so excluded from the fit); diameter of Jupiter assumed 37 1/4'' (transits gave 37 1/8'' and 37 3/8'', shadow 37''; micrometer 38-40'')",
+     "elong_arcsec": {
+      "4": [
+       8,
+       16
+      ],
+      "3": [
+       4,
+       42
+      ],
+      "2_derived": [
+       2,
+       56,
+       47
+      ],
+      "1_derived": [
+       1,
+       51,
+       6
+      ]
+     },
+     "diameter_arcsec_assumed": [
+      37,
+      1,
+      4
+     ]
+    }
+   },
+   "ex_temporibus_periodicis": {
+    "a": [
+     5.667,
+     9.017,
+     14.384,
+     25.299
+    ],
+    "conf": "H",
+    "note": "Newton's own values from the periods via the 3/2 law: excluded from every fit"
+   },
+   "table_page": 390,
+   "table_image_n": 431,
+   "motte_check": {
+    "page": [
+     206,
+     207
+    ],
+    "image_n": [
+     229,
+     230
+    ],
+    "result": "periods and table identical to the Latin, including 14 23/60 and 25 3/10"
+   }
+  },
+  "P1687": {
+   "where": "Book III, Hypoth. V, pp. 402-403 (image n399-n400)",
+   "periods": [
+    {
+     "d": 1,
+     "h": 18,
+     "m": [
+      28,
+      3,
+      5
+     ]
+    },
+    {
+     "d": 3,
+     "h": 13,
+     "m": [
+      17,
+      9,
+      10
+     ]
+    },
+    {
+     "d": 7,
+     "h": 3,
+     "m": [
+      59,
+      3,
+      5
+     ]
+    },
+    {
+     "d": 16,
+     "h": 18,
+     "m": [
+      5,
+      1,
+      5
+     ]
+    }
+   ],
+   "periods_page": 403,
+   "periods_image_n": 400,
+   "periods_conf": "H",
+   "periods_qualifier": "none printed (Hypoth. V lacks the 1726 phrase 'stellis fixis quiescentibus')",
+   "rows": {
+    "Cassini": {
+     "a": [
+      5,
+      8,
+      13,
+      23
+     ],
+     "conf": "H"
+    },
+    "Borelli": {
+     "a": [
+      [
+       5,
+       2,
+       3
+      ],
+      [
+       8,
+       2,
+       3
+      ],
+      14,
+      [
+       24,
+       2,
+       3
+      ]
+     ],
+     "conf": "H"
+    },
+    "Tounlei per Micromet.": {
+     "a": [
+      5.51,
+      8.78,
+      13.47,
+      24.72
+     ],
+     "conf": "H",
+     "note": "1st satellite 5,51 here, 5,52 in 1726"
+    },
+    "Flamstedii per Microm.": {
+     "a": [
+      5.31,
+      8.85,
+      13.98,
+      24.23
+     ],
+     "conf": "H"
+    },
+    "Flamst. per Eclips. Satel.": {
+     "a": [
+      5.578,
+      8.876,
+      14.159,
+      24.903
+     ],
+     "conf": "H",
+     "note": "1st value equals the 'ex temporibus' 5,578: possibly anchored to it"
+    }
+   },
+   "ex_temporibus_periodicis": {
+    "a": [
+     5.578,
+     8.878,
+     14.168,
+     24.968
+    ],
+    "conf": "H"
+   },
+   "table_page": 403,
+   "table_image_n": 400
+  }
+ }
+}
