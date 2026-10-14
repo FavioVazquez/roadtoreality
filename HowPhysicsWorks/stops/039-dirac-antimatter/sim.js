@@ -80,15 +80,40 @@
   function drawPair() {
     var cy = H * 0.36, nx = W * 0.5, T = 4, ph = t % T, thr = 2 * MEC2, ok = eGamma >= thr && nucleus;
     txt('A photon of ' + eGamma.toFixed(2) + ' MeV ' + (nucleus ? 'passes a nucleus' : 'in empty space'), 16, 22, COL.text, 14);
-    if (nucleus) { dot(nx, cy + 26, 9, 'rgba(255,255,255,0.5)'); txt('nucleus', nx, cy + 52, COL.muted, 11, 'center'); }
-    var x0 = 16, f = ph / T;
+    /* not to scale: the momentum exchanged is between the minimum recoil and about m_e c, so the pair forms at
+       hbar/q, a few hundred fm from the nucleus (386 fm = hbar/(m_e c)), tens of nuclear radii away (lead: about 7 fm) */
+    if (nucleus) wrapTxt('Not to scale: the pair forms hundreds of femtometres from the nucleus, tens of times its radius. The photon only passes through the nucleus\'s field; it never hits it.', 16, 42, W - 32, COL.muted, W < 560 ? 10 : 11, W < 560 ? 13 : 15);
+    var f = ph / T, ny0 = cy + 50, recoil = eGamma >= thr ? eGamma - Math.sqrt(eGamma * eGamma - thr * thr) : 0, made = ok && f >= 0.45, gm = made ? Math.min(1, (f - 0.45) / 0.15) : 0;
+    if (nucleus) {
+      /* the nucleus's Coulomb field: faint rings, with the vertex inside it */
+      ctx.lineWidth = 1;
+      [36, 58, 80].forEach(function (rr, i) { ctx.strokeStyle = 'rgba(255,255,255,' + (0.14 - i * 0.03).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(nx, ny0, rr, 0, 2 * Math.PI); ctx.stroke(); });
+      var nx1 = nx + 3 * gm;
+      dot(nx1, ny0, 9, 'rgba(255,255,255,0.5)');
+      txt('nucleus', nx1 - 16, ny0 + 4, COL.muted, 11, 'right');
+      if (made) {
+        /* recoil is forward, along the photon's direction (+x) */
+        var al = 14 + 26 * Math.min(1, recoil / 1.5), ax0 = nx1 + 12, ax1 = ax0 + al * gm;
+        ctx.strokeStyle = COL.ph; ctx.fillStyle = COL.ph; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(ax0, ny0); ctx.lineTo(ax1, ny0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(ax1 + 6, ny0); ctx.lineTo(ax1 - 2, ny0 - 4); ctx.lineTo(ax1 - 2, ny0 + 4); ctx.closePath(); ctx.fill();
+        if (gm >= 1) txt('recoil ≥ ' + recoil.toFixed(3) + ' MeV/c', nx1 - 30, ny0 + 26, COL.ph, W < 560 ? 10 : 11, 'left');
+      }
+    }
+    var x0 = 16;
     if (!ok || f < 0.45) {
       var xe = ok ? x0 + (nx - x0) * (f / 0.45) : x0 + (W - 32) * f;
       wave(x0, cy, xe, cy, COL.ph, t * 10);
     } else {
-      var g = (f - 0.45) / 0.55, L = (W - nx - 30) * g, ang = 0.35 + 0.25 / (1 + eGamma);
-      dot(nx + L * Math.cos(ang), cy - L * Math.sin(ang), 6, COL.em, 'e⁻');
-      dot(nx + L * Math.cos(ang), cy + L * Math.sin(ang), 6, COL.ep, 'e⁺');
+      var ang = 0.35 + 0.25 / (1 + eGamma), sA = Math.sin(ang), topY = W < 560 ? 92 : 78, botY = H - 175;
+      /* keep both particles between the caption and the energy bar */
+      var Lmax = Math.min(W - nx - 30, (cy - topY) / sA, (botY - cy) / sA);
+      var g = (f - 0.45) / 0.55, L = Lmax * g;
+      var ex = nx + L * Math.cos(ang), ey = L * Math.sin(ang), sa = Math.sin(ang), ca = Math.cos(ang);
+      dot(ex, cy - ey, 6, COL.em); dot(ex, cy + ey, 6, COL.ep);
+      /* labels sit off the tracks, perpendicular to them and away from each other */
+      txt('e⁻', ex - sa * 18, cy - ey - ca * 18 + 4, COL.em, 12, 'center');
+      txt('e⁺', ex - sa * 18, cy + ey + ca * 18 + 4, COL.ep, 12, 'center');
       ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(nx, cy); ctx.lineTo(nx + L * Math.cos(ang), cy - L * Math.sin(ang)); ctx.moveTo(nx, cy); ctx.lineTo(nx + L * Math.cos(ang), cy + L * Math.sin(ang)); ctx.stroke();
     }

@@ -239,6 +239,11 @@ code, pre {
   color: var(--color-text-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+/* phones: the counter wrapped onto four lines beside the logo; the breadcrumb already says where you are */
+@media (max-width: 480px) {
+  .site-header__tagline { display: none; }
 }
 
 /* ── Site Footer ────────────────────────────────────────────── */
