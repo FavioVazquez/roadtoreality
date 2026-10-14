@@ -289,17 +289,13 @@ code, pre {
   font-style: italic;
   font-display: swap;
 }
+/* Latin subset of Cormorant Garamond (SIL OFL 1.1), variable wght 300-700.
+   Replaces the former SemiBold/Bold files, which were Cyrillic/Vietnamese
+   subsets with no basic Latin (headings fell back to Georgia). */
 @font-face {
   font-family: 'Cormorant Garamond';
-  src: url('../fonts/CormorantGaramond-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../fonts/CormorantGaramond-Bold.woff2') format('woff2');
-  font-weight: 700;
+  src: url('../fonts/CormorantGaramond-SemiBoldBold-Latin.woff2') format('woff2');
+  font-weight: 600 700;
   font-style: normal;
   font-display: swap;
 }
