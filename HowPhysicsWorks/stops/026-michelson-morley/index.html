@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="They tried to measure Earth's motion through the luminiferous ether — and found nothing. This null result shattered classical physics and pointed toward Einstein.">
+  <meta name="description" content="Rotate Michelson and Morley&#x27;s interferometer and compute the fringe shift a stationary ether predicts: 0.40 of a fringe expected, less than 0.02 reported in 1887.">
   <meta property="og:title" content="The Michelson-Morley Experiment — How Physics Works">
-  <meta property="og:description" content="They tried to measure Earth's motion through the luminiferous ether — and found nothing. This null result shattered classical physics and pointed toward Einstein.">
+  <meta property="og:description" content="Rotate Michelson and Morley&#x27;s interferometer and compute the fringe shift a stationary ether predicts: 0.40 of a fringe expected, less than 0.02 reported in 1887.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/026-michelson-morley/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -56,62 +56,111 @@
     <div class="stop-header__meta">
       <span class="stop-header__year">1887</span>
       <span>·</span>
-      <span class="stop-header__scientist">Michelson & Morley</span>
+      <span class="stop-header__scientist">Michelson &amp; Morley</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>They tried to measure Earth's motion through the luminiferous ether — and found nothing. This null result shattered classical physics and pointed toward Einstein.</p>
+    <p>
+      In 1887 Albert Michelson and Edward Morley, working in Cleveland, Ohio, tried to detect Earth's motion through the luminiferous ether, the medium that light waves were then thought to travel in<sup><a href="#src-1">[1]</a></sup>. If the ether stood still while Earth moved through it, turning their apparatus by 90° should have moved its interference fringes by about 0.4 of a fringe. They saw less than a twentieth of that<sup><a href="#src-1">[1]</a></sup>.
+    </p>
+    <p>
+      The simulation computes the shift a stationary ether would produce. Set the arm length, the speed through the ether and the wavelength, rotate the apparatus, and compare the prediction with the bound they reported.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="The Michelson-Morley Experiment — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: Michelson-Morley interferometer with the fringe shift predicted by a stationary ether">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
-    <div class="sim-controls" id="sim-controls-026">
-      <div class="sim-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-        <button class="sim-btn mode-btn active" data-mode="1" aria-label="Mode 1: The Setup">1 The Setup</button>
-        <button class="sim-btn mode-btn" data-mode="2" aria-label="Mode 2: Expected vs Found">2 Expected vs Found</button>
-        <button class="sim-btn mode-btn" data-mode="3" aria-label="Mode 3: Arm Ratio">3 Arm Ratio</button>
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play simulation" style="margin-left:auto;">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset simulation">&#8634; Reset</button>
+    <div class="sim-controls">
+      <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+        <label class="sim-control__label" for="len-slider">
+          Light path per arm
+          <span class="sim-control__value" style="text-transform:none" id="len-val">11.0 m</span>
+        </label>
+        <input type="range" id="len-slider" min="1" max="30" step="0.5" value="11" aria-label="Effective light path length of each arm in metres" aria-valuetext="11 metres">
       </div>
-      <div class="row-rotation" style="display:flex;align-items:center;gap:0.75rem;margin-top:0.5rem;">
-        <label for="rot-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Rotation angle</label>
-        <input id="rot-slider" type="range" min="0" max="360" step="1" value="0" style="flex:1;" aria-label="Rotation angle in degrees">
-        <span style="font-size:var(--text-sm);color:var(--color-text-muted);width:3ch;" id="rot-slider-val">0°</span>
+      <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+        <label class="sim-control__label" for="vel-slider">
+          Speed through ether
+          <span class="sim-control__value" style="text-transform:none" id="vel-val">30 km/s</span>
+        </label>
+        <input type="range" id="vel-slider" min="0" max="60" step="1" value="30" aria-label="Assumed speed of the apparatus through the ether in kilometres per second" aria-valuetext="30 kilometres per second">
       </div>
-      <div class="row-arm-ratio" style="display:none;align-items:center;gap:0.75rem;margin-top:0.5rem;">
-        <label for="arm-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">Arm ratio</label>
-        <input id="arm-slider" type="range" min="0.80" max="1.20" step="0.005" value="1.0" style="flex:1;" aria-label="Arm 2 to arm 1 length ratio">
-        <span style="font-size:var(--text-sm);color:var(--color-text-muted);width:5ch;" id="arm-slider-val">1.000</span>
+      <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+        <label class="sim-control__label" for="lam-slider">
+          Wavelength
+          <span class="sim-control__value" style="text-transform:none" id="lam-val">550 nm</span>
+        </label>
+        <input type="range" id="lam-slider" min="400" max="700" step="5" value="550" aria-label="Wavelength of the light in nanometres" aria-valuetext="550 nanometres">
+      </div>
+      <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+        <label class="sim-control__label" for="rot-slider">
+          Rotation angle
+          <span class="sim-control__value" style="text-transform:none" id="rot-val">0°</span>
+        </label>
+        <input type="range" id="rot-slider" min="0" max="360" step="1" value="0" aria-label="Angle between arm 1 and the direction of motion in degrees" aria-valuetext="0 degrees">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+        <button class="sim-btn" id="auto-toggle" type="button" aria-pressed="true">Auto-rotate: on</button>
+        <button class="sim-btn" id="contract-toggle" type="button" aria-pressed="false">Lorentz–FitzGerald contraction: off</button>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <p id="mode-hint" style="font-size:var(--text-sm);color:var(--color-text-secondary);margin:0.5rem 0 0;min-height:1.4em;"></p>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Interactive interferometer — rotate the apparatus or adjust the arm ratio</span>
+      <span id="sim-status">Press play to rotate the apparatus. The model fringes move; the observed ones did not.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Split a light beam along two perpendicular arms and recombine it</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Rotate the interferometer and observe that no fringe shift occurs</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Understand why this null result demanded a new theory of space and time</li>
-    </ul>
+    <h3>Light in a Moving Medium</h3>
+    <p>In the nineteenth century light was understood as a wave, and a wave was thought to need something to wave in. That medium was called the luminiferous ether. If light moves at speed $c$ relative to the ether, an apparatus moving through the ether at speed $v$ should see light take slightly different times to cross it in different directions.</p>
+    <p>Earth orbits the Sun at about 29.8 km/s<sup><a href="#src-2">[2]</a></sup>, so $v/c$ is about $10^{-4}$. A round trip of length $2L$ along the motion takes $\frac{2L/c}{1 - v^2/c^2}$; the same trip across the motion takes $\frac{2L/c}{\sqrt{1 - v^2/c^2}}$. To second order in $v/c$ the trip into the wind takes longer by $L v^2/c^3$; in path length that is $L v^2/c^2$, about one part in $10^8$<sup><a href="#src-9">[9]</a></sup>. That is far too small to time directly, but an interferometer compares the two paths against the wavelength of the light.</p>
+    <h3>The Fringe Shift</h3>
+    <p>An interferometer splits a beam in two, sends the halves along perpendicular arms, and recombines them. Where the waves arrive in step the light is bright; where they arrive out of step it is dark. The result is a row of bright and dark bands, the fringes. A change in the path difference of one wavelength $\lambda$ moves the fringes by one band.</p>
+    <p>Turning the apparatus by 90° swaps the roles of the two arms, so the path difference changes by twice $L v^2/c^2$. The predicted shift, in fringes, is</p>
+    <p style="overflow-x:auto;">$$\Delta N_{90^\circ} = \frac{2 L v^2}{\lambda c^2}$$</p>
+    <p>and at any angle $\theta$ between one arm and the motion the fringe position follows</p>
+    <p style="overflow-x:auto;">$$N(\theta) = \frac{\Delta N_{90^\circ}}{2}\cos 2\theta$$</p>
+    <p>Michelson and Morley's mirrors folded the light back and forth so that each arm's path was about 11 m, about $2 \times 10^7$ wavelengths of yellow light. With Earth's orbital speed they expected a shift of about 0.4 of a fringe<sup><a href="#src-1">[1]</a></sup>. The simulation starts with those values: 11 m, 30 km/s and 550 nm give 0.40.</p>
+    <h3>The 1881 Attempt and the 1887 Apparatus</h3>
+    <p>Michelson first tried the experiment in 1881 at Potsdam, with arms about 1.2 m long<sup><a href="#src-3">[3]</a></sup>; the formula above gives an expected shift of only about 0.04 fringe for that apparatus. That was small compared with his errors, and his analysis had left out the effect of the motion on the arm across it, which halves the prediction<sup><a href="#src-4">[4]</a></sup>. For the 1887 repeat with Morley the optics were mounted on a stone slab about 1.5 m square, floating on mercury so it could be turned smoothly and continuously<sup><a href="#src-1">[1]</a></sup>. They read the fringe position at sixteen directions as the stone turned, at noon and in the evening, on several days in July 1887<sup><a href="#src-1">[1]</a></sup>.</p>
+    <p>They reported that the displacement was "certainly less than the twentieth part" of the expected 0.4, and probably less than the fortieth<sup><a href="#src-1">[1]</a></sup>: less than 0.02 of a fringe. In the simulation the lower fringe strip stands for that observation, and the graph draws the bound as a band, because what they reported is an upper limit, not a curve.</p>
+    <h3>What They Concluded, and What Came After</h3>
+    <p>Michelson and Morley did not conclude that the ether does not exist. They concluded that the relative motion of Earth and the ether, if any, must be small, small enough to rule out Fresnel's explanation of stellar aberration, which assumed an ether at rest<sup><a href="#src-1">[1]</a></sup>. One possibility then on the table was that Earth drags the nearby ether along with it.</p>
+    <p>Toggle the contraction in the simulation and the two light pulses return together at every angle; stops 029 and 030 come back to this. In 1889 George FitzGerald<sup><a href="#src-5">[5]</a></sup> and in 1892 Hendrik Lorentz<sup><a href="#src-6">[6]</a></sup> independently proposed that objects moving through the ether shrink along the direction of motion by the factor $\sqrt{1 - v^2/c^2}$, just enough to cancel the expected shift. In 1905 Einstein's special relativity made the speed of light the same for every observer moving at constant velocity, and the ether was no longer needed<sup><a href="#src-7">[7]</a></sup>. His paper mentions "unsuccessful attempts to discover any motion of the earth relatively to the light medium" without naming this experiment; how much it influenced him is still discussed by historians.</p>
+    <p>Modern versions use lasers and rotating optical cavities. One reported in 2009 found no direction dependence of the speed of light at the level of about one part in $10^{17}$<sup><a href="#src-8">[8]</a></sup>.</p>
+    <h3>What the Simulation Leaves Out</h3>
+    <p>The prediction uses the textbook second-order formula for an ether at rest relative to the Sun, and the speed slider stands for the whole speed through the ether. A real analysis would add the Sun's own motion and the daily and yearly changes in direction. The fringes are drawn as an ideal pattern; the real ones were viewed through a telescope and read by eye against a fiducial mark. The shifts are computed exactly from the two round-trip times, $t(\theta) = \frac{2L}{c}\frac{\sqrt{1-\beta^2\sin^2\theta}}{1-\beta^2}$ with $\beta = v/c$, not taken from data; at $\beta = 10^{-4}$ this agrees with the formula above. The light pulses in the top view are drawn at an exaggerated speed (shown on screen) so the lag can be seen.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>No ether wind was detected — the speed of light is the same in all directions regardless of Earth's motion. This null result forced a complete rethinking of space, time, and motion.</li>
+      <li>A stationary ether predicts that turning the interferometer by 90° moves the fringes by $2Lv^2/(\lambda c^2)$: about 0.4 of a fringe for the 1887 apparatus (cited).</li>
+      <li>Michelson and Morley reported less than 0.02, probably less than 0.01 (cited). They concluded that Earth's motion relative to the ether is small, not that the ether does not exist.</li>
+      <li>The length contraction of FitzGerald and Lorentz explained the null result within the ether picture; special relativity in 1905 removed the need for an ether.</li>
     </ul>
+    <p style="overflow-x:auto;">$$\Delta N_{90^\circ} = \frac{2 L v^2}{\lambda c^2}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">A. A. Michelson and E. W. Morley, "On the Relative Motion of the Earth and the Luminiferous Ether", <em>American Journal of Science</em> ser. 3, 34, 333–345 (1887). Cited: expected shift about 0.4 fringe; path about $2 \times 10^7$ wavelengths (about 11 m) per arm; stone slab about 1.5 m square floating on mercury; readings at sixteen directions, noon and evening, July 1887; displacement "certainly less than the twentieth part" of the expected value; conclusion on Fresnel's explanation of aberration.</li>
+      <li id="src-2">NASA Goddard Space Flight Center, <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html" target="_blank" rel="noopener" style="overflow-wrap:anywhere;">Earth Fact Sheet</a>. Cited: mean orbital velocity 29.78 km/s.</li>
+      <li id="src-3">A. A. Michelson, "The Relative Motion of the Earth and the Luminiferous Ether", <em>American Journal of Science</em> ser. 3, 22, 120–129 (1881). Arms about 1.2 m (Potsdam).</li>
+      <li id="src-4">R. S. Shankland, "Michelson-Morley Experiment", <em>American Journal of Physics</em> 32, 16–35 (1964). History of the 1881 and 1887 experiments, including the correction to the 1881 analysis.</li>
+      <li id="src-5">G. F. FitzGerald, "The Ether and the Earth's Atmosphere", <em>Science</em> 13, 390 (1889).</li>
+      <li id="src-6">H. A. Lorentz, "De relatieve beweging van de aarde en den aether", <em>Verslagen der Koninklijke Akademie van Wetenschappen</em> 1, 74–79 (1892).</li>
+      <li id="src-7">A. Einstein, "Zur Elektrodynamik bewegter Körper", <em>Annalen der Physik</em> 17, 891–921 (1905). Quoted phrase from the English translation.</li>
+      <li id="src-8">S. Herrmann et al., "Rotating optical cavity experiment testing Lorentz invariance at the $10^{-17}$ level", <em>Physical Review D</em> 80, 105011 (2009).</li>
+      <li id="src-9">R. P. Feynman, R. B. Leighton and M. Sands, <em>The Feynman Lectures on Physics</em>, Vol. I, ch. 15 (1963). Textbook derivation of the round-trip times and the second-order path difference.</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>The ether was gone. Classical physics was in crisis. Planck's desperate solution to the blackbody problem introduced an entirely new idea: energy comes in discrete chunks.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>The ether wind was not there. Lorentz and FitzGerald patched the theory; Einstein would remove the ether altogether. Meanwhile Planck's desperate solution to the blackbody problem introduced an entirely new idea: energy comes in discrete chunks.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -137,8 +186,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>

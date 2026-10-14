@@ -1,353 +1,313 @@
-/* sim.js — 026 Michelson-Morley: three-mode narrative interferometer */
+/* ============================================================
+   sim.js — Stop 026: The Michelson-Morley Experiment
+   Stationary-ether prediction, to second order in v/c:
+     path difference  Δ(θ) = (L v²/c²) cos 2θ
+     fringe position  N(θ) = Δ(θ)/λ = (ΔN90/2) cos 2θ
+     swing for a 90° turn  ΔN90 = 2 L v² / (λ c²)
+   Computed exactly from the round-trip times (no small-β expansion):
+     t(θ) = (2L/c) √(1 − β² sin²θ) / (1 − β²),  ΔN(θ) = c[t(θ) − t(θ+90°)]/λ
+   With the Lorentz–FitzGerald contraction on, every arm's round trip
+   takes 2L/(c√(1−β²)) and ΔN = 0. The 1887 upper bound (< 0.02 fringe,
+   Michelson & Morley 1887) is drawn as a band, not a computed curve.
+   The pulse race is drawn at an exaggerated β (labelled on screen).
+   ============================================================ */
 (function () {
   'use strict';
-  var mount = document.getElementById('sim-mount');
-  if (!mount) return;
 
-  var canvas = document.createElement('canvas');
-  mount.appendChild(canvas);
-  canvas.style.display = 'block';
-  canvas.style.width  = '100%';
-  canvas.style.height = '100%';
-  var ctx = canvas.getContext('2d');
-
-  var W, H;
-  var raf     = null;
-  var t       = 0;
+  var canvas, ctx, W, H, mountEl;
   var running = false;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rafId = null;
+  var lastTs = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var currentMode = 1;
-  var rotAngle    = 0;
-  var armRatio    = 1.0;
+  var C_LIGHT = 299792458;
+  var REPORTED_BOUND = 0.02;           /* cited upper bound on the swing, fringes */
+  var TURN_SECONDS = 16;               /* animation: one full turn of the stone   */
 
-  function resize() {
-    W = mount.clientWidth  || 680;
-    H = mount.clientHeight || 380;
-    canvas.width  = W;
-    canvas.height = H;
+  var L = 11, V = 30, LAM = 550;       /* m, km/s, nm */
+  var theta = 0;
+  var contraction = false, autoRot = true, scrubbing = false;
+  var beamPhase = 0;
+
+  var COL = {
+    arm1: 'oklch(0.65 0.18 240)',
+    arm2: 'oklch(0.72 0.14 200)',
+    beam: 'oklch(0.92 0.12 95)',
+    text: 'rgba(255,255,255,0.88)',
+    muted: 'rgba(255,255,255,0.55)',
+    faint: 'rgba(255,255,255,0.18)',
+    band: 'rgba(160,175,190,0.28)',
+    wind: 'oklch(0.65 0.18 240 / 0.45)'
+  };
+
+  function tRound(beta, th) {
+    if (contraction) return 2 * L / C_LIGHT / Math.sqrt(1 - beta * beta);
+    var s = Math.sin(th);
+    return 2 * L / C_LIGHT * Math.sqrt(1 - beta * beta * s * s) / (1 - beta * beta);
+  }
+  function nAt(th) {
+    var beta = V * 1000 / C_LIGHT;
+    return C_LIGHT * (tRound(beta, th) - tRound(beta, th + Math.PI / 2)) / (LAM * 1e-9);
+  }
+  function swing90() { return nAt(0) - nAt(Math.PI / 2); }
+  function fringeNow() { return nAt(theta); }
+  function betaDisp() { return Math.min(0.45, 0.3 * V / 30); }
+
+  function layout() {
+    var narrow = W < 560;
+    if (narrow) {
+      return { narrow: true, app: { x: 0, y: 0, w: W, h: 250 }, fr: { x: 14, y: 272, w: W - 28, h: 92 }, gr: { x: 14, y: 400, w: W - 28, h: H - 418 } };
+    }
+    var topH = H - 170;
+    return { narrow: false, app: { x: 0, y: 0, w: W * 0.55, h: topH }, fr: { x: W * 0.58, y: 70, w: W * 0.42 - 18, h: 130 }, gr: { x: 18, y: topH + 10, w: W - 36, h: 140 } };
   }
 
-  var C_ARM1  = '#5285c8';
-  var C_ARM2  = '#c85252';
-  var C_BEAM  = '#ffee66';
-  var C_NULL  = '#888888';
-  var C_TEXT  = 'rgba(255,255,255,0.85)';
-  var C_MUTED = 'rgba(255,255,255,0.45)';
-
-  function t_(str, x, y, color, align, size) {
-    ctx.fillStyle = color || C_TEXT;
-    ctx.font      = (size || 12) + 'px sans-serif';
+  function txt(s, x, y, col, size, align) {
+    ctx.fillStyle = col || COL.text;
+    ctx.font = (size || 12) + 'px "DM Sans", sans-serif';
     ctx.textAlign = align || 'left';
-    ctx.fillText(str, x, y);
-  }
-  function b_(str, x, y, color, align, size) {
-    ctx.fillStyle = color || C_TEXT;
-    ctx.font      = 'bold ' + (size || 12) + 'px sans-serif';
-    ctx.textAlign = align || 'left';
-    ctx.fillText(str, x, y);
+    ctx.fillText(s, x, y);
   }
 
-  // ── Interferometer schematic ─────────────────────────────────────
-  function drawInterferometer(cx, cy, rotRad, arm1, arm2, beamT, showLabels) {
+  function drawApparatus(r) {
+    var cx = r.x + r.w / 2, cy = r.y + r.h / 2 + 10;
+    var arm = Math.min(r.w, r.h) * (W < 560 ? 0.26 : 0.34);
+    if (V > 0) {
+      ctx.strokeStyle = COL.wind; ctx.lineWidth = 1.2;
+      for (var k = -2; k <= 2; k++) {
+        var yy = cy + k * arm * 0.55, x0 = r.x + 16, x1 = r.x + r.w - 16;
+        var off = (beamPhase * 40) % 40;
+        ctx.setLineDash([10, 30]); ctx.lineDashOffset = -off;
+        ctx.beginPath(); ctx.moveTo(x1, yy); ctx.lineTo(x0, yy); ctx.stroke();
+      }
+      ctx.setLineDash([]);
+      txt('← ether wind in the classical model', r.x + 16, r.y + 40, COL.muted, 11);
+    }
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(rotRad);
-
-    // Arms — drawn with higher opacity so they're visible alongside splitter
-    ctx.strokeStyle = 'rgba(82,133,200,0.75)'; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(arm1, 0); ctx.stroke();
-    ctx.strokeStyle = 'rgba(200,82,82,0.75)'; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -arm2); ctx.stroke();
-
-    // Mirrors
-    ctx.strokeStyle = C_ARM1; ctx.lineWidth = 5;
-    ctx.beginPath(); ctx.moveTo(arm1, -13); ctx.lineTo(arm1, 13); ctx.stroke();
-    ctx.strokeStyle = C_ARM2;
-    ctx.beginPath(); ctx.moveTo(-13, -arm2); ctx.lineTo(13, -arm2); ctx.stroke();
-
-    // Beam splitter — drawn last so it sits on top of arm start
-    ctx.strokeStyle = C_BEAM; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(-10, -10); ctx.lineTo(10, 10); ctx.stroke();
-
-    if (showLabels) {
-      b_('M₁', arm1 + 7, 4, C_ARM1, 'left', 11);
-      b_('M₂', 7, -arm2 - 5, C_ARM2, 'left', 11);
-    }
-
-    // Animated beam dots
-    if (beamT !== null) {
-      var b1 = beamT % 1;
-      var b1x = b1 < 0.5 ? b1 * 2 * arm1 : (1 - (b1 - 0.5) * 2) * arm1;
-      ctx.beginPath(); ctx.arc(b1x, 0, 5, 0, Math.PI*2);
-      ctx.fillStyle = C_ARM1; ctx.fill();
-      var b2 = (beamT + 0.25) % 1;
-      var b2y = b2 < 0.5 ? -b2 * 2 * arm2 : -(1 - (b2-0.5) * 2) * arm2;
-      ctx.beginPath(); ctx.arc(0, b2y, 5, 0, Math.PI*2);
-      ctx.fillStyle = C_ARM2; ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  // ── Detector box ─────────────────────────────────────────────────
-  function drawDetector(dx, dy, shift, isNull, sublabel) {
-    var dw = 32, dh = 56;
-    if (isNull) {
-      ctx.fillStyle = 'rgb(120,120,120)';
-      ctx.fillRect(dx - dw/2, dy - dh/2, dw, dh);
-      ctx.strokeStyle = '#aaaaaa'; ctx.lineWidth = 1.5;
-      ctx.strokeRect(dx - dw/2, dy - dh/2, dw, dh);
-      b_('NULL', dx, dy + 4, '#ffffff', 'center', 9);
-    } else {
-      ctx.fillStyle = 'rgba(10,10,25,0.9)';
-      ctx.fillRect(dx - dw/2, dy - dh/2, dw, dh);
-      ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
-      ctx.strokeRect(dx - dw/2, dy - dh/2, dw, dh);
-      for (var fi = 0; fi < 8; fi++) {
-        var bright = 0.5 + 0.5 * Math.sin((fi / 8 + shift) * Math.PI * 5);
-        ctx.fillStyle = 'rgba(255,255,255,' + bright.toFixed(2) + ')';
-        ctx.fillRect(dx - dw/2 + 2, dy - dh/2 + 2 + fi * (dh-4)/8, dw-4, (dh-4)/8 - 1);
-      }
-    }
-    t_('Detector', dx, dy + dh/2 + 13, C_MUTED, 'center', 10);
-    if (sublabel) t_(sublabel, dx, dy + dh/2 + 25, isNull ? '#aaffaa' : '#ffaa66', 'center', 10);
-  }
-
-  // ── MODE 1: The Setup ────────────────────────────────────────────
-  function drawMode1() {
-    var ARM = Math.min(W * 0.24, H * 0.34);
-    var cx  = W * 0.30, cy = H * 0.46;
-    var beamT = (t * 0.4) % 1;
-
-    drawInterferometer(cx, cy, 0, ARM, ARM, beamT, true);
-
-    // Light source
-    ctx.beginPath(); ctx.arc(cx - ARM * 0.55, cy, 8, 0, Math.PI*2);
-    ctx.fillStyle = C_BEAM; ctx.fill();
-    ctx.strokeStyle = 'rgba(255,238,102,0.4)'; ctx.lineWidth = 1.5;
-    ctx.setLineDash([4,3]);
-    ctx.beginPath(); ctx.moveTo(cx - ARM * 0.55 + 8, cy); ctx.lineTo(cx, cy); ctx.stroke();
-    ctx.setLineDash([]);
-    t_('Source', cx - ARM * 0.55, cy - 14, C_BEAM, 'center', 11);
-
-    // Beam splitter label — above the junction, away from both arms
-    t_('Splitter', cx, cy - 18, C_BEAM, 'center', 11);
-
-    // Arm labels — positioned mid-arm, below/beside
-    t_('Arm 1', cx + ARM * 0.42, cy + 14, C_ARM1, 'center', 11);
-    t_('Arm 2', cx + 14, cy - ARM * 0.55, C_ARM2, 'left', 11);
-
-    // Detector below splitter
-    var detY = cy + ARM * 0.65;
-    ctx.strokeStyle = 'rgba(255,238,102,0.35)'; ctx.lineWidth = 1.5;
-    ctx.setLineDash([4,3]);
-    ctx.beginPath(); ctx.moveTo(cx, cy + 10); ctx.lineTo(cx, detY - 28); ctx.stroke();
-    ctx.setLineDash([]);
-    drawDetector(cx, detY, (t * 0.1) % 1, false, '');
-
-    // Right panel — explanation list
-    var rx = W * 0.56, ry = H * 0.08, maxW = W - rx - 10;
-    b_('How it works', rx, ry, C_TEXT, 'left', 13);
-    var steps = [
-      ['1. Light hits the beam splitter.', C_MUTED],
-      ['2. Half travels right → bounces off M₁.', C_ARM1],
-      ['3. Half travels up → bounces off M₂.', C_ARM2],
-      ['4. Beams recombine at the detector.', C_MUTED],
-      ['5. Equal paths → uniform (null result).', '#aaffaa'],
-      ['   Unequal paths → fringe pattern.', '#ffaa66']
-    ];
-    steps.forEach(function(s, i) {
-      t_(s[0], rx, ry + 22 + i * 19, s[1], 'left', 11);
+    ctx.rotate(-theta);
+    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    ctx.strokeStyle = COL.faint; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.rect(-arm * 1.25, -arm * 1.25, arm * 2.5, arm * 2.5); ctx.fill(); ctx.stroke();
+    /* source → splitter, arms, detector */
+    ctx.strokeStyle = COL.beam; ctx.globalAlpha = 0.55; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-arm, 0); ctx.lineTo(0, 0); ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = COL.arm1; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(arm, 0); ctx.stroke();
+    ctx.strokeStyle = COL.arm2;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -arm); ctx.stroke();
+    ctx.strokeStyle = COL.beam; ctx.globalAlpha = 0.55; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, arm * 0.8); ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = COL.arm1; ctx.beginPath(); ctx.moveTo(arm, -12); ctx.lineTo(arm, 12); ctx.stroke();
+    ctx.strokeStyle = COL.arm2; ctx.beginPath(); ctx.moveTo(-12, -arm); ctx.lineTo(12, -arm); ctx.stroke();
+    ctx.strokeStyle = COL.beam; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(-10, 10); ctx.lineTo(10, -10); ctx.stroke();
+    ctx.fillStyle = COL.beam;
+    ctx.beginPath(); ctx.arc(-arm, 0, 5, 0, 2 * Math.PI); ctx.fill();
+    ctx.fillStyle = COL.muted;
+    ctx.fillRect(-8, arm * 0.8, 16, 6);
+    /* pulse race at exaggerated β: each pulse's out/back split follows the
+       ether-wind picture; a pulse that is home waits at the splitter */
+    var bd = betaDisp(), t1 = tRound(bd, theta), t2 = tRound(bd, theta + Math.PI / 2), tm = Math.max(t1, t2);
+    var ph = (beamPhase % 1.25) * tm;
+    ctx.fillStyle = COL.beam;
+    [[t1, theta, 1], [t2, theta + Math.PI / 2, 2]].forEach(function (q) {
+      var tt = q[0], c = contraction ? 0 : Math.cos(q[1]), out = tt * (1 + bd * c) / 2, d;
+      if (ph >= tt) d = 0; else if (ph < out) d = ph / out; else d = 1 - (ph - out) / (tt - out);
+      if (q[2] === 1) { ctx.beginPath(); ctx.arc(d * arm, 0, 4, 0, 2 * Math.PI); ctx.fill(); }
+      else { ctx.beginPath(); ctx.arc(0, -d * arm, 4, 0, 2 * Math.PI); ctx.fill(); }
     });
+    ctx.font = '11px "DM Sans", sans-serif'; ctx.textAlign = 'center';
+    ctx.fillStyle = COL.arm1; ctx.fillText('arm 1', arm * 0.55, 16);
+    ctx.fillStyle = COL.arm2; ctx.fillText('arm 2', -24, -arm * 0.55);
+    ctx.restore();
+    var deg = ((theta * 180 / Math.PI) % 360 + 360) % 360;
+    txt('Arm 1 at ' + deg.toFixed(0) + '° to the motion', r.x + 16, r.y + 22, COL.text, 13);
+    var bdTxt = V === 0 ? 'pulse race: β = 0, both pulses return together' : (contraction ? 'pulse race at β = ' + bd.toFixed(2) + ' (exaggerated), contracted: they return together' : 'pulse race drawn at β = ' + bd.toFixed(2) + ' (exaggerated; real ' + sciTxt(V * 1000 / C_LIGHT) + ')');
+    txt(bdTxt, r.x + 16, r.y + r.h - 6, COL.muted, 11);
   }
 
-  // ── MODE 2: Expected vs Found ────────────────────────────────────
-  function drawMode2() {
-    var autoRot = (rotAngle !== 0) ? rotAngle * Math.PI / 180 : t * 0.25;
-    var ARM     = Math.min(W * 0.18, H * 0.26);
-    var cx      = W * 0.20, cy = H * 0.50;
-
-    // Aether wind arrow (in world space)
-    var wLen = ARM * 1.3;
-    ctx.strokeStyle = 'rgba(100,200,255,0.3)'; ctx.lineWidth = 1;
-    ctx.setLineDash([4,3]);
-    ctx.beginPath(); ctx.moveTo(cx - wLen, cy); ctx.lineTo(cx + wLen, cy); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(100,200,255,0.3)';
-    ctx.beginPath(); ctx.moveTo(cx + wLen, cy); ctx.lineTo(cx + wLen - 9, cy - 5); ctx.lineTo(cx + wLen - 9, cy + 5); ctx.closePath(); ctx.fill();
-    t_('Aether wind →', cx - wLen, cy - 10, 'rgba(100,200,255,0.35)', 'left', 10);
-
-    drawInterferometer(cx, cy, autoRot, ARM, ARM, t * 0.4, false);
-
-    // Two stacked graphs on the right
-    var pad  = 8;
-    var gx   = W * 0.42;
-    var gw   = W - gx - pad;
-    var gh   = H * 0.36;
-    var topY = H * 0.05;
-    var botY = topY + gh + 14;
-
-    function graphBox(gY, title, titleColor) {
-      ctx.fillStyle = 'rgba(255,255,255,0.03)';
-      ctx.fillRect(gx, gY, gw, gh);
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 1;
-      ctx.strokeRect(gx, gY, gw, gh);
-      b_(title, gx + 6, gY + 14, titleColor, 'left', 11);
-      // zero line
-      ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(gx + 2, gY + gh/2); ctx.lineTo(gx + gw - 2, gY + gh/2); ctx.stroke();
-      t_('Δ=0', gx - 2, gY + gh/2 + 4, C_MUTED, 'right', 10);
+  function strip(x, y, w, h, shiftFr, period) {
+    for (var i = 0; i < w; i += 2) {
+      var I = Math.pow(Math.cos(Math.PI * ((i - w / 2) / period - shiftFr)), 2);
+      ctx.fillStyle = 'rgba(255,240,180,' + (0.08 + 0.85 * I).toFixed(3) + ')';
+      ctx.fillRect(x + i, y, 2, h);
     }
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x + w / 2, y - 3); ctx.lineTo(x + w / 2, y + h + 3); ctx.stroke();
+  }
+  function drawFringes(r, L_) {
+    var period = Math.max(26, Math.min(44, r.w / 8)), sh = (r.h - 22) / 2;
+    txt('Model (formula): shift ' + fmtSigned(fringeNow()) + ' fringe', r.x, r.y - 4, COL.muted, 11);
+    strip(r.x, r.y, r.w, sh, fringeNow(), period);
+    txt('1887 observed: no shift above 0.02 (cited)', r.x, r.y + sh + 16, COL.muted, 11);
+    strip(r.x, r.y + sh + 22, r.w, sh, 0, period);
+    if (!L_.narrow) {
+      txt('Model swing for a 90° turn:', r.x, r.y + r.h + 30, COL.muted, 12);
+      txt(swing90().toFixed(2) + ' fringe' + (contraction ? ' (with contraction)' : ''), r.x, r.y + r.h + 50, COL.text, 15);
+      txt('1887 reported: < 0.02, probably < 0.01 (cited)', r.x, r.y + r.h + 74, COL.muted, 12);
+    }
+  }
 
-    // Top: predicted (oscillating)
-    graphBox(topY, 'Predicted (aether theory)', '#ffaaaa');
-    ctx.beginPath(); ctx.strokeStyle = '#ff6666'; ctx.lineWidth = 2;
-    for (var xi = 0; xi < gw - 4; xi++) {
-      var ang = (xi / (gw - 4)) * Math.PI * 2;
-      var sh  = Math.sin(ang * 2 + autoRot * 2) * (gh * 0.34);
-      var px  = gx + 2 + xi, py = topY + gh/2 - sh;
-      if (xi === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  function syncRot(fromSlider) {
+    var deg = ((theta * 180 / Math.PI) % 360 + 360) % 360;
+    var rs = document.getElementById('rot-slider'), out = document.getElementById('rot-val');
+    if (rs && !fromSlider) rs.value = String(Math.round(deg));
+    if (rs) rs.setAttribute('aria-valuetext', Math.round(deg) + ' degrees');
+    if (out) out.textContent = Math.round(deg) + '°';
+  }
+  function sciTxt(x) {
+    if (x === 0) return '0';
+    var e = Math.floor(Math.log10(x)), m = x / Math.pow(10, e), sup = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+    return m.toFixed(1) + '×10' + String(e).split('').map(function (ch) { return sup[ch]; }).join('');
+  }
+  function fmtSigned(v) { return (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2); }
+
+  function drawGraph(r, L_) {
+    var A = Math.abs(swing90()) / 2;
+    var yMax = Math.max(0.25, A * 1.15, REPORTED_BOUND);
+    var mid = r.y + r.h / 2 + (L_.narrow ? 14 : 6);
+    var sy = (r.h / 2 - (L_.narrow ? 22 : 14)) / yMax;
+    ctx.strokeStyle = COL.faint; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(r.x, mid); ctx.lineTo(r.x + r.w, mid); ctx.stroke();
+    ctx.fillStyle = COL.band;
+    var bh = Math.max(2, REPORTED_BOUND / 2 * sy);
+    ctx.fillRect(r.x, mid - bh, r.w, 2 * bh);
+    ctx.strokeStyle = COL.arm1;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (var i = 0; i <= 180; i++) {
+      var th = i / 180 * 2 * Math.PI, x = r.x + i / 180 * r.w, y = mid - nAt(th) * sy;
+      if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
     }
     ctx.stroke();
-    var mx = gx + 2 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw - 4);
-    var my = topY + gh/2 - Math.sin(autoRot * 4) * (gh * 0.34);
-    ctx.beginPath(); ctx.arc(mx, my, 5, 0, Math.PI*2); ctx.fillStyle = '#ff6666'; ctx.fill();
-    t_('Fringes should shift as device rotates', gx + 4, topY + gh - 5, '#ffaaaa', 'left', 10);
-
-    // Bottom: measured (flat zero)
-    graphBox(botY, 'Measured (actual result)', '#aaffaa');
-    ctx.beginPath(); ctx.strokeStyle = '#66ff88'; ctx.lineWidth = 3;
-    ctx.moveTo(gx + 2, botY + gh/2); ctx.lineTo(gx + gw - 2, botY + gh/2); ctx.stroke();
-    var mx2 = gx + 2 + ((autoRot % (Math.PI*2)) / (Math.PI*2)) * (gw - 4);
-    ctx.beginPath(); ctx.arc(mx2, botY + gh/2, 5, 0, Math.PI*2); ctx.fillStyle = '#66ff88'; ctx.fill();
-    b_('No shift — at any angle', gx + 4, botY + gh - 5, '#aaffaa', 'left', 11);
-
-    // Verdict banner
-    var vy = botY + gh + 6;
-    if (vy + 26 < H) {
-      ctx.fillStyle = 'rgba(100,255,120,0.07)';
-      ctx.fillRect(gx, vy, gw, 22);
-      b_('Null result: the aether does not exist.', gx + 8, vy + 15, '#aaffaa', 'left', 12);
+    var thw = ((theta % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    var mx = r.x + thw / (2 * Math.PI) * r.w;
+    ctx.fillStyle = COL.beam;
+    ctx.beginPath(); ctx.arc(mx, mid - fringeNow() * sy, 4.5, 0, 2 * Math.PI); ctx.fill();
+    txt('Fringe position vs angle, 0–360°', r.x, r.y + 2, COL.muted, 11);
+    var lbl = 'curve: model (formula), amplitude ' + A.toFixed(2) + ' · band: 1887 bound < 0.02 (cited)';
+    if (L_.narrow) txt('curve: model, amplitude ' + A.toFixed(2) + ' · band: bound < 0.02', r.x, r.y + 17, COL.muted, 11); else txt(lbl, r.x + r.w, r.y + 2, COL.muted, 11, 'right');
+    if (L_.narrow) {
+      txt('Model swing, 90° turn: ' + swing90().toFixed(2) + ' fringe · reported < 0.02', r.x, r.y + r.h + 4, COL.text, 12);
     }
   }
 
-  // ── MODE 3: Arm Ratio ────────────────────────────────────────────
-  function drawMode3() {
-    var ARM1 = Math.min(W * 0.22, H * 0.30);
-    var ARM2 = ARM1 * armRatio;
-    var cx   = W * 0.28, cy = H * 0.48;
-
-    drawInterferometer(cx, cy, 0, ARM1, ARM2, null, true);
-
-    // Arm length labels — mid-arm, clear of mirrors and splitter
-    t_('L₁', cx + ARM1 * 0.45, cy + 16, C_ARM1, 'center', 11);
-    t_('L₂ = ' + armRatio.toFixed(3) + '×', cx + 14, cy - ARM2 * 0.55, C_ARM2, 'left', 11);
-
-    // Detector — pushed further down to leave room for ΔL label above it
-    var isNull = Math.abs(armRatio - 1.0) < 0.003;
-    var detY   = cy + ARM1 * 1.05;
-    drawDetector(cx, detY, (armRatio - 1) * 12, isNull, isNull ? 'Equal arms' : 'Unequal arms');
-
-    // ΔL label — sits between splitter and detector, clear of both
-    var pdText = isNull ? 'ΔL = 0  →  null result' : 'ΔL = ' + (armRatio - 1).toFixed(3) + ' × L₁';
-    b_(pdText, cx, cy + ARM1 * 0.65, isNull ? '#aaffaa' : '#ffaa66', 'center', 12);
-
-    // Right panel
-    var rx = W * 0.56, ry = H * 0.08, rw = W - rx - 10;
-    b_('Interferometer sensitivity', rx, ry, C_TEXT, 'left', 13);
-
-    var lines = [
-      ['Equal arms (1.000):', C_MUTED],
-      ['  Same path length → no phase shift.', '#aaffaa'],
-      ['  Detector shows uniform grey.', '#aaffaa'],
-      ['', C_MUTED],
-      ['Unequal arms:', C_MUTED],
-      ['  Path difference → interference fringes.', '#ffaa66'],
-      ['  Brighter difference = bigger shift.', '#ffaa66'],
-      ['', C_MUTED],
-      ['Michelson sensitivity: 0.01 fringes.', C_MUTED],
-      ['Aether prediction: ~0.4 fringes.', '#ff8888'],
-      ['Measured: 0.00 fringes.', '#aaffaa']
-    ];
-    lines.forEach(function(l, i) {
-      if (l[0]) t_(l[0], rx, ry + 22 + i * 17, l[1], 'left', 11);
-    });
-  }
-
-  // ── Main draw ────────────────────────────────────────────────────
-  function drawFrame() {
+  function draw() {
+    if (!ctx) return;
     ctx.clearRect(0, 0, W, H);
-    // Clip everything to canvas bounds
-    ctx.save();
-    ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
-    if      (currentMode === 1) drawMode1();
-    else if (currentMode === 2) drawMode2();
-    else                        drawMode3();
-    ctx.restore();
-
-    if (running && !reduced) { t += 0.022; raf = requestAnimationFrame(drawFrame); }
+    var L_ = layout();
+    drawApparatus(L_.app);
+    drawFringes(L_.fr, L_);
+    drawGraph(L_.gr, L_);
   }
 
-  function drawStatic() { drawFrame(); }
+  function setStatus() {
+    var el = document.getElementById('sim-status');
+    if (!el) return;
+    el.textContent = contraction
+      ? 'With the Lorentz–FitzGerald contraction both round trips take the same time: the model shift is ' + swing90().toFixed(2) + ', matching the null result.'
+      : 'Ether model (formula): turning by 90° moves the fringes by ' + swing90().toFixed(2) + ' of a fringe for L = ' + L.toFixed(1) + ' m, v = ' + V + ' km/s, λ = ' + LAM + ' nm. Reported in 1887: < 0.02.';
+  }
 
-  // ── Controls ─────────────────────────────────────────────────────
-  var controls     = document.getElementById('sim-controls-026');
-  var rotSliderRow = controls ? controls.querySelector('.row-rotation')  : null;
-  var armSliderRow = controls ? controls.querySelector('.row-arm-ratio') : null;
-  var rotSlider    = document.getElementById('rot-slider');
-  var armSlider    = document.getElementById('arm-slider');
-  var rotValEl     = document.getElementById('rot-slider-val');
-  var armValEl     = document.getElementById('arm-slider-val');
-  var hintEl       = document.getElementById('mode-hint');
+  function loop(ts) {
+    if (!running) return;
+    if (!lastTs) lastTs = ts;
+    var dt = Math.min((ts - lastTs) / 1000, 0.05);
+    lastTs = ts;
+    if (autoRot && !scrubbing) { theta += dt * 2 * Math.PI / TURN_SECONDS; syncRot(); }
+    beamPhase += dt * 0.8;
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
 
-  var HINTS = {
-    1: 'Watch the light beam bounce between mirrors and recombine at the detector.',
-    2: 'Apparatus rotates automatically. Top = aether prediction. Bottom = actual measurement.',
-    3: 'Drag the arm ratio. At 1.000 (equal arms) the result is null. Any difference creates fringes.'
-  };
+  function setBtn(playing) {
+    var btn = document.getElementById('sim-play-btn');
+    if (btn) { btn.textContent = playing ? '⏸ Pause' : '▶ Play'; btn.dataset.state = playing ? 'playing' : 'paused'; }
+    var dot = document.querySelector('.sim-caption__dot');
+    if (dot) dot.classList.toggle('is-running', playing);
+  }
 
-  function setMode(m) {
-    currentMode = m;
-    if (rotSliderRow) rotSliderRow.style.display = (m === 2) ? 'flex' : 'none';
-    if (armSliderRow) armSliderRow.style.display = (m === 3) ? 'flex' : 'none';
-    if (hintEl) hintEl.textContent = HINTS[m] || '';
-    if (controls) {
-      controls.querySelectorAll('.mode-btn').forEach(function(btn) {
-        btn.classList.toggle('active', parseInt(btn.dataset.mode, 10) === m);
-      });
+  function start() {
+    if (running) return;
+    if (reducedMotion) { theta += Math.PI / 4; draw(); return; }
+    running = true; lastTs = null; setBtn(true);
+    rafId = requestAnimationFrame(loop);
+  }
+  function pause() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null; setBtn(false);
+  }
+  function reset() {
+    pause(); theta = 0; beamPhase = 0; syncRot(); draw(); setStatus();
+  }
+  function destroy() {
+    pause();
+    window.removeEventListener('resize', onResize);
+    if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
+  }
+  window.SimAPI = { start: start, pause: pause, reset: reset, destroy: destroy };
+
+  function onResize() {
+    if (!mountEl || !canvas) return;
+    var dpr = window.devicePixelRatio || 1;
+    W = Math.round(mountEl.getBoundingClientRect().width) || 680;
+    H = W < 560 ? 560 : 470;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function bindSlider(id, valId, fmt, aria, apply) {
+    var el = document.getElementById(id), out = document.getElementById(valId);
+    if (!el) return;
+    el.addEventListener('input', function () {
+      var v = parseFloat(el.value);
+      apply(v);
+      if (out) out.textContent = fmt(v);
+      el.setAttribute('aria-valuetext', aria(v));
+      setStatus(); draw();
+    });
+  }
+
+  function init() {
+    mountEl = document.getElementById('sim-mount');
+    if (!mountEl) return;
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', 'Top view of the interferometer, its fringe pattern, and a graph of fringe position against rotation angle');
+    canvas.style.display = 'block';
+    mountEl.appendChild(canvas);
+    ctx = canvas.getContext('2d');
+    bindSlider('len-slider', 'len-val', function (v) { return v.toFixed(1) + ' m'; }, function (v) { return v + ' metres'; }, function (v) { L = v; });
+    bindSlider('vel-slider', 'vel-val', function (v) { return v + ' km/s'; }, function (v) { return v + ' kilometres per second'; }, function (v) { V = v; });
+    bindSlider('lam-slider', 'lam-val', function (v) { return v + ' nm'; }, function (v) { return v + ' nanometres'; }, function (v) { LAM = v; });
+    var rs = document.getElementById('rot-slider');
+    if (rs) {
+      rs.addEventListener('input', function () { scrubbing = true; theta = parseFloat(rs.value) * Math.PI / 180; syncRot(true); draw(); });
+      ['change', 'pointerup', 'blur'].forEach(function (ev) { rs.addEventListener(ev, function () { scrubbing = false; }); });
     }
-    if (!running) drawStatic();
-  }
-
-  if (rotSlider) {
-    rotSlider.addEventListener('input', function() {
-      rotAngle = parseFloat(rotSlider.value);
-      if (rotValEl) rotValEl.textContent = Math.round(rotAngle) + '°';
-      if (!running) drawStatic();
+    var at = document.getElementById('auto-toggle');
+    if (at) at.addEventListener('click', function () {
+      autoRot = !autoRot; at.setAttribute('aria-pressed', String(autoRot));
+      at.textContent = autoRot ? 'Auto-rotate: on' : 'Auto-rotate: off';
     });
-  }
-  if (armSlider) {
-    armSlider.addEventListener('input', function() {
-      armRatio = parseFloat(armSlider.value);
-      if (armValEl) armValEl.textContent = armRatio.toFixed(3);
-      if (!running) drawStatic();
+    var ct = document.getElementById('contract-toggle');
+    if (ct) ct.addEventListener('click', function () {
+      contraction = !contraction; ct.setAttribute('aria-pressed', String(contraction));
+      ct.textContent = contraction ? 'Lorentz–FitzGerald contraction: on' : 'Lorentz–FitzGerald contraction: off';
+      setStatus(); draw();
     });
-  }
-  if (controls) {
-    controls.querySelectorAll('.mode-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() { setMode(parseInt(btn.dataset.mode, 10)); });
-    });
+    window.addEventListener('resize', onResize);
+    onResize();
+    setStatus();
   }
 
-  resize();
-  window.addEventListener('resize', function() { resize(); if (!running) drawStatic(); });
-
-  window.SimAPI = {
-    start:   function() { if (running) return; running = true; if (reduced) { drawStatic(); return; } raf = requestAnimationFrame(drawFrame); },
-    pause:   function() { running = false; if (raf) { cancelAnimationFrame(raf); raf = null; } },
-    reset:   function() { window.SimAPI.pause(); t = 0; rotAngle = 0; armRatio = 1.0; if (rotSlider) rotSlider.value = 0; if (armSlider) armSlider.value = 1.0; if (rotValEl) rotValEl.textContent = '0°'; if (armValEl) armValEl.textContent = '1.000'; setMode(1); },
-    destroy: function() { window.SimAPI.pause(); if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }
-  };
-
-  setMode(1);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 }());
