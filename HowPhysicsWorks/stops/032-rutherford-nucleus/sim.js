@@ -64,8 +64,10 @@
 
   /* ---- Rutherford scattering ---- */
   function chargeD() {
-    /* D = closest-approach distance for head-on at current Z */
-    return Z * (H * 0.004);
+    /* D = k Z1 Z2 e^2 / (2 E_k), half the head-on closest-approach distance.
+       Drawn about ten times smaller than before so that most alphas are only
+       slightly deflected; the nucleus is still drawn far too large. */
+    return Z * (H * 0.0004);
   }
 
   function rutherfordTheta(b) {
@@ -76,13 +78,8 @@
 
   /* ---- Particle pool ---- */
   function randomB() {
-    if (Math.random() < 0.7) {
-      /* large b — mostly straight */
-      return (Math.random() * 0.37 + 0.08) * H;
-    } else {
-      /* small b — near nucleus */
-      return Math.random() * 0.08 * H;
-    }
+    /* uniform in impact parameter, as for a uniform beam on the foil */
+    return Math.random() * 0.45 * H;
   }
 
   function makeParticle(index) {
@@ -375,7 +372,7 @@
         ctx.fillStyle = 'rgba(100,200,255,0.8)';
         ctx.font = '11px monospace';
         ctx.textAlign = 'right';
-        ctx.fillText('b=' + Math.round(b) + 'px', fx - 24, (cy + ys) / 2 + 4);
+        ctx.fillText('b=' + (b / chargeD()).toFixed(1) + ' D', fx - 24, (cy + ys) / 2 + 4);
         ctx.textAlign = 'left';
       }
     }
@@ -482,7 +479,7 @@
       chargeSlider.addEventListener('input', function () {
         Z = parseInt(chargeSlider.value, 10);
         if (chargeReadout) {
-          chargeReadout.textContent = 'Z = ' + Z + (Z === 79 ? ' (Gold)' : Z === 1 ? ' (Hydrogen)' : '');
+          chargeReadout.textContent = 'Z = ' + Z + (ELEMENT_NAMES[Z] ? ' (' + ELEMENT_NAMES[Z] + ')' : '');
         }
         if (mode === 'aim') { resetAimParticle(); if (!running) drawAimMode(); }
         else { initParticles(); if (!running) drawStatic(); }
@@ -518,11 +515,11 @@
     if (aimSlider) {
       aimSlider.addEventListener('input', function () {
         var val = parseInt(aimSlider.value, 10);
-        aimB = val / 100 * H * 0.45;
+        aimB = Math.pow(val / 100, 2) * H * 0.45;
         var theta = rutherfordTheta(aimB);
         var deg = Math.round(theta * 180 / Math.PI);
         if (aimReadout) {
-          aimReadout.textContent = 'b = ' + Math.round(aimB) + 'px  (\u03b8 = ' + deg + '\u00b0)';
+          aimReadout.textContent = 'b = ' + (aimB / chargeD()).toFixed(1) + ' D  (\u03b8 = ' + deg + '\u00b0)';
         }
         if (mode === 'aim') {
           resetAimParticle();

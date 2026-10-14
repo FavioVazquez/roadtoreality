@@ -47,37 +47,14 @@
   var emitTimer = 0;
   var waves     = [];           /* {cx:px, r:px} */
 
-  /* ── Build controls ─────────────────────────────────────── */
-  var ctrlRow = document.querySelector('.sim-controls .sim-actions');
-  if (ctrlRow) {
-    var sliderWrap = document.createElement('div');
-    sliderWrap.style.cssText = 'display:flex;align-items:center;gap:8px;flex:1;min-width:0;';
-
-    var sliderLabel = document.createElement('label');
-    sliderLabel.textContent = 'Source speed:';
-    sliderLabel.style.cssText = 'font-size:var(--text-sm,0.85rem);color:var(--color-text-secondary,#aaa);white-space:nowrap;';
-
-    var slider = document.createElement('input');
-    slider.type  = 'range';
-    slider.min   = '0';
-    slider.max   = '95';
-    slider.value = '35';
-    slider.step  = '1';
-    slider.style.cssText = 'flex:1;accent-color:#5285c8;cursor:pointer;';
-
-    var speedVal = document.createElement('span');
-    speedVal.style.cssText = 'font-size:var(--text-sm,0.85rem);color:var(--color-text-muted,#888);font-family:var(--font-mono,monospace);min-width:3.5em;text-align:right;';
-    speedVal.textContent = '0.35c';
-
+  /* ── Source speed slider (declared in HTML) ─────────────── */
+  var slider   = document.getElementById('source-speed-slider');
+  var speedVal = document.getElementById('source-speed-readout');
+  if (slider) {
     slider.addEventListener('input', function () {
       sourceSpeed = parseInt(slider.value, 10) / 100;
-      speedVal.textContent = sourceSpeed.toFixed(2) + 'c';
+      if (speedVal) speedVal.textContent = sourceSpeed.toFixed(2) + ' v_w';
     });
-
-    sliderWrap.appendChild(sliderLabel);
-    sliderWrap.appendChild(slider);
-    sliderWrap.appendChild(speedVal);
-    ctrlRow.insertBefore(sliderWrap, ctrlRow.firstChild);
   }
 
   /* ── Source frequency slider (declared in HTML) ─────────── */
@@ -86,7 +63,7 @@
   if (freqSlider) {
     freqSlider.addEventListener('input', function () {
       emitFreq = parseFloat(freqSlider.value);
-      if (freqReadout) freqReadout.textContent = 'f = ' + emitFreq.toFixed(1) + ' Hz';
+      if (freqReadout) freqReadout.textContent = 'f\u2080 \u00D7 ' + emitFreq.toFixed(1);
     });
   }
 
@@ -235,7 +212,7 @@
     ctx.font = '10px monospace';
     ctx.textAlign = 'left';
     ctx.fillStyle = COLOR_SOURCE + '0.8)';
-    ctx.fillText('v\u209B=' + sourceSpeed.toFixed(2) + 'c', sx2 + 14, sy - 14);
+    ctx.fillText('v\u209B=' + sourceSpeed.toFixed(2) + ' v_w', sx2 + 14, sy - 14);
 
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';

@@ -29,15 +29,17 @@
     var cx     = panelW / 2;
     var cy     = H * 0.54;
     var x0     = panelW * 0.04;
-    var x1     = panelW * 0.30;
-    var x2     = panelW * 0.70;
+    var x1     = panelW * 0.24;   /* end of inlet pipe, start of converging taper */
+    var t1     = panelW * 0.42;   /* throat start */
+    var t2     = panelW * 0.58;   /* throat end */
+    var x2     = panelW * 0.76;   /* end of diverging taper */
     var x3     = panelW * 0.96;
     var wideH  = H * 0.22;
     var narrowH = wideH * throatRatio;
 
     tubeGeo = {
       cx: cx, cy: cy,
-      x0: x0, x1: x1, x2: x2, x3: x3,
+      x0: x0, x1: x1, t1: t1, t2: t2, x2: x2, x3: x3,
       wideH: wideH, narrowH: narrowH,
       panelW: panelW
     };
@@ -47,13 +49,20 @@
   function tubeHalfAt(x) {
     var g = tubeGeo;
     if (x <= g.x1) return g.wideH;
-    if (x <= g.x2) {
-      /* smooth cosine taper */
-      var frac = (x - g.x1) / (g.x2 - g.x1);
+    if (x <= g.t1) {
+      /* converging cosine taper */
+      var frac = (x - g.x1) / (g.t1 - g.x1);
       var t_cos = (1 - Math.cos(frac * Math.PI)) / 2;
       return g.wideH + (g.narrowH - g.wideH) * t_cos;
     }
-    return g.narrowH;
+    if (x <= g.t2) return g.narrowH;
+    if (x <= g.x2) {
+      /* diverging cosine taper: pressure recovers */
+      var frac2 = (x - g.t2) / (g.x2 - g.t2);
+      var t_cos2 = (1 - Math.cos(frac2 * Math.PI)) / 2;
+      return g.narrowH + (g.wideH - g.narrowH) * t_cos2;
+    }
+    return g.wideH;
   }
 
   /* ── Speed at x (continuity equation: A1*v1 = A2*v2) ──────── */
@@ -64,19 +73,26 @@
     return flowSpeed * ratio;
   }
 
-  /* ── Pressure at x (Bernoulli: P + ½ρv² = const) ──────────── */
+  /* ── Pressure at x (Bernoulli, constant height) ──────────── */
+  /* Absolute pressure in Pa for water (rho = 1000 kg/m^3). The inlet static
+     pressure P0 is large enough that the throat never goes below zero at any
+     slider value (largest drop, throat 0.15 at 2 m/s inlet: about 87 kPa). */
+  var RHO = 1000, P0 = 100000;
   function pressureAt(x) {
-    /* Normalised: 1.0 = full static pressure at wide section */
-    var v    = speedAt(x);
-    var vRef = flowSpeed;          /* speed at wide section */
-    /* ΔP = ½ρ(v_ref² - v²); we normalise by ½ρ*v_ref² */
-    var pNorm = 1.0 - (v * v) / (vRef * vRef);
-    return pNorm; /* 1 = high pressure (wide), 0 or negative = low (throat) */
+    var v = speedAt(x), v1 = flowSpeed;
+    return P0 - 0.5 * RHO * (v * v - v1 * v1);
   }
 
   /* ── Particle system ──────────────────────────────────────── */
   var PARTICLE_COUNT = 36;
   var particles = [];
+
+  /* Pressure axis floor: the throat dip fills 40 % of the scale at every setting. */
+  function pFloorNow() {
+    var pThroat = pressureAt((tubeGeo.t1 + tubeGeo.t2) / 2);
+    return Math.max(0, P0 - 2.5 * (P0 - pThroat));
+  }
+  function pFrac(P) { var f = pFloorNow(); return (P - f) / (P0 - f); }
 
   function initParticles() {
     var g = tubeGeo;
@@ -150,8 +166,8 @@
     ctx.lineTo(g.x0, g.cy + g.wideH);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(g.x3, g.cy - g.narrowH);
-    ctx.lineTo(g.x3, g.cy + g.narrowH);
+    ctx.moveTo(g.x3, g.cy - g.wideH);
+    ctx.lineTo(g.x3, g.cy + g.wideH);
     ctx.stroke();
   }
 
@@ -164,6 +180,7 @@
       (g.x1 + g.x2) / 2,
       g.x2 + (g.x3 - g.x2) * 0.5
     ];
+    sampleX[1] = (g.t1 + g.t2) / 2;
 
     var colW    = 14;
     var baseY   = g.cy - g.wideH - 10;
@@ -171,10 +188,8 @@
 
     for (var i = 0; i < sampleX.length; i++) {
       var sx  = sampleX[i];
-      var p   = pressureAt(sx);
-      /* clamp so throat can be near 0 */
-      var pClamped = Math.max(0.02, p);
-      var colH = maxColH * pClamped;
+      var p   = pFrac(pressureAt(sx));   /* fraction of inlet pressure, never clamped */
+      var colH = maxColH * p;
       var colY = baseY - colH;
 
       /* Tube stem */
@@ -186,7 +201,7 @@
       ctx.stroke();
 
       /* Fluid column */
-      var hue = p < 0.4 ? '180,80,80' : '82,133,200';
+      var hue = p < 0.97 ? '180,80,80' : '82,133,200';
       ctx.fillStyle = 'rgba(' + hue + ',0.30)';
       ctx.fillRect(sx - colW / 2, colY, colW, colH);
       ctx.strokeStyle = 'rgba(' + hue + ',0.70)';
@@ -230,8 +245,8 @@
     var g = tubeGeo;
     var arrowPositions = [
       g.x0 + (g.x1 - g.x0) * 0.35,
-      (g.x1 + g.x2) / 2,
-      g.x2 + (g.x3 - g.x2) * 0.65
+      (g.t1 + g.t2) / 2,
+      g.x2 + (g.x3 - g.x2) * 0.5
     ];
     for (var i = 0; i < arrowPositions.length; i++) {
       var ax = arrowPositions[i];
@@ -295,7 +310,7 @@
     ctx.fillText('x →', gx1, gy1 + 3);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('P', gx0 + 3, gy0);
+    ctx.fillText('P (kPa)', gx0 + 3, gy0);
     ctx.restore();
 
     /* Tube profile (scaled to graph width) — faint reference */
@@ -323,9 +338,8 @@
     for (var j = 0; j <= 80; j++) {
       var fr = j / 80;
       var xs = g.x0 + fr * (g.x3 - g.x0);
-      var press = pressureAt(xs);
-      /* normalise to [0,1]: p=1 maps to gy0, p=0 maps to gy1 */
-      var pClamped2 = Math.max(0, Math.min(1, press));
+      /* P/P0: 1 maps to gy0, 0 maps to gy1; stays in range for every slider value */
+      var pClamped2 = pFrac(pressureAt(xs));
       var gxp = gx0 + fr * gW;
       var gyp = gy0 + (1 - pClamped2) * gH;
       if (j === 0) ctx.moveTo(gxp, gyp); else ctx.lineTo(gxp, gyp);
@@ -339,7 +353,7 @@
     for (var k = 0; k <= 80; k++) {
       var fk = k / 80;
       var xk = g.x0 + fk * (g.x3 - g.x0);
-      var pk = Math.max(0, Math.min(1, pressureAt(xk)));
+      var pk = pFrac(pressureAt(xk));
       var gxk = gx0 + fk * gW;
       var gyk = gy0 + (1 - pk) * gH;
       if (k === 0) ctx.moveTo(gxk, gy1); else ctx.lineTo(gxk, gyk);
@@ -371,6 +385,10 @@
     ctx.fillText('High P', gx0 + 4, gy0 + 4);
     ctx.fillStyle = 'rgba(200,120,80,0.65)';
     ctx.fillText('Low P', gx0 + 4, gy1 - 14);
+    ctx.fillStyle = 'rgba(200,200,200,0.55)';
+    ctx.textAlign = 'right';
+    ctx.fillText((P0 / 1000).toFixed(0), gx0 - 3, gy0 + 4);
+    ctx.fillText((pFloorNow() / 1000).toFixed(0), gx0 - 3, gy1 - 12);
     ctx.restore();
   }
 
@@ -384,11 +402,11 @@
     ctx.fillStyle = 'rgba(200,200,200,0.40)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillText('Venturi Tube', g.cx, 6);
+    ctx.fillText('Venturi Tube (2-D channel)', g.cx, 6);
     ctx.restore();
 
     /* Speed readout */
-    var vThroat = speedAt((g.x1 + g.x2) / 2);
+    var vThroat = speedAt((g.t1 + g.t2) / 2);
     var vWide   = flowSpeed;
     ctx.save();
     ctx.font = '10px "DM Sans", system-ui, sans-serif';
@@ -399,6 +417,17 @@
       'v\u2081 = ' + vWide.toFixed(2) + ' m/s  |  v\u2082 = ' + vThroat.toFixed(2) + ' m/s',
       g.cx, H * 0.96
     );
+    ctx.restore();
+
+    /* Pressure drop readout */
+    var dP = 0.5 * RHO * (vThroat * vThroat - vWide * vWide);
+    ctx.save();
+    ctx.font = '10px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(200,200,200,0.65)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('\u0394P = \u00bd\u03c1(v\u2082\u00b2 \u2212 v\u2081\u00b2) = ' + (dP / 1000).toFixed(1) + ' kPa',
+      g.cx, H * 0.96 - 14);
     ctx.restore();
 
     /* "Flow \u2192" arrow label at tube entrance */

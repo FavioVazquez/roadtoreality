@@ -26,7 +26,7 @@
 
   /* ── Physics constants (normalized units) ── */
   var FREQ_THRESHOLD = 0.5;  /* normalized; slider maps 0.3–1.0 */
-  var KE_SCALE       = 10.0; /* so KE_max at freq=1.0 is (1.0-0.5)*10 = 5 eV */
+  var KE_SCALE       = 4.6;  /* hf = 4.6*freq eV, so threshold = 0.5*4.6 = 2.3 eV = phi; KE_max at freq=1.0 is 2.3 eV */
   var PHI_LABEL      = '2.3'; /* eV label only */
 
   /* ── State ── */
@@ -318,9 +318,9 @@
     /* Frequency bar mini */
     ctx.fillStyle = 'rgba(140,100,200,0.55)';
     ctx.font      = '9px monospace';
-    ctx.fillText('freq: ' + freq.toFixed(2) + (aboveThreshold ? '  >\u03c6' : '  <\u03c6'), px0, py0 + 90);
+    ctx.fillText('hf: ' + (freq * KE_SCALE).toFixed(2) + ' eV' + (aboveThreshold ? '  >\u03c6' : '  <\u03c6'), px0, py0 + 90);
     ctx.fillText('intensity: ' + Math.round(intensity * 100) + '%', px0, py0 + 104);
-    ctx.fillText('threshold: ' + FREQ_THRESHOLD.toFixed(2), px0, py0 + 118);
+    ctx.fillText('\u03c6 = ' + (FREQ_THRESHOLD * KE_SCALE).toFixed(2) + ' eV', px0, py0 + 118);
 
     /* Note about intensity */
     ctx.fillStyle = 'rgba(140,140,170,0.65)';
@@ -415,7 +415,7 @@
       electrons = [];
       flashes   = [];
       updateState();
-      if (freqSlider)  freqSlider.value  = '34'; /* 0.30 + 33/99*0.70 ≈ 0.53 → use 34 for 0.40 */
+      if (freqSlider)  freqSlider.value  = '15'; /* 0.30 + 14/99*0.70 = 0.399 */
       if (intSlider)   intSlider.value   = '50';
       if (freqReadout) freqReadout.textContent  = 'Below threshold';
       if (intReadout)  intReadout.textContent   = '50%';

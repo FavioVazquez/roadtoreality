@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.">
+  <meta name="description" content="Carnot showed there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.">
   <meta property="og:title" content="Carnot and the Heat Engine — How Physics Works">
-  <meta property="og:description" content="Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.">
+  <meta property="og:description" content="Carnot showed there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/020-carnot-heat-engine/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../assets/css/simulation.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+  <style>
+    input[type=range], select { min-height: 44px; }
+  </style>
 </head>
 <body>
 <script id="stop-config" type="application/json">
@@ -60,7 +63,7 @@
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>Carnot proved there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering. Adjust the hot and cold reservoir temperatures below and watch the efficiency readout change. The enclosed area on the PV diagram is exactly the net work extracted per cycle.</p>
+    <p>Carnot showed there is a fundamental limit to how efficiently any heat engine can run — a limit set by thermodynamics itself, not by engineering. Adjust the hot and cold reservoir temperatures below and watch the efficiency readout change. The enclosed area on the PV diagram is exactly the net work extracted per cycle.</p>
   </div>
   <div class="sim-wrapper content-column" data-autoplay="true">
     <div class="sim-container" id="sim-mount" aria-label="Carnot Heat Engine — interactive simulation">
@@ -70,12 +73,12 @@
     <div class="sim-controls">
       <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;">
         <div style="display:flex;align-items:center;gap:0.75rem;">
-          <label for="hot-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T&#8347; (hot reservoir, K):</label>
+          <label for="hot-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T<sub>H</sub> (hot reservoir, K):</label>
           <input id="hot-temp-slider" type="range" min="400" max="800" step="10" value="600" style="flex:1;" aria-label="Hot reservoir temperature 400 to 800 K">
           <span id="hot-temp-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3.5rem;text-align:right;">600 K</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;">
-          <label for="cold-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T&#8346; (cold reservoir, K):</label>
+          <label for="cold-temp-slider" style="font-size:var(--text-sm);color:var(--color-text-secondary);white-space:nowrap;">T<sub>C</sub> (cold reservoir, K):</label>
           <input id="cold-temp-slider" type="range" min="200" max="400" step="10" value="300" style="flex:1;" aria-label="Cold reservoir temperature 200 to 400 K">
           <span id="cold-temp-label" style="font-size:var(--text-sm);color:var(--color-text-secondary);min-width:3.5rem;text-align:right;">300 K</span>
         </div>
@@ -92,17 +95,27 @@
   </div>
   <div class="stop-body content-column">
     <h3>What's happening</h3>
-    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The four stages of the Carnot cycle are: (1) isothermal expansion at T<sub>H</sub> — the gas absorbs heat and expands; (2) adiabatic expansion — temperature drops from T<sub>H</sub> to T<sub>C</sub>; (3) isothermal compression at T<sub>C</sub> — the gas releases heat and is compressed; (4) adiabatic compression — temperature rises back to T<sub>H</sub>. The enclosed area equals net work done per cycle.</p>
+    <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-top:0.75rem;">The four stages of the Carnot cycle are: (1) isothermal expansion at T<sub>H</sub> — the gas absorbs heat and expands; (2) adiabatic expansion — temperature drops from T<sub>H</sub> to T<sub>C</sub>; (3) isothermal compression at T<sub>C</sub> — the gas releases heat and is compressed; (4) adiabatic compression — temperature rises back to T<sub>H</sub>. The enclosed area equals net work done per cycle. The gas is a monatomic ideal gas (&gamma; = 5/3), one mole, and the volume axis is logarithmic so the four corners stay apart. At the defaults the numbers on the diagram are W = 1729 J, Q<sub>H</sub> = 3458 J and Q<sub>C</sub> = 1729 J, so W/Q<sub>H</sub> = 0.50 = 1 &minus; 300/600.</p>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concepts</div>
     <ul class="takeaway-box__list">
       <li>The Carnot efficiency is the maximum possible efficiency for any heat engine operating between two temperatures. No real engine can exceed it.</li>
       <li>$$\eta_{\text{Carnot}} = 1 - \frac{T_C}{T_H}$$</li>
-      <li>The area enclosed by the PV cycle equals the net work done per cycle: \(W = Q_H - Q_C\).</li>
+      <li><span>Carnot argued the limit exists (1824) with a theory of heat as a fluid that was wrong; Clapeyron drew the cycle on a PV diagram (1834); Kelvin and Clausius wrote the limit as 1 &minus; T<sub>C</sub>/T<sub>H</sub> once temperature had an absolute scale (1848&ndash;1851).</span></li>
+      <li><span>The area enclosed by the PV cycle equals the net work done per cycle: \(W = Q_H - Q_C\).</span></li>
       <li>To achieve 100% efficiency, the cold reservoir would need to be at absolute zero (0 K) — physically impossible.</li>
-      <li>Temperature must be in Kelvin for this formula. Celsius and Fahrenheit are shifts; ratios only make sense in Kelvin.</li>
+      <li><span>Temperature must be in Kelvin for this formula. Celsius is the Kelvin scale shifted by 273.15; Fahrenheit is shifted and stretched; only Kelvin makes T<sub>C</sub>/T<sub>H</sub> a ratio of absolute temperatures.</span></li>
     </ul>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">S. Carnot, <em>R&eacute;flexions sur la puissance motrice du feu et sur les machines propres &agrave; d&eacute;velopper cette puissance</em> (Bachelier, Paris, 1824).</li>
+      <li id="src-2">&Eacute;. Clapeyron, "M&eacute;moire sur la puissance motrice de la chaleur", <em>Journal de l'&Eacute;cole Royale Polytechnique</em> 14, 153&ndash;190 (1834).</li>
+      <li id="src-3">W. Thomson, "On an Absolute Thermometric Scale founded on Carnot's Theory of the Motive Power of Heat", <em>Philosophical Magazine</em> 33, 313&ndash;317 (1848).</li>
+      <li id="src-4">R. Clausius, "Ueber die bewegende Kraft der W&auml;rme", <em>Annalen der Physik</em> 79, 368&ndash;397 and 500&ndash;524 (1850).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
