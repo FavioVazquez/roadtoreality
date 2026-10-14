@@ -462,8 +462,9 @@
     if (running) return;
     setPlayBtn(true);
     if (reducedMotion) {
-      rew = 1; holdT = 0;
-      update(0);
+      /* no animation: keep the data on screen and say so */
+      rew = 0; holdT = 0;
+      setStatus('Reduced motion is on, so the rewind is not animated. Its result: run back at constant speed, every galaxy on your line reaches zero distance after 1/H₀, and the microwave background was about 3,000 K at z ≈ 1090.');
       draw();
       return;
     }
