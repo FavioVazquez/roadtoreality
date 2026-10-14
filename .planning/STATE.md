@@ -4,9 +4,9 @@
 
 Milestone: v2.0 — Full Spectrum
 Phase: 11 — Era 4: Modern Physics Part B (in progress) · Phase 13 plan 13-02 done out of order
-Plan: 11-01 (stop 034 done, 035 pending) · 13-02 (stop 048) complete
-Status: Stops 034 (General Relativity, Mercury perihelion) and 048 (Gravitational Waves, BBH chirp) built on branch stops-034-048; headless-browser checks at 1440 px and 390 px pass. Remaining Phase 11: 035–039.
-Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cited sources, re-measured placeholder blocks (#remeasured-mercury-transits, #remeasured-ligo-public-data).
+Plan: 11-01 (stops 034–037 done, 038–039 pending) · 13-02 (stop 048) complete · stop 026 rebuilt
+Status: Batch 1 on branch stops-batch1: stop 026 (Michelson-Morley) rebuilt as a fringe-shift calculator, stops 035–037 (de Broglie / Schrödinger / Heisenberg) built; headless-browser checks at 1440 px and 390 px pass. Remaining Phase 11: 038–039.
+Last activity: 2026-10-14 — Stops 026 rebuild + 035, 036, 037 full simulations, essays with cited Sources blocks, built to the REVIEW-PR14 referee standard (no "measured" for sim output, formula vs cited labels, assumptions disclosed).
 
 ### Quick Tasks Completed
 
@@ -36,7 +36,7 @@ Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cite
 - All prev/next navigation chains verified
 - `.nojekyll` added for GitHub Pages
 
-## Full Simulations Built (34)
+## Full Simulations Built (37)
 - 001 Thales: supernatural vs natural explanation two-panel comparison
 - 002 Pythagoras: six harmonic ratio buttons (1:1 to 9:8), Web Audio sine tones, Canvas 2D standing wave (n=1 to 9)
 - 003 Democritus: zoom-into-matter (macroscopic → nuclear → quarks)
@@ -62,7 +62,7 @@ Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cite
 - 023 Doppler: moving source wavefronts, source-speed + source-frequency sliders
 - 024 Boltzmann: two-panel — elastic collision gas + MB histogram, partition wall + entropy meter
 - 025 Hertz: oscillating dipole, sin²θ radiation pattern
-- 026 Michelson-Morley: three-mode narrative (Setup / Expected vs Found / Arm Ratio)
+- 026 Michelson-Morley (rebuilt per audit): rotating interferometer, fringe shift computed exactly from the round-trip times (ΔN₉₀ = 2Lv²/(λc²) = 0.40 at 1887 defaults) from L, v, λ sliders; rotation scrub + auto-rotate toggle; model vs flat 1887-observed fringe strips; cos 2θ graph with the cited < 0.02 bound as a band; pulse race at labelled exaggerated β; Lorentz–FitzGerald contraction toggle
 - 027 Planck: Rayleigh-Jeans vs Planck curve comparison, temperature + h sliders, UV catastrophe visualized
 - 028 Photoelectric: frequency + intensity dual sliders, KE readout, stopping voltage, threshold frequency
 - 029 SR Time Dilation: twin paradox, velocity slider, age gap readout, clock comparison
@@ -71,6 +71,9 @@ Last activity: 2026-10-14 — Stops 034 + 048 full simulations, essays with cite
 - 032 Rutherford: gold foil scattering stream (8-particle pool, Coulomb deflection) + manual aim mode, nuclear charge slider, H/C/Fe/Au presets, element label
 - 033 Bohr: classical spiral collapse (3.5 s) → quantized orbits toggle, orbit ring click → Balmer emission, spectrum bar with glow + white flash + dedup
 - 034 General Relativity: Mercury RK4 orbit, planets' pull (ring model, scaled to cited 532.3″/cy) + 1PN Schwarzschild toggle, perihelion advance readout in ″/century (model + sim's own value), planets-vs-leftover split with ghost orbit, exaggeration slider
+- 035 Wave-particle duality: single-electron double-slit buildup, relativistic de Broglie λ from energy slider, slit-separation slider, block-one-slit and which-slit toggles, λD/d marked on the histogram vs P(y) formula
+- 036 Schrödinger: electron in a 1 nm infinite well, exact spectral evolution (80 modes), one state with n slider (node count) / 1+2 slosh / wave packet with revival at h/E₁ = 11 fs, Re/Im + phase-coloured |ψ|², ⟨x⟩ trace; hydrogen tab with 1s/2s/2p slices and r²|R|² vs Bohr radius
+- 037 Heisenberg: free electron packet (Gaussian / two-peak), width slider, |ψ(x)|² and |φ(p)|² with σ brackets, σx·σp/(ħ/2) trace vs the Kennard limit; single-slit tab (slit-width slider, dot buildup, ±λD/a, Δp_y ≈ h/a)
 - 048 Gravitational Waves: leading-order BBH inspiral + ringdown, two mass sliders, live strain chirp (face-on, 410 Mpc), expanding ripples, Web Audio chirp (pitch ×4, stretched to 4 s, labelled scaled)
 
 ## Milestone
@@ -131,7 +134,9 @@ All site code lives in: `Episodio4/`
 - 10-09-FIX: Stops 031/032/033 UAT round-2 fixes — complete (2026-03-25): 031 expanding shockwave rings; 032 aim slider max-width; 033 Balmer glow+flash+dedup
 
 ### Phase 11 Plans Progress
-- 11-01: Stop 034 (General Relativity) — complete (2026-10-14): Mercury perihelion sim, GR 1PN toggle, planets vs leftover split, ″/century readout, cited essay + Sources, placeholder #remeasured-mercury-transits. Stop 035 pending.
+- 11-01: Stop 034 (General Relativity) — complete (2026-10-14): Mercury perihelion sim, GR 1PN toggle, planets vs leftover split, ″/century readout, cited essay + Sources, placeholder #remeasured-mercury-transits.
+- 11-01 (batch 1): Stops 035–037 — complete (2026-10-14): double-slit buildup, Schrödinger box, Heisenberg packet; cited essays + Sources
+- 09 follow-up (batch 1): Stop 026 Michelson-Morley rebuild — complete (2026-10-14): fringe-shift calculator, corrected 1887 conclusion
 
 ### Phase 13 Plans Progress
 - 13-02: Stop 048 (Gravitational Waves) — complete (2026-10-14): BBH inspiral + ringdown, mass sliders, live chirp, scaled Web Audio, cited essay + Sources, placeholder #remeasured-ligo-public-data

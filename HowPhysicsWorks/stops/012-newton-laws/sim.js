@@ -38,12 +38,15 @@
   function pxPerMetre() { return W * 0.06; }
 
   function netForce() {
-    if (!applyingForce && Math.abs(vel) < 0.5) return 0;
     var applied = applyingForce ? forceN : 0;
     var friction = FRICTION_COEFF[frictionLevel] * massKg * 9.8;
+    if (Math.abs(vel) < 0.5) {
+      /* At rest: static friction holds the block unless the push beats it */
+      if (applied <= friction) return 0;
+      return applied - friction;
+    }
     /* Friction opposes velocity */
-    var fDir = vel > 0 ? -1 : (vel < 0 ? 1 : 0);
-    if (Math.abs(vel) < 0.5 && !applyingForce) return 0;
+    var fDir = vel > 0 ? -1 : 1;
     return applied + fDir * friction;
   }
 
@@ -142,11 +145,30 @@
     ctx.fillText(massKg + ' kg', bx + blockW/2, by + blockH/2);
     ctx.restore();
 
-    /* Force arrow */
+    /* Third law: the equal and opposite pair while the force is applied */
     if (applyingForce && forceN > 0) {
-      var arrowLen = Math.min(forceN * 3, 80);
-      drawArrow(bx - 8, by + blockH/2, bx - 8 - arrowLen, by + blockH/2,
-        'oklch(0.80 0.17 82)', forceN + ' N');
+      var arrowLen = Math.max(16, Math.min(forceN * 1.8, 60));
+      var ay = by + 12;
+      var contact = bx - 4;
+      /* the pusher (hand) */
+      ctx.save();
+      ctx.fillStyle = 'oklch(0.55 0.05 60)';
+      ctx.beginPath();
+      ctx.roundRect(contact - 16, by + 6, 16, blockH - 12, 4);
+      ctx.fill();
+      ctx.restore();
+      drawArrow(contact, ay, contact + arrowLen, ay, 'oklch(0.80 0.17 82)', '');
+      drawArrow(contact, ay, contact - arrowLen, ay, 'oklch(0.68 0.22 20)', '');
+      ctx.save();
+      ctx.font = '11px "DM Sans", system-ui, sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = 'oklch(0.80 0.17 82)';
+      ctx.fillText('push on block: ' + forceN + ' N', contact + 2, floorY + 8);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = 'oklch(0.68 0.22 20)';
+      ctx.fillText('push on hand: \u2212' + forceN + ' N', contact - 2, floorY + 8);
+      ctx.restore();
     }
 
     /* Velocity arrow */
@@ -164,7 +186,7 @@
     if (hitWall && hitWallTimer > 0) {
       var reactLen = 50;
       drawArrow(wallX, by + blockH/2 - 10, wallX - reactLen, by + blockH/2 - 10,
-        'oklch(0.68 0.22 20)', '← Reaction (3rd Law)');
+        'oklch(0.68 0.22 20)', 'wall pushes back');
     }
   }
 
@@ -234,12 +256,12 @@
       ctx.beginPath();
       ctx.roundRect(gx, gy, gw, gh + 20, 8);
       ctx.fill();
+      var maxV = 1;
+      for (var k = 0; k < velHistory.length; k++) maxV = Math.max(maxV, Math.abs(velHistory[k]));
       ctx.font = '9px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'oklch(0.45 0.04 285)';
       ctx.textAlign = 'left';
-      ctx.fillText('Velocity over time', gx + 4, gy + 4);
-
-      var maxV = Math.max(...velHistory.map(Math.abs), 1);
+      ctx.fillText('v(t), peak ' + maxV.toFixed(1) + ' m/s', gx + 4, gy + 4);
       ctx.strokeStyle = 'oklch(0.72 0.15 145)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -276,7 +298,7 @@
       var btn = document.getElementById('sim-play-btn');
       if (btn) { btn.textContent = '⏸ Release Force'; btn.dataset.state = 'playing'; }
       var s = document.getElementById('sim-status');
-      if (s) s.textContent = 'Force applied! Watch acceleration, then release to see inertia.';
+      if (s) s.textContent = 'Force applied! The hand feels the same force back (3rd Law). Watch acceleration, then release to see inertia.';
     } else {
       applyingForce = false;
       var btn = document.getElementById('sim-play-btn');
@@ -327,7 +349,11 @@
 
     var F = netForce();
     acc = F / massKg;
+    var v0 = vel;
     vel += acc * pxPerMetre() * dt;
+    /* Kinetic friction cannot reverse the motion: it stops the block */
+    if (!applyingForce && v0 * vel < 0) vel = 0;
+    if (Math.abs(vel) < 0.5 && !applyingForce) vel = 0;
     blockX += vel * dt;
 
     /* Wall collision */
@@ -340,13 +366,6 @@
 
     /* Left boundary */
     if (blockX < 0) { blockX = 0; vel = Math.abs(vel) * 0.5; }
-
-    /* Friction brings to halt */
-    if (!applyingForce) {
-      var friction = FRICTION_COEFF[frictionLevel] * massKg * 9.8 * pxPerMetre();
-      if (vel > 0) { vel -= friction * dt; if (vel < 0) vel = 0; }
-      if (vel < 0) { vel += friction * dt; if (vel > 0) vel = 0; }
-    }
 
     if (hitWallTimer > 0) hitWallTimer--;
     else hitWall = false;

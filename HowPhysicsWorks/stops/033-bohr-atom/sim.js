@@ -32,7 +32,7 @@
     r_max = Math.min(W, H) * 0.30;
     r_min = 6;
     /* Scale orbit radii to canvas so they never overlap the spectrum bar */
-    BOHR_RADII = [0, r_max * 0.17, r_max * 0.40, r_max * 0.70, r_max];
+    BOHR_RADII = [0, r_max * 0.14, r_max * 0.32, r_max * 0.50, r_max * 0.67, r_max * 0.83, r_max];
   }
 
   /* ---- Global state ---- */
@@ -51,9 +51,9 @@
   /* ---- Bohr state ---- */
   var bohrLevel = 3;
   var bohrAngle = 0;
-  /* BOHR_RADII index 0 unused; n=1..4 */
-  var BOHR_RADII = [0, 0, 0, 0, 0]; /* populated in resize() */
-  var BOHR_SPEEDS = [0, 0.08, 0.038, 0.024, 0.017];
+  /* BOHR_RADII index 0 unused; n=1..6 (compressed layout, not to scale) */
+  var BOHR_RADII = [0, 0, 0, 0, 0, 0, 0]; /* populated in resize() */
+  var BOHR_SPEEDS = [0, 0.08, 0.038, 0.024, 0.017, 0.014, 0.012];
   var spectrumLines = [];
   var flashLines = {};   /* key: rounded wavelength string, value: frame countdown */
   var photons = [];
@@ -145,7 +145,7 @@
   function drawOrbitRings() {
     ctx.save();
     ctx.setLineDash([4, 5]);
-    for (var n = 1; n <= 4; n++) {
+    for (var n = 1; n <= 6; n++) {
       var r = BOHR_RADII[n];
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
@@ -240,6 +240,11 @@
       ctx.fillStyle = ph.color;
       ctx.globalAlpha = Math.min(ph.life / 40, 1);
       ctx.fill();
+      if (ph.tag) {
+        ctx.fillStyle = 'rgba(230,230,255,0.9)';
+        ctx.font = '10px monospace';
+        ctx.fillText(ph.tag, ph.x + 7, ph.y - 5);
+      }
       ctx.globalAlpha = 1;
       if (ph.x > W + 20 || ph.x < -20 || ph.y > H + 20 || ph.y < -20 || ph.life <= 0) {
         photons.splice(i, 1);
@@ -397,7 +402,10 @@
     var nLow = Math.min(nTarget, bohrLevel);
     var dE_abs = 13.6 * (1.0 / (nLow * nLow) - 1.0 / (nHigh * nHigh));
     var lambda_nm = 1240 / dE_abs;
-    var color = balmerColor(lambda_nm);
+    var color, tag = null;
+    if (lambda_nm < 380) { color = 'rgba(200,200,255,0.9)'; tag = 'UV'; }
+    else if (lambda_nm > 700) { color = 'rgba(255,220,180,0.9)'; tag = 'IR'; }
+    else color = balmerColor(lambda_nm);
 
     if (nTarget < bohrLevel) {
       /* downward jump: emit photon */
@@ -407,7 +415,7 @@
       var speed = 3.5;
       var vx = (ex - cx) / r * speed;
       var vy = (ey - cy) / r * speed;
-      photons.push({ x: ex, y: ey, vx: vx, vy: vy, color: color, life: 80 });
+      photons.push({ x: ex, y: ey, vx: vx, vy: vy, color: color, tag: tag, life: 80 });
 
       /* add spectrum line if visible range — deduplicate within ±3nm */
       if (lambda_nm >= 380 && lambda_nm <= 700) {
@@ -454,7 +462,7 @@
 
     var closest = -1;
     var closestDist = Infinity;
-    for (var n = 1; n <= 4; n++) {
+    for (var n = 1; n <= 6; n++) {
       var d = Math.abs(dist - BOHR_RADII[n]);
       if (d < closestDist) {
         closestDist = d;
@@ -484,7 +492,7 @@
           photons = [];
           collapseBohrBtn.textContent = 'Restart Classical';
           var hintEl = document.getElementById('bohr-hint');
-          if (hintEl) hintEl.textContent = 'Click orbit rings to jump energy levels';
+          if (hintEl) hintEl.textContent = 'Click orbit rings to jump energy levels. Only jumps ending on n = 2 give visible light; jumps to n = 1 are ultraviolet (Lyman), jumps to n = 3 are infrared (Paschen). Orbit spacing compressed for clicking; real radii grow as n\u00b2, real orbital frequencies fall as 1/n\u00b3.';
           if (!running) drawStatic();
         } else {
           /* restart classical */

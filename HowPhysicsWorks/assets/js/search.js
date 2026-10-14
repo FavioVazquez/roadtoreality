@@ -12,7 +12,7 @@
   var focusedIndex = -1;
 
   var ERA_LABELS = {
-    ancient: 'Ancient & Classical',
+    ancient: 'Antiquity & the Middle Ages',
     revolution: 'Scientific Revolution',
     classical: 'Classical Physics',
     modern: 'Modern Revolution',

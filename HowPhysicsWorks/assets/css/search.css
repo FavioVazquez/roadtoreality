@@ -220,6 +220,7 @@
   letter-spacing: 0.04em;
   cursor: pointer;
   white-space: nowrap;
+  min-height: 44px;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 

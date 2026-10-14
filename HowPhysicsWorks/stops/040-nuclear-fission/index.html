@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="When heavy nuclei split, the products weigh slightly less than the original — and that missing mass becomes energy via E = mc². The atomic age begins.">
+  <meta name="description" content="In December 1938 uranium hit by neutrons was found to yield barium: the nucleus had split. Run a chain reaction, see why delayed neutrons make it controllable, and compute the 200 MeV per fission from nuclear masses.">
   <meta property="og:title" content="Nuclear Fission — How Physics Works">
-  <meta property="og:description" content="When heavy nuclei split, the products weigh slightly less than the original — and that missing mass becomes energy via E = mc². The atomic age begins.">
+  <meta property="og:description" content="In December 1938 uranium hit by neutrons was found to yield barium: the nucleus had split. Run a chain reaction, see why delayed neutrons make it controllable, and compute the 200 MeV per fission from nuclear masses.">
   <meta property="og:image" content="https://roadtoreality.dev/HowPhysicsWorks/stops/040-nuclear-fission/og-image.png">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,7 +22,7 @@
 {
   "id": "040-nuclear-fission",
   "order": 40,
-  "era": "contemporary",
+  "era": "modern",
   "title": "Nuclear Fission",
   "prev": "039-dirac-antimatter",
   "prevTitle": "Dirac and Antimatter",
@@ -47,57 +47,99 @@
     if (hint) hint.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl+K';
   }());
 </script>
-<main class="stop-page container" data-era="contemporary">
-  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="Contemporary Physics"></nav>
+<main class="stop-page container" data-era="modern">
+  <nav class="breadcrumb" id="stop-breadcrumb" aria-label="Breadcrumb" data-era-label="The Modern Revolution"></nav>
   <header class="stop-header">
-    <div class="stop-header__era">Contemporary Physics · 1938</div>
+    <div class="stop-header__era">The Modern Revolution · 1938</div>
     <h1 class="stop-header__title">Nuclear Fission</h1>
     <p class="stop-header__subtitle">Splitting the atom releases enormous energy</p>
     <div class="stop-header__meta">
       <span class="stop-header__year">1938</span>
       <span>·</span>
-      <span class="stop-header__scientist">Hahn, Strassmann & Meitner</span>
+      <span class="stop-header__scientist">Hahn, Strassmann &amp; Meitner</span>
     </div>
   </header>
   <div class="stop-intro content-column">
-    <p>When heavy nuclei split, the products weigh slightly less than the original — and that missing mass becomes energy via E = mc². The atomic age begins.</p>
+    <p>
+      In December 1938 Otto Hahn and Fritz Strassmann bombarded uranium with slow neutrons and found barium among the products, an element about half as heavy<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-5">[5]</a></sup>. Lise Meitner and Otto Frisch explained it: the uranium nucleus had split in two. Meitner estimated that each split releases about 200 MeV, and Frisch named the process fission<sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>.
+    </p>
+    <p>
+      The simulation runs a chain reaction generation by generation, shows how fast the power would change, and computes where the energy comes from.
+    </p>
   </div>
-  <div class="sim-wrapper content-column" data-autoplay="true">
-    <div class="sim-container" id="sim-mount" aria-label="Nuclear Fission — teaser animation">
-      <div class="stop-skeleton" aria-hidden="true"></div>
+  <div class="sim-wrapper content-column">
+    <div class="sim-container" id="sim-mount" style="min-height:460px;" aria-label="Interactive: a neutron chain reaction with reactor power over time, and the binding-energy curve with fission and fusion">
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
     <div class="sim-controls">
-      <div class="sim-actions" style="margin-left:auto;">
-        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused" aria-label="Play teaser">&#9654; Play</button>
-        <button class="sim-btn sim-btn-reset" id="sim-reset-btn" aria-label="Reset teaser">&#8634; Reset</button>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;" role="group" aria-label="View">
+        <button class="sim-btn" id="mode-chain" type="button" aria-pressed="true">Chain reaction</button>
+        <button class="sim-btn" id="mode-energy" type="button" aria-pressed="false">Where the energy comes from</button>
+      </div>
+      <div id="chain-controls" style="display:contents">
+        <div class="sim-control" style="flex:1 1 40%;min-width:200px">
+          <label class="sim-control__label" for="p-slider">
+            Neutrons that cause a fission
+            <span class="sim-control__value" style="text-transform:none" id="p-val">41.1 % (k = 1.001)</span>
+          </label>
+          <input type="range" id="p-slider" min="0.38" max="0.44" step="0.0005" value="0.411" aria-label="Chance that a neutron causes another fission; control rods, capture and leakage lower it" aria-valuetext="41.1 percent, k = 1.001">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;width:100%;">
+          <button class="sim-btn" id="delayed-toggle" type="button" aria-pressed="false">Compare: no delayed neutrons</button>
+        </div>
+      </div>
+      <div class="sim-actions">
+        <button class="sim-btn sim-btn-play" id="sim-play-btn" data-state="paused">▶ Play</button>
+        <button class="sim-btn sim-btn-reset" id="sim-reset-btn">↺ Reset</button>
       </div>
     </div>
-    <div class="sim-caption">
+    <div class="sim-caption" aria-live="polite">
       <div class="sim-caption__dot"></div>
-      <span>Teaser — full interactive simulation coming in Phase 12</span>
+      <span id="sim-status">Press play to run the chain reaction.</span>
     </div>
   </div>
   <div class="stop-body content-column">
-    <h3>What you'll explore in the full stop</h3>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Trigger a fission chain reaction and control it with absorbing rods</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Calculate the energy released from mass deficit in U-235 fission</li>
-      <li style="color:var(--color-text-secondary);font-size:var(--text-sm);">→ Compare prompt vs. delayed neutrons — why reactors can be controlled</li>
-    </ul>
+    <h3>Barium from Uranium</h3>
+    <p>Through the 1930s several laboratories fired neutrons at uranium, expecting to make slightly heavier elements. Hahn and Strassmann, chemists at the Kaiser Wilhelm Institute for Chemistry in Berlin, showed that one product behaved chemically as barium. They submitted the result to <em>Die Naturwissenschaften</em> on 22 December 1938<sup><a href="#src-1">[1]</a></sup><sup><a href="#src-5">[5]</a></sup>. Meitner and Frisch worked out that a uranium nucleus, pictured as a charged liquid drop, could stretch and split into two smaller nuclei, and published their account in <em>Nature</em><sup><a href="#src-2">[2]</a></sup><sup><a href="#src-5">[5]</a></sup>. Later in 1939 Niels Bohr and John Wheeler gave the full liquid-drop theory of fission<sup><a href="#src-3">[3]</a></sup>.</p>
+    <h3>Where the Energy Comes From</h3>
+    <p>The mass of a nucleus is less than the masses of its protons and neutrons; the difference, times $c^2$, is its binding energy. Divided by the number of nucleons it rises steeply for light nuclei, peaks in the iron–nickel region and falls slowly for heavy ones. Nickel-62 has the highest binding energy per nucleon, about 8.79 MeV; iron-56 has the lowest mass per nucleon<sup><a href="#src-4">[4]</a></sup><sup><a href="#src-7">[7]</a></sup>. Uranium-235 sits near 7.59 MeV per nucleon, its fragments near 8.3–8.5. Splitting it moves both halves up the curve, and the mass that disappears is released as energy. Light nuclei release energy the other way, by fusing.</p>
+    <p>The <em>Where the energy comes from</em> view computes this from the 2020 atomic mass evaluation<sup><a href="#src-4">[4]</a></sup>. For one common split,</p>
+    <p style="overflow-x:auto;">$$^{235}\mathrm{U} + n \to {}^{141}\mathrm{Ba} + {}^{92}\mathrm{Kr} + 3n$$</p>
+    <p>the lost mass corresponds to 173.3 MeV, most of it the kinetic energy of the two fragments. The fragments are radioactive; once they have decayed to stable praseodymium-141 and zirconium-92 the total is 199.2 MeV, some of which escapes with neutrinos. This is the "about 200 MeV" Meitner estimated. One kilogram of uranium-235 split completely at 200 MeV per fission releases $8.2 \times 10^{13}$ J, about 20 kilotons of TNT, using the convention 1 ton of TNT = 4.184 GJ<sup><a href="#src-8">[8]</a></sup>. For comparison, the D–T fusion reaction releases 17.6 MeV from just five nucleons.</p>
+    <h3>A Chain Reaction</h3>
+    <p>A thermal-neutron fission of uranium-235 releases on average about 2.43 to 2.44 neutrons, depending on the evaluation<sup><a href="#src-6">[6]</a></sup>. If each of those has a chance $p$ of causing another fission, each generation is $k = \bar\nu\,p$ times the last. With $k = 1$ the chain holds steady; above 1 it grows, below 1 it dies out. In a reactor, $p$ is lowered by neutrons that are captured without fission, that leak out, or that are absorbed by control rods. In the simulation one slider stands for all three, and the bars show neutron counts drawn at random generation by generation.</p>
+    <h3>Why a Reactor Can Be Controlled</h3>
+    <p>Most neutrons appear within a tiny fraction of a second, and a neutron generation in a thermal reactor lasts of order $10^{-4}$ s<sup><a href="#src-6">[6]</a></sup>. If they were all there was, a reactor 0.1 % above critical would multiply its power by $e$ about every tenth of a second. But a fraction $\beta = 0.0065$ of the neutrons from uranium-235 are emitted from a fraction of a second to about a minute later, by decaying fission fragments<sup><a href="#src-6">[6]</a></sup>. As long as the excess reactivity $\rho = (k-1)/k$ stays below $\beta$, the power follows the slow delayed neutrons:</p>
+    <p style="overflow-x:auto;">$$\frac{P(t)}{P_0} \approx \frac{\beta}{\beta-\rho}\,\exp\!\left(\frac{\lambda\rho\,t}{\beta-\rho}\right)$$</p>
+    <p>with an effective one-group decay constant $\lambda \approx 0.077$ per second, the value that follows from the published delayed-neutron group data<sup><a href="#src-6">[6]</a></sup>. At $\rho = 0.1$ % that gives a doubling every 50 seconds or so instead of every 0.07 s, slow enough for control systems to follow. If $\rho$ reaches $\beta$, the reactor is "prompt critical" and the delayed neutrons no longer help.</p>
+    <h3>What the Simulation Assumes</h3>
+    <p>The chain view counts neutrons generation by generation, drawing 2 or 3 neutrons per fission with the right average; it ignores neutron energies, geometry and the fuel's changing state. The power curve is the one-group prompt-jump formula above, with no temperature feedback; it is a formula, not reactor data. The binding-energy curve plots, at each mass number, the most tightly bound nuclide in the mass table, and the Q values are calculated from tabulated atomic masses.</p>
   </div>
   <div class="takeaway-box content-column">
-    <div class="takeaway-box__title">Key Concept</div>
+    <div class="takeaway-box__title">Key Takeaway</div>
     <ul class="takeaway-box__list">
-      <li>When a heavy nucleus splits, the products weigh slightly less than the original. That missing mass (Δm) becomes energy: ΔE = Δmc². One kilogram of U-235 releases as much energy as 20,000 tonnes of TNT.</li>
+      <li>Uranium-235 split by a neutron releases about 200 MeV, from the mass lost as both fragments move up the binding-energy curve (calculated here from AME2020 masses).</li>
+      <li>Each fission frees about 2.4 neutrons, so the chain grows if more than about 41 % of them cause another fission.</li>
+      <li>The 0.65 % of neutrons that come late are what make a reactor controllable, as long as the reactivity stays below that fraction.</li>
     </ul>
+    <p style="overflow-x:auto;">$$Q = \left[m(^{235}\mathrm{U}) + m_n - \textstyle\sum m_{\text{products}}\right]c^2 \approx 200\ \text{MeV}$$</p>
+  </div>
+  <div class="stop-body content-column" id="sources">
+    <h3>Sources</h3>
+    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <li id="src-1">O. Hahn and F. Strassmann, "Über den Nachweis und das Verhalten der bei der Bestrahlung des Urans mittels Neutronen entstehenden Erdalkalimetalle", <em>Die Naturwissenschaften</em> 27, 11–15 (1939).</li>
+      <li id="src-2">L. Meitner and O. R. Frisch, <em>Nature</em> 143, 239 (1939).</li>
+      <li id="src-3">N. Bohr and J. A. Wheeler, "The Mechanism of Nuclear Fission", <em>Physical Review</em> 56, 426 (1939).</li>
+      <li id="src-4">M. Wang et al., AME2020 atomic mass evaluation, <em>Chinese Physics C</em> 45, 030003 (2021); mass table file <code>mass_1.mas20</code> from the IAEA Atomic Mass Data Center. Cited: atomic masses and binding energies per nucleon; used to calculate 173.3 MeV, 199.2 MeV and 17.6 MeV.</li>
+      <li id="src-5">Hahn and Strassmann [1] (received 22 December 1938) for the barium result; Meitner and Frisch [2] for the estimate of "about 200 Mev" and the word "fission"; O. R. Frisch, "Physical Evidence for the Division of Heavy Nuclei under Neutron Bombardment", <em>Nature</em> 143, 276 (1939).</li>
+      <li id="src-6">IAEA Neutron Data Standards 2006 thermal constants (A. D. Carlson et al., <em>Nuclear Data Sheets</em> 110, 3215 (2009)): $\bar\nu = 2.4355(23)$ for thermal fission of U-235; the 2017 standards (Carlson et al., <em>Nuclear Data Sheets</em> 148, 143 (2018), Table 11) give 2.425(11). $\beta = 0.0065$ and the delayed-neutron groups: G. R. Keepin, T. F. Wimett and R. K. Zeigler, <em>Physical Review</em> 107, 1044 (1957).</li>
+      <li id="src-7">M. P. Fewell, "The atomic nuclide with the highest mean binding energy", <em>American Journal of Physics</em> 63, 653–658 (1995), with AME2020 [4]. Cited: Ni-62 has the highest binding energy per nucleon; Fe-56 the lowest mass per nucleon.</li>
+      <li id="src-8">NIST, <em>Guide for the Use of the International System of Units</em> (SP 811), Appendix B.8. Cited: 1 ton of TNT is defined as 4.184 GJ (exact, by convention).</li>
+    </ol>
   </div>
   <div class="stop-bridge content-column">
     <span class="stop-bridge__arrow">→</span>
-    <span>The nucleus can be split. Feynman, Schwinger, and Tomonaga explained how light and matter interact at the deepest level — quantum electrodynamics, the most precise theory ever written.</span>
-  </div>
-  <div style="margin-top:var(--space-6);text-align:center;">
-    <a href="https://github.com/FavioVazquez/roadtoreality/issues" target="_blank" rel="noopener" style="font-size:var(--text-sm);color:var(--color-text-muted);">Want to contribute the full simulation? Open an issue on GitHub →</a>
+    <span>Fission showed how much energy the nucleus holds. At the same time, theorists were learning to calculate how light and electrons interact, with a precision never reached before.</span>
   </div>
   <nav class="stop-nav" id="stop-nav" aria-label="Stop navigation"></nav>
 </main>
@@ -123,8 +165,8 @@
 <script src="../../assets/js/vendor/fuse.min.js"></script>
 <script src="../../assets/js/search.js"></script>
 <script src="../../assets/js/progress.js"></script>
-<script src="sim.js"></script>
 <script src="../../assets/js/stop-shell.js"></script>
+<script src="sim.js"></script>
 <script defer src="../../assets/katex/katex.min.js"></script>
 <script defer src="../../assets/katex/auto-render.min.js"></script>
 <script defer src="../../assets/js/katex-init.js"></script>
