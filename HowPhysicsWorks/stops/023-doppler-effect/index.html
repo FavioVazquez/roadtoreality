@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
   <link rel="stylesheet" href="../../assets/css/simulation.css">
+  <link rel="stylesheet" href="../../assets/css/stop-pattern.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
@@ -62,6 +63,10 @@
       <span class="stop-header__scientist">Christian Doppler</span>
     </div>
   </header>
+  <div class="stop-question content-column">
+    <p class="stop-question__label">The question</p>
+    <h2 class="stop-question__text">How much higher is the pitch ahead of a moving source than behind it, and how does that depend on the source’s speed?</h2>
+  </div>
   <div class="stop-intro content-column">
     <p>In 1842 Christian Doppler proposed, in a lecture in Prague, that a moving source of waves is heard or seen at a shifted frequency, and he applied it, wrongly, to the colours of double stars. The effect itself was right. For sound it was confirmed in 1845 by Buys Ballot with musicians on a moving train: when a source moves, the wavefronts it emits bunch up in front and spread apart behind. That bunching is a frequency shift — and it became the ruler astronomers use to measure the expansion of the universe.</p>
   </div>
@@ -91,6 +96,15 @@
       <span>Drag the speed slider to change how fast the source moves. Watch the wavefronts compress ahead and expand behind.</span>
     </div>
   </div>
+  <aside class="try-this content-column" aria-labelledby="try-this-title">
+    <h2 class="try-this__title" id="try-this-title">What to try</h2>
+    <ol class="try-this__list">
+      <li>With the sim playing (press <strong>Play</strong> if it is paused; the readout only updates while it runs), set <strong>Source speed (fraction of v<sub>w</sub>)</strong> to 0.50: the readout shows f (ahead) = 2.00f₀ and f (behind) = 0.67f₀, and the rings bunch up in front of the source.</li>
+      <li>Set <strong>Source speed (fraction of v<sub>w</sub>)</strong> to 0: both readouts show 1.00f₀ and the rings spread out evenly around the source.</li>
+      <li>Push the speed to 0.95: f (ahead) climbs to 20.00f₀ while f (behind) only falls to 0.51f₀. The shift is not symmetric, because the source nearly catches its own wavefronts in front.</li>
+      <li>Raise <strong>Source Frequency</strong> to f₀ × 2.0: rings are emitted twice as often and sit closer together, but the ahead and behind ratios do not change.</li>
+    </ol>
+  </aside>
   <div class="stop-body content-column">
     <h3>The Doppler formula</h3>
     <p style="color:var(--color-text-secondary);line-height:1.8;margin-bottom:1rem;">
@@ -108,6 +122,10 @@
     <p style="color:var(--color-text-secondary);line-height:1.8;">
       This is the formula Hubble used in 1929 with Slipher's velocities to show that almost every galaxy is receding — and the further away it is, the faster it moves. The Doppler effect, proposed for starlight in a Prague lecture hall and first checked with trumpets on a train, turned out to measure the size and fate of the cosmos.
     </p>
+    <section class="sim-limits" aria-labelledby="sim-limits-title">
+    <h3 id="sim-limits-title">What the Simulation Leaves Out</h3>
+    <p>The ahead and behind readouts come from the formula f₀ · v<sub>w</sub>/(v<sub>w</sub> ∓ v<sub>s</sub>), not from measuring the drawn rings. Speeds are fractions of the screen width per frame, not metres per second, and the time between emissions is rounded to whole frames. The source speed stops at 0.95 v<sub>w</sub>, so the case of a source faster than its waves is not shown, and the observers are fixed icons at the edges. When the source reaches the right side it jumps back to the left and the rings are cleared.</p>
+    </section>
   </div>
   <div class="takeaway-box content-column">
     <div class="takeaway-box__title">Key Concept</div>
@@ -115,9 +133,9 @@
       <li>A source moving toward you compresses its wavefronts — observed frequency rises. Moving away stretches them — frequency drops. The formula is \(f = f_0 \, v_w/(v_w \mp v_s)\). For nearby galaxies the redshift reads as a Doppler shift, cz ≈ v; for distant ones it is better described as the stretching of light by the expansion of space, 1 + z = a_now/a_then, which is not a speed.</li>
     </ul>
   </div>
-  <div class="stop-body content-column" id="sources">
+  <div class="stop-body stop-sources content-column" id="sources">
     <h3>Sources</h3>
-    <ol style="color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.7;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <ol class="stop-sources__list">
       <li>C. Doppler, "Über das farbige Licht der Doppelsterne und einiger anderer Gestirne des Himmels", <em>Abhandlungen der Königl. Böhmischen Gesellschaft der Wissenschaften</em> ser. 5, 2, 465–482 (1842; read 25 May 1842).</li>
       <li>C. H. D. Buys Ballot, "Akustische Versuche auf der Niederländischen Eisenbahn, nebst gelegentlichen Bemerkungen zur Theorie des Hrn. Prof. Doppler", <em>Annalen der Physik und Chemie</em> 66, 321–351 (1845).</li>
       <li>E. Hubble, "A relation between distance and radial velocity among extra-galactic nebulae", <em>PNAS</em> 15, 168–173 (1929).</li>
