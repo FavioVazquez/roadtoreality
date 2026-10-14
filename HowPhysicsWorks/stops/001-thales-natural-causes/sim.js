@@ -211,16 +211,17 @@
       ctx.strokeStyle = COL.truth; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.moveTo(apexX, apexY); ctx.lineTo(apexX, L.yG); ctx.stroke();
       ctx.restore();
-      text('true height 146.6 m', apexX + 8, apexY + 8, COL.truth, 11, 'left', '600');
+      text('true height 146.6 m (cited)', apexX + 8, apexY + 8, COL.truth, 11, 'left', '600');
       var est = estimate();
       if (isFinite(est) && est > 0) {
         var ey = L.yG - est * L.sx;
         if (ey > 4) {
           ctx.save();
           ctx.strokeStyle = COL.ruler; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.2;
-          ctx.beginPath(); ctx.moveTo(apexX - 26, ey); ctx.lineTo(apexX + 26, ey); ctx.stroke();
+          var lx = Math.max(apexX - 30, 74);   /* keep the label on the canvas at phone widths */
+          ctx.beginPath(); ctx.moveTo(lx + 4, ey); ctx.lineTo(apexX + 26, ey); ctx.stroke();
           ctx.restore();
-          text('your estimate', apexX - 30, ey, COL.ruler, 10, 'right', '600');
+          text('your estimate', lx, ey, COL.ruler, 10, 'right', '600');
         }
       }
     }
@@ -590,8 +591,9 @@
     /* legend */
     c.textBaseline = 'middle'; c.textAlign = 'left';
     c.font = '600 10px "DM Sans", system-ui, sans-serif';
-    c.fillStyle = SAROS_COL[145]; c.fillText('\u25CF saros 145', padL + 6, Y(9));
-    c.fillStyle = SAROS_COL[139]; c.fillText('\u25CF saros 139', padL + 82, Y(9));
+    c.textAlign = 'right';
+    c.fillStyle = SAROS_COL[139]; c.fillText('\u25CF saros 139', SW - padR - 6, Y(4));
+    c.fillStyle = SAROS_COL[145]; c.fillText('\u25CF saros 145', SW - padR - 84, Y(4));
   }
 
   function sizeSaros() {

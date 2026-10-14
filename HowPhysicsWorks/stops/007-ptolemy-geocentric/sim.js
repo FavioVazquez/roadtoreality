@@ -33,7 +33,7 @@
     Venus:   { inner: true,  r: 0.723, syn: 583.92,  col: 'oklch(0.88 0.08 90)' },
     Mars:    { inner: false, r: 0.656, sid: 686.98,  col: 'oklch(0.68 0.19 32)' },
     Jupiter: { inner: false, r: 0.192, sid: 4332.59, col: 'oklch(0.78 0.10 60)' },
-    Saturn:  { inner: false, r: 0.105, sid: 10759.22, col: 'oklch(0.82 0.09 85)' }
+    Saturn:  { inner: false, r: 0.104, sid: 10755.70, col: 'oklch(0.82 0.09 85)' }
   };
   var SPEEDS = [5, 10, 20, 40, 80];          /* days of model time per second */
   var SPEED_DEFAULT = 2;
