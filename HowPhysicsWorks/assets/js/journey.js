@@ -4,7 +4,8 @@
    How Physics Works
    ------------------------------------------------------------
    Data rules
-   - position: stop.year on a piecewise time axis. Each era band
+   - position: stop.mapYear (else stop.year) on a piecewise time axis. mapYear is the confirmation year for
+     stops whose story spans decades, so each node sits in its own era's band. Each era band
      gets road length in proportion to its number of stops, and
      the empty stretch between 200 CE and 1500 CE is compressed
      into a short dashed section with break marks.
@@ -89,7 +90,7 @@
   function segmentWeights() {
     return SEGMENTS.map(function (seg) {
       if (seg.gap) return 2.6;
-      var n = stops.filter(function (s) { return s.year >= seg.from && s.year < seg.to; }).length;
+      var n = stops.filter(function (s) { var y = s.mapYear || s.year; return y >= seg.from && y < seg.to; }).length;
       return n + 1.5;
     });
   }
@@ -118,7 +119,7 @@
 
   /* Place nodes on lanes: 0 on the road, then -1, +1, -2, +2 … */
   function swarm(scale, gap, maxLanes) {
-    var order = stops.map(function (s) { return { s: s, x: scale.x(s.year) }; });
+    var order = stops.map(function (s) { return { s: s, x: scale.x(s.mapYear || s.year) }; });
     order.sort(function (a, b) { return a.x - b.x || a.s.order - b.s.order; });
     var lanes = {};
     var worst = 0, ok = true;
