@@ -81,6 +81,11 @@
       <div class="stop-skeleton" aria-hidden="true"></div>
       <noscript><div class="sim-placeholder"><div class="sim-placeholder__text">Simulation requires JavaScript</div></div></noscript>
     </div>
+    <style>
+      /* fixed-width readouts on wider screens, so the two rows stop jumping between one line and two while dragging */
+      #temperature-readout, #h-readout { display: inline-block; font-variant-numeric: tabular-nums; }
+      @media (min-width: 641px) { #temperature-readout { min-width: 4.6em; } #h-readout { min-width: 2.6em; } }
+    </style>
     <div class="sim-controls">
       <div class="sim-control-row">
         <label class="sim-label" for="temperature-slider">Temperature</label>
