@@ -330,8 +330,14 @@
     ctx.font = '9px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'oklch(0.45 0.04 285)';
     ctx.textAlign = 'center';
+    /* each label fades out while the planet passes over it (they overprinted "Planet") */
+    var planetC = toCanvas(x, y);
+    var fade = function (c) { return Math.min(1, Math.max(0, (Math.hypot(planetC.x - c.x, planetC.y - c.y) - 25) / 35)); };
+    ctx.globalAlpha = fade(perC);
     ctx.fillText('Perihelion (fastest)', perC.x, perC.y - 14);
+    ctx.globalAlpha = fade(aphC);
     ctx.fillText('Aphelion (slowest)', aphC.x, aphC.y - 14);
+    ctx.globalAlpha = 1;
     ctx.restore();
 
     /* Both foci and the centre: the Sun sits at one focus, not the centre */
@@ -353,7 +359,8 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.fillText('empty focus', emptyC.x, emptyC.y + 8);
-      ctx.fillText('centre', midC.x, midC.y + 6);
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('centre', midC.x, midC.y - 6);
       ctx.restore();
     }
 

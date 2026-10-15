@@ -200,7 +200,14 @@
       var lbl = 'λ_max = ' + (lamMax >= 1 ? lamMax.toFixed(2) + ' µm' : Math.round(lamMax * 1000) + ' nm');
       var tx = mx + 6;
       if (tx + 100 > ox + gW) { ctx.textAlign = 'right'; tx = mx - 6; }
-      ctx.fillText(lbl, tx, Math.max(peakY - 8, oy - gH + 10));
+      var ty = Math.max(peakY - 8, oy - gH + 10);
+      var infoR = ox + 4 + 120, infoB = oy - gH + 34;   /* the 'T = 10000 K' / 'h x 1.00' box, top left */
+      var lw = ctx.measureText(lbl).width, lx = ctx.textAlign === 'right' ? tx - lw : tx;
+      if (lx < infoR && ty - 10 < infoB) ty = infoB + 14;
+      ctx.fillStyle = 'rgba(8,6,16,0.72)';                /* a backing so the label reads over the curve and the band */
+      ctx.fillRect(lx - 3, ty - 10, lw + 6, 14);
+      ctx.fillStyle = 'rgba(220,200,255,0.95)';
+      ctx.fillText(lbl, tx, ty);
       ctx.textAlign = 'left';
       ctx.restore();
     } else if (hF * WIEN_B / T < LAM_MIN) {
