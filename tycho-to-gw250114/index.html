@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Tycho Brahe to GW250114 · Road to Reality</title>
+  <meta name="description" content="A paper by Favio Vázquez: three results in physics re-measured from the primary records with AI agents, under a written protocol that kept the expected answer out of their instructions.">
+  <link rel="canonical" href="https://roadtoreality.dev/tycho-to-gw250114/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="From the observations of Tycho Brahe to GW250114">
+  <meta property="og:description" content="Three results in physics re-measured from the primary records, with the expected answer kept out of the agents' instructions: Kepler's orbit from Tycho's logs, Mercury's perihelion from Newcomb's transit contacts, and the horizon area of GW250114.">
+  <meta property="og:url" content="https://roadtoreality.dev/tycho-to-gw250114/">
+  <meta property="og:image" content="https://roadtoreality.dev/tycho-to-gw250114/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="From the observations of Tycho Brahe to GW250114, with the three records the agents read: a page of Tycho's Mars log, Newcomb's Mercury contacts and the GW250114 strain">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://roadtoreality.dev/tycho-to-gw250114/og-image.png">
+  <meta name="citation_title" content="From the observations of Tycho Brahe to GW250114: three results in physics re-measured with the answer withheld">
+  <meta name="citation_author" content="Vázquez, Favio">
+  <meta name="citation_publication_date" content="2026/10/16">
+  <meta name="citation_doi" content="10.5281/zenodo.23410498">
+  <meta name="citation_pdf_url" content="https://zenodo.org/records/23410498/files/FavioVazquez-2026-Tycho-Brahe-to-GW250114-answer-withheld.pdf">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --void:      oklch(0.07 0 0);
+      --surface:   oklch(0.11 0 0);
+      --border:    oklch(1 0 0 / 0.08);
+      --gold:      oklch(0.78 0.12 75);
+      --text-1:    oklch(0.92 0 0);
+      --text-2:    oklch(0.65 0 0);
+      --text-3:    oklch(0.45 0 0);
+      --paper:     oklch(0.985 0 0);
+      --radius:    8px;
+      --font-sans: 'Georgia', 'Times New Roman', serif;
+      --font-mono: 'Courier New', monospace;
+    }
+
+    html { background: var(--void); color: var(--text-1); font-family: var(--font-sans); }
+    body { min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+    a { color: inherit; }
+
+    .container { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); }
+
+    /* ── Header ─────────────────────────────── */
+    .site-header { padding: clamp(2.5rem, 7vw, 4.5rem) 0 clamp(1.5rem, 4vw, 2.5rem); border-bottom: 1px solid var(--border); }
+    .back {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-3); text-decoration: none; display: inline-block; margin-bottom: 2rem;
+    }
+    .back:hover { color: var(--gold); }
+    .kicker {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.7rem, 5vw, 2.6rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em;
+      overflow-wrap: anywhere;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .subtitle { margin-top: 0.9rem; font-size: clamp(1.02rem, 2.6vw, 1.2rem); font-style: italic; color: var(--text-2); line-height: 1.45; }
+    .byline {
+      margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-3);
+      display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; line-height: 1.6;
+    }
+    .byline a { text-decoration: none; border-bottom: 1px solid var(--border); }
+    .byline a:hover { color: var(--gold); }
+
+    .buttons { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .btn {
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-decoration: none;
+      padding: 0.6rem 0.95rem; border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text-1); background: var(--surface); transition: border-color 160ms, color 160ms;
+    }
+    .btn:hover { border-color: var(--gold); color: var(--gold); }
+    .btn--primary { border-color: oklch(0.78 0.12 75 / 0.55); color: var(--gold); }
+
+    /* ── Body ───────────────────────────────── */
+    main { flex: 1; padding: clamp(2rem, 5vw, 3rem) 0 clamp(3rem, 7vw, 5rem); }
+    section { margin-top: clamp(2.5rem, 6vw, 3.5rem); }
+    section:first-child { margin-top: 0; }
+    h2 {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+    }
+    h3 { font-size: 1.2rem; font-weight: 400; line-height: 1.3; margin: 2rem 0 0.75rem; }
+    h3 .num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold); margin-right: 0.6rem; }
+    p, li { font-size: 1rem; line-height: 1.7; color: var(--text-2); }
+    p + p { margin-top: 0.9rem; }
+    p strong, li strong { color: var(--text-1); font-weight: 400; }
+    .lead { font-size: 1.1rem; color: var(--text-1); }
+
+    figure { margin: 1.5rem 0; }
+    figure .plate { background: var(--paper); border-radius: var(--radius); padding: clamp(0.5rem, 2vw, 1rem); }
+    figure img { display: block; width: 100%; height: auto; margin: 0 auto; }
+    figure.narrow img { max-width: 420px; }
+    figure.mid img { max-width: 480px; }
+    figcaption { margin-top: 0.6rem; font-size: 0.85rem; line-height: 1.55; color: var(--text-3); font-style: italic; }
+
+    .glance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+    .stat__label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+    .stat__value { margin-top: 0.5rem; font-size: 1.45rem; color: var(--gold); line-height: 1.2; }
+    .stat__note { margin-top: 0.4rem; font-size: 0.82rem; line-height: 1.5; color: var(--text-2); }
+
+    ol.steps { list-style: none; counter-reset: s; margin-top: 1rem; }
+    ol.steps li { counter-increment: s; position: relative; padding-left: 2.2rem; }
+    ol.steps li + li { margin-top: 0.6rem; }
+    ol.steps li::before {
+      content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 0.2rem;
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold);
+    }
+    ul.plain { list-style: none; margin-top: 1rem; }
+    ul.plain li { padding-left: 1.1rem; position: relative; }
+    ul.plain li + li { margin-top: 0.6rem; }
+    ul.plain li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+
+    .note { border-left: 2px solid var(--gold); padding: 0.2rem 0 0.2rem 1rem; margin-top: 1rem; }
+
+    .cite { position: relative; margin-top: 1rem; }
+    .cite pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; padding-top: 2.6rem; font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.55;
+      color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere;
+    }
+    .copy {
+      position: absolute; top: 0.6rem; right: 0.6rem; cursor: pointer;
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--void); color: var(--text-2); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.6rem;
+    }
+    .copy:hover { color: var(--gold); border-color: var(--gold); }
+
+    .films video { width: 100%; height: auto; border-radius: var(--radius); background: var(--surface); }
+
+    .credit { margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-3); font-style: italic; line-height: 1.6; }
+
+    /* ── Footer ─────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--border); padding: 1.5rem clamp(1rem, 4vw, 2rem);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .site-footer__copy, .site-footer__links a {
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-3); text-decoration: none;
+    }
+    .site-footer__links { display: flex; gap: 1.25rem; }
+    .site-footer__links a:hover { color: var(--gold); }
+
+    @media (max-width: 640px) {
+      .glance { grid-template-columns: 1fr; }
+      .stat__value { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="back" href="../">← Road to Reality</a>
+      <div class="kicker">Episode 09 · Paper</div>
+      <h1>From the observations of Tycho Brahe to <em>GW250114</em></h1>
+      <p class="subtitle">Three results in physics re-measured with the answer withheld</p>
+      <div class="byline">
+        <span>Favio Vázquez, independent researcher</span>
+        <a href="https://orcid.org/0009-0005-4591-1873" target="_blank" rel="noopener">ORCID 0009-0005-4591-1873</a>
+        <span>Preprint, 16 October 2026</span>
+      </div>
+      <div class="buttons">
+        <a class="btn btn--primary" href="https://zenodo.org/records/23410498/files/FavioVazquez-2026-Tycho-Brahe-to-GW250114-answer-withheld.pdf?download=1" target="_blank" rel="noopener">Read the paper (PDF)</a>
+        <a class="btn" href="https://doi.org/10.5281/zenodo.23410498" target="_blank" rel="noopener">Paper DOI</a>
+        <a class="btn" href="https://doi.org/10.5281/zenodo.23410453" target="_blank" rel="noopener">Dataset DOI</a>
+        <a class="btn" href="https://github.com/FavioVazquez/tycho-to-gw250114" target="_blank" rel="noopener">Code and record</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <section id="summary">
+        <h2>In plain words</h2>
+        <p class="lead">Can AI agents redo a classic measurement of physics from the primary record, to a standard a physicist would accept, when they almost certainly know the textbook answer?</p>
+        <p>I tried it three times, working with AI agents: Kepler's orbit of Mars from Tycho Brahe's own observing logs, the extra advance of Mercury's perihelion from Newcomb's transit timings, and whether the horizon area grew in the black hole merger GW250114. A written protocol kept the expected answer out of the agents' instructions and fixed the comparison with modern values in advance; the one brief that leaked the shape of the answer was caught, and the run repeated. Each result was frozen before that comparison (for Mercury only by commit order, with the headline refitted after the checker's report), and every measurement went to a separate re-analysis agent. The paper reports what came out, and everything that went wrong along the way.</p>
+
+        <div class="glance">
+          <div class="stat">
+            <div class="stat__label">Kepler</div>
+            <div class="stat__value">2.46′</div>
+            <div class="stat__note">median miss on the withheld years 1596–1601, with two Keplerian orbits the agent chose itself</div>
+          </div>
+          <div class="stat">
+            <div class="stat__label">Mercury</div>
+            <div class="stat__value">43.71 ± 1.04″</div>
+            <div class="stat__note">extra perihelion advance per century, 0.7σ above the 42.98″ of general relativity</div>
+          </div>
+          <div class="stat">
+            <div class="stat__label">GW250114</div>
+            <div class="stat__value">0.86 &lt; 0.90</div>
+            <div class="stat__note">every cell favours area growth, but the minimum missed the pre-registered bar, so the claim was withheld</div>
+          </div>
+        </div>
+
+        <figure>
+          <div class="plate"><img src="figures/ed5-three-records.png" width="1400" height="660" alt="The three primary records as the agents received them: a page of Tycho Brahe's Mars log for 1595, Newcomb's comparison of observed and tabular transit contacts of Mercury, and the GW250114 strain at LIGO Hanford and Livingston around the merger"></div>
+          <figcaption>The three records as the agents received them: Tycho's Mars log for 1595 in Dreyer's edition, Newcomb's comparison of observed and tabular contacts of Mercury, and the GW250114 strain at the two LIGO detectors (Extended Data Fig. 5).</figcaption>
+        </figure>
+      </section>
+
+      <section id="results">
+        <h2>The three results</h2>
+
+        <h3><span class="num">01</span>Kepler's orbit from Tycho's logs</h3>
+        <p>Six agent workers transcribed 427 Mars sessions from page images of Tycho's logs, with a confidence on every number. The 187 sessions with good quality flags form the frozen data product, at a median residual of 1.38′ against the modern ephemeris, which was used only for verification.</p>
+        <p>A fitting agent was then told nothing about model families, and every row after mid-January 1596 was withheld. Two Keplerian ellipses about one common point predicted the withheld years to a median of 2.46′. Eccentric circles with equants reached 16.3′, and a harmonic series with no physics missed them by 21′.</p>
+        <p>Was the agent recognising Mars? Fresh agents received disguised copies of the data, with time rescaled, longitude rotated or mirrored and every label removed. Three runs found two Kepler ellipses again, with held-out medians over the unflagged rows of 2.05′, 2.13′ and 2.02′ (the undisguised fit gives 2.21′ on the same rows), and identified the data as Mars only after the fit. The disguise shows that recognition followed the fit; it cannot show that knowledge played no part in which families the agents chose to try.</p>
+        <figure>
+          <div class="plate"><img class="" src="figures/fig2-kepler-heldout.png" width="675" height="950" style="max-width:380px" alt="Held-out residuals by model family: two Keplerian ellipses predict the withheld years best; eccentric circles with equants and a harmonic series miss them"></div>
+          <figcaption>Held-out residuals by model family. The two Keplerian ellipses predict the withheld years; the equant model and the harmonic series miss them (Figure 2).</figcaption>
+        </figure>
+
+        <h3><span class="num">02</span>Mercury's perihelion from Newcomb's transit contacts</h3>
+        <p>The record is Newcomb's 58 concluded contacts from 23 transits of 1677–1881, with the weights he printed. By the measurement report's own statement, the instructions named no expected value and no theory; no brief file survives. A Newtonian model of the planets with an extra uniform perihelion advance D gives <strong>D = 43.71 ± 1.04″ per century</strong>, 0.7σ above the 42.98″ general relativity predicts. Every variant tried lies between 43.2 and 44.3. Run on the modern ephemeris's own contact times, the same pipeline returns 43.007, which checks the pipeline but says nothing about the historical data.</p>
+        <figure>
+          <div class="plate"><img src="figures/fig3-mercury.png" width="1390" height="582" alt="Mercury's excess perihelion advance from Newcomb's transit contacts compared with general relativity and earlier determinations"></div>
+          <figcaption>The excess advance under every variant, beside general relativity and earlier determinations (Figure 3).</figcaption>
+        </figure>
+
+        <h3><span class="num">03</span>Did the horizon area of GW250114 grow?</h3>
+        <p>Hawking's area theorem says a black hole merger cannot shrink the total horizon area. I asked that question with the agents' own ringdown fits and the exact probability P(ΔA &gt; 0) that the area grew, under a decision rule fixed before any area was computed.</p>
+        <p>The earliest reading did not survive. The single-mode fits starting 10.5–13 M<sub>f</sub> after the peak gave P of 0.998–0.999, but their remnant mass fell in a way that signals a known single-mode bias. A pre-registered overtone test confirmed it, and those cells were withdrawn. With the overtone included, P is 0.89–0.96 for fits starting 10.5–13 M<sub>f</sub> after the peak; the retained cells at 15–18 M<sub>f</sub> give 0.91–0.98, and the fit at 20 M<sub>f</sub> gives 0.86. That minimum is below the pre-registered 0.90, so the rule says: whether the area grew depends on analysis choices, and with these fits the paper cannot claim it.</p>
+        <p class="note">This is not evidence against the area theorem, since every combination favours an increase, and it does not show that the LIGO-Virgo-KAGRA result is wrong. The decision is not robust either way: the agents' initial area is 6.6% above LIGO-Virgo-KAGRA's, for reasons mostly unexplained, and a post-hoc check with their value gives a minimum of 0.917, which would read "the data favour an increase". The paper does not claim the area grew, and does not claim it did not.</p>
+        <figure>
+          <div class="plate"><img src="figures/fig4-gw250114.png" width="705" height="752" style="max-width:440px" alt="The probability that the horizon area grew, and the remnant mass, against the ringdown start time, for single-mode and overtone fits"></div>
+          <figcaption>The probability that the area grew, and the remnant mass, against the ringdown start time (Figure 4).</figcaption>
+        </figure>
+      </section>
+
+      <section id="protocol">
+        <h2>How the protocol works</h2>
+        <p>The protocol was written on 13 October 2026 and committed before any batch transcription, reduction or fit. Two of these steps are written rules, withholding the answer and fixing the comparison; the rest is the practice each episode followed.</p>
+        <ol class="steps">
+          <li><strong>The brief withholds the answer.</strong> Agents get the data and a question: "find the orbit that fits these positions", not "fit an ellipse".</li>
+          <li><strong>A kill test</strong> with a pass criterion shows the record can be read at all.</li>
+          <li><strong>A plan</strong> fixes models, outlier rule, uncertainty recipe and decision rule before the result.</li>
+          <li><strong>A freeze</strong> records the result before it is compared with modern values.</li>
+          <li><strong>A checker</strong>, a separate agent with read-only access, re-runs the code and grades its findings.</li>
+          <li><strong>The comparison is fixed in advance.</strong> For Mercury it was 42.98″ per century.</li>
+          <li><strong>A record</strong> of every run is kept in git, and anything added after a result was seen is labelled post hoc.</li>
+        </ol>
+        <figure>
+          <div class="plate"><img src="figures/fig1-protocol.png" width="1392" height="712" alt="The protocol as executed: one row per measurement on a common time axis for 13 to 14 October 2026, with briefs, plans, first fits, freeze hashes, checker reports and comparisons marked"></div>
+          <figcaption>The protocol as it was executed, episode by episode, with each deviation and catch marked where it occurred (Figure 1).</figcaption>
+        </figure>
+      </section>
+
+      <section id="caught">
+        <h2>What the protocol caught</h2>
+        <p>The failures are part of the evidence, and the paper lists every one of them.</p>
+        <ul class="plain">
+          <li>A brief leaked the shape of the answer, and the checker graded the leak a blocker. The run was relabelled and repeated with no model family named.</li>
+          <li>When a fitter attributed an offset to Tycho's data, the checker showed that the data were not at fault.</li>
+          <li>A disguised run failed and was reported with its declared rerun.</li>
+          <li>The strongest GW250114 cells rested on a known single-mode bias. The checker flagged it, the pre-registered overtone test passed, and those cells were withdrawn.</li>
+        </ul>
+        <p style="margin-top:1rem">Explanations failed more often than measurements. Twice the agents' interpretations ran ahead of their evidence, and both times a second agent with different information corrected them. The division of labour that emerged, with agents measuring, a separate agent checking and the author arbitrating, is the method the paper proposes.</p>
+      </section>
+
+      <section id="limits">
+        <h2>What this does not show</h2>
+        <p class="note"><strong>The agents know the textbook answers.</strong> Withholding the answer, fixing the plan, holding out data and disguising the record narrow what that knowledge can do; none removes it.</p>
+        <p class="note"><strong>The checker is an AI agent, not an independent expert.</strong> A human domain expert's reading of each measurement is still due, as are an independent re-transcription of Tycho's logs and a re-reduction of the about 770 individual Mercury rows.</p>
+        <p class="note"><strong>The evidence that plans came first varies.</strong> In two episodes it rests on statements, logs and file times rather than on version history, and in GW250114 the single-mode fits predate the plan; the paper's Section 2 says where the record falls short.</p>
+        <p class="note"><strong>GW250114: the claim was withheld, not refuted.</strong> The paper does not claim the area grew, and does not claim it did not.</p>
+      </section>
+
+      <!--
+        FILMS: hidden until release. To release: add the files under films/, set each video's src and poster,
+        remove `hidden`.
+      -->
+      <section id="films" class="films" hidden>
+        <h2>The films</h2>
+        <p>Three short films walk through the records and the results.</p>
+        <figure>
+          <video controls preload="none" playsinline src="" poster=""></video>
+          <figcaption>Film 1.</figcaption>
+        </figure>
+        <figure>
+          <video controls preload="none" playsinline src="" poster=""></video>
+          <figcaption>Kepler from Tycho's logs.</figcaption>
+        </figure>
+        <figure>
+          <video controls preload="none" playsinline src="" poster=""></video>
+          <figcaption>Mercury from Newcomb's contacts.</figcaption>
+        </figure>
+        <p class="credit">Films made with <a href="https://github.com/FavioVazquez/showtime" target="_blank" rel="noopener">showtime</a>.</p>
+      </section>
+
+      <section id="cite">
+        <h2>Cite</h2>
+        <p>Please cite the paper; for the data and code, also cite the dataset.</p>
+        <div class="cite">
+          <button class="copy" type="button" data-target="bibtex">Copy</button>
+          <pre id="bibtex">@misc{vazquez2026tycho,
+  author    = {V{\'a}zquez, Favio},
+  title     = {From the observations of {Tycho Brahe} to {GW250114}: three results in physics re-measured with the answer withheld},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23410498},
+  url       = {https://doi.org/10.5281/zenodo.23410498},
+  note      = {Preprint}
+}
+
+@misc{vazquez2026remeasureddata,
+  author    = {V{\'a}zquez, Favio},
+  title     = {Road re-measured: ringdown posterior samples and code snapshot (commit b6b0b05)},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23410453},
+  url       = {https://doi.org/10.5281/zenodo.23410453}
+}</pre>
+        </div>
+        <p class="credit">The analyses were run by AI agents under the written protocol, with the author designing the study and arbitrating every result. Text, data and figures are under CC BY 4.0; code is under the MIT licence.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span class="site-footer__copy">© Favio Vázquez</span>
+    <nav class="site-footer__links">
+      <a href="../">Road to Reality</a>
+      <a href="https://github.com/FavioVazquez/tycho-to-gw250114" target="_blank" rel="noopener">Repository</a>
+      <a href="https://github.com/FavioVazquez" target="_blank" rel="noopener">Author</a>
+    </nav>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = document.getElementById(btn.dataset.target).textContent;
+        var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); });
+        } else { fallback(text); done(); }
+      });
+    });
+    function fallback(text) {
+      var t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', '');
+      t.style.position = 'absolute'; t.style.left = '-9999px'; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(t);
+    }
+  </script>
+
+</body>
+</html>

@@ -17,6 +17,8 @@
 !scripts/**
 !assets/
 !assets/**
+!tycho-to-gw250114/
+!tycho-to-gw250114/**
 
 !package.json
 !package-lock.json
