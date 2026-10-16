@@ -64,6 +64,22 @@ The full planning process is documented in [`.planning/`](./.planning/) — ever
 
 ---
 
+<!-- Episodios 5–8 are to come (added later); this paper is Episodio 9. -->
+
+### Episodio 9 — From Tycho Brahe to GW250114
+
+<img src="assets/img/portada-episodio9.png" alt="Episodio 9 cover: From the observations of Tycho Brahe to GW250114, with the three records the agents read" width="600">
+
+Can AI agents redo a classic measurement of physics from the primary record, to a standard a physicist would accept, when they almost certainly know the textbook answer? This episode is a paper that tries it three times: Kepler's orbit of Mars from Tycho Brahe's observing logs, the extra advance of Mercury's perihelion from Newcomb's transit contacts, and whether the horizon area grew in the black hole merger GW250114.
+
+I worked with AI agents under a written protocol that kept the expected answer out of their instructions and fixed the comparison with modern values in advance. Each result was frozen before that comparison (for Mercury only by commit order, with the headline refitted after the checker's report), and every measurement went to a separate re-analysis agent. Two Keplerian orbits predicted the withheld years to a median of 2.46′; Mercury needs an extra perihelion advance of 43.71 ± 1.04″ per century, 0.7σ above the 42.98″ general relativity predicts; and for GW250114 the minimum probability that the area grew, 0.86, fell below the pre-registered 0.90, so the claim was withheld. The paper also reports everything the protocol caught along the way.
+
+**Page:** [roadtoreality.dev/tycho-to-gw250114](https://roadtoreality.dev/tycho-to-gw250114/) · **Paper:** [doi:10.5281/zenodo.23410498](https://doi.org/10.5281/zenodo.23410498) · **Dataset:** [doi:10.5281/zenodo.23410453](https://doi.org/10.5281/zenodo.23410453) · **Code and record:** [github.com/FavioVazquez/tycho-to-gw250114](https://github.com/FavioVazquez/tycho-to-gw250114)
+
+See [`tycho-to-gw250114/`](./tycho-to-gw250114/) for the page.
+
+---
+
 ## What Learnship Is
 
 Learnship is the agentic workflow system developed through this series. It structures AI-assisted work into explicit phases: discovery, planning, execution, and verification. Every decision has a record. Every phase has a definition of done. Nothing ships without a UAT report.
